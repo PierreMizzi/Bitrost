@@ -68,18 +68,20 @@ public class BulletTrackManager : MonoBehaviour
     {
         get { return m_linkPrefab; }
     }
-    public TurretNode turretPrefab
+
+	#endregion
+
+    #region Bullets
+
+    [Header("Bullets")]
+    [SerializeField]
+    private Transform m_bulletContainer = null;
+    public Transform bulletContainer
     {
-        get { return m_turretPrefab; }
+        get { return m_bulletContainer; }
     }
 
-    private List<ABulletTrackNode> m_nodes = new List<ABulletTrackNode>();
-
-	#endregion
-
-	#region Name
-
-	#endregion
+    #endregion
 
 	#region Methods
 
@@ -141,13 +143,20 @@ public class BulletTrackManager : MonoBehaviour
 
 	#region Retrieve
 
-    private void CallbackRetrieveNodeAction(InputAction.CallbackContext context) { }
+    private void CallbackRetrieveNodeAction(InputAction.CallbackContext context)
+    {
+        foreach (BulletTrack track in m_bulletTracks)
+        {
+            track.Clear();
+            Destroy(track.gameObject);
+        }
+        m_bulletTracks.Clear();
+        m_remainingAvailableNodes = m_amountAvailableNodes;
+    }
 
 	#endregion
 
     #region Bullet Track
-
-    private void RebuildBulletTrack() { }
 
     #endregion
 

@@ -1,36 +1,58 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Splines;
 
 public class BulletTrack : MonoBehaviour
 {
 	#region Fields
 
-	[SerializeField]
-    private LineRenderer m_lineRenderer = null;
-
     private BulletTrackManager m_manager = null;
 
-    private CrystalShard m_crystalShard = null;
+    #region Track
+
+    [Header("Track")]
+    [SerializeField]
+    private LineRenderer m_lineRenderer = null;
+
+    public Spline spline { get; private set; }
 
     private List<ABulletTrackNode> m_nodes = new List<ABulletTrackNode>();
+
+    public ExtractorNode extractor
+    {
+        get
+        {
+            if (m_nodes.Count > 0)
+                return m_nodes[0] as ExtractorNode;
+            else
+                return null;
+        }
+    }
 
     public ABulletTrackNode lastNode
     {
         get { return m_nodes[m_nodes.Count - 1]; }
     }
 
-    private ExtractorNode m_extractor
+    #endregion
+
+
+    #region Bullets
+
+    [Header("Bullets")]
+    [SerializeField]
+    private PlayerBullet m_bulletPrefab = null;
+
+    private List<PlayerBullet> m_bullets = new List<PlayerBullet>();
+
+    [SerializeField]
+    private float m_bulletSpeed = 1f;
+    public float bulletSpeed
     {
-        get
-        {
-            if (m_nodes.Count > 1)
-                return m_nodes[0] as ExtractorNode;
-            else
-            {
-                return null;
-            }
-        }
+        get { return m_bulletSpeed; }
     }
+
+    #endregion
 
 	#endregion
 
@@ -39,17 +61,25 @@ public class BulletTrack : MonoBehaviour
     public void Initialize(BulletTrackManager manager, CrystalShard crystal)
     {
         m_manager = manager;
-        m_crystalShard = crystal;
 
         ExtractorNode extractor = Instantiate(
             m_manager.extractorPrefab,
-            m_crystalShard.transform.position,
+            crystal.transform.position,
             Quaternion.identity,
             m_manager.nodeContainer
         );
+        extractor.Initialize(crystal);
 
         m_nodes.Add(extractor);
-        extractor.RefreshState();
+        RebuildLinking();
+    }
+
+    public void Clear()
+    {
+        foreach (ABulletTrackNode node in m_nodes)
+            Destroy(node.gameObject);
+
+        m_nodes.Clear();
     }
 
 	#region Nodes
@@ -60,7 +90,7 @@ public class BulletTrack : MonoBehaviour
         {
             lastNode.nextNode = turret;
             m_nodes.Add(turret);
-			RebuildLinking();
+            RebuildLinking();
         }
         else if (lastNode.GetType() == typeof(TurretNode))
         {
@@ -88,22 +118,61 @@ public class BulletTrack : MonoBehaviour
 
     private void RebuildLinking()
     {
-        int count = m_nodes.Count;
-        m_lineRenderer.positionCount = count;
-        for (int i = 0; i < count; i++)
-        {
-            ABulletTrackNode node = m_nodes[i];
-            node.RefreshState();
-            m_lineRenderer.SetPosition(i, transform.InverseTransformPoint(node.transform.position));
+        Vector3 localPosition = transform.InverseTransformPoint(lastNode.transform.position);
 
-            if (i < count - 1)
-                node.nextNode = m_nodes[i + 1];
-            else
-                node = null;
-        }
+        m_lineRenderer.positionCount += 1;
+        m_lineRenderer.SetPosition(m_nodes.Count - 1, localPosition);
+
+        BezierKnot knot = new BezierKnot(
+            lastNode.transform.position,
+            lastNode.transform.position,
+            lastNode.transform.position,
+            Quaternion.Euler(270, 0, 0)
+        );
+        spline.Add(knot);
     }
 
 	#endregion
+
+    #region Fire
+
+    public void Fire()
+    {
+        if (CanFire())
+        {
+            extractor.Extract();
+            CreateBullet();
+        }
+    }
+
+    public bool CanFire()
+    {
+        bool result = false;
+
+        if (extractor.CanExtract())
+        {
+            Debug.LogWarning("CRYSTAL IS DEPLEATED");
+            result &= extractor.CanExtract();
+        }
+
+        return result;
+    }
+
+    public void CreateBullet()
+    {
+        PlayerBullet bullet = Instantiate(
+            m_bulletPrefab,
+            extractor.transform.position,
+            Quaternion.identity,
+            m_manager.bulletContainer
+        );
+
+        m_bullets.Add(bullet);
+
+        bullet.Initialize(this);
+    }
+
+    #endregion
 
 	#endregion
 }

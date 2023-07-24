@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public abstract class ABulletTrackNode : MonoBehaviour
@@ -10,10 +11,14 @@ public abstract class ABulletTrackNode : MonoBehaviour
 
     public ABulletTrackNode nextNode { get; set; }
 
+
+
     public bool isLinkable
     {
         get { return nextNode == null; }
     }
+
+
 
     public virtual void Update()
     {
@@ -29,4 +34,6 @@ public abstract class ABulletTrackNode : MonoBehaviour
     {
         m_linkRadiusVisual.SetActive(isLinkable);
     }
+
+
 }
