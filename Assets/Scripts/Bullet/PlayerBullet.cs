@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Splines;
 using DG.Tweening;
+using System.Collections;
 
 public class PlayerBullet : Bullet
 {
@@ -13,19 +14,39 @@ public class PlayerBullet : Bullet
         m_track = track;
 
         float time = m_track.spline.GetLength() / m_track.bulletSpeed;
-		
+
         m_tween = DOVirtual
             .Float(
+                0f,
+                1f,
                 time,
-                0,
-                1,
                 (float value) =>
                 {
                     transform.position = m_track.spline.EvaluatePosition(value);
+                    transform.up = m_track.spline.EvaluateTangent(value);
                 }
             )
+            .SetEase(Ease.Linear)
             .OnComplete(FireFromTurret);
     }
 
-    public void FireFromTurret() { }
+    public void FireFromTurret()
+    {
+        transform.up = ((TurretNode)m_track.lastNode).aimDirection;
+        StartCoroutine("FreeMouvement");
+    }
+
+    public IEnumerator FreeMouvement()
+    {
+        while (LevelManager.IsInsideArena(transform.position))
+        {
+            transform.position += transform.up * m_track.bulletSpeed * Time.deltaTime;
+            yield return null;
+        }
+
+        // TODO : DestroyBullets
+        Destroy(gameObject);
+
+        yield return null;
+    }
 }

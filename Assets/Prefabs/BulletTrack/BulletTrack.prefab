@@ -180,11 +180,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_lineRenderer: {fileID: 1890625128}
-  m_spline:
+  spline:
     m_EditModeType: 1
     m_Knots: []
     m_Length: -1
     m_MetaData: []
     m_Closed: 0
-  m_bulletContainer: {fileID: 0}
-  m_bulletPrefab: {fileID: 0}
+  m_bulletPrefab: {fileID: 2902073254673733944, guid: a0519969b01c1db4a856f4edb5d51775,
+    type: 3}
+  m_bulletSpeed: 5

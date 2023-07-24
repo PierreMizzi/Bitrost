@@ -83,6 +83,14 @@ public class BulletTrackManager : MonoBehaviour
 
     #endregion
 
+    #region Fire
+
+    [Header("Fire")]
+    [SerializeField]
+    private InputActionReference m_fireActionReference = null;
+
+    #endregion
+
 	#region Methods
 
 	#region MonoBehaviour
@@ -100,6 +108,9 @@ public class BulletTrackManager : MonoBehaviour
         if (m_retrieveNodeActionReference != null)
             m_retrieveNodeActionReference.action.performed += CallbackRetrieveNodeAction;
 
+        if (m_fireActionReference != null)
+            m_fireActionReference.action.performed += CallbackFireAction;
+
         m_remainingAvailableNodes = m_amountAvailableNodes;
     }
 
@@ -112,6 +123,9 @@ public class BulletTrackManager : MonoBehaviour
 
         if (m_retrieveNodeActionReference != null)
             m_retrieveNodeActionReference.action.performed -= CallbackRetrieveNodeAction;
+
+        if (m_fireActionReference != null)
+            m_fireActionReference.action.performed -= CallbackFireAction;
     }
 
 	#endregion
@@ -156,7 +170,16 @@ public class BulletTrackManager : MonoBehaviour
 
 	#endregion
 
-    #region Bullet Track
+    #region Fire
+
+    private void CallbackFireAction(InputAction.CallbackContext context)
+    {
+        foreach (BulletTrack track in m_bulletTracks)
+        {
+            Debug.Log("FIRE !");
+            track.Fire();
+        }
+    }
 
     #endregion
 
@@ -181,8 +204,7 @@ public class BulletTrackManager : MonoBehaviour
 
     private void CreateBulletTrack(CrystalShard crystal)
     {
-        if (!CanCreateExtractor(crystal)) { }
-        else
+        if (CanCreateExtractor(crystal))
         {
             BulletTrack bulletTrack = Instantiate(
                 m_bulletTrackPrefab,

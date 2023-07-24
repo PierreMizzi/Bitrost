@@ -14,7 +14,7 @@ public class BulletTrack : MonoBehaviour
     [SerializeField]
     private LineRenderer m_lineRenderer = null;
 
-    public Spline spline { get; private set; }
+    public Spline spline = null;
 
     private List<ABulletTrackNode> m_nodes = new List<ABulletTrackNode>();
 
@@ -129,7 +129,8 @@ public class BulletTrack : MonoBehaviour
             lastNode.transform.position,
             Quaternion.Euler(270, 0, 0)
         );
-        spline.Add(knot);
+        
+        spline.Add(knot, TangentMode.AutoSmooth);
     }
 
 	#endregion
@@ -147,13 +148,17 @@ public class BulletTrack : MonoBehaviour
 
     public bool CanFire()
     {
-        bool result = false;
+        bool result = true;
 
-        if (extractor.CanExtract())
-        {
+        bool canExtract = extractor.CanExtract();
+        result &= canExtract;
+        if (!canExtract)
             Debug.LogWarning("CRYSTAL IS DEPLEATED");
-            result &= extractor.CanExtract();
-        }
+
+        bool hasATurret = lastNode.GetType() == typeof(TurretNode);
+        result &= hasATurret;
+        if (!hasATurret)
+            Debug.LogWarning("No turret");
 
         return result;
     }

@@ -19,8 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InputActionReference m_mousePositionActionReference = null;
 
-    // [SerializeField]
-    // private InputActionReference m_fireActionReference = null;
+
 
 
 

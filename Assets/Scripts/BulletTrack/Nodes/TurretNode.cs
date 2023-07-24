@@ -6,6 +6,11 @@ public class TurretNode : ABulletTrackNode
 
     private Vector3 m_aimDirection;
 
+    public Vector3 aimDirection
+    {
+        get { return m_aimDirection; }
+    }
+
     [SerializeField]
     private Transform m_sprite = null;
 
