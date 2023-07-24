@@ -41,3 +41,24 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Terrain
+    uniqueID: 2267078837
+    locked: 0
+  - name: BulletTrack
+    uniqueID: 3996132283
+    locked: 0
+  - name: Enemies
+    uniqueID: 884171409
+    locked: 0
+  - name: Player
+    uniqueID: 3889497491
+    locked: 0
+  - name: Bullets
+    uniqueID: 2811228753
+    locked: 0
+  - name: HUD
+    uniqueID: 913941713
+    locked: 0
+  - name: UI
+    uniqueID: 2408489847
+    locked: 0
