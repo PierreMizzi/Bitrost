@@ -22,11 +22,7 @@ public class PlayerController : MonoBehaviour
     // [SerializeField]
     // private InputActionReference m_fireActionReference = null;
 
-    // [SerializeField]
-    // private InputActionReference m_dropNodeActionReference = null;
 
-    // [SerializeField]
-    // private InputActionReference m_retrieveNodeActionReference = null;
 
 	#endregion
 
@@ -115,11 +111,6 @@ public class PlayerController : MonoBehaviour
         // if (m_fireActionReference != null)
         //     m_fireActionReference.action.performed += CallbackLocomotionAction;
 
-        // if (m_dropNodeActionReference != null)
-        //     m_dropNodeActionReference.action.performed += CallbackLocomotionAction;
-
-        // if (m_retrieveNodeActionReference != null)
-        //     m_retrieveNodeActionReference.action.performed += CallbackLocomotionAction;
     }
 
     public void UnsubscribeInputs()

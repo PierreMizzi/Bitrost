@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - CrystalShard
   - 
   - 
   - 
@@ -45,6 +45,9 @@ TagManager:
     uniqueID: 2267078837
     locked: 0
   - name: BulletTrack
+    uniqueID: 2631737337
+    locked: 0
+  - name: BulletTrackNode
     uniqueID: 3996132283
     locked: 0
   - name: Enemies
