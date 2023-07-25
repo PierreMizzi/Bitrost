@@ -9,7 +9,12 @@ public class BulletChannel : ScriptableObject
 
     private void OnEnable()
     {
-        onInstantiateBullet = (BulletType type, Vector3 position, Vector3 orientation) => { };
+        onInstantiateBullet = (
+            IBulletLauncher launcher,
+            BulletType type,
+            Vector3 position,
+            Vector3 orientation
+        ) => { };
         onReleaseBullet = (Bullet bullet) => { };
     }
 }

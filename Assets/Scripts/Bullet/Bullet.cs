@@ -5,39 +5,63 @@ public class Bullet : MonoBehaviour
     #region Fields
 
     [SerializeField]
-    private BulletType m_type = BulletType.None;
+    protected BulletChannel m_bulletChannel = null;
+
+    [SerializeField]
+    protected BulletType m_type = BulletType.None;
     public BulletType type
     {
         get { return m_type; }
     }
 
-    private BulletManager m_manager = null;
+    protected BulletManager m_manager = null;
+
+    public IBulletLauncher launcher;
 
     [SerializeField]
-    private float m_speed;
+    protected float m_speed;
+
+    #region Collision
+
+    protected bool m_hasHit = false;
 
     [SerializeField]
-    private ContactFilter2D m_crystalShardFilter;
+    protected ContactFilter2D m_collisionFilter;
 
-    [SerializeField]
-    private BulletChannel m_bulletChannel = null;
+    #endregion
 
     #endregion
 
     #region Methods
 
-    private void Update()
+    protected virtual void OnEnable()
+    {
+        m_hasHit = false;
+    }
+
+    protected virtual void Update()
     {
         transform.position += transform.up * m_speed * Time.deltaTime;
 
         CheckInsideArena();
     }
 
-    private void CheckInsideArena()
+    protected void CheckInsideArena()
     {
         if (!LevelManager.IsInsideArena(transform.position))
-            m_bulletChannel.onReleaseBullet.Invoke(this);
+            Release();
     }
+
+    protected virtual void Release()
+    {
+        m_bulletChannel.onReleaseBullet.Invoke(this);
+    }
+
+    #region Collision
+
+    public void RaycastForCollision() { }
+
+    #endregion
 
     #endregion
 }

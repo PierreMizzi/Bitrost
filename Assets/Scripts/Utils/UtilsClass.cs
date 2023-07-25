@@ -300,6 +300,20 @@ namespace CodesmithWorkshop.Useful
 
 		#endregion
 
+        #region Collision
+
+        /// <summary>
+        /// Checks if layerValueB is inside layerValueA masks
+        /// </summary>
+        /// <param name="layerValueA">value of the layer mask</param>
+        /// <param name="layerValueB">value of the layer to check within layerMaskValue</param>
+        public static bool CheckLayer(int layerMaskValue, int layerToCheck)
+        {
+            return (layerMaskValue & 1 << layerToCheck) != 0;
+        }
+
+        #endregion
+
 		#region Bitwise Operation
 
         public static int SetFlag(int a, int b)

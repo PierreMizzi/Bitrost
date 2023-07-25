@@ -4,7 +4,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 
-public class Module : MonoBehaviour
+public class Module : MonoBehaviour, IBulletLauncher
 {
     #region Fields
 
@@ -120,7 +120,7 @@ public class Module : MonoBehaviour
     public void CompleteExtract()
     {
         m_isExtracting = false;
-        crystal.Extract();
+        crystal.DecrementEnergy();
         storedEnergyCount += 2;
 
         if (storedEnergyCount > storedEnergyCapacity)
@@ -176,15 +176,15 @@ public class Module : MonoBehaviour
             if (storedEnergyCount > 0)
                 storedEnergyCount--;
             else
-                crystal.Extract();
+                crystal.DecrementEnergy();
 
             refreshUI.Invoke();
 
-            m_bulletChannel.onInstantiateBullet.Invoke(BulletType.Player, m_bulletOrigin.position, m_aimDirection);
+            m_bulletChannel.onInstantiateBullet.Invoke(this, BulletType.Player, m_bulletOrigin.position, m_aimDirection);
         }
     }
 
-    private bool CanFire()
+    public bool CanFire()
     {
         bool result = true;
 

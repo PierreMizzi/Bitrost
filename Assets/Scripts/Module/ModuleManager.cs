@@ -132,7 +132,6 @@ public class ModuleManager : MonoBehaviour
             if (results[0].transform.TryGetComponent<CrystalShard>(out CrystalShard crystal))
                 CreateModule(crystal);
         }
-        else { }
     }
 
     private void CallbackRetrieveNodeAction(InputAction.CallbackContext context)

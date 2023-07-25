@@ -346,8 +346,7 @@ MonoBehaviour:
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
   m_poolConfigs:
   - name: Player Bullet
-    prefab: {fileID: 1921138390287335016, guid: a0519969b01c1db4a856f4edb5d51775,
-      type: 3}
+    prefab: {fileID: 581132774510046145, guid: a0519969b01c1db4a856f4edb5d51775, type: 3}
     defaultSize: 50
     maxSize: 200
   m_poolsContainer: {fileID: 1791389394}

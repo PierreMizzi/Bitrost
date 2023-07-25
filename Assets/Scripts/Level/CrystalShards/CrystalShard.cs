@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class CrystalShard : MonoBehaviour
@@ -17,7 +16,7 @@ public class CrystalShard : MonoBehaviour
         remainingEnergyCount = startingEnergyCount;
     }
 
-    public void Extract()
+    public void DecrementEnergy()
     {
         remainingEnergyCount--;
     }

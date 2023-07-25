@@ -3,6 +3,7 @@ using UnityEngine.Pool;
 using System.Collections.Generic;
 
 public delegate void InstantiateBulletDelegate(
+    IBulletLauncher launcher,
     BulletType type,
     Vector3 position,
     Vector3 orientation
@@ -105,12 +106,12 @@ public class BulletManager : MonoBehaviour
         Destroy(bullet.gameObject);
     }
 
-    public void CallbackInstantiateBullet(BulletType type, Vector3 position, Vector3 orientation)
+    public void CallbackInstantiateBullet(IBulletLauncher launcher, BulletType type, Vector3 position, Vector3 orientation)
     {
-        Debug.Log("CallbackInstantiateBullet");
         if (m_bulletPools.ContainsKey(type))
         {
             Bullet bullet = m_bulletPools[type].Get();
+            bullet.launcher = launcher;
             bullet.transform.position = position;
             bullet.transform.up = orientation;
         }
@@ -118,7 +119,6 @@ public class BulletManager : MonoBehaviour
 
     public void CallbackReleaseBullet(Bullet bullet)
     {
-        Debug.Log("CallbackReleaseBullet");
         if (m_bulletPools.ContainsKey(bullet.type))
             m_bulletPools[bullet.type].Release(bullet);
     }
