@@ -170,7 +170,11 @@ public class Module : MonoBehaviour
     {
         if (CanFire())
         {
-            crystal.Extract();
+            if (storedEnergyCount > 0)
+                storedEnergyCount--;
+            else
+                crystal.Extract();
+
             refreshUI.Invoke();
 
             Bullet bullet = Instantiate(
@@ -181,7 +185,6 @@ public class Module : MonoBehaviour
             );
 
             bullet.transform.up = m_aimDirection;
-
             bullet.Initialize(m_settings.bulletSpeed);
         }
     }
@@ -195,13 +198,11 @@ public class Module : MonoBehaviour
         if (m_isExtracting)
             Debug.LogWarning("IS EXTRACTING");
 
-        // Crystal has energy ?
-        bool crystalHasEnergy = crystal.remainingEnergyCount > 0;
-        result &= crystalHasEnergy;
-        if (!crystalHasEnergy)
-            Debug.LogWarning("CRYSTAL IS DEPLEATED");
-
-        Debug.Log($"CAN FIRE ? { result }");
+        // Has energy in crystal or stored ?
+        bool hasEnergy = crystal.remainingEnergyCount > 0 || storedEnergyCount > 0;
+        result &= hasEnergy;
+        if (!hasEnergy)
+            Debug.LogWarning("NO ENERGY");
 
         return result;
     }

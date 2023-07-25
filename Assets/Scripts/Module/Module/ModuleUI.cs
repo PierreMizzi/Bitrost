@@ -47,12 +47,6 @@ public class ModuleUI : MonoBehaviour
 
     public void Refresh()
     {
-        Debug.Log($"crystal remaining : {m_module.crystal.remainingEnergyCount}");
-        Debug.Log($"crystal total : {m_module.crystal.totalEnergyCount}");
-
-        Debug.Log($"module stored : {m_module.storedEnergyCount}");
-        Debug.Log($"crystal capcacity : {m_module.storedEnergyCapacity}");
-
         m_crystalText.text = string.Format(
             "{0} / {1}",
             m_module.crystal.remainingEnergyCount,
