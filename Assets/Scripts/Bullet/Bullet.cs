@@ -2,12 +2,29 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    #region Fields
+
+    [SerializeField]
+    private BulletType m_type = BulletType.None;
+    public BulletType type
+    {
+        get { return m_type; }
+    }
+
+    private BulletManager m_manager = null;
+
+    [SerializeField]
     private float m_speed;
 
-    public void Initialize(float speed)
-    {
-        m_speed = speed;
-    }
+    [SerializeField]
+    private ContactFilter2D m_crystalShardFilter;
+
+    [SerializeField]
+    private BulletChannel m_bulletChannel = null;
+
+    #endregion
+
+    #region Methods
 
     private void Update()
     {
@@ -19,6 +36,8 @@ public class Bullet : MonoBehaviour
     private void CheckInsideArena()
     {
         if (!LevelManager.IsInsideArena(transform.position))
-            Destroy(gameObject);
+            m_bulletChannel.onReleaseBullet.Invoke(this);
     }
+
+    #endregion
 }

@@ -596,6 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_settings: {fileID: 11400000, guid: f02b5e9ff94dbe2439122dca132ad81c, type: 2}
+  m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
   m_turret: {fileID: 6585395777087232122}
   m_bulletOrigin: {fileID: 2603461646432851164}
   m_ui: {fileID: 5912531058324299835}

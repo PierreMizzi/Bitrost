@@ -13,17 +13,20 @@ public class Module : MonoBehaviour
     [SerializeField]
     private ModuleSettings m_settings;
 
+    [SerializeField]
+    private BulletChannel m_bulletChannel;
+
     private ModuleManager m_manager;
 
     [SerializeField]
-    private Transform m_turret = null;
+    private Transform m_turret;
 
     [SerializeField]
-    private Transform m_bulletOrigin = null;
+    private Transform m_bulletOrigin;
 
     private Vector3 m_aimDirection = new Vector3();
 
-    private PlayerController m_player = null;
+    private PlayerController m_player;
 
     #region UI
 
@@ -177,15 +180,7 @@ public class Module : MonoBehaviour
 
             refreshUI.Invoke();
 
-            Bullet bullet = Instantiate(
-                m_settings.bulletPrefab,
-                m_bulletOrigin.position,
-                Quaternion.identity,
-                m_manager.bulletContainer
-            );
-
-            bullet.transform.up = m_aimDirection;
-            bullet.Initialize(m_settings.bulletSpeed);
+            m_bulletChannel.onInstantiateBullet.Invoke(BulletType.Player, m_bulletOrigin.position, m_aimDirection);
         }
     }
 
