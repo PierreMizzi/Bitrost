@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
-                    "type": "Button",
-                    "id": "926fe343-483e-4068-8dd3-e67ab921d913",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "DropBTN",
                     "type": "Button",
                     "id": "56314524-0e8a-44d4-83c5-d409c390b237",
@@ -49,6 +40,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "926fe343-483e-4068-8dd3-e67ab921d913",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Extract",
+                    "type": "Button",
+                    "id": "ca6fb5b2-5708-46cf-bcbe-b4be30b7832f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -109,19 +118,8 @@
                 },
                 {
                     "name": "",
-                    "id": "6459e678-1585-4c19-bcd5-d56f901baa1d",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "6c09a38e-d4da-4dfd-bfa7-87c324fbcf32",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "Tap",
                     "processors": "",
                     "groups": "",
@@ -132,7 +130,7 @@
                 {
                     "name": "",
                     "id": "f7e22526-80f7-402a-9d78-5c20c903b2ff",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/e",
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",
@@ -148,6 +146,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21c5d22e-74b2-4a7b-9588-93571ac9b214",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Extract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6459e678-1585-4c19-bcd5-d56f901baa1d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

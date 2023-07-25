@@ -4,21 +4,21 @@ using UnityEngine;
 public class CrystalShard : MonoBehaviour
 {
     private CrystalShardsManager m_manager;
-    public float quantity { get; private set; }
+    public int totalEnergyCount { get; private set; }
 
-    public float remainingQuantity;
+    public int remainingEnergyCount { get; private set; }
 
-    public bool isExtracted = false;
+    public bool isAvailable = true;
 
-    public void Initialize(CrystalShardsManager manager, int quantity)
+    public void Initialize(CrystalShardsManager manager, int startingEnergyCount)
     {
         m_manager = manager;
-        this.quantity = quantity;
-        remainingQuantity = quantity;
+        totalEnergyCount = startingEnergyCount;
+        remainingEnergyCount = startingEnergyCount;
     }
 
     public void Extract()
     {
-        remainingQuantity--;
+        remainingEnergyCount--;
     }
 }

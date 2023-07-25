@@ -194,10 +194,10 @@ public class BulletTrackManager : MonoBehaviour
             Debug.LogWarning("NO AVAILABLE NODE");
             result &= m_remainingAvailableNodes < 1;
         }
-        else if (crystal.isExtracted)
+        else if (crystal.isAvailable)
         {
             Debug.LogWarning("CRYSTAL IS ALREADY EXTRACTED>");
-            result &= crystal.isExtracted;
+            result &= crystal.isAvailable;
         }
         return result;
     }

@@ -22,15 +22,15 @@ public class ExtractorNode : ABulletTrackNode
 
     public bool CanExtract()
     {
-        return m_crystal.remainingQuantity > 0;
+        return m_crystal.remainingEnergyCount > 0;
     }
 
     private void RefreshUI()
     {
         m_quantityText.text = string.Format(
             $"{0} / {1}",
-            m_crystal.remainingQuantity,
-            m_crystal.quantity
+            m_crystal.remainingEnergyCount,
+            m_crystal.totalEnergyCount
         );
     }
 }
