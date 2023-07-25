@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,10 +18,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InputActionReference m_mousePositionActionReference = null;
 
-
-
-
-
 	#endregion
 
 	#region Locomotion
@@ -37,8 +32,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_orientation;
 
 	#endregion
-
-
 
 	#endregion
 
@@ -66,8 +59,6 @@ public class PlayerController : MonoBehaviour
         Rotate();
     }
 
-    private void OnDestroy() { }
-
 	#endregion
 
 	#region Locomotion
@@ -91,47 +82,12 @@ public class PlayerController : MonoBehaviour
 
 	#endregion
 
-	#region Inputs
-
     private void ReadInputs()
     {
         m_locomotionActionValue = m_locomotionActionReference.action.ReadValue<Vector2>();
         m_mousePositionActionValue = m_mousePositionActionReference.action.ReadValue<Vector2>();
     }
 
-    public void SubscribeInputs()
-    {
-        if (m_locomotionActionReference != null)
-            m_locomotionActionReference.action.performed += CallbackLocomotionAction;
-
-        if (m_mousePositionActionReference != null)
-            m_mousePositionActionReference.action.performed += CallbackLocomotionAction;
-
-        // if (m_fireActionReference != null)
-        //     m_fireActionReference.action.performed += CallbackLocomotionAction;
-
-    }
-
-    public void UnsubscribeInputs()
-    {
-        if (m_locomotionActionReference != null)
-            m_locomotionActionReference.action.performed -= CallbackLocomotionAction;
-
-        if (m_mousePositionActionReference != null)
-            m_mousePositionActionReference.action.performed -= CallbackMousePositionAction;
-    }
-
-    private void CallbackLocomotionAction(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void CallbackMousePositionAction(InputAction.CallbackContext context)
-    {
-        throw new NotImplementedException();
-    }
-
-	#endregion
 
 	#endregion
 }
