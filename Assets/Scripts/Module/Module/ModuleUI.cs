@@ -35,16 +35,23 @@ public class ModuleUI : MonoBehaviour
 
     public void Subscribe()
     {
-        m_module.refreshUI += Refresh;
-        m_module.updateExtractionUI += UpdateExtraction;
+        if (m_module != null)
+        {
+            m_module.refreshUI += Refresh;
+            m_module.updateExtractionUI += UpdateExtraction;
+        }
     }
 
     public void Unsubscribe()
     {
-        m_module.refreshUI -= Refresh;
-        m_module.updateExtractionUI -= UpdateExtraction;
+        if (m_module != null)
+        {
+            m_module.refreshUI -= Refresh;
+            m_module.updateExtractionUI -= UpdateExtraction;
+        }
     }
 
+    // TODO : Refresh when the crystal is being extracted by Harvester
     public void Refresh()
     {
         m_crystalText.text = string.Format(

@@ -12,11 +12,12 @@ public class Harvester : Enemy
         get { return m_levelChannel; }
     }
 
-    public CrystalShard targetCrystal = null;
+    public CrystalShard targetCrystal { get; private set; }
 
     [SerializeField]
     private float m_rangeAroundPlayer = 10f;
 
+    [HideInInspector]
     public float rangeAroundPlayerSqr;
 
     [SerializeField]
@@ -31,6 +32,20 @@ public class Harvester : Enemy
     public float offsetFromShard
     {
         get { return m_offsetFromShard; }
+    }
+
+    [SerializeField]
+    private float m_attackSpeed = 3f;
+    public float attackSpeed
+    {
+        get { return m_attackSpeed; }
+    }
+
+    [SerializeField]
+    private float m_attackDelay = 1f;
+    public float attackDelay
+    {
+        get { return m_attackDelay; }
     }
 
     protected override void Awake()

@@ -17,7 +17,7 @@ public class EnemyIdleState : AState
             delay,
             () =>
             {
-                m_stateMachine.ChangeState(type, (int)EnemyStateType.Move);
+                ChangeState((int)EnemyStateType.Move);
             }
         );
     }

@@ -65,7 +65,7 @@ MonoBehaviour:
   targetCrystal: {fileID: 0}
   m_rangeAroundPlayer: 10
   rangeAroundPlayerSqr: 0
-  m_speed: 20
+  m_speed: 10
   m_offsetFromShard: 0.8
 --- !u!61 &2018638641934519392
 BoxCollider2D:

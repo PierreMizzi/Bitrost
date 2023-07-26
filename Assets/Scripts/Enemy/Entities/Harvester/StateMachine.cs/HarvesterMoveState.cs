@@ -1,6 +1,4 @@
-using CodesmithWorkshop.Useful;
 using DG.Tweening;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HarvesterMoveState : EnemyMoveState
@@ -38,6 +36,6 @@ public class HarvesterMoveState : EnemyMoveState
 
     public void OnCompleteMovement()
     {
-        m_harvester.ChangeState((EnemyStateType)type, EnemyStateType.Attack);
+        ChangeState((int)EnemyStateType.Attack);
     }
 }
