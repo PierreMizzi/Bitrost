@@ -28,6 +28,9 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     private PlayerController m_player;
 
+    [SerializeField]
+    private Bullet m_bullet = null;
+
     #region UI
 
     [SerializeField]
@@ -163,6 +166,10 @@ public class Module : MonoBehaviour, IBulletLauncher
     public void Retrieve()
     {
         crystal.isAvailable = true;
+
+        // if(crystal.remainingEnergyCount == 0)
+        //     // crystal.Destroy();
+        //     // Destroy(crystal.gameObject);
     }
 
     #endregion
@@ -180,7 +187,12 @@ public class Module : MonoBehaviour, IBulletLauncher
 
             refreshUI.Invoke();
 
-            m_bulletChannel.onInstantiateBullet.Invoke(this, BulletType.Player, m_bulletOrigin.position, m_aimDirection);
+            m_bulletChannel.onInstantiateBullet.Invoke(
+                this,
+                m_bullet,
+                m_bulletOrigin.position,
+                m_aimDirection
+            );
         }
     }
 

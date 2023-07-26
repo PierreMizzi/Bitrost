@@ -5,6 +5,5 @@ using UnityEngine;
 public class BulletPoolConfig : APoolConfig
 {
 
-    public Bullet prefab;
 
 }

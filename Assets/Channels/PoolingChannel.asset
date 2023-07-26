@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86fbe1ecfdb69bd47814de5b7535ac7c, type: 3}
-  m_Name: BulletChannel
+  m_Script: {fileID: 11500000, guid: ed2098b2dd760394997d96c4564f1753, type: 3}
+  m_Name: PoolingChannel
   m_EditorClassIdentifier: 
-  bulletPoolConfigs:
-  - name: PlayerBullet
-    prefab: {fileID: 2902073254673733947, guid: a0519969b01c1db4a856f4edb5d51775,
-      type: 3}
-    defaultSize: 20
-    maxSize: 100

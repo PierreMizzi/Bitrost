@@ -25,7 +25,7 @@ public partial class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeSpawning();
+        //InitializeSpawning();
     }
 
     private void InitializeSpawning()
@@ -41,13 +41,14 @@ public partial class EnemyManager : MonoBehaviour
 
     private IEnumerator SpawningCoroutine(EnemySpawningConfig config)
     {
-        while (true)
-        {
-            Enemy enemy = GetEnemyFromType(config.type);
+        // while (true)
+        // {
+        //     Enemy enemy = GetEnemyFromType(config.type);
 
-            float delaySpawn = Random.Range(config.minSpawnDelay, config.maxSpawnDelay);
-            yield return new WaitForSeconds(delaySpawn);
-        }
+        //     float delaySpawn = Random.Range(config.minSpawnDelay, config.maxSpawnDelay);
+        //     yield return new WaitForSeconds(delaySpawn);
+        // }
+        yield return null;
     }
 
 	#endregion
