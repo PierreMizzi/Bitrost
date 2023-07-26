@@ -2,27 +2,40 @@ using UnityEngine;
 using System.Collections.Generic;
 using CodesmithWorkshop.Useful;
 
+public delegate void SetCrystalShardDelegate(CrystalShard crystal);
+public delegate CrystalShard GetCrystalShardDelegate();
+
 public class CrystalShardsManager : MonoBehaviour
 {
 	#region Fields
-
 
     [SerializeField]
     private PoolingChannel m_poolingChannel = null;
 
     [SerializeField]
-    private PoolConfig m_crystalPoolConfig = null;
+    private LevelChannel m_levelChannel = null;
 
     [SerializeField]
-    private CrystalShard m_crystalPrefab = null;
+    private PoolConfig m_crystalPoolConfig = null;
 
     [SerializeField]
     private CrystalShardsSettings m_settings = null;
 
-    private List<CrystalShard> m_crystalShards = new List<CrystalShard>();
+    private List<CrystalShard> m_crystals = new List<CrystalShard>();
+    public List<CrystalShard> crystals
+    {
+        get { return m_crystals; }
+    }
 
     [SerializeField]
     private Transform m_container;
+
+    private List<CrystalShard> m_unavailableCrystals = new List<CrystalShard>();
+
+    public List<CrystalShard> unavailableCrystals
+    {
+        get { return m_unavailableCrystals; }
+    }
 
 	#endregion
 
@@ -30,11 +43,14 @@ public class CrystalShardsManager : MonoBehaviour
 
     private void Start()
     {
+        m_levelChannel.crystalManager = this;
         ClearCrystalShards();
 
         m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
         SpawnFill();
     }
+
+    private void OnDestroy() { }
 
     private void SpawnFill()
     {
@@ -66,26 +82,22 @@ public class CrystalShardsManager : MonoBehaviour
         crystal.transform.rotation = rotation;
 
         // set random quantity
-        int quantity = UnityEngine.Random.Range(
-            m_settings.minQuantity,
-            m_settings.maxQuantity
-        );
+        int quantity = UnityEngine.Random.Range(m_settings.minQuantity, m_settings.maxQuantity);
 
-        crystal.transform.localScale =
-            Vector3.one * quantity * m_settings.quantityToScaleRatio;
-            
+        crystal.transform.localScale = Vector3.one * quantity * m_settings.quantityToScaleRatio;
+
         crystal.Initialize(this, quantity);
-        m_crystalShards.Add(crystal);
+        m_crystals.Add(crystal);
     }
 
     private bool IsValidPosition(Vector3 position)
     {
-        if (m_crystalShards.Count == 0)
+        if (m_crystals.Count == 0)
             return true;
 
         float distance = 0;
 
-        foreach (CrystalShard crystal in m_crystalShards)
+        foreach (CrystalShard crystal in m_crystals)
         {
             distance = (position - crystal.transform.position).magnitude;
 
@@ -96,10 +108,28 @@ public class CrystalShardsManager : MonoBehaviour
         return true;
     }
 
+    public void AddUnavailableCrystal(CrystalShard crystal)
+    {
+        if (!m_unavailableCrystals.Contains(crystal))
+            m_unavailableCrystals.Add(crystal);
+    }
+
+    public void RemoveUnavailableCrystal(CrystalShard crystal)
+    {
+        if (m_unavailableCrystals.Contains(crystal))
+            m_unavailableCrystals.Remove(crystal);
+    }
+
+    public CrystalShard GetRandomCrystal(List<CrystalShard> crystals)
+    {
+        int index = Random.Range(0, crystals.Count - 1);
+        return crystals[index];
+    }
+
     public void ClearCrystalShards()
     {
         UtilsClass.EmptyTransform(m_container, true);
-        m_crystalShards.Clear();
+        m_crystals.Clear();
     }
 
     [ContextMenu("Debug Fill Spawn")]

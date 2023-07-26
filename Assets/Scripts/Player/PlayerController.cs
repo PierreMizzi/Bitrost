@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-#region Fields
+    #region Fields
 
     [SerializeField]
     private PlayerControllerSettings m_settings = null;
@@ -87,7 +87,6 @@ public class PlayerController : MonoBehaviour
         m_locomotionActionValue = m_locomotionActionReference.action.ReadValue<Vector2>();
         m_mousePositionActionValue = m_mousePositionActionReference.action.ReadValue<Vector2>();
     }
-
 
 	#endregion
 }

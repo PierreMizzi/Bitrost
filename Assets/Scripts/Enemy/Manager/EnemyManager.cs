@@ -29,9 +29,22 @@ public partial class EnemyManager : MonoBehaviour
 
     private List<IEnumerator> m_enemySpawnCoroutines = new List<IEnumerator>();
 
+    #region Spawn Bounds
+
+    [Header("Spawn Bounds")]
+    [SerializeField]
+    private float m_offsetSpawnBounds = 1f;
+
+    private Bounds m_enemySpawnBounds;
+
+    #endregion
+
 	#endregion
 
 	#region Methods
+
+    #region MonoBehaviour
+
     private void Awake()
     {
         m_camera = Camera.main;
@@ -47,7 +60,12 @@ public partial class EnemyManager : MonoBehaviour
     private void Start()
     {
         InitializeEnemyPools();
-        InitializeSpawning();
+        // InitializeSpawning();
+    }
+
+    private void Update()
+    {
+        ManageQuickSpawn();
     }
 
     private void LateUpdate()
@@ -59,6 +77,10 @@ public partial class EnemyManager : MonoBehaviour
     {
         Gizmos.DrawWireCube(m_enemySpawnBounds.center, m_enemySpawnBounds.size);
     }
+
+    #endregion
+
+    #region Spawning
 
     private void InitializeSpawning()
     {
@@ -75,15 +97,19 @@ public partial class EnemyManager : MonoBehaviour
     {
         while (true)
         {
-            Enemy enemy = m_poolingChannel.onGetFromPool
-                .Invoke(config.prefab.gameObject)
-                .GetComponent<Enemy>();
-
-            enemy.transform.position = GetCameraEdgeRandomPosition();
+            SpawnEnemy(config.prefab.gameObject);
 
             float delaySpawn = Random.Range(config.minSpawnDelay, config.maxSpawnDelay);
+
             yield return new WaitForSeconds(delaySpawn);
         }
+    }
+
+    private void SpawnEnemy(GameObject prefab)
+    {
+        Enemy enemy = m_poolingChannel.onGetFromPool.Invoke(prefab).GetComponent<Enemy>();
+
+        enemy.transform.position = GetCameraEdgeRandomPosition();
     }
 
     private void InitializeEnemyPools()
@@ -94,10 +120,22 @@ public partial class EnemyManager : MonoBehaviour
         }
     }
 
-    private Bounds m_enemySpawnBounds;
+    #endregion
 
-    [SerializeField]
-    private float m_offsetSpawnBounds = 1f;
+    #region Quick Spawning
+
+    private void ManageQuickSpawn()
+    {
+        foreach (EnemySpawningConfig config in m_enemySpawnConfigs)
+        {
+            if (Input.GetKeyDown(config.quickSpawnKey))
+                SpawnEnemy(config.prefab.gameObject);
+        }
+    }
+
+    #endregion
+
+    #region Spawn Bounds
 
     private void UpdateEnemySpawnBounds()
     {
@@ -149,6 +187,8 @@ public partial class EnemyManager : MonoBehaviour
         randomPosition += m_enemySpawnBounds.center;
         return randomPosition;
     }
+
+    #endregion
 
 	#endregion
 }

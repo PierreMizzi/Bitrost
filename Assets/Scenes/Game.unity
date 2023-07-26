@@ -206,14 +206,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_poolingChannel: {fileID: 11400000, guid: a300e10b08d5742479ad11a9df1206d0, type: 2}
+  m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_crystalPoolConfig:
     name: CrystalShard
     prefab: {fileID: 6620406873546702137, guid: 05e0ca5654df5dd42aefa0e0e3f13862,
       type: 3}
     defaultSize: 20
     maxSize: 50
-  m_crystalPrefab: {fileID: 6620406873546702138, guid: 05e0ca5654df5dd42aefa0e0e3f13862,
-    type: 3}
   m_settings: {fileID: 11400000, guid: b1f8d4aa558fd984c9f2c32a95428e1a, type: 2}
   m_container: {fileID: 783057577}
 --- !u!1 &76268816
@@ -580,7 +579,8 @@ MonoBehaviour:
   - prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
       type: 3}
     minSpawnDelay: 1
-    maxSpawnDelay: 2
+    maxSpawnDelay: 10
+    quickSpawnKey: 49
   m_offsetSpawnBounds: 2
 --- !u!1 &1591346875
 GameObject:
@@ -997,75 +997,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_poolingChannel: {fileID: 11400000, guid: a300e10b08d5742479ad11a9df1206d0, type: 2}
   m_poolsContainer: {fileID: 881131116}
---- !u!1001 &2018638641003456115
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519395, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018638641934519420, guid: 0327d195a2dad7a408feb8264d47c90b,
-        type: 3}
-      propertyPath: m_Name
-      value: Harvester
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0327d195a2dad7a408feb8264d47c90b, type: 3}
 --- !u!1001 &4479647473538394714
 PrefabInstance:
   m_ObjectHideFlags: 0

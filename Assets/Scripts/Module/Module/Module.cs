@@ -63,7 +63,7 @@ public class Module : MonoBehaviour, IBulletLauncher
         m_manager = manager;
 
         this.crystal = crystal;
-        this.crystal.isAvailable = false;
+        this.crystal.SetUnavailable();
 
         storedEnergyCount = 0;
         storedEnergyCapacity = m_settings.storedEnergyCapacity;
@@ -165,7 +165,7 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     public void Retrieve()
     {
-        crystal.isAvailable = true;
+        crystal.SetAvailable();
 
         // if(crystal.remainingEnergyCount == 0)
         //     // crystal.Destroy();

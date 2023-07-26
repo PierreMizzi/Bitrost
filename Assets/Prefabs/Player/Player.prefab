@@ -94,6 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4479647473967820815}
   - component: {fileID: 4479647473967820812}
+  - component: {fileID: 641082568361862189}
+  - component: {fileID: 8305061508649315334}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -136,3 +138,28 @@ MonoBehaviour:
     type: 3}
   m_locomotionActionValue: {x: 0, y: 0, z: 0}
   m_mousePositionActionValue: {x: 0, y: 0}
+--- !u!114 &641082568361862189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4479647473967820814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e665eb798fab884b95b7df425a9913e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8305061508649315334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4479647473967820814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d753ac203687fcd4fb31a97ed61ec818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
