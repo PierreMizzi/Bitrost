@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        arenaRadius = m_arenaDiameter /2f;
+        arenaRadius = m_arenaDiameter / 2f;
         arenaRadiusSqr = math.pow(arenaRadius, 2f);
     }
 
@@ -30,10 +30,12 @@ public class LevelManager : MonoBehaviour
 
     public static Vector3 RandomPosition()
     {
-        float randomX = UnityEngine.Random.Range(-1f, 1f);
-        float randomY = UnityEngine.Random.Range(-1f, 1f);
+        float randomAngle = UnityEngine.Random.Range(0f, Mathf.PI * 2f);
+        float randomLength = UnityEngine.Random.Range(0f, 1f);
 
-        return new Vector3(randomX, randomY, 0) * arenaRadius;
+        return new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0)
+            * arenaRadius
+            * randomLength;
     }
 
 	#endregion

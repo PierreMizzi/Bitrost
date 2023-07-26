@@ -67,7 +67,7 @@ public class PoolingManager : MonoBehaviour
             return null;
     }
 
-    private void CallbackCreateInPool(APoolConfig config)
+    private void CallbackCreateInPool(PoolConfig config)
     {
         if (!m_objectPools.ContainsKey(config.prefab.name))
         {

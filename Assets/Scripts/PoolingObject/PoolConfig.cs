@@ -1,6 +1,8 @@
 using UnityEngine;
+using System;
 
-public abstract class APoolConfig
+[Serializable]
+public class PoolConfig
 {
     public string name;
 

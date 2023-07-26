@@ -3,7 +3,7 @@ using System;
 [Serializable]
 public struct EnemySpawningConfig
 {
-    public EnemyType type;
+    public Enemy prefab;
 
     public int minSpawnDelay;
     public int maxSpawnDelay;

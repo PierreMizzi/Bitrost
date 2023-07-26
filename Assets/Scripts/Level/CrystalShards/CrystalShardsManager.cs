@@ -6,6 +6,13 @@ public class CrystalShardsManager : MonoBehaviour
 {
 	#region Fields
 
+
+    [SerializeField]
+    private PoolingChannel m_poolingChannel = null;
+
+    [SerializeField]
+    private PoolConfig m_crystalPoolConfig = null;
+
     [SerializeField]
     private CrystalShard m_crystalPrefab = null;
 
@@ -23,7 +30,9 @@ public class CrystalShardsManager : MonoBehaviour
 
     private void Start()
     {
-		ClearCrystalShards();
+        ClearCrystalShards();
+
+        m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
         SpawnFill();
     }
 
@@ -42,21 +51,30 @@ public class CrystalShardsManager : MonoBehaviour
 
     private void SpawnCrystalShard(Vector3 position = new Vector3())
     {
+        // Get From Pool
+        CrystalShard crystal = m_poolingChannel.onGetFromPool
+            .Invoke(m_crystalPoolConfig.prefab)
+            .GetComponent<CrystalShard>();
+
+        // Set Random Position
         if (position == Vector3.zero)
             position = LevelManager.RandomPosition();
+        crystal.transform.position = position;
 
-        Quaternion randomRotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360));
+        // Set Random Rotation
+        Quaternion rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360));
+        crystal.transform.rotation = rotation;
 
-        CrystalShard crystal = Instantiate(m_crystalPrefab, position, randomRotation, m_container);
-
-        int randomQuantity = UnityEngine.Random.Range(
+        // set random quantity
+        int quantity = UnityEngine.Random.Range(
             m_settings.minQuantity,
             m_settings.maxQuantity
         );
 
         crystal.transform.localScale =
-            Vector3.one * randomQuantity * m_settings.quantityToScaleRatio;
-        crystal.Initialize(this, randomQuantity);
+            Vector3.one * quantity * m_settings.quantityToScaleRatio;
+            
+        crystal.Initialize(this, quantity);
         m_crystalShards.Add(crystal);
     }
 
@@ -87,7 +105,7 @@ public class CrystalShardsManager : MonoBehaviour
     [ContextMenu("Debug Fill Spawn")]
     public void DebugFillSpawn()
     {
-		ClearCrystalShards();
+        ClearCrystalShards();
         SpawnFill();
     }
 

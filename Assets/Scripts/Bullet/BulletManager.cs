@@ -21,8 +21,6 @@ public class BulletManager : MonoBehaviour
     [SerializeField]
     private PoolingChannel m_poolingChannel = null;
 
-
-
     private IEnumerator Start()
     {
         if (m_bulletChannel != null)

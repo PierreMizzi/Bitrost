@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public delegate void CreatePool(APoolConfig config);
+public delegate void CreatePool(PoolConfig config);
 public delegate GameObject GetFromPool(GameObject gameObject);
 public delegate void ReleaseFromPool(GameObject gameObject);
 
@@ -15,7 +15,7 @@ public class PoolingChannel : ScriptableObject
 
     private void OnEnable()
     {
-        onCreatePool = (APoolConfig config) => { };
+        onCreatePool = (PoolConfig config) => { };
         onGetFromPool = (GameObject gameObject) =>
         {
             return null;
