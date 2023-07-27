@@ -9,9 +9,10 @@ public class ModuleBullet : Bullet
 
     private CrystalShard m_originCrystal;
 
-    protected virtual void Start()
+    public override void AssignLauncher(IBulletLauncher launcher)
     {
-        Module module = launcher.gameObject.GetComponent<Module>();
+        base.AssignLauncher(launcher);
+        Module module = m_launcher.gameObject.GetComponent<Module>();
         m_originCrystal = module.crystal;
         m_speed = m_settings.bulletSpeed;
     }
@@ -27,6 +28,7 @@ public class ModuleBullet : Bullet
             {
                 if (crystal == m_originCrystal)
                     return;
+
                 HitCrystal(crystal);
             }
             else if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))

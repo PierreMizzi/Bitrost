@@ -60,7 +60,7 @@ public class BulletManager : MonoBehaviour
             .Invoke(prefab.gameObject)
             .GetComponent<Bullet>();
 
-        bullet.launcher = launcher;
+        bullet.AssignLauncher(launcher);
         bullet.transform.position = position;
         bullet.transform.up = orientation;
     }

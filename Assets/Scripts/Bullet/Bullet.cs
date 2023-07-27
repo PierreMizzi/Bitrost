@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
 
     protected BulletManager m_manager = null;
 
-    public IBulletLauncher launcher;
+    protected IBulletLauncher m_launcher;
 
     [SerializeField]
     protected float m_speed;
@@ -56,6 +56,11 @@ public class Bullet : MonoBehaviour
     protected virtual void Release()
     {
         m_bulletChannel.onReleaseBullet.Invoke(this);
+    }
+
+    public virtual void AssignLauncher(IBulletLauncher launcher)
+    {
+        m_launcher = launcher;
     }
 
     #region Collision

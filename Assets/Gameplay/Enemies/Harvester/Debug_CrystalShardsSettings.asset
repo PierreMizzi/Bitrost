@@ -17,6 +17,6 @@ MonoBehaviour:
   maxFillSpawnCount: 5
   minDelayContinuousSpawn: 10
   maxDelayContinuousSpawn: 30
-  minQuantity: 25
-  maxQuantity: 100
+  minQuantity: 50
+  maxQuantity: 150
   quantityToScaleRatio: 0.06
