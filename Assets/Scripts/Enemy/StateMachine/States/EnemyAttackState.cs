@@ -6,7 +6,4 @@ public class EnemyAttackState : AState
         type = (int)EnemyStateType.Attack;
     }
 
-	
-
-
 }

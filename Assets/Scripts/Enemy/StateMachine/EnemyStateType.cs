@@ -1,8 +1,8 @@
 public enum EnemyStateType
 {
-	None,
-	Inactive,
-	Idle,
-	Move,
-	Attack
+	None = 0,
+	Inactive = 1,
+	Idle = 2,
+	Move = 3,
+	Attack = 4
 }

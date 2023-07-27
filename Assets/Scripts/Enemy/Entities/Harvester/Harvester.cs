@@ -5,13 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Harvester : Enemy
 {
-    [SerializeField]
-    private LevelChannel m_levelChannel = null;
-
-    public LevelChannel levelChannel
-    {
-        get { return m_levelChannel; }
-    }
 
     public HarvesterSettings settings
     {
@@ -98,11 +91,7 @@ public class Harvester : Enemy
         return crystals;
     }
 
-    public override void Initialize(EnemyManager manager)
-    {
-        base.Initialize(manager);
-        ChangeState((EnemyStateType)currentState.type, EnemyStateType.Idle);
-    }
+
 
     protected override void CallbackNoHealth()
     {

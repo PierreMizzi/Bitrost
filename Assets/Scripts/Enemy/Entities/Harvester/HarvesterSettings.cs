@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HarvesterSettings", menuName = "Bitrost/HarvesterSettings", order = 0)]
+[CreateAssetMenu(fileName = "HarvesterSettings", menuName = "Bitrost/Enemies/HarvesterSettings", order = 0)]
 public class HarvesterSettings : EnemySettings
 {
 

@@ -18,3 +18,8 @@ MonoBehaviour:
       type: 3}
     defaultSize: 20
     maxSize: 100
+  - name: FighterBullet
+    prefab: {fileID: 3741169766357441707, guid: f85d070aacc883c42b97b82a01838423,
+      type: 3}
+    defaultSize: 20
+    maxSize: 100

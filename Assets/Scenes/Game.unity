@@ -151,8 +151,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1186876196}
   - {fileID: 1632678450}
+  - {fileID: 1186876196}
   - {fileID: 69706813}
   - {fileID: 1682663911}
   - {fileID: 76268817}
@@ -509,7 +509,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 38425163}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1186876197
 MonoBehaviour:
@@ -575,12 +575,22 @@ MonoBehaviour:
       type: 3}
     defaultSize: 20
     maxSize: 50
+  - name: Fighter
+    prefab: {fileID: 4318404297879891383, guid: 6c79b948a6cd95e42bdb45a5f0022a27,
+      type: 3}
+    defaultSize: 20
+    maxSize: 50
   m_enemySpawnConfigs:
   - prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
       type: 3}
     minSpawnDelay: 1
     maxSpawnDelay: 10
     quickSpawnKey: 49
+  - prefab: {fileID: 4318404297879891376, guid: 6c79b948a6cd95e42bdb45a5f0022a27,
+      type: 3}
+    minSpawnDelay: 1
+    maxSpawnDelay: 10
+    quickSpawnKey: 50
   m_offsetSpawnBounds: 2
 --- !u!1 &1591346875
 GameObject:
@@ -643,7 +653,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 38425163}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1632678451
 MonoBehaviour:

@@ -7,6 +7,14 @@ public class Enemy : MonoBehaviour, IStateMachine
 	#region Fields
 
     [SerializeField]
+    protected LevelChannel m_levelChannel = null;
+
+    public LevelChannel levelChannel
+    {
+        get { return m_levelChannel; }
+    }
+
+    [SerializeField]
     protected EnemyType m_type = EnemyType.None;
     public EnemyType type
     {
@@ -34,8 +42,6 @@ public class Enemy : MonoBehaviour, IStateMachine
     {
         m_healthEntity = GetComponent<HealthEntity>();
         InitiliazeState();
-
-        ChangeState(EnemyStateType.None, EnemyStateType.Idle);
     }
 
     protected virtual void Start()
@@ -75,7 +81,7 @@ public class Enemy : MonoBehaviour, IStateMachine
             currentState.Enter(previousState);
         else
         {
-            Debug.LogError($"Couldn't find a new state of type : {nextState}. Going GroundedIdle");
+            Debug.LogError($"Couldn't find a new state of type : {nextState}. Going Inactive");
         }
     }
 
@@ -94,6 +100,7 @@ public class Enemy : MonoBehaviour, IStateMachine
         m_healthEntity.maxHealth = m_settings.maxHealth;
         m_healthEntity.Reset();
         m_manager = manager;
+        ChangeState(EnemyStateType.None, EnemyStateType.Idle);
     }
 
     #endregion
