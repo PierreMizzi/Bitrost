@@ -27,15 +27,24 @@ public class ModuleBullet : Bullet
             {
                 if (crystal == m_originCrystal)
                     return;
-
-                crystal.DecrementEnergy();
-                Release();
-                m_hasHit = true;
+                HitCrystal(crystal);
             }
             else if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))
-            {
-                healthEntity.LoseHealth(m_settings.bulletDamage);
-            }
+                HitHealthEntity(healthEntity);
         }
+    }
+
+    private void HitCrystal(CrystalShard crystal)
+    {
+        crystal.DecrementEnergy();
+        Release();
+        m_hasHit = true;
+    }
+
+    private void HitHealthEntity(HealthEntity healthEntity)
+    {
+        healthEntity.LoseHealth(m_settings.bulletDamage);
+        Release();
+        m_hasHit = true;
     }
 }

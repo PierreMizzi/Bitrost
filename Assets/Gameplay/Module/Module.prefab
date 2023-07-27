@@ -598,6 +598,8 @@ MonoBehaviour:
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
   m_turret: {fileID: 6585395777087232122}
   m_bulletOrigin: {fileID: 2603461646432851164}
+  m_mousePositionActionReference: {fileID: -4717243020878214388, guid: b31e137cb3947c244992c71078d944dc,
+    type: 3}
   m_ui: {fileID: 5912531058324299835}
 --- !u!1 &6585395777033767244
 GameObject:

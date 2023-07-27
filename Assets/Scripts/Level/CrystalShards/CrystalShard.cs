@@ -11,6 +11,11 @@ public class CrystalShard : MonoBehaviour
 
     public int remainingEnergyCount { get; private set; }
 
+    public bool hasEnergy
+    {
+        get { return remainingEnergyCount > 0; }
+    }
+
     public Action onRefreshEnergy = null;
 
     public bool isAvailable = true;

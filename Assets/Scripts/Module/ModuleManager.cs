@@ -154,7 +154,7 @@ public class ModuleManager : MonoBehaviour
     private void CallbackExtractAction(InputAction.CallbackContext context)
     {
         foreach (Module module in m_modules)
-            module.Extract();
+            module.ToggleExtracting();
     }
 
     #endregion

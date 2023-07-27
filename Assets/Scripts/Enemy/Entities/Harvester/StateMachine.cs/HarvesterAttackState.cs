@@ -30,8 +30,6 @@ public class HarvesterAttackState : EnemyAttackState
 
     public void Attack()
     {
-        // attackTween = DOVirtual.DelayedCall(m_harvester.attackDelay, AttackComplete);
-
         attackSequence = DOTween.Sequence();
         attackSequence
             .AppendInterval(m_harvester.settings.attackDelay)
@@ -39,11 +37,6 @@ public class HarvesterAttackState : EnemyAttackState
             .AppendInterval(m_harvester.settings.attackSpeed)
             .AppendCallback(CompleteAttack);
     }
-
-    // delay
-    // Attack animation
-    // Stop attack animation
-
 
     public void StartAttack()
     {
@@ -55,7 +48,7 @@ public class HarvesterAttackState : EnemyAttackState
         m_harvester.animator.SetBool(IS_ATTACKING_BOOL, false);
         m_harvester.targetCrystal.DecrementEnergy();
 
-        if (m_harvester.targetCrystal.remainingEnergyCount > 0)
+        if (m_harvester.targetCrystal.hasEnergy)
             Attack();
         else
             ChangeState((int)EnemyStateType.Idle);

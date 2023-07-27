@@ -3,6 +3,7 @@ using TMPro;
 using DG.Tweening;
 using System;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class Module : MonoBehaviour, IBulletLauncher
 {
@@ -28,6 +29,13 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     private PlayerController m_player;
 
+    [SerializeField]
+    private InputActionReference m_mousePositionActionReference = null;
+
+    private Vector3 m_mouseWorldSpace;
+
+    private Camera m_camera;
+
     #region UI
 
     [SerializeField]
@@ -48,6 +56,8 @@ public class Module : MonoBehaviour, IBulletLauncher
     public int storedEnergyCount { get; private set; }
 
     public int storedEnergyCapacity { get; private set; }
+
+    public Tween m_extractingTween = null;
 
     #endregion
 
@@ -71,6 +81,7 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     protected void Awake()
     {
+        m_camera = Camera.main;
         m_player = FindObjectOfType<PlayerController>();
 
         onRefreshModuleEnergy = () => { };
@@ -99,34 +110,59 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     #region Extract
 
-    public void Extract()
+    public void ToggleExtracting()
+    {
+        if (!m_isExtracting)
+            StartExtracting();
+        else
+            StopExtracting();
+    }
+
+    private void StartExtracting()
     {
         if (CanExtract())
         {
             m_isExtracting = true;
             extractionNormalized = 0;
 
-            DOVirtual
-                .Float(0, 1, m_settings.extractionDuration, ExtractUpdate)
+            m_extractingTween = DOVirtual
+                .Float(0, 1, m_settings.extractionDuration, ExtractingUpdate)
                 .SetEase(Ease.Linear)
-                .OnComplete(CompleteExtract);
+                .SetLoops(-1)
+                .OnStepComplete(CompleteExtracting);
         }
     }
 
-    public void ExtractUpdate(float value)
+    private void StopExtracting()
+    {
+        m_extractingTween.Kill();
+        m_isExtracting = false;
+        extractionNormalized = 0;
+        onUpdateExtractionUI.Invoke(1);
+    }
+
+    public void ExtractingUpdate(float value)
     {
         extractionNormalized = value;
         onUpdateExtractionUI.Invoke(extractionNormalized);
     }
 
-    public void CompleteExtract()
+    public void CompleteExtracting()
     {
-        m_isExtracting = false;
         crystal.DecrementEnergy();
+
+        if(!crystal.hasEnergy)
+            StopExtracting();
+
         storedEnergyCount += 2;
 
         if (storedEnergyCount > storedEnergyCapacity)
+        {
             storedEnergyCount = storedEnergyCapacity;
+            StopExtracting();
+        }
+
+
 
         extractionNormalized = 0;
         onUpdateExtractionUI.Invoke(1);
@@ -149,9 +185,8 @@ public class Module : MonoBehaviour, IBulletLauncher
             Debug.LogWarning("IS EXTRACTING");
 
         // Crystal has energy ?
-        bool crystalHasEnergy = crystal.remainingEnergyCount > 0;
-        result &= crystalHasEnergy;
-        if (!crystalHasEnergy)
+        result &= crystal.hasEnergy;
+        if (!crystal.hasEnergy)
             Debug.LogWarning("CRYSTAL IS DEPLEATED");
 
         return result;
@@ -166,7 +201,7 @@ public class Module : MonoBehaviour, IBulletLauncher
         crystal.SetAvailable();
         m_ui.UnsubscribeCrystal();
 
-        if(crystal.remainingEnergyCount == 0)
+        if (!crystal.hasEnergy)
             Destroy(crystal.gameObject);
     }
 
@@ -205,7 +240,7 @@ public class Module : MonoBehaviour, IBulletLauncher
             Debug.LogWarning("IS EXTRACTING");
 
         // Has energy in crystal or stored ?
-        bool hasEnergy = crystal.remainingEnergyCount > 0 || storedEnergyCount > 0;
+        bool hasEnergy = crystal.hasEnergy || storedEnergyCount > 0;
         result &= hasEnergy;
         if (!hasEnergy)
             Debug.LogWarning("NO ENERGY");
@@ -215,7 +250,11 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     private void UpdateRotation()
     {
-        m_aimDirection = (m_player.transform.position - transform.position).normalized;
+        m_mouseWorldSpace = m_mousePositionActionReference.action.ReadValue<Vector2>();
+        m_mouseWorldSpace = m_camera.ScreenToWorldPoint(m_mouseWorldSpace);
+        m_mouseWorldSpace.z = 0;
+
+        m_aimDirection = (m_mouseWorldSpace - transform.position).normalized;
         m_turret.up = m_aimDirection;
     }
 

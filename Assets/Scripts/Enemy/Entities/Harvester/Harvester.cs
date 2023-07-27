@@ -43,25 +43,40 @@ public class Harvester : Enemy
     public void SearchCrystalShard()
     {
         // First, targe tall currently used crystals
-        CrystalShard crystal = UtilsClass.PickRandomInList(
+        CrystalShard crystal = PickRandomValidCrystal(
             m_levelChannel.crystalManager.unavailableCrystals
         );
         if (crystal != null)
             goto Found;
 
         // If none, picks from crystals at player's range
-        crystal = UtilsClass.PickRandomInList(CrystalsAroundPlayer());
+        crystal = PickRandomValidCrystal(CrystalsAroundPlayer());
         if (crystal != null)
             goto Found;
 
         // If none, picks from all crystals
-        crystal = UtilsClass.PickRandomInList(m_levelChannel.crystalManager.crystals);
+        crystal = PickRandomValidCrystal(m_levelChannel.crystalManager.crystals);
         if (crystal != null)
             goto Found;
 
         Found:
         {
             targetCrystal = crystal;
+        }
+    }
+
+    private CrystalShard PickRandomValidCrystal(List<CrystalShard> crystals)
+    {
+        List<CrystalShard> validCrystals = crystals.FindAll(
+            (CrystalShard crystal) => crystal.hasEnergy
+        );
+
+        if (validCrystals.Count == 0)
+            return null;
+        else
+        {
+            int index = Random.Range(0, validCrystals.Count - 1);
+            return validCrystals[index];
         }
     }
 
