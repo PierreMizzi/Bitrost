@@ -15,6 +15,12 @@ public class Fighter : Enemy, IBulletLauncher
         get { return base.settings as FighterSettings; }
     }
 
+    public Vector3 directionTowardPlayer{
+        get{
+            return (transform.position - m_levelChannel.player.transform.position).normalized;
+        }
+    }
+
 	#endregion
 
 	#region Methods

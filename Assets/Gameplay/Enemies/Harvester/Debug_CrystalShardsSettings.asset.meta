@@ -1,5 +1,8 @@
 fileFormatVersion: 2
 guid: cee68ee327fbec146bd1c1da94df5a68
+labels:
+- Debug
+- GameDesign
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

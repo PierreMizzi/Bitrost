@@ -15,6 +15,10 @@ MonoBehaviour:
   maxHealth: 150
   speed: 14
   radiusAroundPlayer: 7
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 7446927507745633935, guid: f85d070aacc883c42b97b82a01838423,
+    type: 3}
+  bulletSpeed: 25
+  bulletDamage: 15
   bulletSalvoCount: 3
-  bulletSalvoFrequency: 0.25
+  bulletSalvoRateOfFire: 0.25
+  delayBetweenSalvo: 6

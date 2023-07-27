@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
+  m_settings: {fileID: 11400000, guid: 54c8770f483b33d4699d427e224aa84a, type: 2}
 --- !u!50 &7284331528206994719
 Rigidbody2D:
   serializedVersion: 4

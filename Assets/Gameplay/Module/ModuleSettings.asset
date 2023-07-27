@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ModuleSettings
   m_EditorClassIdentifier: 
   startingModuleCount: 1
-  storedEnergyCapacity: 5
-  extractionDuration: 3
+  storedEnergyCapacity: 10
+  extractionDuration: 2
   bulletPrefab: {fileID: 883983956993748104, guid: a0519969b01c1db4a856f4edb5d51775,
     type: 3}
   bulletSpeed: 30

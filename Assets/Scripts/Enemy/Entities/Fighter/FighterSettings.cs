@@ -13,6 +13,10 @@ public class FighterSettings : EnemySettings
     [Header("Attack")]
     public Bullet bulletPrefab;
 
+    public float bulletSpeed;
+
+    public float bulletDamage;
+
     /// <summary> 
     /// Amount of bullets in a salvo
     /// </summary>

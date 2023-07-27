@@ -19,16 +19,25 @@ public class FighterMoveState : EnemyMoveState
     {
         ApproachPlayer();
     }
+    
+    public override void Update()
+    {
+        m_fighter.transform.up = m_fighter.directionTowardPlayer;
+    }
+
+	public override void Exit()
+	{
+        m_tween.Kill();
+	}
 
     private void ApproachPlayer()
     {
         Vector3 playerPosition = m_fighter.levelChannel.player.transform.position;
         Vector3 playerToFighter = (m_fighter.transform.position - playerPosition);
-        m_endPosition = playerToFighter.normalized * m_fighter.settings.radiusAroundPlayer;
+        m_endPosition = playerPosition + (playerToFighter.normalized * m_fighter.settings.radiusAroundPlayer);
 
-        float duration = playerToFighter.magnitude / m_fighter.settings.speed;
+        float duration = (playerPosition - m_endPosition).magnitude / m_fighter.settings.speed;
 
-        m_fighter.transform.up = -playerToFighter.normalized;
         m_tween = m_fighter.transform.DOMove(m_endPosition, duration).OnComplete(ApproachPlayerComplete);
     }
 
