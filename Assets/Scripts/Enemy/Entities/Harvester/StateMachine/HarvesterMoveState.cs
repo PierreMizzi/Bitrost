@@ -16,8 +16,6 @@ public class HarvesterMoveState : EnemyMoveState
         base.DefaultEnter();
         m_harvester.SearchCrystalShard();
 
-        Debug.Log($"targetCrystal : {m_harvester.targetCrystal.name}");
-
         Vector3 direction =
             m_harvester.targetCrystal.transform.position - m_harvester.transform.position;
         float distance = direction.magnitude;

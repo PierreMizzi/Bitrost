@@ -24,8 +24,7 @@ public class Enemy : MonoBehaviour, IStateMachine
     protected HealthEntity m_healthEntity;
     protected EnemyManager m_manager = null;
 
-    [SerializeField]
-    protected EnemySettings m_settings;
+    public EnemySettings settings;
 
 	#region StateMachine
 
@@ -97,7 +96,7 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     public virtual void Initialize(EnemyManager manager)
     {
-        m_healthEntity.maxHealth = m_settings.maxHealth;
+        m_healthEntity.maxHealth = settings.maxHealth;
         m_healthEntity.Reset();
         m_manager = manager;
         ChangeState(EnemyStateType.None, EnemyStateType.Idle);

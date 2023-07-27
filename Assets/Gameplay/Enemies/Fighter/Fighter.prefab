@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &561922541109734238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8116805840696305865}
+  m_Layer: 9
+  m_Name: BulletOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8116805840696305865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561922541109734238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.132, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4318404297879891378}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4318404297879891383
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +64,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4318404298137485604}
+  - {fileID: 8116805840696305865}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -62,7 +94,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_type: 2
-  m_settings: {fileID: 11400000, guid: 5fef314c02da33649882a22154889ac8, type: 2}
+  settings: {fileID: 11400000, guid: 5fef314c02da33649882a22154889ac8, type: 2}
+  bulletOrigin: {fileID: 8116805840696305865}
+  bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
 --- !u!50 &4318404297879891377
 Rigidbody2D:
   serializedVersion: 4

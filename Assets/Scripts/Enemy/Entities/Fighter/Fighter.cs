@@ -1,9 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fighter : Enemy
+public class Fighter : Enemy, IBulletLauncher
 {
 	#region Fields
+
+    [Header("Fighter")]
+    public Transform bulletOrigin;
+
+    public BulletChannel bulletChannel = null;
+
+    public new FighterSettings settings
+    {
+        get { return base.settings as FighterSettings; }
+    }
 
 	#endregion
 
@@ -23,6 +33,28 @@ public class Fighter : Enemy
     }
 
 	#endregion
+
+    #region IBulletLauncher
+
+    public bool CanFire()
+    {
+        return true;
+    }
+
+    public void Fire()
+    {
+        Vector3 playerPosition = levelChannel.player.transform.position;
+        Vector3 fighterToPlayer = playerPosition - transform.position;
+
+        bulletChannel.onInstantiateBullet(
+            this,
+            settings.bulletPrefab,
+            bulletOrigin.position,
+            fighterToPlayer.normalized
+        );
+    }
+
+    #endregion
 
 	#endregion
 }

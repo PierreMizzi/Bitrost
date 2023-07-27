@@ -5,10 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Harvester : Enemy
 {
-
+    // [Header("Header")]
     public HarvesterSettings settings
     {
-        get { return m_settings as HarvesterSettings; }
+        get { return base.settings as HarvesterSettings; }
     }
 
     public CrystalShard targetCrystal { get; private set; }
@@ -90,8 +90,6 @@ public class Harvester : Enemy
 
         return crystals;
     }
-
-
 
     protected override void CallbackNoHealth()
     {

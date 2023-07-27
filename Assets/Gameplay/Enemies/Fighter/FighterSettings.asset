@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 150
   speed: 14
-  radiusAroundPlayer: 5
+  radiusAroundPlayer: 7
   bulletPrefab: {fileID: 0}
-  bulletSalvoCount: 0
-  bulletSalvoFrequency: 0
+  bulletSalvoCount: 3
+  bulletSalvoFrequency: 0.25
