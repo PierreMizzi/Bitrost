@@ -17,8 +17,8 @@ MonoBehaviour:
   radiusAroundPlayer: 7
   bulletPrefab: {fileID: 7446927507745633935, guid: f85d070aacc883c42b97b82a01838423,
     type: 3}
-  bulletSpeed: 25
+  bulletSpeed: 15
   bulletDamage: 15
   bulletSalvoCount: 3
   bulletSalvoRateOfFire: 0.25
-  delayBetweenSalvo: 6
+  delayBetweenSalvo: 4

@@ -907,7 +907,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867264002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4}
+  m_LocalPosition: {x: -0.87157553, y: -0.49026123, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -961,6 +961,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: {fileID: 803773013}
   m_distance: 4
+  m_mousePositionActionReference: {fileID: -4717243020878214388, guid: b31e137cb3947c244992c71078d944dc,
+    type: 3}
+  m_debugCenterScreen: {x: -960, y: -540}
+  m_minRadius: 200
+  m_maxRadius: 400
+  m_offsetMagnitude: 1
 --- !u!1 &1934349536
 GameObject:
   m_ObjectHideFlags: 0
