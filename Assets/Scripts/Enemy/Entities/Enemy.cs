@@ -13,9 +13,13 @@ public class Enemy : MonoBehaviour, IStateMachine
         get { return m_type; }
     }
 
-    private HealthEntity m_healthEntity;
+    protected HealthEntity m_healthEntity;
+    protected EnemyManager m_manager = null;
 
-    #region StateMachine
+    [SerializeField]
+    protected EnemySettings m_settings;
+
+	#region StateMachine
 
     public List<AState> states { get; set; } = new List<AState>();
     public AState currentState { get; set; }
@@ -32,6 +36,11 @@ public class Enemy : MonoBehaviour, IStateMachine
         InitiliazeState();
 
         ChangeState(EnemyStateType.None, EnemyStateType.Idle);
+    }
+
+    protected virtual void Start()
+    {
+        SubscribeHealth();
     }
 
     protected virtual void Update()
@@ -56,7 +65,7 @@ public class Enemy : MonoBehaviour, IStateMachine
         ChangeState((int)previousState, (int)nextState);
     }
 
-    public virtual void ChangeState(int previousState, int nextState)
+    public void ChangeState(int previousState, int nextState)
     {
         if (currentState != null)
             currentState.Exit();
@@ -77,6 +86,40 @@ public class Enemy : MonoBehaviour, IStateMachine
     }
 
 	#endregion
+
+    #region Behaviour
+
+    public virtual void Initialize(EnemyManager manager)
+    {
+        m_healthEntity.maxHealth = m_settings.maxHealth;
+        m_healthEntity.Reset();
+        m_manager = manager;
+    }
+
+    #endregion
+
+        #region Health
+
+    protected virtual void SubscribeHealth()
+    {
+        m_healthEntity.onLostHealth += CallbackLostHealth;
+        m_healthEntity.onNoHealth += CallbackNoHealth;
+    }
+
+    protected virtual void UnsubscribeHealth()
+    {
+        m_healthEntity.onLostHealth -= CallbackLostHealth;
+        m_healthEntity.onNoHealth -= CallbackNoHealth;
+    }
+
+    protected virtual void CallbackLostHealth() { }
+
+    protected virtual void CallbackNoHealth()
+    {
+        m_manager.Release(gameObject);
+    }
+
+    #endregion
 
 
 

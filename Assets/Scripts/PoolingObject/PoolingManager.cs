@@ -21,9 +21,13 @@ public class PoolingManager : MonoBehaviour
 	#region Methods
 
 
-    private void Start()
+    private void Awake()
     {
         Subscribe();
+    }
+
+    private void Start()
+    {
     }
 
     private void OnDestroy()

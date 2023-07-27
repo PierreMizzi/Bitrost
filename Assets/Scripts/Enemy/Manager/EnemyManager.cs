@@ -108,6 +108,7 @@ public partial class EnemyManager : MonoBehaviour
     private void SpawnEnemy(GameObject prefab)
     {
         Enemy enemy = m_poolingChannel.onGetFromPool.Invoke(prefab).GetComponent<Enemy>();
+        enemy.Initialize(this);
 
         enemy.transform.position = GetCameraEdgeRandomPosition();
     }
@@ -188,6 +189,15 @@ public partial class EnemyManager : MonoBehaviour
         return randomPosition;
     }
 
+    #endregion
+
+    #region DestroyEnemy
+
+    public void Release(GameObject gameObject)
+    {
+        m_poolingChannel.onReleaseFromPool.Invoke(gameObject);
+    }
+        
     #endregion
 
 	#endregion

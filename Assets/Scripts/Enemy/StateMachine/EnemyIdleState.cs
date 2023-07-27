@@ -12,7 +12,7 @@ public class EnemyIdleState : AState
     protected override void DefaultEnter()
     {
         base.DefaultEnter();
-        float delay = Random.Range(2f, 5f);
+        float delay = Random.Range(1f, 2f);
         DOVirtual.DelayedCall(
             delay,
             () =>

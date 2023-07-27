@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using CodesmithWorkshop.Useful;
 
 public delegate void SetCrystalShardDelegate(CrystalShard crystal);
@@ -41,11 +42,13 @@ public class CrystalShardsManager : MonoBehaviour
 
 	#region Methods
 
-    private void Start()
+    private IEnumerator Start()
     {
         m_levelChannel.crystalManager = this;
         ClearCrystalShards();
 
+
+        yield return new WaitForEndOfFrame();
         m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
         SpawnFill();
     }
@@ -118,6 +121,16 @@ public class CrystalShardsManager : MonoBehaviour
     {
         if (m_unavailableCrystals.Contains(crystal))
             m_unavailableCrystals.Remove(crystal);
+    }
+
+    public void DestroyCrystal(CrystalShard crystal)
+    {
+        if (m_crystals.Contains(crystal))
+            m_crystals.Remove(crystal);
+
+        RemoveUnavailableCrystal(crystal);
+
+        m_poolingChannel.onReleaseFromPool(crystal.gameObject);
     }
 
     public CrystalShard GetRandomCrystal(List<CrystalShard> crystals)

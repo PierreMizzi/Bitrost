@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     #region Fields
 
     [SerializeField]
-    private PlayerControllerSettings m_settings = null;
+    private PlayerSettings m_settings = null;
 
     private Camera m_camera;
 

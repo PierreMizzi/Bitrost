@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class ModuleUI : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class ModuleUI : MonoBehaviour
 
     [SerializeField]
     private Module m_module = null;
+
+    private CrystalShard m_crystal = null;
 
     [SerializeField]
     private TextMeshProUGUI m_crystalText = null;
@@ -25,41 +28,60 @@ public class ModuleUI : MonoBehaviour
 
     private void Start()
     {
-        Subscribe();
+        SubscribeModule();
     }
 
     private void OnDestroy()
     {
-        Unsubscribe();
+        UnsubscribeModule();
     }
 
-    public void Subscribe()
+    public void Initialize(CrystalShard crystal)
+    {
+        m_crystal = crystal;
+        SubscribeCrystal();
+    }
+
+    public void SubscribeModule()
     {
         if (m_module != null)
         {
-            m_module.refreshUI += Refresh;
-            m_module.updateExtractionUI += UpdateExtraction;
+            m_module.onRefreshModuleEnergy += CallbackRefreshModuleEnergy;
+            m_module.onUpdateExtractionUI += CallbackUpdateExtractionUI;
         }
     }
 
-    public void Unsubscribe()
+    public void UnsubscribeModule()
     {
         if (m_module != null)
         {
-            m_module.refreshUI -= Refresh;
-            m_module.updateExtractionUI -= UpdateExtraction;
+            m_module.onRefreshModuleEnergy -= CallbackRefreshModuleEnergy;
+            m_module.onUpdateExtractionUI -= CallbackUpdateExtractionUI;
         }
     }
 
-    // TODO : Refresh when the crystal is being extracted by Harvester
-    public void Refresh()
+    public void SubscribeCrystal()
+    {
+        m_crystal.onRefreshEnergy += CallbackRefreshCrystalEnergy;
+    }
+
+    public void UnsubscribeCrystal()
+    {
+        m_crystal.onRefreshEnergy -= CallbackRefreshCrystalEnergy;
+    }
+
+    private void CallbackRefreshCrystalEnergy()
     {
         m_crystalText.text = string.Format(
             "{0} / {1}",
-            m_module.crystal.remainingEnergyCount,
-            m_module.crystal.totalEnergyCount
+            m_crystal.remainingEnergyCount,
+            m_crystal.totalEnergyCount
         );
+    }
 
+    // TODO : Refresh when the crystal is being extracted by Harvester
+    public void CallbackRefreshModuleEnergy()
+    {
         m_moduleText.text = string.Format(
             "{0} / {1}",
             m_module.storedEnergyCount,
@@ -67,7 +89,7 @@ public class ModuleUI : MonoBehaviour
         );
     }
 
-    public void UpdateExtraction(float normalized)
+    public void CallbackUpdateExtractionUI(float normalized)
     {
         m_extractionImageScale.x = 1f - normalized;
         m_extractionImage.localScale = m_extractionImageScale;

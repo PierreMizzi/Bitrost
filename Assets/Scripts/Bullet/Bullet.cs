@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     #region Fields
 
+    [Header("Bullet")]
     [SerializeField]
     protected BulletChannel m_bulletChannel = null;
 

@@ -21,14 +21,14 @@ public class HarvesterMoveState : EnemyMoveState
         Vector3 direction =
             m_harvester.targetCrystal.transform.position - m_harvester.transform.position;
         float distance = direction.magnitude;
-        float duration = distance / m_harvester.speed;
+        float duration = distance / m_harvester.settings.speed;
 
         Vector3 endPosition =
             m_harvester.targetCrystal.transform.position
             + (
                 -direction.normalized
                 * m_harvester.targetCrystal.transform.localScale.x
-                * m_harvester.offsetFromShard
+                * m_harvester.settings.offsetFromShard
             );
         m_harvester.transform.up = direction.normalized;
         m_harvester.transform.DOMove(endPosition, duration).OnComplete(OnCompleteMovement);

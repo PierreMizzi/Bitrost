@@ -28,17 +28,14 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     private PlayerController m_player;
 
-    [SerializeField]
-    private Bullet m_bullet = null;
-
     #region UI
 
     [SerializeField]
     private ModuleUI m_ui = null;
 
-    public Action refreshUI = null;
+    public Action onRefreshModuleEnergy = null;
 
-    public FloatDelegate updateExtractionUI = null;
+    public FloatDelegate onUpdateExtractionUI = null;
 
     #endregion
 
@@ -64,6 +61,7 @@ public class Module : MonoBehaviour, IBulletLauncher
 
         this.crystal = crystal;
         this.crystal.SetUnavailable();
+        m_ui.Initialize(this.crystal);
 
         storedEnergyCount = 0;
         storedEnergyCapacity = m_settings.storedEnergyCapacity;
@@ -75,14 +73,15 @@ public class Module : MonoBehaviour, IBulletLauncher
     {
         m_player = FindObjectOfType<PlayerController>();
 
-        refreshUI = () => { };
-        updateExtractionUI = (float normalized) => { };
+        onRefreshModuleEnergy = () => { };
+        onUpdateExtractionUI = (float normalized) => { };
     }
 
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        refreshUI.Invoke();
+        onRefreshModuleEnergy.Invoke();
+        crystal.onRefreshEnergy.Invoke();
 
         yield return null;
     }
@@ -117,7 +116,7 @@ public class Module : MonoBehaviour, IBulletLauncher
     public void ExtractUpdate(float value)
     {
         extractionNormalized = value;
-        updateExtractionUI.Invoke(extractionNormalized);
+        onUpdateExtractionUI.Invoke(extractionNormalized);
     }
 
     public void CompleteExtract()
@@ -130,9 +129,8 @@ public class Module : MonoBehaviour, IBulletLauncher
             storedEnergyCount = storedEnergyCapacity;
 
         extractionNormalized = 0;
-        updateExtractionUI.Invoke(1);
-
-        refreshUI.Invoke();
+        onUpdateExtractionUI.Invoke(1);
+        onRefreshModuleEnergy.Invoke();
     }
 
     public bool CanExtract()
@@ -166,10 +164,10 @@ public class Module : MonoBehaviour, IBulletLauncher
     public void Retrieve()
     {
         crystal.SetAvailable();
+        m_ui.UnsubscribeCrystal();
 
-        // if(crystal.remainingEnergyCount == 0)
-        //     // crystal.Destroy();
-        //     // Destroy(crystal.gameObject);
+        if(crystal.remainingEnergyCount == 0)
+            Destroy(crystal.gameObject);
     }
 
     #endregion
@@ -181,15 +179,16 @@ public class Module : MonoBehaviour, IBulletLauncher
         if (CanFire())
         {
             if (storedEnergyCount > 0)
+            {
                 storedEnergyCount--;
+                onRefreshModuleEnergy.Invoke();
+            }
             else
                 crystal.DecrementEnergy();
 
-            refreshUI.Invoke();
-
             m_bulletChannel.onInstantiateBullet.Invoke(
                 this,
-                m_bullet,
+                m_settings.bulletPrefab,
                 m_bulletOrigin.position,
                 m_aimDirection
             );

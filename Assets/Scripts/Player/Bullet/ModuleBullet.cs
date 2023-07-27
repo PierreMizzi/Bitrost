@@ -1,0 +1,41 @@
+using UnityEngine;
+using CodesmithWorkshop.Useful;
+
+public class ModuleBullet : Bullet
+{
+    [Header("Module Bullet")]
+    [SerializeField]
+    private ModuleSettings m_settings = null;
+
+    private CrystalShard m_originCrystal;
+
+    protected virtual void Start()
+    {
+        Module module = launcher.gameObject.GetComponent<Module>();
+        m_originCrystal = module.crystal;
+        m_speed = m_settings.bulletSpeed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (m_hasHit)
+            return;
+
+        if (UtilsClass.CheckLayer(m_collisionFilter.layerMask.value, other.gameObject.layer))
+        {
+            if (other.gameObject.TryGetComponent(out CrystalShard crystal))
+            {
+                if (crystal == m_originCrystal)
+                    return;
+
+                crystal.DecrementEnergy();
+                Release();
+                m_hasHit = true;
+            }
+            else if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))
+            {
+                healthEntity.LoseHealth(m_settings.bulletDamage);
+            }
+        }
+    }
+}

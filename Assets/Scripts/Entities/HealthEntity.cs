@@ -6,7 +6,7 @@ public class HealthEntity : MonoBehaviour
 	#region Fields
 
     public float currentHealth { get; private set; }
-    public float maxHealth { get; private set; }
+    public float maxHealth { get; set; }
 
 	public Action onLostHealth = null;
 	public Action onHealedHealth = null;
@@ -21,6 +21,11 @@ public class HealthEntity : MonoBehaviour
         onLostHealth = () => { };
         onHealedHealth = () => { };
         onNoHealth = () => { };
+    }
+
+    public void Reset()
+    {
+        currentHealth = maxHealth;
     }
 
     public void LoseHealth(float lost)
@@ -38,7 +43,6 @@ public class HealthEntity : MonoBehaviour
     public void HealHealth(float healed)
     {
         currentHealth += healed;
-
 		onHealedHealth.Invoke();
 
         if (currentHealth > maxHealth)

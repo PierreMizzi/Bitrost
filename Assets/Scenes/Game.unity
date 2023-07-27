@@ -213,7 +213,7 @@ MonoBehaviour:
       type: 3}
     defaultSize: 20
     maxSize: 50
-  m_settings: {fileID: 11400000, guid: b1f8d4aa558fd984c9f2c32a95428e1a, type: 2}
+  m_settings: {fileID: 11400000, guid: cee68ee327fbec146bd1c1da94df5a68, type: 2}
   m_container: {fileID: 783057577}
 --- !u!1 &76268816
 GameObject:

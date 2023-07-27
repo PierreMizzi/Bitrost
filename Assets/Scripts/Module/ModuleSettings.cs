@@ -9,10 +9,10 @@ public class ModuleSettings : ScriptableObject
     [Header("Module")]
     [Header("Energy")]
     public int storedEnergyCapacity = 5;
+    public float extractionDuration = 3;
 
-	public float extractionDuration = 3;
-
-	public Bullet bulletPrefab = null;
-
-	public float bulletSpeed;
+    [Header("Bullet")]
+    public Bullet bulletPrefab = null;
+    public float bulletSpeed;
+    public float bulletDamage = 50;
 }

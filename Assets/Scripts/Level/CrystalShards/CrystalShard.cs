@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CrystalShard : MonoBehaviour
@@ -10,7 +11,19 @@ public class CrystalShard : MonoBehaviour
 
     public int remainingEnergyCount { get; private set; }
 
+    public Action onRefreshEnergy = null;
+
     public bool isAvailable = true;
+
+    private void Awake()
+    {
+        onRefreshEnergy = () => { };
+    }
+
+    private void OnDestroy()
+    {
+        m_manager.DestroyCrystal(this);
+    }
 
     public void Initialize(CrystalShardsManager manager, int startingEnergyCount)
     {
@@ -34,5 +47,6 @@ public class CrystalShard : MonoBehaviour
     public void DecrementEnergy()
     {
         remainingEnergyCount--;
+        onRefreshEnergy.Invoke();
     }
 }

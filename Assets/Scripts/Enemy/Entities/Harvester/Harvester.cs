@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CodesmithWorkshop.Useful;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Harvester : Enemy
 {
     [SerializeField]
@@ -12,53 +13,27 @@ public class Harvester : Enemy
         get { return m_levelChannel; }
     }
 
+    public HarvesterSettings settings
+    {
+        get { return m_settings as HarvesterSettings; }
+    }
+
     public CrystalShard targetCrystal { get; private set; }
 
-    [SerializeField]
-    private float m_rangeAroundPlayer = 10f;
-
-    [HideInInspector]
-    public float rangeAroundPlayerSqr;
-
-    [SerializeField]
-    private float m_speed = 80f;
-    public float speed
-    {
-        get { return m_speed; }
-    }
-
-    [SerializeField]
-    private float m_offsetFromShard = 0.4f;
-    public float offsetFromShard
-    {
-        get { return m_offsetFromShard; }
-    }
-
-    [SerializeField]
-    private float m_attackSpeed = 3f;
-    public float attackSpeed
-    {
-        get { return m_attackSpeed; }
-    }
-
-    [SerializeField]
-    private float m_attackDelay = 1f;
-    public float attackDelay
-    {
-        get { return m_attackDelay; }
-    }
+    public Animator animator { get; private set; }
 
     protected override void Awake()
     {
         base.Awake();
-
-        rangeAroundPlayerSqr = Mathf.Pow(m_rangeAroundPlayer, 2f);
+        animator = GetComponent<Animator>();
+        m_healthEntity = GetComponent<HealthEntity>();
     }
 
     public override void InitiliazeState()
     {
         states = new List<AState>()
         {
+            new EnemyInactiveState(this),
             new EnemyIdleState(this),
             new HarvesterMoveState(this),
             new HarvesterAttackState(this),
@@ -101,10 +76,23 @@ public class Harvester : Enemy
         {
             sqrDistance = (playerPosition - crystal.transform.position).sqrMagnitude;
 
-            if (sqrDistance < rangeAroundPlayerSqr)
+            if (sqrDistance < settings.rangeAroundPlayerSqr)
                 crystals.Add(crystal);
         }
 
         return crystals;
+    }
+
+    public override void Initialize(EnemyManager manager)
+    {
+        base.Initialize(manager);
+        ChangeState((EnemyStateType)currentState.type, EnemyStateType.Idle);
+    }
+
+    protected override void CallbackNoHealth()
+    {
+        targetCrystal = null;
+        ChangeState((EnemyStateType)currentState.type, EnemyStateType.Inactive);
+        base.CallbackNoHealth();
     }
 }
