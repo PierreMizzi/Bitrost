@@ -1,0 +1,7 @@
+<ui:UXML ...>
+    <ui:Template src="/Assets/Portrait.uxml" name="Portrait"/>
+    <ui:VisualElement name="players">
+        <ui:Instance template="Portrait" name="player1"/>
+        <ui:Instance template="Portrait" name="player2"/>
+    </ui:VisualElement>
+</ui:UXML>
