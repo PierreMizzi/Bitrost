@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Gameplay/PlayerHUD.uss?fileID=7433441132597879392&amp;guid=3605961c70fd4be48aaefe6d4b96197a&amp;type=3#PlayerHUD" />
+    <ui:VisualElement name="player-hud__container" style="height: 143px; width: 500px; position: absolute; bottom: 10px; left: 10px; align-items: center; justify-content: space-between; flex-direction: row; top: auto; right: auto;">
+        <ui:VisualElement name="player-ship__container" class="player-profil__container">
+            <ui:VisualElement name="player-ship__picture" class="player-profil__picture" />
+        </ui:VisualElement>
+        <ui:VisualElement name="health-progress-bar" class="health-progress-bar" style="height: 25%;">
+            <ui:VisualElement name="health-progress-bar__progress" class="health-progress-bar__progress" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
