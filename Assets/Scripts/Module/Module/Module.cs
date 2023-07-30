@@ -47,6 +47,8 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     #endregion
 
+
+
     #region Extracting
 
     private bool m_isExtracting = false;
@@ -61,10 +63,21 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     #endregion
 
+    #region Reworked UI
+
+    [HideInInspector]
+    public bool isActivated = false;
+
+    [SerializeField]
+    private ModuleView m_view = null;
+
+    #endregion
+
     #endregion
 
     #region Methods
 
+    [Obsolete]
     public void Initialize(ModuleManager manager, CrystalShard crystal)
     {
         m_manager = manager;
@@ -72,6 +85,14 @@ public class Module : MonoBehaviour, IBulletLauncher
         this.crystal = crystal;
         this.crystal.SetUnavailable();
         m_ui.Initialize(this.crystal);
+
+        storedEnergyCount = 0;
+        storedEnergyCapacity = m_settings.storedEnergyCapacity;
+    }
+
+    public void Initialize(ModuleManager manager)
+    {
+        m_manager = manager;
 
         storedEnergyCount = 0;
         storedEnergyCapacity = m_settings.storedEnergyCapacity;
@@ -91,8 +112,8 @@ public class Module : MonoBehaviour, IBulletLauncher
     private IEnumerator Start()
     {
         yield return new WaitForEndOfFrame();
-        onRefreshModuleEnergy.Invoke();
-        crystal.onRefreshEnergy.Invoke();
+        // onRefreshModuleEnergy.Invoke();
+        // crystal.onRefreshEnergy.Invoke();
 
         yield return null;
     }
@@ -151,7 +172,7 @@ public class Module : MonoBehaviour, IBulletLauncher
     {
         crystal.DecrementEnergy();
 
-        if(!crystal.hasEnergy)
+        if (!crystal.hasEnergy)
             StopExtracting();
 
         storedEnergyCount += 2;
@@ -161,8 +182,6 @@ public class Module : MonoBehaviour, IBulletLauncher
             storedEnergyCount = storedEnergyCapacity;
             StopExtracting();
         }
-
-
 
         extractionNormalized = 0;
         onUpdateExtractionUI.Invoke(1);

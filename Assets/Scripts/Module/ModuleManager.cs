@@ -2,6 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+
+/*
+
+    - Controller : Inputs from mouse, checks closer Module
+    - Model : Manages available controllers
+    - View : Creates ModuleHUD VisualElements, links them to Module
+
+*/
 
 public class ModuleManager : MonoBehaviour
 {
@@ -78,6 +87,9 @@ public class ModuleManager : MonoBehaviour
     {
         m_remainingModuleCount = m_settings.startingModuleCount;
         Subscribe();
+
+        Initialize();
+        CreateModule();
     }
 
     private void OnDestroy()
@@ -197,6 +209,71 @@ public class ModuleManager : MonoBehaviour
     }
 
     #endregion
+
+    #region Rework
+
+    [SerializeField]
+    private UIDocument m_document = null;
+
+    private const string k_moduleViewVisualContainer = "module-container";
+
+    public VisualElement moduleViewVisualContainer { get; private set; }
+    
+    [SerializeField]
+    private VisualTreeAsset m_moduleViewAsset;
+
+    public List<ModuleView> m_moduleViews = new List<ModuleView>();
+
+    // TODO : Initialize
+    private void Initialize()
+    {
+        moduleViewVisualContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
+    }
+
+    private void CreateModule()
+    {
+        // Model
+        Module module = Instantiate(m_modulePrefab, m_moduleContainer);
+        module.Initialize(this);
+        m_modules.Add(module);
+
+        // View
+        ModuleView moduleView = new ModuleView();
+        // View VisualElement
+        VisualElement moduleViewVisual = m_moduleViewAsset.Instantiate();
+        moduleViewVisualContainer.Add(moduleViewVisual);
+        moduleView.Initialize(module, moduleViewVisual);
+        m_moduleViews.Add(moduleView);
+    }
+
+    private void ActivateModule()
+    {
+        Module module = GetUnactivatedModule();
+
+        if (module)
+        {
+            Debug.LogWarning("NO UNACTIVATED MODULE");
+            return;
+        }
+
+
+
+    }
+
+    private Module GetUnactivatedModule()
+    {
+        int count = m_modules.Count;
+        for (int i = 0; i < count; i++)
+        {
+            if (!m_modules[i].isActivated)
+                return m_modules[i];
+        }
+        return null;
+    }
+
+    #endregion
+
+
 
     #endregion
 }

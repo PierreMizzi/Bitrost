@@ -1,32 +1,36 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Gameplay/ModuleHUD.uss?fileID=7433441132597879392&amp;guid=1b4e74142b7cf364aa78c08a789770ee&amp;type=3#ModuleHUD" />
-    <ui:VisualElement name="module-hud-active" style="width: 100%; height: 100%; flex-grow: 0; visibility: visible; display: flex; justify-content: flex-start;">
-        <ui:VisualElement name="module-hud-content" class="glass-background" style="justify-content: space-between; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px; flex-grow: 1;">
-            <ui:Label text="EXTRACT" display-tooltip-when-elided="true" name="module-hud__mode-label" style="height: auto; -unity-text-align: middle-left; flex-grow: 0; flex-shrink: 1; font-size: 50px; color: rgb(255, 255, 255);" />
-            <ui:VisualElement name="resources-container" style="flex-grow: 0; height: auto; flex-direction: row; justify-content: center;">
-                <ui:VisualElement name="resources-crystal-container" class="consumed-resources" style="flex-grow: 0; flex-direction: row; justify-content: center; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
-                    <ui:VisualElement name="resources-crystal-sprite" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/meteor_squareDetailedSmall.png?fileID=2800000&amp;guid=4d2dae0aef8989848ad4777a9b885f3d&amp;type=3#meteor_squareDetailedSmall&apos;); width: 62px; height: auto; -unity-background-scale-mode: scale-and-crop; rotate: -22deg; -unity-background-image-tint-color: rgb(141, 255, 250);" />
-                    <ui:Label text="100/100" display-tooltip-when-elided="true" name="resources-crystal-label" class="resources-label" />
-                </ui:VisualElement>
-                <ui:VisualElement name="resources-arrow" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/right.png?fileID=2800000&amp;guid=aaab75f58cf972b448e28947b25bb9ad&amp;type=3#right&apos;); width: 77px; height: auto; -unity-background-scale-mode: scale-to-fit; visibility: visible; display: flex;" />
-                <ui:VisualElement name="resources-stored-container" class="consumed-resources" style="flex-grow: 0; flex-direction: row; justify-content: center; padding-left: 0; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
-                    <ui:VisualElement name="resources-stored-sprite" style="width: 50px; height: auto; align-items: center; justify-content: center;">
-                        <ui:VisualElement name="resources-stored-sprites" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/powerupRed_bolt.png?fileID=2800000&amp;guid=39bbca0c1db9278409b91481f3a783f2&amp;type=3#powerupRed_bolt&apos;); width: 80%; height: 80%; -unity-background-scale-mode: scale-to-fit;" />
+    <ui:VisualElement name="module-hud-root" style="flex-grow: 0; width: 100%; height: 200px; margin-top: 20px;">
+        <ui:VisualElement name="module-hud-active" style="width: 100%; height: 100%; visibility: visible; display: flex; justify-content: flex-start;">
+            <ui:VisualElement name="module-hud-content" class="glass-background" style="justify-content: space-between; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px; flex-grow: 1;">
+                <ui:Label text="EXTRACT" display-tooltip-when-elided="true" name="module-hud__mode-label" style="height: auto; -unity-text-align: middle-left; flex-grow: 0; flex-shrink: 1; font-size: 40px; color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="resources-container" style="flex-grow: 0; height: auto; flex-direction: row; justify-content: center;">
+                    <ui:VisualElement name="resources-crystal-container" class="consumed-resources" style="flex-grow: 0; flex-direction: row; justify-content: center; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+                        <ui:VisualElement name="resources-crystal-sprite" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/meteor_squareDetailedSmall.png?fileID=2800000&amp;guid=4d2dae0aef8989848ad4777a9b885f3d&amp;type=3#meteor_squareDetailedSmall&apos;); width: 62px; height: auto; -unity-background-scale-mode: scale-and-crop; rotate: -22deg; -unity-background-image-tint-color: rgb(141, 255, 250);" />
+                        <ui:Label text="100/100" display-tooltip-when-elided="true" name="resources-crystal-label" class="resources-label" />
                     </ui:VisualElement>
-                    <ui:Label text="100/100" display-tooltip-when-elided="true" name="resources-stored-label" class="resources-label" style="width: auto; height: auto;" />
+                    <ui:VisualElement name="resources-arrow" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/right.png?fileID=2800000&amp;guid=aaab75f58cf972b448e28947b25bb9ad&amp;type=3#right&apos;); width: 77px; height: auto; -unity-background-scale-mode: scale-to-fit; visibility: visible; display: flex;" />
+                    <ui:VisualElement name="resources-stored-container" class="consumed-resources" style="flex-grow: 0; flex-direction: row; justify-content: center; padding-left: 0; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+                        <ui:VisualElement name="resources-stored-sprite" style="width: 50px; height: auto; align-items: center; justify-content: center;">
+                            <ui:VisualElement name="resources-stored-sprites" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/powerupRed_bolt.png?fileID=2800000&amp;guid=39bbca0c1db9278409b91481f3a783f2&amp;type=3#powerupRed_bolt&apos;); width: 80%; height: 80%; -unity-background-scale-mode: scale-to-fit;" />
+                        </ui:VisualElement>
+                        <ui:Label text="100/100" display-tooltip-when-elided="true" name="resources-stored-label" class="resources-label" style="width: auto; height: auto;" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
+            <ui:VisualElement name="tips-container" style="flex-grow: 1; flex-direction: row; justify-content: flex-start;">
+                <ui:Label text="Left Click : Fire" display-tooltip-when-elided="true" name="tips-fire" class="tip-label" />
+                <ui:Label text="Right Click : Switch Mode" display-tooltip-when-elided="true" name="tips-switch-mode" class="tip-label" style="-unity-text-align: middle-left;" />
+                <ui:Label text="E : Retrieve" display-tooltip-when-elided="true" name="tips-retrieve" class="tip-label" style="-unity-text-align: middle-left;" />
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="tips-container" style="flex-grow: 1; flex-direction: row; justify-content: flex-start;">
-            <ui:Label text="Left Click : Fire" display-tooltip-when-elided="true" name="tips-fire" class="tip-label" />
-            <ui:Label text="Right Click : Switch Mode" display-tooltip-when-elided="true" name="tips-switch-mode" class="tip-label" style="-unity-text-align: middle-left;" />
-            <ui:Label text="E : Retrieve" display-tooltip-when-elided="true" name="tips-retrieve" class="tip-label" style="-unity-text-align: middle-left;" />
+        <ui:VisualElement name="module-hud-inactive" style="background-image: none; width: 100%; height: 100%; -unity-slice-left: 25; -unity-slice-top: 25; -unity-slice-right: 25; -unity-slice-bottom: 25; display: none; justify-content: space-around; align-items: center;">
+            <ui:VisualElement name="module-hud-inactive-container" class="glass-background" style="flex-direction: row; flex-grow: 0; height: 66%; width: 100%; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px;">
+                <ui:VisualElement name="module-hud-inactive__sprite-container">
+                    <ui:VisualElement name="module-hud-inactive__sprite" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/icon_plusLarge.png?fileID=2800000&amp;guid=d7678e9348d18c5409f54ba005eeb613&amp;type=3#icon_plusLarge&apos;); width: 84px; -unity-background-scale-mode: scale-to-fit; height: 100%; -unity-background-image-tint-color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:Label text="E to drop module" display-tooltip-when-elided="true" enable-rich-text="true" name="module-hud-inactive__label" style="-unity-text-align: middle-left; font-size: 30px; white-space: normal; flex-shrink: 1; color: rgb(255, 255, 255);" />
+            </ui:VisualElement>
         </ui:VisualElement>
-    </ui:VisualElement>
-    <ui:VisualElement name="module-hud-inactive" class="glass-background" style="background-image: url(&apos;project://database/Assets/Sprites/Assets/glassPanel_cornerTR.png?fileID=2800000&amp;guid=80057f5f7d0034f48be6f7593a25f770&amp;type=3#glassPanel_cornerTR&apos;); width: 100%; height: 66%; -unity-slice-left: 25; -unity-slice-top: 25; -unity-slice-right: 25; -unity-slice-bottom: 25; flex-grow: 0; display: none; flex-direction: row; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px; justify-content: space-around;">
-        <ui:VisualElement name="module-hud-inactive__sprite-container">
-            <ui:VisualElement name="module-hud-inactive__sprite" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/icon_plusLarge.png?fileID=2800000&amp;guid=d7678e9348d18c5409f54ba005eeb613&amp;type=3#icon_plusLarge&apos;); width: 84px; -unity-background-scale-mode: scale-to-fit; height: 100%; -unity-background-image-tint-color: rgb(210, 210, 210);" />
-        </ui:VisualElement>
-        <ui:Label text="E to drop module" display-tooltip-when-elided="true" enable-rich-text="true" name="module-hud-inactive__label" style="-unity-text-align: middle-left; font-size: 30px; white-space: normal; flex-shrink: 1;" />
     </ui:VisualElement>
 </ui:UXML>

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerHUDController : MonoBehaviour
+public class PlayerHUDView : MonoBehaviour
 {
 	#region Fields
 
