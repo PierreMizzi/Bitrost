@@ -102,7 +102,7 @@ public class ModuleManager : MonoBehaviour
     private void Subscribe()
     {
         if (m_dropNodeActionReference != null)
-            m_dropNodeActionReference.action.performed += CallbackDropNodeAction;
+            m_dropNodeActionReference.action.performed += CallbackActivateModule;
 
         if (m_retrieveNodeActionReference != null)
             m_retrieveNodeActionReference.action.performed += CallbackRetrieveNodeAction;
@@ -117,7 +117,7 @@ public class ModuleManager : MonoBehaviour
     private void Unsubscribe()
     {
         if (m_dropNodeActionReference != null)
-            m_dropNodeActionReference.action.performed -= CallbackDropNodeAction;
+            m_dropNodeActionReference.action.performed -= CallbackActivateModule;
 
         if (m_retrieveNodeActionReference != null)
             m_retrieveNodeActionReference.action.performed -= CallbackRetrieveNodeAction;
@@ -131,7 +131,7 @@ public class ModuleManager : MonoBehaviour
 
     #region Inputs
 
-    private void CallbackDropNodeAction(InputAction.CallbackContext context)
+    private void CallbackActivateModule(InputAction.CallbackContext context)
     {
         Vector3 mouseScreenPosition = m_mousePositionActionReference.action.ReadValue<Vector2>();
         Vector3 raycastOrigin = m_camera.ScreenToWorldPoint(mouseScreenPosition);
@@ -142,19 +142,18 @@ public class ModuleManager : MonoBehaviour
         if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_crystalShardFilter, results) > 0)
         {
             if (results[0].transform.TryGetComponent<CrystalShard>(out CrystalShard crystal))
-                CreateModule(crystal);
+                ActivateModule(crystal);
         }
     }
 
+    // TODO : Make mouse position related option
     private void CallbackRetrieveNodeAction(InputAction.CallbackContext context)
     {
         foreach (Module module in m_modules)
         {
-            module.Retrieve();
-            Destroy(module.gameObject);
+            module.SetInactive();
+            module.RemoveCrystal();
         }
-        m_modules.Clear();
-        m_remainingModuleCount = m_settings.startingModuleCount;
     }
 
     private void CallbackFireAction(InputAction.CallbackContext context)
@@ -173,6 +172,7 @@ public class ModuleManager : MonoBehaviour
 
     #region Module
 
+    [Obsolete]
     private bool CanCreateModule(CrystalShard crystal)
     {
         bool result = true;
@@ -190,6 +190,7 @@ public class ModuleManager : MonoBehaviour
         return result;
     }
 
+    [Obsolete]
     private void CreateModule(CrystalShard crystal)
     {
         if (CanCreateModule(crystal))
@@ -218,13 +219,12 @@ public class ModuleManager : MonoBehaviour
     private const string k_moduleViewVisualContainer = "module-container";
 
     public VisualElement moduleViewVisualContainer { get; private set; }
-    
+
     [SerializeField]
     private VisualTreeAsset m_moduleViewAsset;
 
     public List<ModuleView> m_moduleViews = new List<ModuleView>();
 
-    // TODO : Initialize
     private void Initialize()
     {
         moduleViewVisualContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
@@ -246,18 +246,15 @@ public class ModuleManager : MonoBehaviour
         m_moduleViews.Add(moduleView);
     }
 
-    private void ActivateModule()
+    private void ActivateModule(CrystalShard crystal)
     {
         Module module = GetUnactivatedModule();
 
-        if (module)
+        if (module != null)
         {
-            Debug.LogWarning("NO UNACTIVATED MODULE");
-            return;
+            module.AssignCrystal(crystal);
+            module.SetActive();
         }
-
-
-
     }
 
     private Module GetUnactivatedModule()
@@ -265,7 +262,7 @@ public class ModuleManager : MonoBehaviour
         int count = m_modules.Count;
         for (int i = 0; i < count; i++)
         {
-            if (!m_modules[i].isActivated)
+            if (!m_modules[i].isActive)
                 return m_modules[i];
         }
         return null;

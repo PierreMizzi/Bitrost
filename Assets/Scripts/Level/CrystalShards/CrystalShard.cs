@@ -18,6 +18,7 @@ public class CrystalShard : MonoBehaviour
 
     public Action onRefreshEnergy = null;
 
+
     public bool isAvailable = true;
 
     private void Awake()

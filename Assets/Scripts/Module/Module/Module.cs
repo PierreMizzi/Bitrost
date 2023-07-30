@@ -5,6 +5,8 @@ using System;
 using System.Collections;
 using UnityEngine.InputSystem;
 
+public delegate void ModuleDelegate(Module module);
+
 public class Module : MonoBehaviour, IBulletLauncher
 {
     #region Fields
@@ -41,7 +43,7 @@ public class Module : MonoBehaviour, IBulletLauncher
     [SerializeField]
     private ModuleUI m_ui = null;
 
-    public Action onRefreshModuleEnergy = null;
+    public Action onRefreshEnergy = null;
 
     public FloatDelegate onUpdateExtractionUI = null;
 
@@ -51,7 +53,7 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     #region Extracting
 
-    private bool m_isExtracting = false;
+    public bool isExtracting { get; private set; }
 
     public float extractionNormalized { get; private set; }
 
@@ -65,11 +67,26 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     #region Reworked UI
 
-    [HideInInspector]
-    public bool isActivated = false;
-
     [SerializeField]
-    private ModuleView m_view = null;
+    private GameObject m_spritesContainer = null;
+
+    // Activation
+    [HideInInspector]
+    public bool isActive = false;
+
+    public Action onActivation = null;
+
+    public Action onAssignCrystal = null;
+
+    public Action onRemoveCrystal = null;
+
+    public Action onExtraction = null;
+
+    public Action onStoredEnergyAvailable = null;
+    public Action onCrystalEnergyAvailable = null;
+
+    // [SerializeField]
+    // private ModuleView m_view = null;
 
     #endregion
 
@@ -95,7 +112,8 @@ public class Module : MonoBehaviour, IBulletLauncher
         m_manager = manager;
 
         storedEnergyCount = 0;
-        storedEnergyCapacity = m_settings.storedEnergyCapacity;
+
+        SetInactive();
     }
 
     #region MonoBehaviour
@@ -104,28 +122,72 @@ public class Module : MonoBehaviour, IBulletLauncher
     {
         m_camera = Camera.main;
         m_player = FindObjectOfType<PlayerController>();
+        storedEnergyCapacity = m_settings.storedEnergyCapacity;
 
-        onRefreshModuleEnergy = () => { };
+        onActivation = () => { };
+        onAssignCrystal = () => { };
+        onRemoveCrystal = () => { };
+
+        onRefreshEnergy = () => { };
         onUpdateExtractionUI = (float normalized) => { };
-    }
 
-    private IEnumerator Start()
-    {
-        yield return new WaitForEndOfFrame();
-        // onRefreshModuleEnergy.Invoke();
-        // crystal.onRefreshEnergy.Invoke();
-
-        yield return null;
+        onStoredEnergyAvailable = () => { };
+        onCrystalEnergyAvailable = () => { };
     }
 
     public void Update()
     {
-        UpdateRotation();
+        if (isActive)
+            UpdateRotation();
     }
 
     #endregion
 
-    #region UI
+    #region Activation
+
+    public void SetActive()
+    {
+        isActive = true;
+        m_spritesContainer.SetActive(true);
+
+        transform.position = this.crystal.transform.position;
+
+        onActivation.Invoke();
+        onRefreshEnergy.Invoke();
+        onExtraction.Invoke();
+        onCrystalEnergyAvailable.Invoke();
+    }
+
+    public void SetInactive()
+    {
+        isActive = false;
+        m_spritesContainer.SetActive(false);
+
+        onActivation.Invoke();
+
+        if (m_extractingTween != null && m_extractingTween.IsPlaying())
+            m_extractingTween.Kill();
+    }
+
+    public void AssignCrystal(CrystalShard crystal)
+    {
+        this.crystal = crystal;
+        this.crystal.SetUnavailable();
+
+        onAssignCrystal.Invoke();
+        this.crystal.onRefreshEnergy.Invoke();
+    }
+
+    public void RemoveCrystal()
+    {
+        crystal.SetAvailable();
+
+        if (!crystal.hasEnergy)
+            Destroy(crystal.gameObject);
+
+        onRemoveCrystal.Invoke();
+        crystal = null;
+    }
 
     #endregion
 
@@ -133,7 +195,7 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     public void ToggleExtracting()
     {
-        if (!m_isExtracting)
+        if (!isExtracting)
             StartExtracting();
         else
             StopExtracting();
@@ -143,7 +205,7 @@ public class Module : MonoBehaviour, IBulletLauncher
     {
         if (CanExtract())
         {
-            m_isExtracting = true;
+            isExtracting = true;
             extractionNormalized = 0;
 
             m_extractingTween = DOVirtual
@@ -151,15 +213,18 @@ public class Module : MonoBehaviour, IBulletLauncher
                 .SetEase(Ease.Linear)
                 .SetLoops(-1)
                 .OnStepComplete(CompleteExtracting);
+
+            onExtraction.Invoke();
         }
     }
 
     private void StopExtracting()
     {
         m_extractingTween.Kill();
-        m_isExtracting = false;
+        isExtracting = false;
         extractionNormalized = 0;
         onUpdateExtractionUI.Invoke(1);
+        onExtraction.Invoke();
     }
 
     public void ExtractingUpdate(float value)
@@ -185,7 +250,8 @@ public class Module : MonoBehaviour, IBulletLauncher
 
         extractionNormalized = 0;
         onUpdateExtractionUI.Invoke(1);
-        onRefreshModuleEnergy.Invoke();
+        onRefreshEnergy.Invoke();
+        onStoredEnergyAvailable.Invoke();
     }
 
     public bool CanExtract()
@@ -199,8 +265,8 @@ public class Module : MonoBehaviour, IBulletLauncher
             Debug.LogWarning("CAN'T STORE ENERGY");
 
         // Is already Extracting ?
-        result &= !m_isExtracting;
-        if (m_isExtracting)
+        result &= !isExtracting;
+        if (isExtracting)
             Debug.LogWarning("IS EXTRACTING");
 
         // Crystal has energy ?
@@ -215,15 +281,6 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     #region Retrieve
 
-    public void Retrieve()
-    {
-        crystal.SetAvailable();
-        m_ui.UnsubscribeCrystal();
-
-        if (!crystal.hasEnergy)
-            Destroy(crystal.gameObject);
-    }
-
     #endregion
 
     #region Fire
@@ -235,7 +292,7 @@ public class Module : MonoBehaviour, IBulletLauncher
             if (storedEnergyCount > 0)
             {
                 storedEnergyCount--;
-                onRefreshModuleEnergy.Invoke();
+                onRefreshEnergy.Invoke();
             }
             else
                 crystal.DecrementEnergy();
@@ -246,6 +303,9 @@ public class Module : MonoBehaviour, IBulletLauncher
                 m_bulletOrigin.position,
                 m_aimDirection
             );
+
+            if (storedEnergyCount == 0)
+                onCrystalEnergyAvailable.Invoke();
         }
     }
 
@@ -254,8 +314,8 @@ public class Module : MonoBehaviour, IBulletLauncher
         bool result = true;
 
         // Is extracting ?
-        result &= !m_isExtracting;
-        if (m_isExtracting)
+        result &= !isExtracting;
+        if (isExtracting)
             Debug.LogWarning("IS EXTRACTING");
 
         // Has energy in crystal or stored ?

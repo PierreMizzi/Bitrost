@@ -46,7 +46,7 @@ public class ModuleUI : MonoBehaviour
     {
         if (m_module != null)
         {
-            m_module.onRefreshModuleEnergy += CallbackRefreshModuleEnergy;
+            m_module.onRefreshEnergy += CallbackRefreshModuleEnergy;
             m_module.onUpdateExtractionUI += CallbackUpdateExtractionUI;
         }
     }
@@ -55,7 +55,7 @@ public class ModuleUI : MonoBehaviour
     {
         if (m_module != null)
         {
-            m_module.onRefreshModuleEnergy -= CallbackRefreshModuleEnergy;
+            m_module.onRefreshEnergy -= CallbackRefreshModuleEnergy;
             m_module.onUpdateExtractionUI -= CallbackUpdateExtractionUI;
         }
     }
