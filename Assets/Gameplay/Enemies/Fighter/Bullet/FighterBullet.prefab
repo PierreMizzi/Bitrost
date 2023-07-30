@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3741169766357441705}
   - component: {fileID: 7446927507745633968}
   - component: {fileID: 1548620162354812183}
-  - component: {fileID: 7446927507745633935}
+  - component: {fileID: 2571815961913954840}
   m_Layer: 0
   m_Name: FighterBullet
   m_TagString: Untagged
@@ -82,7 +82,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.6}
   m_EdgeRadius: 0
---- !u!114 &7446927507745633935
+--- !u!114 &2571815961913954840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,12 +91,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3741169766357441707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c9eab5426c7b545addb3818d40218c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2dd84b0bbbf71de41b6bf83fb2b656e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
   m_type: 2
-  m_speed: 25
+  m_speed: 0
   m_collisionFilter:
     useTriggers: 0
     useLayerMask: 1
@@ -111,6 +111,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  m_settings: {fileID: 11400000, guid: 5fef314c02da33649882a22154889ac8, type: 2}
 --- !u!1 &8555526859511224642
 GameObject:
   m_ObjectHideFlags: 0

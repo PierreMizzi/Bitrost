@@ -4,8 +4,8 @@
         <ui:VisualElement name="player-ship__container" class="player-profil__container">
             <ui:VisualElement name="player-ship__picture" class="player-profil__picture" />
         </ui:VisualElement>
-        <ui:VisualElement name="health-progress-bar" class="health-progress-bar" style="height: 25%;">
-            <ui:VisualElement name="health-progress-bar__progress" class="health-progress-bar__progress" />
+        <ui:VisualElement name="health-progress-bar" class="health-progress-bar" style="height: 25%; border-left-width: 4px;">
+            <ui:VisualElement name="health-progress-bar__progress" class="health-progress-bar__progress" style="left: 0; position: absolute; right: 0;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

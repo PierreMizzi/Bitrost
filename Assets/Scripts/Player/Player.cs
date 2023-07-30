@@ -21,20 +21,26 @@ public class Player : MonoBehaviour
 
 	#region Methods
 
-    private void Start()
+    private void Awake()
     {
         m_levelChannel.player = gameObject;
-        m_healthEntity = GetComponent<HealthEntity>();
+
         m_controller = GetComponent<PlayerController>();
-        
-        m_healthEntity.maxHealth = m_settings.maxHealth;
+
+        m_healthEntity = GetComponent<HealthEntity>();
+        m_healthEntity.Initialize(m_settings.maxHealth);
+    }
+
+    private void Start()
+    {
         SubscribeHealthEntity();
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         UnsubscribeHealthEntity();
     }
-    
+
     #region Health
 
     private void SubscribeHealthEntity()
@@ -44,28 +50,22 @@ public class Player : MonoBehaviour
         m_healthEntity.onNoHealth += CallbackNoHealth;
     }
 
-        private void UnsubscribeHealthEntity()
+    private void UnsubscribeHealthEntity()
     {
         m_healthEntity.onLostHealth -= CallbackLostHealth;
         m_healthEntity.onHealedHealth -= CallbackHealedHealth;
         m_healthEntity.onNoHealth -= CallbackNoHealth;
     }
 
-	private void CallbackHealedHealth()
-	{
-	}
+    private void CallbackHealedHealth() { }
 
-	private void CallbackLostHealth()
-	{
-	}
+    private void CallbackLostHealth() { }
 
     private void CallbackNoHealth()
-	{
+    {
         Debug.LogWarning("PLAYER HAS DIED !");
         m_controller.enabled = false;
-	}
-
-
+    }
 
 	#endregion
 

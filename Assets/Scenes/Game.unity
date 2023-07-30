@@ -984,8 +984,8 @@ MonoBehaviour:
     type: 3}
   m_treshold: 0.75
   m_offsetMagnitude: 1
-  m_smoothDampSpeed: 0
-  m_smoothDampMaxSpeed: 0
+  m_smoothDampSpeed: 0.33
+  m_smoothDampMaxSpeed: 50
 --- !u!1 &1903221704
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,6 +995,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903221705}
+  - component: {fileID: 1903221706}
   m_Layer: 0
   m_Name: PlayerHUDController
   m_TagString: Untagged
@@ -1017,6 +1018,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1903221706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903221704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e68aa6e3f9b48439f215b69d2273b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_document: {fileID: 2059864115}
+  m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
+  d_normalizedHealth: 0
 --- !u!1 &1934349536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,7 +1090,7 @@ GameObject:
   - component: {fileID: 2059864116}
   - component: {fileID: 2059864115}
   m_Layer: 0
-  m_Name: GameHUD
+  m_Name: GameUIDocument
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
