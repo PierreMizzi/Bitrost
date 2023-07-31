@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour, IStateMachine
     }
 
     protected HealthEntity m_healthEntity;
+    protected bool m_isInitialized;
     protected EnemyManager m_manager = null;
 
     public EnemySettings settings;
@@ -37,20 +38,14 @@ public class Enemy : MonoBehaviour, IStateMachine
 
 	#region Methods
 
-    protected virtual void Awake()
-    {
-        m_healthEntity = GetComponent<HealthEntity>();
-        InitiliazeState();
-    }
-
-    protected virtual void Start()
-    {
-        SubscribeHealth();
-    }
-
     protected virtual void Update()
     {
         UpdateStateMachine();
+    }
+
+    protected virtual void OnDestroy()
+    {
+        UnsubscribeHealth();
     }
 
     #region StateMachine
@@ -94,8 +89,21 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     #region Behaviour
 
-    public virtual void Initialize(EnemyManager manager)
+    protected virtual void Initialize()
     {
+        m_healthEntity = GetComponent<HealthEntity>();
+        SubscribeHealth();
+
+        InitiliazeState();
+
+        m_isInitialized = true;
+    }
+
+    public virtual void GetFromPool(EnemyManager manager)
+    {
+        if(!m_isInitialized)
+            Initialize();
+
         m_healthEntity.maxHealth = settings.maxHealth;
         m_healthEntity.Reset();
         m_manager = manager;

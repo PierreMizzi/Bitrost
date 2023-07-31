@@ -15,10 +15,9 @@ public class Fighter : Enemy, IBulletLauncher
         get { return base.settings as FighterSettings; }
     }
 
-    public Vector3 directionTowardPlayer{
-        get{
-            return (transform.position - m_levelChannel.player.transform.position).normalized;
-        }
+    public Vector3 directionTowardPlayer
+    {
+        get { return (transform.position - m_levelChannel.player.transform.position).normalized; }
     }
 
 	#endregion
@@ -49,15 +48,18 @@ public class Fighter : Enemy, IBulletLauncher
 
     public void Fire()
     {
-        Vector3 playerPosition = levelChannel.player.transform.position;
-        Vector3 fighterToPlayer = playerPosition - transform.position;
+        if (CanFire())
+        {
+            Vector3 playerPosition = levelChannel.player.transform.position;
+            Vector3 fighterToPlayer = playerPosition - transform.position;
 
-        bulletChannel.onInstantiateBullet(
-            this,
-            settings.bulletPrefab,
-            bulletOrigin.position,
-            fighterToPlayer.normalized
-        );
+            bulletChannel.onInstantiateBullet(
+                this,
+                settings.bulletPrefab,
+                bulletOrigin.position,
+                fighterToPlayer.normalized
+            );
+        }
     }
 
     #endregion

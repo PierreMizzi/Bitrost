@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using CodesmithWorkshop.Useful;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 public class Harvester : Enemy
 {
     // [Header("Header")]
-    public HarvesterSettings settings
+    public new HarvesterSettings settings
     {
         get { return base.settings as HarvesterSettings; }
     }
@@ -15,11 +14,10 @@ public class Harvester : Enemy
 
     public Animator animator { get; private set; }
 
-    protected override void Awake()
+    protected override void Initialize()
     {
-        base.Awake();
         animator = GetComponent<Animator>();
-        m_healthEntity = GetComponent<HealthEntity>();
+        base.Initialize();
     }
 
     public override void InitiliazeState()

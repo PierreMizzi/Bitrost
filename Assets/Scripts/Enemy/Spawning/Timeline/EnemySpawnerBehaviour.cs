@@ -14,7 +14,7 @@ public class EnemySpawnerBehaviour : PlayableBehaviour
         {
             m_manager = playerData as EnemyManager;
             m_manager.ChangeEnemySpawnConfig(spawnConfig);
-            
+
 			m_done = true;
         }
     }
@@ -46,10 +46,10 @@ public class EnemySpawnerBehaviour : PlayableBehaviour
     //     Debug.Log("OnGraphStart");
     // }
 
-    // public override void OnGraphStop(Playable playable)
-    // {
-    //     Debug.Log("OnGraphStop");
-    // }
+    public override void OnGraphStop(Playable playable)
+    {
+        Debug.Log("OnGraphStop");
+    }
 
     // public override void OnPlayableCreate(Playable playable)
     // {

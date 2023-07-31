@@ -28,7 +28,9 @@ public partial class EnemyManager : MonoBehaviour
     private List<EnemySpawnShortcutConfig> m_enemySpawnShortcutConfigs =
         new List<EnemySpawnShortcutConfig>();
 
-    private List<IEnumerator> m_enemySpawnCoroutines = new List<IEnumerator>();
+    private Dictionary<EnemyType, EnemySpawner> m_enemyTypeToSpawner =
+        new Dictionary<EnemyType, EnemySpawner>();
+
 
     #region Spawn Bounds
 
@@ -61,6 +63,7 @@ public partial class EnemyManager : MonoBehaviour
     private void Start()
     {
         InitializeEnemyPools();
+        InitializeEnemySpawners();
     }
 
     private void Update()
@@ -84,15 +87,30 @@ public partial class EnemyManager : MonoBehaviour
 
     #region Spawning
 
-    public void ChangeEnemySpawnConfig(EnemySpawnConfig config)
+    private void InitializeEnemySpawners()
     {
-        Debug.Log($"CHANGE SPAWN CONFIG : {config.prefab.name}");
+        foreach (Transform child in transform)
+        {
+            if (child.TryGetComponent(out EnemySpawner spawner))
+            {
+                spawner.Initialize(this);
+                m_enemyTypeToSpawner.Add(spawner.enemy.type, spawner);
+            }
+        }
     }
 
-    private void SpawnEnemy(GameObject prefab)
+    public void ChangeEnemySpawnConfig(EnemySpawnConfig config)
+    {
+        if(m_enemyTypeToSpawner.ContainsKey(config.prefab.type))
+        {
+            m_enemyTypeToSpawner[config.prefab.type].ChangeConfig(config);
+        }
+    }
+
+    public void SpawnEnemy(GameObject prefab)
     {
         Enemy enemy = m_poolingChannel.onGetFromPool.Invoke(prefab).GetComponent<Enemy>();
-        enemy.Initialize(this);
+        enemy.GetFromPool(this);
 
         enemy.transform.position = GetCameraEdgeRandomPosition();
     }

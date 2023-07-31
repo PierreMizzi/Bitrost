@@ -36,7 +36,7 @@ public abstract class AState
     // State Machine lifecycle
     protected virtual void DefaultEnter()
     {
-        Debug.Log($"ENTER : {type}");
+        // Debug.Log($"ENTER : {type}");
     }
 
     /// <summary>
