@@ -2,12 +2,9 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public struct EnemySpawningConfig
+public struct EnemySpawnShortcutConfig
 {
     public Enemy prefab;
-
-    public int minSpawnDelay;
-    public int maxSpawnDelay;
 
     public KeyCode quickSpawnKey;
 }

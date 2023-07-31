@@ -16,9 +16,6 @@ public partial class EnemyManager : MonoBehaviour
 {
 	#region Fields
 
-    [SerializeField]
-    private LevelChannel m_levelChannel = null;
-
     private Camera m_camera = null;
 
     [SerializeField]
@@ -28,7 +25,8 @@ public partial class EnemyManager : MonoBehaviour
     private List<EnemyPoolConfig> m_enemyPoolConfigs = new List<EnemyPoolConfig>();
 
     [SerializeField]
-    private List<EnemySpawningConfig> m_enemySpawnConfigs = new List<EnemySpawningConfig>();
+    private List<EnemySpawnShortcutConfig> m_enemySpawnShortcutConfigs =
+        new List<EnemySpawnShortcutConfig>();
 
     private List<IEnumerator> m_enemySpawnCoroutines = new List<IEnumerator>();
 
@@ -63,7 +61,6 @@ public partial class EnemyManager : MonoBehaviour
     private void Start()
     {
         InitializeEnemyPools();
-        // InitializeSpawning();
     }
 
     private void Update()
@@ -76,6 +73,8 @@ public partial class EnemyManager : MonoBehaviour
         UpdateEnemySpawnBounds();
     }
 
+    private void OnDestroy() { }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(m_enemySpawnBounds.center, m_enemySpawnBounds.size);
@@ -85,27 +84,9 @@ public partial class EnemyManager : MonoBehaviour
 
     #region Spawning
 
-    private void InitializeSpawning()
+    public void ChangeEnemySpawnConfig(EnemySpawnConfig config)
     {
-        foreach (EnemySpawningConfig config in m_enemySpawnConfigs)
-        {
-            IEnumerator coroutine = SpawningCoroutine(config);
-            StartCoroutine(coroutine);
-
-            m_enemySpawnCoroutines.Add(coroutine);
-        }
-    }
-
-    private IEnumerator SpawningCoroutine(EnemySpawningConfig config)
-    {
-        while (true)
-        {
-            SpawnEnemy(config.prefab.gameObject);
-
-            float delaySpawn = Random.Range(config.minSpawnDelay, config.maxSpawnDelay);
-
-            yield return new WaitForSeconds(delaySpawn);
-        }
+        Debug.Log($"CHANGE SPAWN CONFIG : {config.prefab.name}");
     }
 
     private void SpawnEnemy(GameObject prefab)
@@ -130,7 +111,7 @@ public partial class EnemyManager : MonoBehaviour
 
     private void ManageQuickSpawn()
     {
-        foreach (EnemySpawningConfig config in m_enemySpawnConfigs)
+        foreach (EnemySpawnShortcutConfig config in m_enemySpawnShortcutConfigs)
         {
             if (Input.GetKeyDown(config.quickSpawnKey))
                 SpawnEnemy(config.prefab.gameObject);
