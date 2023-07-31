@@ -11,6 +11,16 @@ using System.Collections.Generic;
 
 */
 
+// TODO : Add up maxCount of all EnemySpawnerConfig
+// to know how many enemy will be killed at eaxh stage
+
+// TODO : Decrement the number when enemy killed
+
+// TODO : Tell LevelManager when to continue
+
+// TODO : Spawn enemy not on a border but on an area -> TO TEST
+
+
 [ExecuteInEditMode]
 public partial class EnemyManager : MonoBehaviour
 {
@@ -31,12 +41,13 @@ public partial class EnemyManager : MonoBehaviour
     private Dictionary<EnemyType, EnemySpawner> m_enemyTypeToSpawner =
         new Dictionary<EnemyType, EnemySpawner>();
 
-
     #region Spawn Bounds
 
     [Header("Spawn Bounds")]
     [SerializeField]
     private float m_offsetSpawnBounds = 1f;
+
+    private float m_spawnBoundsAreaSize = 2f;
 
     private Bounds m_enemySpawnBounds;
 
@@ -81,6 +92,10 @@ public partial class EnemyManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(m_enemySpawnBounds.center, m_enemySpawnBounds.size);
+        Gizmos.DrawWireCube(
+            m_enemySpawnBounds.center,
+            m_enemySpawnBounds.size * m_spawnBoundsAreaSize
+        );
     }
 
     #endregion
@@ -101,10 +116,16 @@ public partial class EnemyManager : MonoBehaviour
 
     public void ChangeEnemySpawnConfig(EnemySpawnConfig config)
     {
-        if(m_enemyTypeToSpawner.ContainsKey(config.prefab.type))
+        if (m_enemyTypeToSpawner.ContainsKey(config.prefab.type))
         {
             m_enemyTypeToSpawner[config.prefab.type].ChangeConfig(config);
         }
+    }
+
+    public void SpawnEnemy(GameObject prefab, int count)
+    {
+        for (int i = 0; i < count; i++)
+            SpawnEnemy(prefab);
     }
 
     public void SpawnEnemy(GameObject prefab)
@@ -165,6 +186,7 @@ public partial class EnemyManager : MonoBehaviour
 
     private Vector3 GetCameraEdgeRandomPosition()
     {
+        // Compute random position on the bounds
         Vector3 randomPosition = new Vector2();
 
         bool horizontalOrVertical = Random.Range(0, 2) == 0;
@@ -187,7 +209,13 @@ public partial class EnemyManager : MonoBehaviour
             randomPosition.x = (positiveOrNegative ? 1 : -1) * m_enemySpawnBounds.extents.x;
         }
 
+        Vector3 dirToPosition = randomPosition.normalized;
+
         randomPosition += m_enemySpawnBounds.center;
+        randomPosition += dirToPosition * Random.Range(1f, m_spawnBoundsAreaSize);
+
+        // Compute a new random position inside the area
+
         return randomPosition;
     }
 

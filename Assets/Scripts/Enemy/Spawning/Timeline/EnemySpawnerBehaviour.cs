@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.Playables;
 
 public class EnemySpawnerBehaviour : PlayableBehaviour
@@ -46,10 +45,10 @@ public class EnemySpawnerBehaviour : PlayableBehaviour
     //     Debug.Log("OnGraphStart");
     // }
 
-    public override void OnGraphStop(Playable playable)
-    {
-        Debug.Log("OnGraphStop");
-    }
+    // public override void OnGraphStop(Playable playable)
+    // {
+    //     Debug.Log("OnGraphStop");
+    // }
 
     // public override void OnPlayableCreate(Playable playable)
     // {

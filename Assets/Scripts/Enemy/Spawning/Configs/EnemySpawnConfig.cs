@@ -3,12 +3,15 @@ using System;
 [Serializable]
 public struct EnemySpawnConfig
 {
-
-	public Enemy prefab;
-    public int minDelaySpawn;
-    public int maxDelaySpawn;
+    public Enemy prefab;
 
     public int maxCount;
+    public int batchCount;
+    public float duration;
 
-	public bool autoReplace;
+    public float spawnFrequency
+    {
+        get { return (duration / maxCount) * batchCount; }
+    }
+
 }

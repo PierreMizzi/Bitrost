@@ -16,6 +16,8 @@ public class EnemySpawner : MonoBehaviour
 
     private EnemySpawnConfig m_config;
 
+    private int currentCount;
+
     private IEnumerator m_spawnCoroutine;
 
     public void Initialize(EnemyManager manager)
@@ -67,13 +69,10 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            m_manager.SpawnEnemy(m_config.prefab.gameObject);
-            yield return new WaitForSeconds(GetRandomDelay());
+            m_manager.SpawnEnemy(m_config.prefab.gameObject, m_config.batchCount);
+            yield return new WaitForSeconds(m_config.spawnFrequency);
         }
     }
 
-    public float GetRandomDelay()
-    {
-        return UnityEngine.Random.Range(m_config.minDelaySpawn, m_config.maxDelaySpawn);
-    }
+
 }
