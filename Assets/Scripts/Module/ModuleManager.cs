@@ -159,7 +159,10 @@ public class ModuleManager : MonoBehaviour
     private void CallbackFireAction(InputAction.CallbackContext context)
     {
         foreach (Module module in m_modules)
-            module.Fire();
+        {
+            if (module.isActive)
+                module.Fire();
+        }
     }
 
     private void CallbackExtractAction(InputAction.CallbackContext context)

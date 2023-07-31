@@ -79,7 +79,6 @@ public class ModuleUI : MonoBehaviour
         );
     }
 
-    // TODO : Refresh when the crystal is being extracted by Harvester
     public void CallbackRefreshModuleEnergy()
     {
         m_moduleText.text = string.Format(

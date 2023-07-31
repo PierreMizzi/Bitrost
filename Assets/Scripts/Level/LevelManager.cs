@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Playables;
 
 [ExecuteInEditMode]
 public class LevelManager : MonoBehaviour
@@ -13,6 +14,21 @@ public class LevelManager : MonoBehaviour
 
     public static float arenaRadiusSqr = 0f;
 
+    [SerializeField]
+    private LevelChannel m_levelChannel = null;
+
+    #region Time
+
+    public float time { get; private set; }
+
+    #endregion
+
+    #region Timeline
+
+    private PlayableDirector m_director;
+
+    #endregion
+
 	#endregion
 
 	#region Methods
@@ -21,6 +37,11 @@ public class LevelManager : MonoBehaviour
     {
         arenaRadius = m_arenaDiameter / 2f;
         arenaRadiusSqr = math.pow(arenaRadius, 2f);
+    }
+
+    private void Update()
+    {
+        time += Time.unscaledDeltaTime;
     }
 
     public static bool IsInsideArena(Vector3 position)

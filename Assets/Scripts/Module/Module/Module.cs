@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 
 public delegate void ModuleDelegate(Module module);
 
+// TODO : back to Fire Mode when retrieving while extracting
 public class Module : MonoBehaviour, IBulletLauncher
 {
     #region Fields

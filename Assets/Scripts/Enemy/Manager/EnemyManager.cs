@@ -16,6 +16,9 @@ public partial class EnemyManager : MonoBehaviour
 {
 	#region Fields
 
+    [SerializeField]
+    private LevelChannel m_levelChannel = null;
+
     private Camera m_camera = null;
 
     [SerializeField]
@@ -197,7 +200,7 @@ public partial class EnemyManager : MonoBehaviour
     {
         m_poolingChannel.onReleaseFromPool.Invoke(gameObject);
     }
-        
+
     #endregion
 
 	#endregion
