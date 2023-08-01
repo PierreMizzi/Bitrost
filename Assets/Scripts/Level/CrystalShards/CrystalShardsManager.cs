@@ -47,28 +47,27 @@ public class CrystalShardsManager : MonoBehaviour
         m_levelChannel.crystalManager = this;
         ClearCrystalShards();
 
-
         yield return new WaitForEndOfFrame();
         m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
-        SpawnFill();
     }
 
     private void OnDestroy() { }
 
-    private void SpawnFill()
+    public void SpawnCrystalShards(SpawnCrystalShardsConfig config)
     {
-        int count = UnityEngine.Random.Range(
-            m_settings.minFillSpawnCount,
-            m_settings.maxFillSpawnCount
-        );
+        if (!Application.isPlaying)
+            return;
 
-        for (int i = 0; i < count; i++)
-            SpawnCrystalShard();
+        List<Vector3> randomPositions = LevelManager.RandomPositions(config.count, config.radius);
+
+        for (int i = 0; i < config.count; i++)
+        {
+            int energy = Random.Range(config.minEnergy, config.maxEnergy + 1);
+            SpawnCrystalShard(randomPositions[i], energy);
+        }
     }
 
-    private void SpawnContinuous() { }
-
-    private void SpawnCrystalShard(Vector3 position = new Vector3())
+    private void SpawnCrystalShard(Vector3 position, int energy)
     {
         // Get From Pool
         CrystalShard crystal = m_poolingChannel.onGetFromPool
@@ -76,23 +75,21 @@ public class CrystalShardsManager : MonoBehaviour
             .GetComponent<CrystalShard>();
 
         // Set Random Position
-        if (position == Vector3.zero)
-            position = LevelManager.RandomPosition();
         crystal.transform.position = position;
 
         // Set Random Rotation
         Quaternion rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360));
         crystal.transform.rotation = rotation;
 
-        // set random quantity
-        int quantity = UnityEngine.Random.Range(m_settings.minQuantity, m_settings.maxQuantity);
+        crystal.transform.localScale = Vector3.one * energy * m_settings.quantityToScaleRatio;
 
-        crystal.transform.localScale = Vector3.one * quantity * m_settings.quantityToScaleRatio;
-
-        crystal.Initialize(this, quantity);
+        crystal.Initialize(this, energy);
         m_crystals.Add(crystal);
     }
 
+    /// <summary>
+    /// Might be useful !
+    /// </summary>
     private bool IsValidPosition(Vector3 position)
     {
         if (m_crystals.Count == 0)
@@ -133,24 +130,25 @@ public class CrystalShardsManager : MonoBehaviour
         m_poolingChannel.onReleaseFromPool(crystal.gameObject);
     }
 
-    public CrystalShard GetRandomCrystal(List<CrystalShard> crystals)
-    {
-        int index = Random.Range(0, crystals.Count - 1);
-        return crystals[index];
-    }
-
     public void ClearCrystalShards()
     {
         UtilsClass.EmptyTransform(m_container, true);
         m_crystals.Clear();
     }
 
-    [ContextMenu("Debug Fill Spawn")]
-    public void DebugFillSpawn()
+    #region Debug
+
+
+    [SerializeField]
+    private SpawnCrystalShardsConfig d_config;
+
+    [ContextMenu("DebugSpawn")]
+    public void DebugSpawn()
     {
-        ClearCrystalShards();
-        SpawnFill();
+        SpawnCrystalShards(d_config);
     }
+
+    #endregion
 
 	#endregion
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -7,21 +8,8 @@ using UnityEngine;
 )]
 public class CrystalShardsSettings : ScriptableObject
 {
-	// [Header("Spawning Zone")]
 
-	public float minDistanceBetweenCrystals;
-
-    [Header("Fill spawning")]
-    public int minFillSpawnCount = 20;
-    public int maxFillSpawnCount = 40;
-
-    [Header("Continuous Spawning")]
-    public float minDelayContinuousSpawn = 10f;
-    public float maxDelayContinuousSpawn = 30f;
-
-	[Header("Individual crystal")]
-    public int minQuantity = 25;
-    public int maxQuantity = 100;
+    public float minDistanceBetweenCrystals;
 
     public float quantityToScaleRatio = 0.033f;
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -70,14 +71,27 @@ public class LevelManager : MonoBehaviour
         return position.sqrMagnitude < arenaRadiusSqr;
     }
 
-    public static Vector3 RandomPosition()
+    public static Vector3 RandomPosition(Vector3 origin, float radius)
     {
         float randomAngle = UnityEngine.Random.Range(0f, Mathf.PI * 2f);
         float randomLength = UnityEngine.Random.Range(0f, 1f);
 
-        return new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0)
-            * arenaRadius
+        return origin + new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0)
+            * radius
             * randomLength;
+    }
+
+    public static List<Vector3> RandomPositions(int count, float radius)
+    {
+        Vector3 origin = RandomPosition(Vector3.zero, arenaRadius - radius);
+
+        List<Vector3> positions = new List<Vector3>();
+
+        for (int i = 0; i < count; i++)
+            positions.Add(RandomPosition(origin, radius));
+
+
+        return positions;
     }
 
     #region Stage Management

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549d3bb37e2dbd44aa1586ac777f38e3, type: 3}
   m_Name: FighterSettings
   m_EditorClassIdentifier: 
-  maxHealth: 150
+  maxHealth: 60
   speed: 14
   radiusAroundPlayer: 7
   bulletPrefab: {fileID: 2571815961913954840, guid: f85d070aacc883c42b97b82a01838423,

@@ -13,10 +13,4 @@ MonoBehaviour:
   m_Name: CrystalShardsSettings
   m_EditorClassIdentifier: 
   minDistanceBetweenCrystals: 0
-  minFillSpawnCount: 20
-  maxFillSpawnCount: 40
-  minDelayContinuousSpawn: 10
-  maxDelayContinuousSpawn: 30
-  minQuantity: 25
-  maxQuantity: 100
-  quantityToScaleRatio: 0.05
+  quantityToScaleRatio: 0.2
