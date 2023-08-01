@@ -569,6 +569,7 @@ GameObject:
   - component: {fileID: 1186876196}
   - component: {fileID: 1186876197}
   - component: {fileID: 1186876198}
+  - component: {fileID: 1186876199}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -604,7 +605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_arenaDiameter: 50
-  m_levelChannel: {fileID: 0}
+  m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
 --- !u!320 &1186876198
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -614,7 +615,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1186876195}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 2291c08985e71724c8022f07530227e6, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: e8854b779aa18de4da812d8f92db3cbc, type: 2}
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -624,12 +625,48 @@ PlayableDirector:
     value: {fileID: 1202175241}
   - key: {fileID: -5991889997507718, guid: 2291c08985e71724c8022f07530227e6, type: 2}
     value: {fileID: 1202175241}
+  - key: {fileID: -5991889997507718, guid: e8854b779aa18de4da812d8f92db3cbc, type: 2}
+    value: {fileID: 1202175241}
+  - key: {fileID: 3559903887591459359, guid: e8854b779aa18de4da812d8f92db3cbc, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3060668285923237334, guid: e8854b779aa18de4da812d8f92db3cbc, type: 2}
+    value: {fileID: 1186876199}
   m_ExposedReferences:
     m_References:
     - fb4b267e3e4e74a4dbffc9b23c9f6467: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295,
         type: 2}
     - 1b59c11746e12e24c8499a96418f8634: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295,
         type: 2}
+--- !u!114 &1186876199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186876195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 35c70a195aaedc9439bd29386da29b3d, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1186876197}
+          m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+          m_MethodName: CallbackStayStage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1202175239
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,6 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65b449e73f531049ad057fe3f90c178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_poolingChannel: {fileID: 11400000, guid: a300e10b08d5742479ad11a9df1206d0, type: 2}
   m_enemyPoolConfigs:
   - name: Harvester

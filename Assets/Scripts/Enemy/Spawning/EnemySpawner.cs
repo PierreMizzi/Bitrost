@@ -27,10 +27,10 @@ public class EnemySpawner : MonoBehaviour
 
     public void ChangeConfig(EnemySpawnConfig config)
     {
-        Debug.Log($"CHANGED CONFIG FOR : {config.prefab.type}");
         if (Application.isPlaying)
         {
             m_config = config;
+            currentCount = config.count;
             StartSpawning();
         }
     }
@@ -70,9 +70,15 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             m_manager.SpawnEnemy(m_config.prefab.gameObject, m_config.batchCount);
-            yield return new WaitForSeconds(m_config.spawnFrequency);
+            currentCount -= m_config.batchCount;
+
+            if (currentCount <= 0)
+            {
+                StopSpawning();
+                yield break;
+            }
+            else
+                yield return new WaitForSeconds(m_config.spawnFrequency);
         }
     }
-
-
 }

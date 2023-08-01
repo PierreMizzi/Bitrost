@@ -11,6 +11,7 @@ public class EnemySpawnerAsset : PlayableAsset
 
         EnemySpawnerBehaviour behaviour = playable.GetBehaviour();
 
+        spawnConfig.duration = (float)duration;
         behaviour.spawnConfig = spawnConfig;
 
         return playable;

@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     protected virtual void CallbackNoHealth()
     {
-        m_manager.Release(gameObject);
+        m_manager.KillEnemy(gameObject);
     }
 
     #endregion

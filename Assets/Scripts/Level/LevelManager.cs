@@ -17,6 +17,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private LevelChannel m_levelChannel = null;
 
+    private bool isStageCompleted;
+
+    private bool m_isStageDurationOver;
+
     #region Time
 
     public float time { get; private set; }
@@ -39,6 +43,23 @@ public class LevelManager : MonoBehaviour
         arenaRadiusSqr = math.pow(arenaRadius, 2f);
     }
 
+    private void Awake()
+    {
+        m_director = GetComponent<PlayableDirector>();
+    }
+
+    private void Start()
+    {
+        if (m_levelChannel != null)
+            m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
+    }
+
+    private void OnDestroy()
+    {
+        if (m_levelChannel != null)
+            m_levelChannel.onAllEnemiesKilled -= CallbackAllEnemiesKilled;
+    }
+
     private void Update()
     {
         time += Time.unscaledDeltaTime;
@@ -58,6 +79,36 @@ public class LevelManager : MonoBehaviour
             * arenaRadius
             * randomLength;
     }
+
+    #region Stage Management
+
+    private void PlayStage()
+    {
+        m_director.Play();
+        m_isStageDurationOver = false;
+        isStageCompleted = false;
+    }
+
+    // From Signal Emitter
+    public void CallbackStayStage()
+    {
+        m_isStageDurationOver = true;
+
+        if (!isStageCompleted)
+            m_director.Pause();
+        else
+            PlayStage();
+    }
+
+    public void CallbackAllEnemiesKilled()
+    {
+        isStageCompleted = true;
+
+        if (m_isStageDurationOver)
+            PlayStage();
+    }
+
+    #endregion
 
 	#endregion
 }

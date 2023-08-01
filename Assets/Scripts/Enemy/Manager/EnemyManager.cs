@@ -11,10 +11,10 @@ using System.Collections.Generic;
 
 */
 
-// TODO : Add up maxCount of all EnemySpawnerConfig
+// : Add up maxCount of all EnemySpawnerConfig
 // to know how many enemy will be killed at eaxh stage
 
-// TODO : Decrement the number when enemy killed
+// : Decrement the number when enemy killed
 
 // TODO : Tell LevelManager when to continue
 
@@ -25,6 +25,9 @@ using System.Collections.Generic;
 public partial class EnemyManager : MonoBehaviour
 {
 	#region Fields
+
+    [SerializeField]
+    private LevelChannel m_levelChannel = null;
 
     private Camera m_camera = null;
 
@@ -53,11 +56,26 @@ public partial class EnemyManager : MonoBehaviour
 
     #endregion
 
+    #region Enemy Kill Count
+
+    private int m_stageEnemyCount;
+
+    private int m_stageKilledEnemyCount;
+
+    public bool areAllEnemiesKilled
+    {
+        get {
+            return m_stageKilledEnemyCount >= m_stageEnemyCount;
+        }
+    }
+
+	#endregion
+
 	#endregion
 
 	#region Methods
 
-    #region MonoBehaviour
+	#region MonoBehaviour
 
     private void Awake()
     {
@@ -119,6 +137,7 @@ public partial class EnemyManager : MonoBehaviour
         if (m_enemyTypeToSpawner.ContainsKey(config.prefab.type))
         {
             m_enemyTypeToSpawner[config.prefab.type].ChangeConfig(config);
+            m_stageEnemyCount += config.count;
         }
     }
 
@@ -222,6 +241,16 @@ public partial class EnemyManager : MonoBehaviour
     #endregion
 
     #region DestroyEnemy
+
+
+    public void KillEnemy(GameObject gameObject)
+    {
+        Release(gameObject);
+        m_stageKilledEnemyCount += 1;
+
+        if (areAllEnemiesKilled)
+            m_levelChannel.onAllEnemiesKilled.Invoke();
+    }
 
     public void Release(GameObject gameObject)
     {
