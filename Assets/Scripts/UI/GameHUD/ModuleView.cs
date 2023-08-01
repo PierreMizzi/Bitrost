@@ -158,11 +158,7 @@ public class ModuleView
 
     private void CallbackRefreshCrystalEnergy()
     {
-        m_crystalEnergyLabel.text = string.Format(
-            "{0} / {1}",
-            m_module.crystal.remainingEnergyCount,
-            m_module.crystal.totalEnergyCount
-        );
+        m_crystalEnergyLabel.text = m_module.crystal.remainingEnergyCount.ToString();
     }
 
     private void CallbackRefreshStoredEnergy()

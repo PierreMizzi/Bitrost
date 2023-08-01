@@ -184,7 +184,7 @@ public class Module : MonoBehaviour, IBulletLauncher
         crystal.SetAvailable();
 
         if (!crystal.hasEnergy)
-            Destroy(crystal.gameObject);
+           crystal.Release();
 
         onRemoveCrystal.Invoke();
         crystal = null;

@@ -24,6 +24,7 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public partial class EnemyManager : MonoBehaviour
 {
+
 	#region Fields
 
     [SerializeField]
@@ -150,7 +151,7 @@ public partial class EnemyManager : MonoBehaviour
     public void SpawnEnemy(GameObject prefab)
     {
         Enemy enemy = m_poolingChannel.onGetFromPool.Invoke(prefab).GetComponent<Enemy>();
-        enemy.GetFromPool(this);
+        enemy.OutOfPool(this);
 
         enemy.transform.position = GetCameraEdgeRandomPosition();
     }
@@ -260,4 +261,5 @@ public partial class EnemyManager : MonoBehaviour
     #endregion
 
 	#endregion
+
 }

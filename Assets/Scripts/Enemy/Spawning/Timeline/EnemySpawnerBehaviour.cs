@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Playables;
 
 public class EnemySpawnerBehaviour : PlayableBehaviour
@@ -12,9 +13,10 @@ public class EnemySpawnerBehaviour : PlayableBehaviour
         if (!m_done)
         {
             m_manager = playerData as EnemyManager;
+            spawnConfig.duration = (float)playable.GetDuration();
             m_manager.ChangeEnemySpawnConfig(spawnConfig);
 
-			m_done = true;
+            m_done = true;
         }
     }
 

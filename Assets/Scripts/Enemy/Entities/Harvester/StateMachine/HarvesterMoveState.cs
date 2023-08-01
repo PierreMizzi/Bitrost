@@ -11,6 +11,9 @@ public class HarvesterMoveState : EnemyMoveState
 
     private Harvester m_harvester = null;
 
+
+    private Tween m_moveTween;
+
     protected override void DefaultEnter()
     {
         base.DefaultEnter();
@@ -29,11 +32,18 @@ public class HarvesterMoveState : EnemyMoveState
                 * m_harvester.settings.offsetFromShard
             );
         m_harvester.transform.up = direction.normalized;
-        m_harvester.transform.DOMove(endPosition, duration).OnComplete(OnCompleteMovement);
+        m_moveTween = m_harvester.transform.DOMove(endPosition, duration).OnComplete(OnCompleteMovement);
     }
 
     public void OnCompleteMovement()
     {
         ChangeState((int)EnemyStateType.Attack);
     }
+
+	public override void Exit()
+	{
+		base.Exit();
+        if(m_moveTween != null && m_moveTween.IsPlaying())
+            m_moveTween.Kill();
+	}
 }

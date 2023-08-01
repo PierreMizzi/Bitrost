@@ -44,7 +44,7 @@ public class HealthEntity : MonoBehaviour
         currentHealth -= lost;
         onLostHealth.Invoke();
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             currentHealth = 0;
             onNoHealth.Invoke();

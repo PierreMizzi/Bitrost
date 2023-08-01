@@ -71,7 +71,7 @@ public class EnemySpawner : MonoBehaviour
         {
             m_manager.SpawnEnemy(m_config.prefab.gameObject, m_config.batchCount);
             currentCount -= m_config.batchCount;
-
+            
             if (currentCount <= 0)
             {
                 StopSpawning();

@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour, IStateMachine
         m_isInitialized = true;
     }
 
-    public virtual void GetFromPool(EnemyManager manager)
+    public virtual void OutOfPool(EnemyManager manager)
     {
         if(!m_isInitialized)
             Initialize();

@@ -26,7 +26,7 @@ public class CrystalShard : MonoBehaviour
         onRefreshEnergy = () => { };
     }
 
-    private void OnDestroy()
+    public void Release()
     {
         m_manager.DestroyCrystal(this);
     }

@@ -16,7 +16,7 @@ public struct EnemySpawnConfig
 
     public float spawnFrequency
     {
-        get { return (duration / count) * batchCount; }
+        get { return (duration / (float)count) * (float)batchCount; }
     }
 
 }
