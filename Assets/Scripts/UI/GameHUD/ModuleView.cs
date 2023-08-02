@@ -145,7 +145,7 @@ public class ModuleView
     private void SubscribeToModel()
     {
         // Activable
-        m_module.onSetActivable += CallbackIsActivable;
+        m_module.onDroppable += CallbackIsActivable;
 
         // Targeted
         m_module.onSetTargeted += CallbackIsTargeted;
@@ -157,24 +157,21 @@ public class ModuleView
         m_module.onAssignCrystal += CallbackAssignCrystal;
         m_module.onRemoveCrystal += CallbackRemoveCrystal;
 
-        m_module.onRefreshEnergy += CallbackRefreshStoredEnergy;
+        m_module.onRefreshEnergy += CallbackRefreshEnergy;
 
         // Extraction
         m_module.onExtraction += CallbackExtraction;
 
-        // Available Energy
-        m_module.onStoredEnergyAvailable += CallbackStoredEnergyAvailable;
-        m_module.onCrystalEnergyAvailable += CallbackCrystalEnergyAvailable;
     }
 
     private void CallbackAssignCrystal()
     {
-        m_module.crystal.onRefreshEnergy += CallbackRefreshCrystalEnergy;
+        m_module.crystal.onRefreshEnergy += CallbackRefreshEnergy;
     }
 
     private void CallbackRemoveCrystal()
     {
-        m_module.crystal.onRefreshEnergy -= CallbackRefreshCrystalEnergy;
+        m_module.crystal.onRefreshEnergy -= CallbackRefreshEnergy;
     }
 
     private void UnsubscribeToModel() { }
@@ -185,7 +182,7 @@ public class ModuleView
 
     private void CallbackIsActivable()
     {
-        m_activableLabel.text = (m_module.isActivable) ? k_isActivableText : k_isNotActivableText;
+        m_activableLabel.text = (m_module.isDroppable) ? k_isActivableText : k_isNotActivableText;
     }
 
     #endregion
@@ -222,17 +219,26 @@ public class ModuleView
 
     #region Energy
 
-    private void CallbackRefreshCrystalEnergy()
+    private void CallbackRefreshEnergy()
     {
-        m_crystalEnergyLabel.text = m_module.crystal.remainingEnergyCount.ToString();
-    }
+        // Manages the priority resource
+        if (m_module.storedEnergy > 0)
+        {
+            m_crystalEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+            m_storedEnergyContainer.AddToClassList(k_availableResourceClass);
+        }
+        else
+        {
+            m_crystalEnergyContainer.AddToClassList(k_availableResourceClass);
+            m_storedEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+        }
 
-    private void CallbackRefreshStoredEnergy()
-    {
+        m_crystalEnergyLabel.text = m_module.crystal.remainingEnergyCount.ToString();
+
         m_storedEnergyLabel.text = string.Format(
             "{0} / {1}",
-            m_module.storedEnergyCount,
-            m_module.storedEnergyCapacity
+            m_module.storedEnergy,
+            m_module.settings.maxStoredEnergy
         );
     }
 
@@ -260,22 +266,6 @@ public class ModuleView
         m_modelLabel.text = "REFFINE MODE";
         m_extractionArrow.style.visibility = Visibility.Visible;
         m_fireTip.style.display = DisplayStyle.None;
-    }
-
-    #endregion
-
-    #region Available Energy
-
-    private void CallbackCrystalEnergyAvailable()
-    {
-        m_crystalEnergyContainer.AddToClassList(k_availableResourceClass);
-        m_storedEnergyContainer.RemoveFromClassList(k_availableResourceClass);
-    }
-
-    private void CallbackStoredEnergyAvailable()
-    {
-        m_storedEnergyContainer.AddToClassList(k_availableResourceClass);
-        m_crystalEnergyContainer.RemoveFromClassList(k_availableResourceClass);
     }
 
     #endregion

@@ -26,7 +26,7 @@ public class Fighter : Enemy, IBulletLauncher
 
 	#region State Machine
 
-    public override void InitiliazeState()
+    public override void InitiliazeStates()
     {
         states = new List<AState>()
         {

@@ -2,7 +2,7 @@ public class ModuleTarget : ATarget
 {
 	#region Fields
 
-    public Module module { get; private set; }
+    public Module turret { get; private set; }
 
 	#endregion
 
@@ -10,7 +10,7 @@ public class ModuleTarget : ATarget
 
     private void Awake()
     {
-        module = m_origin.GetComponent<Module>();
+        turret = m_origin.GetComponent<Module>();
     }
 
 	#endregion

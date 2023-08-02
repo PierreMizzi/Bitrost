@@ -20,7 +20,7 @@ public class Harvester : Enemy
         base.Initialize();
     }
 
-    public override void InitiliazeState()
+    public override void InitiliazeStates()
     {
         states = new List<AState>()
         {

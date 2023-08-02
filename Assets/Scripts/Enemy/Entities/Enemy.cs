@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     protected virtual void Update()
     {
-        UpdateStateMachine();
+        UpdateState();
     }
 
     protected virtual void OnDestroy()
@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     #region StateMachine
 
-    public virtual void InitiliazeState()
+    public virtual void InitiliazeStates()
     {
         states = new List<AState>()
         {
@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour, IStateMachine
         }
     }
 
-    public void UpdateStateMachine()
+    public void UpdateState()
     {
         if (currentState != null)
             currentState.Update();
@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour, IStateMachine
         m_healthEntity = GetComponent<HealthEntity>();
         SubscribeHealth();
 
-        InitiliazeState();
+        InitiliazeStates();
 
         m_isInitialized = true;
     }

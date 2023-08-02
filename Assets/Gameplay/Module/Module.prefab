@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 6632321559187287874}
   - component: {fileID: 5181580727728153921}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,10 +207,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_settings: {fileID: 11400000, guid: f02b5e9ff94dbe2439122dca132ad81c, type: 2}
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
-  m_turret: {fileID: 6585395777087232122}
-  m_bulletOrigin: {fileID: 2603461646432851164}
-  m_mousePositionActionReference: {fileID: -4717243020878214388, guid: b31e137cb3947c244992c71078d944dc,
+  m_mousePositionInput: {fileID: -4717243020878214388, guid: b31e137cb3947c244992c71078d944dc,
     type: 3}
+  m_canonTransform: {fileID: 6585395777087232122}
+  m_bulletOriginTransform: {fileID: 2603461646432851164}
+  m_camera: {fileID: 0}
   m_spritesContainer: {fileID: 7352402879377549824}
   m_isTargeted: 0
 --- !u!1 &6585395777033767244
@@ -308,7 +309,7 @@ GameObject:
   - component: {fileID: 6585395777087232122}
   - component: {fileID: 6585395777087232101}
   m_Layer: 0
-  m_Name: Turret
+  m_Name: Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

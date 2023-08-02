@@ -8,8 +8,9 @@ public class ModuleSettings : ScriptableObject
 
     [Header("Module")]
     [Header("Energy")]
-    public int storedEnergyCapacity = 5;
-    public float extractionDuration = 3;
+    public int maxStoredEnergy = 5;
+    public float productionDuration = 3;
+    public int productionRatio = 2;
 
     [Header("Bullet")]
     public Bullet bulletPrefab = null;

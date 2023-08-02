@@ -3,7 +3,7 @@ using UnityEngine;
 public enum TargetType
 {
     None,
-    Module,
+    Turret,
     CrystalShard
 }
 
