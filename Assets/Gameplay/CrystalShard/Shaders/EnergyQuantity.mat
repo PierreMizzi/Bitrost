@@ -47,18 +47,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EnergyPercent: 0
+    - _EnergyPercent: 1
     - _EnergyQuantity: 1
-    - _MaxStep: 0.3
-    - _MinStep: 0.1
+    - _MaxStep: 0.27
+    - _MinStep: 1
     - _NoiseScale: 1.93
     - _NoiseTilling: 1
     - _NormlizedQuantity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _EnergyTint: {r: 0, g: 1, b: 0.902565, a: 1}
-    - _NoiseOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _EnergyTint: {r: 0.42138353, g: 1, b: 0.9401432, a: 0.3764706}
+    - _NoiseOffset: {r: 1.15, g: 1.15, b: 0, a: 0}
     - _Tint: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
     - _UVOffset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

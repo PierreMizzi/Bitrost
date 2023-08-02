@@ -64,7 +64,6 @@ public class ModuleView
     private const string k_storedEnergyContainer = "resources-stored-container";
     private const string k_crystalEnergyLabel = "resources-crystal-label";
     private const string k_storedEnergyLabel = "resources-stored-label";
-    private const string k_fireTip = "tips-fire";
 
     private Label m_modelLabel;
     private VisualElement m_extractionArrow;
@@ -72,9 +71,22 @@ public class ModuleView
     private VisualElement m_storedEnergyContainer;
     private Label m_crystalEnergyLabel;
     private Label m_storedEnergyLabel;
-    private VisualElement m_fireTip;
 
     private const string k_availableResourceClass = "available-resources";
+
+    #endregion
+
+    #region Tips
+
+    private const string k_retrieveTip = "tip-retrieve";
+    private const string k_fireTip = "tip-fire";
+    private const string k_fireModeTip = "tip-fire-mode";
+    private const string k_extractModeTip = "tip-extract-mode";
+
+    private VisualElement m_retrieveTip;
+    private VisualElement m_fireTip;
+    private VisualElement m_fireModeTip;
+    private VisualElement m_extractModeTip;
 
     #endregion
 
@@ -103,6 +115,8 @@ public class ModuleView
         // Activable
         m_activableLabel = m_root.Q<Label>(k_activableLabel);
 
+        // Targeted
+
         // Status
         m_activeContainer = m_root.Q(k_activeContainer);
         m_inactiveContainer = m_root.Q(k_inactiveContainer);
@@ -116,14 +130,25 @@ public class ModuleView
         m_crystalEnergyLabel = m_root.Q<Label>(k_crystalEnergyLabel);
         m_storedEnergyLabel = m_root.Q<Label>(k_storedEnergyLabel);
 
-        // Mode
+        // Tips
+        m_retrieveTip = m_root.Q(k_retrieveTip);
         m_fireTip = m_root.Q(k_fireTip);
+        m_fireModeTip = m_root.Q(k_fireModeTip);
+        m_extractModeTip = m_root.Q(k_extractModeTip);
+
+        m_retrieveTip.style.display = DisplayStyle.None;
+        m_fireTip.style.display = DisplayStyle.None;
+        m_fireModeTip.style.display = DisplayStyle.None;
+        m_extractModeTip.style.display = DisplayStyle.None;
     }
 
     private void SubscribeToModel()
     {
         // Activable
         m_module.onSetActivable += CallbackIsActivable;
+
+        // Targeted
+        m_module.onSetTargeted += CallbackIsTargeted;
 
         // Status
         m_module.onSetActive += CallbackOnActivation;
@@ -161,6 +186,21 @@ public class ModuleView
     private void CallbackIsActivable()
     {
         m_activableLabel.text = (m_module.isActivable) ? k_isActivableText : k_isNotActivableText;
+    }
+
+    #endregion
+
+    #region Targeted
+
+    private void CallbackIsTargeted()
+    {
+        m_retrieveTip.style.display = m_module.isTargeted ? DisplayStyle.Flex : DisplayStyle.None;
+
+        m_extractModeTip.style.display =
+            m_module.isExtracting && m_module.isTargeted ? DisplayStyle.Flex : DisplayStyle.None;
+
+        m_fireModeTip.style.display =
+            !m_module.isExtracting && m_module.isTargeted ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
     #endregion
@@ -210,14 +250,14 @@ public class ModuleView
 
     private void SetFireMode()
     {
-        m_modelLabel.text = "Fire";
+        m_modelLabel.text = "OFFENSIVE MODE";
         m_extractionArrow.style.visibility = Visibility.Hidden;
         m_fireTip.style.display = DisplayStyle.Flex;
     }
 
     private void SetExtractionMode()
     {
-        m_modelLabel.text = "Extract";
+        m_modelLabel.text = "REFFINE MODE";
         m_extractionArrow.style.visibility = Visibility.Visible;
         m_fireTip.style.display = DisplayStyle.None;
     }

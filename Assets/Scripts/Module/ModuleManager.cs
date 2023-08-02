@@ -293,15 +293,14 @@ public class ModuleManager : MonoBehaviour
 
         if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_targetFilter, results) > 0)
         {
-            ModuleTarget target = FindFirst(results, TargetType.Module);
-
+            ATarget target = FindFirst(results, TargetType.Module);
             if (target != null)
             {
+                ManageModuleTarget(target);
                 return;
             }
 
-
-            ATarget target = FindFirst(results, TargetType.CrystalShard);
+            target = FindFirst(results, TargetType.CrystalShard);
             if (target != null)
             {
                 ManageCrystalTarget(target);
@@ -311,7 +310,17 @@ public class ModuleManager : MonoBehaviour
         else
         {
             if (m_currentTarget != null)
-                UnsetTarget();
+            {
+                switch (m_currentTarget.type)
+                {
+                    case TargetType.CrystalShard:
+                        UnsetCrystalTarget();
+                        break;
+                    case TargetType.Module:
+                        UnsetModuleTarget();
+                        break;
+                }
+            }
         }
     }
 
@@ -323,11 +332,20 @@ public class ModuleManager : MonoBehaviour
         if (m_remainingModuleCount > 0)
         {
             Module module = GetUnactivatedModule();
-            module.isActivable = true;
+            if (module != null)
+                module.isActivable = true;
         }
     }
 
-    private void UnsetTarget()
+    private void ManageModuleTarget(ATarget target)
+    {
+        m_moduleTargeter.Target(target);
+        m_currentTarget = target;
+
+        ((ModuleTarget)m_currentTarget).module.isTargeted = true;
+    }
+
+    private void UnsetCrystalTarget()
     {
         m_moduleTargeter.Hide();
         m_currentTarget = null;
@@ -335,8 +353,17 @@ public class ModuleManager : MonoBehaviour
         if (m_remainingModuleCount > 0)
         {
             Module module = GetUnactivatedModule();
-            module.isActivable = false;
+            if (module != null)
+                module.isActivable = false;
         }
+    }
+
+    private void UnsetModuleTarget()
+    {
+        ((ModuleTarget)m_currentTarget).module.isTargeted = false;
+
+        m_moduleTargeter.Hide();
+        m_currentTarget = null;
     }
 
     public ATarget FindFirst(List<RaycastHit2D> results, TargetType type)

@@ -5,7 +5,17 @@ using UnityEngine.InputSystem;
 
 public delegate void ModuleDelegate(Module module);
 
-// TODO : preview Turret when hovering CrystalShard
+/*
+    Targeted when Fire mode
+    -> Retrieve on E
+    -> Extract Mode
+
+    Targeted when Extract
+    -> Retrieve on E
+    -> Fire Mode
+*/
+
+
 
 // TODO : back to Fire Mode when retrieving while extracting
 // TODO : Back to Fire Mode when can't extract any longer
@@ -74,12 +84,25 @@ public class Module : MonoBehaviour, IBulletLauncher
         }
     }
 
+    [SerializeField]
+    private bool m_isTargeted = false;
+    public bool isTargeted
+    {
+        get { return m_isTargeted; }
+        set
+        {
+            m_isTargeted = value;
+            onSetTargeted?.Invoke();
+        }
+    }
+
     // Activation
     [HideInInspector]
     public bool isActive { get; private set; }
 
     public Action onRefreshEnergy = null;
     public Action onSetActivable = null;
+    public Action onSetTargeted = null;
     public Action onSetActive = null;
     public Action onAssignCrystal = null;
     public Action onRemoveCrystal = null;
@@ -186,6 +209,12 @@ public class Module : MonoBehaviour, IBulletLauncher
         onRemoveCrystal.Invoke();
         crystal = null;
     }
+
+    #endregion
+
+    #region Targeted
+
+
 
     #endregion
 

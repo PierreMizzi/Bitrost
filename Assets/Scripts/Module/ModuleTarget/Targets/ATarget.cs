@@ -13,6 +13,9 @@ public abstract class ATarget : MonoBehaviour
 	#region Fields
 
     [SerializeField]
+    protected Transform m_origin;
+
+    [SerializeField]
     private TargetType m_type = TargetType.None;
     public TargetType type
     {
@@ -20,11 +23,11 @@ public abstract class ATarget : MonoBehaviour
     }
 
     [SerializeField]
-    protected float m_targeterScale = 1f;
+    protected float m_targeterScaleFactor = 1f;
 
     public Vector3 targeterScale
     {
-        get { return new Vector3(m_targeterScale, m_targeterScale, m_targeterScale); }
+        get { return new Vector3(m_targeterScaleFactor, m_targeterScaleFactor, m_targeterScaleFactor); }
     }
 
 	#endregion
