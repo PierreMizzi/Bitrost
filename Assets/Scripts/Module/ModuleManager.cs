@@ -72,6 +72,18 @@ public class ModuleManager : MonoBehaviour
 
     #endregion
 
+    #region Module Target
+
+    [Header("Module Target")]
+    [SerializeField]
+    private ModuleTarget m_moduleTarget;
+
+    private CrystalShard m_targetedCrystalShard;
+
+    private 
+
+    #endregion
+
     #endregion
 
     #region Methods
@@ -273,7 +285,9 @@ public class ModuleManager : MonoBehaviour
 
     #endregion
 
+    #region ModuleTarget
 
+    #endregion
 
     #endregion
 }

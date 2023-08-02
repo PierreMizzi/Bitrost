@@ -23,6 +23,8 @@ public class ModuleView
                 - Hide "Fire" tip
     */
 
+    // TODO : Progress Bar extraction
+
 	#region Fields
 
 	#region Behaviour

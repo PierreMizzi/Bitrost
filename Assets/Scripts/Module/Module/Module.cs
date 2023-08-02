@@ -1,13 +1,15 @@
 using UnityEngine;
-using TMPro;
 using DG.Tweening;
 using System;
-using System.Collections;
 using UnityEngine.InputSystem;
 
 public delegate void ModuleDelegate(Module module);
 
+// TODO : preview Turret when hovering CrystalShard
+
 // TODO : back to Fire Mode when retrieving while extracting
+// TODO : Back to Fire Mode when can't extract any longer
+// TODO : Small message when can't fire because extract mode
 public class Module : MonoBehaviour, IBulletLauncher
 {
     #region Fields
@@ -258,6 +260,10 @@ public class Module : MonoBehaviour, IBulletLauncher
     public bool CanExtract()
     {
         bool result = true;
+
+        result &= isActive;
+        if(!isActive)
+            Debug.LogWarning("IS NOT ACTIVE");
 
         // Stored energy is full
         bool canStoreEnergy = storedEnergyCount < storedEnergyCapacity;
