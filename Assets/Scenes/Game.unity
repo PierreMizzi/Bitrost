@@ -618,7 +618,7 @@ PlayableDirector:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186876195}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: e8854b779aa18de4da812d8f92db3cbc, type: 2}
   m_InitialState: 1
@@ -733,7 +733,10 @@ MonoBehaviour:
       type: 3}
     defaultSize: 20
     maxSize: 50
-  m_enemySpawnShortcutConfigs: []
+  m_enemySpawnShortcutConfigs:
+  - prefab: {fileID: 4318404297879891376, guid: 6c79b948a6cd95e42bdb45a5f0022a27,
+      type: 3}
+    quickSpawnKey: 49
   m_offsetSpawnBounds: 2
 --- !u!1 &1354611793
 GameObject:
@@ -1129,7 +1132,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867264002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.87157553, y: -0.49026123, z: -1}
+  m_LocalPosition: {x: -4.028299, y: -2.265918, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1185,8 +1188,8 @@ MonoBehaviour:
   m_distance: 4
   m_mousePositionActionReference: {fileID: -4717243020878214388, guid: b31e137cb3947c244992c71078d944dc,
     type: 3}
-  m_treshold: 0.75
-  m_offsetMagnitude: 1
+  m_treshold: 0.66
+  m_offsetMagnitude: 5
   m_smoothDampSpeed: 0.33
   m_smoothDampMaxSpeed: 50
 --- !u!1 &1903221704

@@ -128,5 +128,15 @@ namespace VirtuoseReality.Rendering
                 ApplyProperties();
             }
         }
+
+        public void SetProperty(string propertyName, Vector4 value)
+        {
+            Property property = m_propreties.Find(item => item.name == propertyName);
+            if(property != null)
+            {
+                property.vectorValue = value;
+                ApplyProperties();
+            }
+        }
     }
 }

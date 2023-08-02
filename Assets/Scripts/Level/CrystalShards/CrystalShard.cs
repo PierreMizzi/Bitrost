@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using VirtuoseReality.Rendering;
 
 public class CrystalShard : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class CrystalShard : MonoBehaviour
 
     public int remainingEnergyCount { get; private set; }
 
+    public float energyPercentage
+    {
+        get { return remainingEnergyCount / (float)totalEnergyCount; }
+    }
+
     public bool hasEnergy
     {
         get { return remainingEnergyCount > 0; }
@@ -18,12 +24,30 @@ public class CrystalShard : MonoBehaviour
 
     public Action onRefreshEnergy = null;
 
-
     public bool isAvailable = true;
+
+    #region Rendering
+
+    [SerializeField]
+    private MaterialPropertyBlockModifier m_propertyBlock = null;
+
+    private const string k_energyPercentProperty = "_EnergyPercent";
+    private const string k_noiseOffsetProperty = "_NoiseOffset";
+
+    #endregion
 
     private void Awake()
     {
         onRefreshEnergy = () => { };
+    }
+
+    [ContextMenu("Start")]
+    private void Start()
+    {
+        Vector4 noiseOffset = new Vector4();
+        noiseOffset.x = UnityEngine.Random.Range(0f, 100f);
+        noiseOffset.y = UnityEngine.Random.Range(0f, 100f);
+        m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
     }
 
     public void Release()
@@ -36,6 +60,7 @@ public class CrystalShard : MonoBehaviour
         m_manager = manager;
         totalEnergyCount = startingEnergyCount;
         remainingEnergyCount = startingEnergyCount;
+        SetVisualEnergy();
     }
 
     public void SetUnavailable()
@@ -53,6 +78,20 @@ public class CrystalShard : MonoBehaviour
     public void DecrementEnergy()
     {
         remainingEnergyCount--;
+        SetVisualEnergy();
         onRefreshEnergy.Invoke();
+    }
+
+    private void SetVisualEnergy()
+    {
+        m_propertyBlock.SetProperty(k_energyPercentProperty, energyPercentage);
+    }
+
+    [SerializeField]
+    private float d_percentage = 0f;
+
+    private void OnValidate()
+    {
+        SetVisualEnergy();
     }
 }

@@ -10,6 +10,8 @@ public class FighterSettings : EnemySettings
     [Header("Movement")]
     public float radiusAroundPlayer;
 
+    public float angleAroundPlayer;
+
     [Header("Attack")]
     public Bullet bulletPrefab;
 

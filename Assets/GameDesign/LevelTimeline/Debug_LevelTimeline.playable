@@ -838,7 +838,7 @@ MonoBehaviour:
   m_Name: SpawnCrystalShardsAsset
   m_EditorClassIdentifier: 
   spawnConfig:
-    count: 2
+    count: 1
     minEnergy: 20
     maxEnergy: 25
     radius: 4
@@ -893,8 +893,8 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
       type: 3}
-    count: 10
-    batchCount: 2
+    count: 5
+    batchCount: 1
     duration: Infinity
 --- !u!114 &2215066939490958979
 MonoBehaviour:

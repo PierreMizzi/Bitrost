@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
 
     private float m_offset;
 
-    private Vector3 m_cameraPosition;
+    private Vector3 m_targetPosition;
 
     #endregion
 
@@ -63,13 +63,19 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        ManageCameraPosition();
-        // transform.position = new Vector3(m_target.position.x, m_target.position.y, -m_distance);
+        m_targetPosition = m_target.position;
+        m_targetPosition.z = -1;
+
+        ManageCameraOffset();
+        transform.position = m_targetPosition + m_cameraOffsetPosition;
     }
 
     private Vector3 velocity;
 
-    private void ManageCameraPosition()
+    private Vector3 m_cameraOffsetPosition;
+    private Vector3 m_previousCameraOffsetPosition;
+
+    private void ManageCameraOffset()
     {
         float angle = Mathf.Atan2(mousePositionScreenCenter.y, mousePositionScreenCenter.x);
 
@@ -88,19 +94,20 @@ public class CameraController : MonoBehaviour
         );
         m_offset = Mathf.Clamp01(m_offset);
 
-        m_cameraPosition = m_target.position;
-        m_cameraPosition.z = -1;
+        // m_cameraPosition = m_target.position;
+        // m_cameraPosition.z = -1;
 
-        m_cameraPosition += mousePositionScreenCenter.normalized * m_offset * m_offsetMagnitude;
+        m_cameraOffsetPosition =
+            mousePositionScreenCenter.normalized * m_offset * m_offsetMagnitude;
 
-        transform.position =
-            Vector3.SmoothDamp(
-                transform.position,
-                m_cameraPosition,
-                ref velocity,
-                m_smoothDampSpeed,
-                m_smoothDampMaxSpeed
-            );
+        m_cameraOffsetPosition = Vector3.SmoothDamp(
+            m_previousCameraOffsetPosition,
+            m_cameraOffsetPosition,
+            ref velocity,
+            m_smoothDampSpeed,
+            m_smoothDampMaxSpeed
+        );
+        m_previousCameraOffsetPosition = m_cameraOffsetPosition;
     }
 
     public float MagnitudeFromAngle(float angle)
