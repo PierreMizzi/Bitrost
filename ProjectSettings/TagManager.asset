@@ -16,7 +16,7 @@ TagManager:
   - CrystalShard
   - Enemy
   - Player
-  - 
+  - ModuleTarget
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: Bullets
     uniqueID: 2811228753
+    locked: 0
+  - name: ModuleTarget
+    uniqueID: 2414080665
     locked: 0
   - name: Player
     uniqueID: 3889497491

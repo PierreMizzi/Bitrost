@@ -36,6 +36,15 @@ public class ModuleView
 
 	#endregion
 
+    #region Activable
+
+    private const string k_activableLabel = "module-hud-inactive__label";
+    private Label m_activableLabel;
+    private const string k_isNotActivableText = "Search asteroid";
+    private const string k_isActivableText = "<b>Press E</b> to drop module";
+
+    #endregion
+
 	#region Activation
 
     private const string k_activeContainer = "module-hud-active";
@@ -91,6 +100,9 @@ public class ModuleView
 
     private void InitializeVisualElements()
     {
+        // Activable
+        m_activableLabel = m_root.Q<Label>(k_activableLabel);
+
         // Status
         m_activeContainer = m_root.Q(k_activeContainer);
         m_inactiveContainer = m_root.Q(k_inactiveContainer);
@@ -110,8 +122,11 @@ public class ModuleView
 
     private void SubscribeToModel()
     {
+        // Activable
+        m_module.onSetActivable += CallbackIsActivable;
+
         // Status
-        m_module.onActivation += CallbackOnActivation;
+        m_module.onSetActive += CallbackOnActivation;
 
         // Energy
         m_module.onAssignCrystal += CallbackAssignCrystal;
@@ -140,6 +155,15 @@ public class ModuleView
     private void UnsubscribeToModel() { }
 
 	#endregion
+
+    #region Activable
+
+    private void CallbackIsActivable()
+    {
+        m_activableLabel.text = (m_module.isActivable) ? k_isActivableText : k_isNotActivableText;
+    }
+
+    #endregion
 
 	#region Activation
 

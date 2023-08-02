@@ -41,18 +41,7 @@ public class Module : MonoBehaviour, IBulletLauncher
 
     private Camera m_camera;
 
-    #region UI
-
-    [SerializeField]
-    private ModuleUI m_ui = null;
-
-    public Action onRefreshEnergy = null;
-
-    public FloatDelegate onUpdateExtractionUI = null;
-
     #endregion
-
-
 
     #region Extracting
 
@@ -73,25 +62,31 @@ public class Module : MonoBehaviour, IBulletLauncher
     [SerializeField]
     private GameObject m_spritesContainer = null;
 
+    private bool m_isActivable;
+
+    public bool isActivable
+    {
+        get { return m_isActivable; }
+        set
+        {
+            m_isActivable = value;
+            onSetActivable?.Invoke();
+        }
+    }
+
     // Activation
     [HideInInspector]
-    public bool isActive = false;
+    public bool isActive { get; private set; }
 
-    public Action onActivation = null;
-
+    public Action onRefreshEnergy = null;
+    public Action onSetActivable = null;
+    public Action onSetActive = null;
     public Action onAssignCrystal = null;
-
     public Action onRemoveCrystal = null;
-
-    public Action onExtraction = null;
-
     public Action onStoredEnergyAvailable = null;
     public Action onCrystalEnergyAvailable = null;
-
-    // [SerializeField]
-    // private ModuleView m_view = null;
-
-    #endregion
+    public Action onExtraction = null;
+    public FloatDelegate onUpdateExtractionUI = null;
 
     #endregion
 
@@ -104,7 +99,6 @@ public class Module : MonoBehaviour, IBulletLauncher
 
         this.crystal = crystal;
         this.crystal.SetUnavailable();
-        m_ui.Initialize(this.crystal);
 
         storedEnergyCount = 0;
         storedEnergyCapacity = m_settings.storedEnergyCapacity;
@@ -127,7 +121,8 @@ public class Module : MonoBehaviour, IBulletLauncher
         m_player = FindObjectOfType<PlayerController>();
         storedEnergyCapacity = m_settings.storedEnergyCapacity;
 
-        onActivation = () => { };
+        onSetActivable = () => { };
+        onSetActive = () => { };
         onAssignCrystal = () => { };
         onRemoveCrystal = () => { };
 
@@ -155,7 +150,7 @@ public class Module : MonoBehaviour, IBulletLauncher
 
         transform.position = this.crystal.transform.position;
 
-        onActivation.Invoke();
+        onSetActive.Invoke();
         onRefreshEnergy.Invoke();
         onExtraction.Invoke();
         onCrystalEnergyAvailable.Invoke();
@@ -166,7 +161,7 @@ public class Module : MonoBehaviour, IBulletLauncher
         isActive = false;
         m_spritesContainer.SetActive(false);
 
-        onActivation.Invoke();
+        onSetActive.Invoke();
 
         if (m_extractingTween != null && m_extractingTween.IsPlaying())
             m_extractingTween.Kill();
@@ -186,7 +181,7 @@ public class Module : MonoBehaviour, IBulletLauncher
         crystal.SetAvailable();
 
         if (!crystal.hasEnergy)
-           crystal.Release();
+            crystal.Release();
 
         onRemoveCrystal.Invoke();
         crystal = null;
@@ -262,7 +257,7 @@ public class Module : MonoBehaviour, IBulletLauncher
         bool result = true;
 
         result &= isActive;
-        if(!isActive)
+        if (!isActive)
             Debug.LogWarning("IS NOT ACTIVE");
 
         // Stored energy is full

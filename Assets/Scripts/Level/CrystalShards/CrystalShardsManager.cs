@@ -49,6 +49,8 @@ public class CrystalShardsManager : MonoBehaviour
 
         yield return new WaitForEndOfFrame();
         m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
+
+        DebugSpawn();
     }
 
     private void OnDestroy() { }

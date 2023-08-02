@@ -60,27 +60,25 @@ public class ModuleManager : MonoBehaviour
 
     #endregion
 
-    #region Bullets
+    #region ModuleViews
 
-    [Header("Bullets")]
     [SerializeField]
-    private Transform m_bulletContainer = null;
-    public Transform bulletContainer
-    {
-        get { return m_bulletContainer; }
-    }
+    private UIDocument m_document = null;
+
+    private const string k_moduleViewVisualContainer = "module-container";
+
+    public VisualElement moduleViewVisualContainer { get; private set; }
+
+    [SerializeField]
+    private VisualTreeAsset m_moduleViewAsset;
+
+    public List<ModuleView> m_moduleViews = new List<ModuleView>();
 
     #endregion
 
     #region Module Target
 
-    [Header("Module Target")]
-    [SerializeField]
-    private ModuleTarget m_moduleTarget;
 
-    private CrystalShard m_targetedCrystalShard;
-
-    private 
 
     #endregion
 
@@ -100,8 +98,14 @@ public class ModuleManager : MonoBehaviour
         m_remainingModuleCount = m_settings.startingModuleCount;
         Subscribe();
 
-        Initialize();
+        moduleViewVisualContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
+
         CreateModule();
+    }
+
+    private void Update()
+    {
+        ManageTarget();
     }
 
     private void OnDestroy()
@@ -226,24 +230,8 @@ public class ModuleManager : MonoBehaviour
 
     #endregion
 
-    #region Rework
+    #region Module Views
 
-    [SerializeField]
-    private UIDocument m_document = null;
-
-    private const string k_moduleViewVisualContainer = "module-container";
-
-    public VisualElement moduleViewVisualContainer { get; private set; }
-
-    [SerializeField]
-    private VisualTreeAsset m_moduleViewAsset;
-
-    public List<ModuleView> m_moduleViews = new List<ModuleView>();
-
-    private void Initialize()
-    {
-        moduleViewVisualContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
-    }
 
     private void CreateModule()
     {
@@ -254,6 +242,7 @@ public class ModuleManager : MonoBehaviour
 
         // View
         ModuleView moduleView = new ModuleView();
+
         // View VisualElement
         VisualElement moduleViewVisual = m_moduleViewAsset.Instantiate();
         moduleViewVisualContainer.Add(moduleViewVisual);
@@ -286,6 +275,89 @@ public class ModuleManager : MonoBehaviour
     #endregion
 
     #region ModuleTarget
+
+    [SerializeField]
+    private ModuleTargeter m_moduleTargeter;
+
+    [SerializeField]
+    private ContactFilter2D m_targetFilter;
+
+    private ATarget m_currentTarget;
+
+    List<RaycastHit2D> results = new List<RaycastHit2D>();
+
+    public void ManageTarget()
+    {
+        Vector3 mouseScreenPosition = m_mousePositionActionReference.action.ReadValue<Vector2>();
+        Vector3 raycastOrigin = ScreenPositionToRaycastOrigin(mouseScreenPosition);
+
+        if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_targetFilter, results) > 0)
+        {
+            ModuleTarget target = FindFirst(results, TargetType.Module);
+
+            if (target != null)
+            {
+                return;
+            }
+
+
+            ATarget target = FindFirst(results, TargetType.CrystalShard);
+            if (target != null)
+            {
+                ManageCrystalTarget(target);
+                return;
+            }
+        }
+        else
+        {
+            if (m_currentTarget != null)
+                UnsetTarget();
+        }
+    }
+
+    private void ManageCrystalTarget(ATarget target)
+    {
+        m_moduleTargeter.Target(target);
+        m_currentTarget = target;
+
+        if (m_remainingModuleCount > 0)
+        {
+            Module module = GetUnactivatedModule();
+            module.isActivable = true;
+        }
+    }
+
+    private void UnsetTarget()
+    {
+        m_moduleTargeter.Hide();
+        m_currentTarget = null;
+
+        if (m_remainingModuleCount > 0)
+        {
+            Module module = GetUnactivatedModule();
+            module.isActivable = false;
+        }
+    }
+
+    public ATarget FindFirst(List<RaycastHit2D> results, TargetType type)
+    {
+        foreach (RaycastHit2D hit in results)
+        {
+            if (hit.collider.TryGetComponent<ATarget>(out ATarget target))
+            {
+                if (target.type == type)
+                    return target;
+            }
+        }
+        return null;
+    }
+
+    public Vector3 ScreenPositionToRaycastOrigin(Vector2 screenPosition)
+    {
+        Vector3 raycastOrigin = m_camera.ScreenToWorldPoint(screenPosition);
+        raycastOrigin.z = m_camera.transform.position.z;
+        return raycastOrigin;
+    }
 
     #endregion
 
