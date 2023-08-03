@@ -219,7 +219,7 @@ public class ModuleView
         m_activeContainer.style.display = DisplayStyle.Flex;
         m_inactiveContainer.style.display = DisplayStyle.None;
 
-        m_modelLabel.text = "OFFENSIVE MODE";
+        m_modelLabel.text = "ATTACK";
         m_productionProgressContainer.style.visibility = Visibility.Hidden;
         m_fireTip.style.display = DisplayStyle.Flex;
     }
@@ -229,7 +229,7 @@ public class ModuleView
         m_activeContainer.style.display = DisplayStyle.Flex;
         m_inactiveContainer.style.display = DisplayStyle.None;
 
-        m_modelLabel.text = "PRODUCTION MODE";
+        m_modelLabel.text = "PRODUCE";
         m_productionProgressContainer.style.visibility = Visibility.Visible;
         m_fireTip.style.display = DisplayStyle.None;
     }

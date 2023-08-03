@@ -15,7 +15,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: -5838110762882374564}
@@ -75,6 +75,30 @@ MonoBehaviour:
     minEnergy: 35
     maxEnergy: 40
     radius: 6
+--- !u!114 &-5960879549928856895
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0fc6f5187a81dc47999eefade6f0935, type: 3}
+  m_Name: Scout
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: -5838110762882374564}
+  m_Children:
+  - {fileID: 8791887926072596610}
+  m_Clips: []
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-5838110762882374564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,6 +120,7 @@ MonoBehaviour:
   m_Parent: {fileID: 11400000}
   m_Children:
   - {fileID: 9071047804422501908}
+  - {fileID: -5960879549928856895}
   - {fileID: -8728436990031365934}
   m_Clips: []
   m_Markers:
@@ -794,7 +819,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
-  m_Name: Debug_LevelTimeline
+  m_Name: Debug_LevelTimeline 1
   m_EditorClassIdentifier: 
   m_Version: 0
   m_Tracks:
@@ -807,6 +832,24 @@ MonoBehaviour:
     m_ScenePreview: 1
   m_DurationMode: 0
   m_MarkerTrack: {fileID: 0}
+--- !u!114 &388024257563382833
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c196aa049ec0cb04daf7b56976a347a2, type: 3}
+  m_Name: EnemySpawnerAsset
+  m_EditorClassIdentifier: 
+  spawnConfig:
+    prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
+      type: 3}
+    count: 5
+    batchCount: 1
+    duration: Infinity
 --- !u!114 &689123541725790499
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -838,6 +881,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnConfig:
     prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
+      type: 3}
+    count: 5
+    batchCount: 1
+    duration: Infinity
+--- !u!114 &1362991852399573042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c196aa049ec0cb04daf7b56976a347a2, type: 3}
+  m_Name: EnemySpawnerAsset(Clone)
+  m_EditorClassIdentifier: 
+  spawnConfig:
+    prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
     count: 5
     batchCount: 1
@@ -874,6 +935,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnConfig:
     prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
+      type: 3}
+    count: 5
+    batchCount: 1
+    duration: Infinity
+--- !u!114 &2148700481050925307
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c196aa049ec0cb04daf7b56976a347a2, type: 3}
+  m_Name: EnemySpawnerAsset(Clone)(Clone)(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  spawnConfig:
+    prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
     count: 5
     batchCount: 1
@@ -1096,7 +1175,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}
@@ -1105,6 +1184,24 @@ MonoBehaviour:
   m_Clips: []
   m_Markers:
     m_Objects: []
+--- !u!114 &6917185564046435757
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c196aa049ec0cb04daf7b56976a347a2, type: 3}
+  m_Name: EnemySpawnerAsset(Clone)(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  spawnConfig:
+    prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
+      type: 3}
+    count: 5
+    batchCount: 1
+    duration: Infinity
 --- !u!114 &6999150056459922564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1174,6 +1271,269 @@ MonoBehaviour:
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 35c70a195aaedc9439bd29386da29b3d, type: 2}
+--- !u!114 &8791887926072596610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b81f80d6f8c14a42a8f7b9dccea2df2, type: 3}
+  m_Name: Enemy Spawner Track
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: -5960879549928856895}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 10
+    m_ClipIn: 0
+    m_Asset: {fileID: 388024257563382833}
+    m_Duration: 30
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8791887926072596610}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: S1 - Scout
+  - m_Version: 1
+    m_Start: 46.4
+    m_ClipIn: 0
+    m_Asset: {fileID: 1362991852399573042}
+    m_Duration: 30
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8791887926072596610}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: S1 - Scout
+  - m_Version: 1
+    m_Start: 115.85
+    m_ClipIn: 0
+    m_Asset: {fileID: 6917185564046435757}
+    m_Duration: 30
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8791887926072596610}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: S1 - Scout
+  - m_Version: 1
+    m_Start: 81.4
+    m_ClipIn: 0
+    m_Asset: {fileID: 2148700481050925307}
+    m_Duration: 30
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8791887926072596610}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: S1 - Scout
+  m_Markers:
+    m_Objects: []
 --- !u!114 &9071047804422501908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1189,7 +1549,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: -5838110762882374564}

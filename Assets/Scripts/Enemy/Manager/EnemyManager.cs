@@ -94,7 +94,6 @@ public partial class EnemyManager : MonoBehaviour
     private void Start()
     {
         InitializeEnemyPools();
-        InitializeEnemySpawners();
     }
 
     private void Update()
@@ -121,18 +120,6 @@ public partial class EnemyManager : MonoBehaviour
     #endregion
 
     #region Spawning
-
-    private void InitializeEnemySpawners()
-    {
-        foreach (Transform child in transform)
-        {
-            if (child.TryGetComponent(out EnemySpawner spawner))
-            {
-                spawner.Initialize(this);
-                m_enemyTypeToSpawner.Add(spawner.enemy.type, spawner);
-            }
-        }
-    }
 
     public void ChangeEnemySpawnConfig(EnemySpawnConfig config)
     {
@@ -161,7 +148,19 @@ public partial class EnemyManager : MonoBehaviour
         foreach (EnemyPoolConfig config in m_enemyPoolConfigs)
         {
             m_poolingChannel.onCreatePool.Invoke(config);
+            CreateSpawner(config);
         }
+    }
+
+    private void CreateSpawner(EnemyPoolConfig config)
+    {
+        GameObject newGameObject = new GameObject(config.prefab.name + "Spawner");
+        newGameObject.transform.parent = transform;
+        EnemySpawner spawner = newGameObject.AddComponent<EnemySpawner>();
+        spawner.Initialize(this);
+
+        if (!m_enemyTypeToSpawner.ContainsKey(config.type))
+            m_enemyTypeToSpawner.Add(config.type, spawner);
     }
 
     #endregion

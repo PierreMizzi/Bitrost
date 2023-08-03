@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   speed: 7
-  radiusAroundPlayer: 10
+  radiusAroundPlayer: 7
   angleAroundPlayer: 10
   speedTrackPlayer: 1
   delayBetweenBullet: 4

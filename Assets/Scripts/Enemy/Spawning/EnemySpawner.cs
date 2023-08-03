@@ -1,18 +1,9 @@
 using UnityEngine;
-using System;
 using System.Collections;
 
 public class EnemySpawner : MonoBehaviour
 {
     private EnemyManager m_manager = null;
-
-    [SerializeField]
-    private Enemy m_enemy;
-
-    public Enemy enemy
-    {
-        get { return m_enemy; }
-    }
 
     private EnemySpawnConfig m_config;
 
@@ -29,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (Application.isPlaying)
         {
+
             m_config = config;
             currentCount = config.count;
             StartSpawning();
@@ -71,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
         {
             m_manager.SpawnEnemy(m_config.prefab.gameObject, m_config.batchCount);
             currentCount -= m_config.batchCount;
-            
+
             if (currentCount <= 0)
             {
                 StopSpawning();

@@ -35,8 +35,7 @@ public partial class Module : MonoBehaviour, IStateMachine
 
     public void ChangeState(int previousState, int nextState)
     {
-        if (currentState != null)
-            currentState.Exit();
+        currentState?.Exit();
 
         currentState = states.Find((AState newState) => newState.type == nextState);
         if (currentState != null)
@@ -82,6 +81,10 @@ public partial class Module : MonoBehaviour, IStateMachine
     public bool CanBeProduction()
     {
         bool result = true;
+
+        result &= canStoreEnergy;
+        if (!canStoreEnergy)
+            Debug.LogWarning("CAN'T STORE ENERGY");
 
         // Crystal has energy ?
         result &= crystal.hasEnergy;

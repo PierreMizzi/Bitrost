@@ -82,6 +82,14 @@ public partial class Module : MonoBehaviour, IBulletLauncher
         set { m_storedEnergy = Mathf.Clamp(value, 0, m_settings.maxStoredEnergy); }
     }
 
+    private bool canStoreEnergy
+    {
+        get
+        {
+            return m_storedEnergy < m_settings.maxStoredEnergy;
+        }
+    }
+
     public bool hasEnergy
     {
         get { return crystal.hasEnergy || m_storedEnergy > 0; }
