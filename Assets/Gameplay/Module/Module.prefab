@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6884133171851215961}
-  - component: {fileID: 4483661929717576709}
   - component: {fileID: 6127655386794914548}
+  - component: {fileID: 7629533949550132179}
   m_Layer: 11
   m_Name: Target
   m_TagString: Untagged
@@ -33,32 +33,6 @@ Transform:
   m_Father: {fileID: 6585395776926643580}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &4483661929717576709
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1891565165707159705}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2}
-  m_EdgeRadius: 0
 --- !u!114 &6127655386794914548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +48,22 @@ MonoBehaviour:
   m_origin: {fileID: 6585395776926643580}
   m_type: 1
   m_targeterScaleFactor: 0.5
+--- !u!58 &7629533949550132179
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891565165707159705}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.6
 --- !u!1 &4521125801839092321
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,12 +197,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_settings: {fileID: 11400000, guid: f02b5e9ff94dbe2439122dca132ad81c, type: 2}
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
+  m_target: {fileID: 6127655386794914548}
   m_mousePositionInput: {fileID: -4717243020878214388, guid: b31e137cb3947c244992c71078d944dc,
     type: 3}
   m_canonTransform: {fileID: 6585395777087232122}
   m_bulletOriginTransform: {fileID: 2603461646432851164}
-  m_camera: {fileID: 0}
+  m_storedEnergy: 0
   m_spritesContainer: {fileID: 7352402879377549824}
+  m_aimSprite: {fileID: 4521125801839092321}
   m_isTargeted: 0
 --- !u!1 &6585395777033767244
 GameObject:
@@ -288,7 +280,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 9c52884b91f3f4d4cb20674d29ef9a7a, type: 3}
-  m_Color: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
+  m_Color: {r: 0.8679245, g: 0.53606063, b: 0.30841336, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

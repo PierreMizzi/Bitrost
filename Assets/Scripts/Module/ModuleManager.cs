@@ -118,7 +118,7 @@ public class ModuleManager : MonoBehaviour
         Unsubscribe();
     }
 
-	#endregion
+    #endregion
 
     private void Subscribe()
     {
@@ -148,6 +148,9 @@ public class ModuleManager : MonoBehaviour
 
     private void CallbackActivateModule(InputAction.CallbackContext context)
     {
+        if (m_currentTarget == null)
+            return;
+
         switch (m_currentTarget.type)
         {
             case TargetType.CrystalShard:

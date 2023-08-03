@@ -11,6 +11,7 @@ public class TurretDisabledState : ATurretState
     protected override void DefaultEnter()
     {
         base.DefaultEnter();
-        m_turret.canonTransform.up = Vector2.up;
+        m_turret.canonTransform.up = Vector2.down;
+        m_turret.aimSprite.SetActive(false);
     }
 }

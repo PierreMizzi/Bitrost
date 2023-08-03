@@ -4,21 +4,8 @@ using System;
 using UnityEngine.InputSystem;
 
 public delegate void ModuleDelegate(Module module);
+public delegate void TurretStateDelegate(TurretStateType type);
 
-/*
-    Targeted when Fire mode
-    -> Retrieve on E
-    -> Extract Mode
-
-    Targeted when Extract
-    -> Retrieve on E
-    -> Fire Mode
-*/
-
-
-
-// TODO : back to Fire Mode when retrieving while extracting
-// TODO : Back to Fire Mode when can't extract any longer
 // TODO : Small message when can't fire because extract mode
 public partial class Module : MonoBehaviour, IBulletLauncher
 {
@@ -41,6 +28,9 @@ public partial class Module : MonoBehaviour, IBulletLauncher
     private ModuleManager m_manager;
 
     public CrystalShard crystal { get; private set; }
+
+
+    [SerializeField] private ModuleTarget m_target;
 
     #endregion
 
@@ -73,10 +63,16 @@ public partial class Module : MonoBehaviour, IBulletLauncher
 
     #region Extracting
 
-    [Obsolete]
-    public bool isExtracting { get; private set; }
-
-    public float productionProgress { get; private set; }
+    private float m_productionProgress;
+    public float productionProgress
+    {
+        get { return m_productionProgress; }
+        set
+        {
+            m_productionProgress = Mathf.Clamp01(value);
+            onProductionProgress?.Invoke(m_productionProgress);
+        }
+    }
 
     public int m_storedEnergy;
 
@@ -97,28 +93,29 @@ public partial class Module : MonoBehaviour, IBulletLauncher
 
     [SerializeField]
     private GameObject m_spritesContainer = null;
-
+    [SerializeField]
+    private GameObject m_aimSprite;
     private bool m_isDroppable;
+    [SerializeField]
+    private bool m_isTargeted = false;
 
+    public GameObject aimSprite { get { return m_aimSprite; } }
     public bool isDroppable
     {
         get { return m_isDroppable; }
         set
         {
             m_isDroppable = value;
-            onDroppable?.Invoke();
+            onIsDroppable?.Invoke();
         }
     }
-
-    [SerializeField]
-    private bool m_isTargeted = false;
     public bool isTargeted
     {
         get { return m_isTargeted; }
         set
         {
             m_isTargeted = value;
-            onSetTargeted?.Invoke();
+            onIsTargeted?.Invoke();
         }
     }
 
@@ -128,14 +125,17 @@ public partial class Module : MonoBehaviour, IBulletLauncher
         get { return (TurretStateType)currentState.type != TurretStateType.Inactive; }
     }
 
-    public Action onRefreshEnergy = null;
-    public Action onDroppable = null;
-    public Action onSetTargeted = null;
-    public Action onSetActive = null;
+    // Keep
+    public Action onIsDroppable = null;
+    public Action onIsTargeted = null;
+
+    public TurretStateDelegate onChangeState = null;
+
     public Action onAssignCrystal = null;
     public Action onRemoveCrystal = null;
-    public Action onExtraction = null;
-    public FloatDelegate onUpdateExtractionUI = null;
+    public Action onRefreshEnergy = null;
+
+    public FloatDelegate onProductionProgress = null;
 
     #endregion
 
@@ -159,13 +159,16 @@ public partial class Module : MonoBehaviour, IBulletLauncher
 
         InitiliazeStates();
 
-        onDroppable = () => { };
-        onSetActive = () => { };
+        onIsDroppable = () => { };
+        onIsTargeted = () => { };
+
+        onChangeState = (TurretStateType state) => { };
+
         onAssignCrystal = () => { };
         onRemoveCrystal = () => { };
-
         onRefreshEnergy = () => { };
-        onUpdateExtractionUI = (float normalized) => { };
+
+        onProductionProgress = (float normalized) => { };
     }
 
     public void Update()
@@ -179,18 +182,18 @@ public partial class Module : MonoBehaviour, IBulletLauncher
 
     public void SetActive()
     {
+        m_target.gameObject.SetActive(true);
         m_spritesContainer.SetActive(true);
-        onSetActive.Invoke();
+
 
         onRefreshEnergy.Invoke();
-        onExtraction.Invoke();
     }
 
     public void SetInactive()
     {
+        m_target.gameObject.SetActive(false);
         m_spritesContainer.SetActive(false);
 
-        onSetActive.Invoke();
     }
 
     public void AssignCrystal(CrystalShard crystal)

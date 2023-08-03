@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Gameplay/ModuleHUD.uss?fileID=7433441132597879392&amp;guid=1b4e74142b7cf364aa78c08a789770ee&amp;type=3#ModuleHUD" />
-    <ui:VisualElement name="module-hud-root" style="flex-grow: 0; width: 100%; height: 200px; margin-top: 20px;">
+    <ui:VisualElement name="module-hud-root" style="flex-grow: 0; width: 100%; height: 200px; margin-top: 20px; align-items: stretch; justify-content: space-between;">
         <ui:VisualElement name="module-hud-active" style="width: 100%; height: 100%; visibility: visible; display: flex; justify-content: flex-start;">
             <ui:VisualElement name="module-hud-content" class="glass-background" style="justify-content: space-between; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px; flex-grow: 1; margin-bottom: 5px;">
                 <ui:Label text="REFFINE MODE" display-tooltip-when-elided="true" name="module-hud__mode-label" style="height: auto; -unity-text-align: middle-left; flex-grow: 0; flex-shrink: 1; font-size: 40px; color: rgb(255, 255, 255);" />
@@ -20,21 +20,21 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="tips-container" style="flex-grow: 0; flex-direction: row; justify-content: flex-start; flex-wrap: wrap;">
-                <ui:VisualElement name="tip-retrieve" class="tip-container" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(31, 31, 31, 0.66); flex-direction: row; align-items: center; justify-content: flex-start; flex-grow: 0; flex-shrink: 1; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; padding-bottom: 2px;">
-                    <ui:VisualElement name="tip-retrieve-icon" style="height: 30px; width: 30px; background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/ModuleHUD/T_E_Key_White.png?fileID=2800000&amp;guid=bc4523ce923b6db4b86d30c43b87f871&amp;type=3#T_E_Key_White&apos;); -unity-background-scale-mode: scale-to-fit;" />
+            <ui:VisualElement name="tips-container" style="flex-grow: 0; flex-direction: row; justify-content: flex-start; flex-wrap: wrap; height: 20%; align-items: center; display: flex;">
+                <ui:VisualElement name="tip-retrieve" class="tip-container" style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px; background-color: rgba(31, 31, 31, 0.66); flex-direction: row; align-items: center; justify-content: flex-start; flex-grow: 0; flex-shrink: 1; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; padding-bottom: 2px; display: flex;">
+                    <ui:VisualElement name="tip-retrieve-icon" style="height: 25px; width: 25px; background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/ModuleHUD/T_Mouse_Right_Key_White.png?fileID=2800000&amp;guid=2cbdf3cc1030f0f4db8726ab852aa966&amp;type=3#T_Mouse_Right_Key_White&apos;); -unity-background-scale-mode: scale-to-fit;" />
                     <ui:Label text="Retrieve" display-tooltip-when-elided="true" name="tip-retrieve-label" class="tip-label" />
                 </ui:VisualElement>
-                <ui:VisualElement name="tip-fire" class="tip-container">
+                <ui:VisualElement name="tip-fire" class="tip-container" style="display: flex;">
                     <ui:VisualElement name="tip-fire-icon" style="height: 25px; width: 25px; background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/ModuleHUD/T_Mouse_Left_Key_White.png?fileID=2800000&amp;guid=8179a71dbcbb34a42abbe39dec66b754&amp;type=3#T_Mouse_Left_Key_White&apos;); -unity-background-scale-mode: scale-to-fit;" />
                     <ui:Label text="Fire" display-tooltip-when-elided="true" name="tip-fire-label" class="tip-label" style="border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; font-size: 16px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="tip-fire-mode" class="tip-container">
-                    <ui:VisualElement name="tip-fire-icon" style="height: 25px; width: 25px; background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/ModuleHUD/T_Mouse_Right_Key_White.png?fileID=2800000&amp;guid=2cbdf3cc1030f0f4db8726ab852aa966&amp;type=3#T_Mouse_Right_Key_White&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                <ui:VisualElement name="tip-fire-mode" class="tip-container" style="display: flex;">
+                    <ui:VisualElement name="tip-fire-icon" style="height: 30px; width: 30px; background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/ModuleHUD/T_E_Key_White.png?fileID=2800000&amp;guid=bc4523ce923b6db4b86d30c43b87f871&amp;type=3#T_E_Key_White&apos;); -unity-background-scale-mode: scale-to-fit;" />
                     <ui:Label text="Offensive mode" display-tooltip-when-elided="true" name="tip-fire-label" class="tip-label" style="border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; font-size: 16px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="tip-extract-mode" class="tip-container">
-                    <ui:VisualElement name="tip-extract-icon" style="height: 25px; width: 25px; background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/ModuleHUD/T_Mouse_Right_Key_White.png?fileID=2800000&amp;guid=2cbdf3cc1030f0f4db8726ab852aa966&amp;type=3#T_Mouse_Right_Key_White&apos;); -unity-background-scale-mode: scale-to-fit;" />
+                <ui:VisualElement name="tip-extract-mode" class="tip-container" style="display: flex;">
+                    <ui:VisualElement name="tip-extract-icon" style="height: 30px; width: 30px; background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/ModuleHUD/T_E_Key_White.png?fileID=2800000&amp;guid=bc4523ce923b6db4b86d30c43b87f871&amp;type=3#T_E_Key_White&apos;); -unity-background-scale-mode: scale-to-fit;" />
                     <ui:Label text="Reffining mode" display-tooltip-when-elided="true" name="tip-extract-label" class="tip-label" style="border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; font-size: 16px;" />
                 </ui:VisualElement>
             </ui:VisualElement>

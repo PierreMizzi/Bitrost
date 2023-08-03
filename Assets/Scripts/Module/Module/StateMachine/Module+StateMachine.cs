@@ -3,16 +3,16 @@ using UnityEngine;
 
 public partial class Module : MonoBehaviour, IStateMachine
 {
-	  #region Fields
+    #region Fields
 
     public AState currentState { get; set; }
     public List<AState> states { get; set; }
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
-	#region State Machine
+    #region State Machine
 
     public void InitiliazeStates()
     {
@@ -40,7 +40,10 @@ public partial class Module : MonoBehaviour, IStateMachine
 
         currentState = states.Find((AState newState) => newState.type == nextState);
         if (currentState != null)
+        {
             currentState.Enter(previousState);
+            onChangeState((TurretStateType)nextState);
+        }
         else
         {
             Debug.LogError($"Couldn't find a new state of type : {nextState}. Going Inactive");
@@ -49,11 +52,10 @@ public partial class Module : MonoBehaviour, IStateMachine
 
     public void UpdateState()
     {
-        if (currentState != null)
-            currentState.Update();
+        currentState?.Update();
     }
 
-	#endregion
+    #endregion
 
     public void SwitchMode()
     {
@@ -95,5 +97,5 @@ public partial class Module : MonoBehaviour, IStateMachine
         return result;
     }
 
-	#endregion
+    #endregion
 }

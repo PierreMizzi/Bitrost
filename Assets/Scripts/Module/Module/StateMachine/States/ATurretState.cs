@@ -7,4 +7,9 @@ public class ATurretState : AState
     }
 
     protected Module m_turret;
+
+    public void ChangeState(TurretStateType state)
+    {
+        ChangeState((int)state);
+    }
 }

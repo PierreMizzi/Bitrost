@@ -25,16 +25,16 @@ public class ModuleView
 
     // TODO : Progress Bar extraction
 
-	#region Fields
+    #region Fields
 
-	#region Behaviour
+    #region Behaviour
 
 
     private VisualElement m_root;
 
     private Module m_module;
 
-	#endregion
+    #endregion
 
     #region Activable
 
@@ -45,7 +45,7 @@ public class ModuleView
 
     #endregion
 
-	#region Activation
+    #region Activation
 
     private const string k_activeContainer = "module-hud-active";
     private const string k_inactiveContainer = "module-hud-inactive";
@@ -53,7 +53,7 @@ public class ModuleView
     private VisualElement m_activeContainer;
     private VisualElement m_inactiveContainer;
 
-	#endregion
+    #endregion
 
 
     #region Mode
@@ -80,22 +80,22 @@ public class ModuleView
 
     private const string k_retrieveTip = "tip-retrieve";
     private const string k_fireTip = "tip-fire";
-    private const string k_fireModeTip = "tip-fire-mode";
-    private const string k_extractModeTip = "tip-extract-mode";
+    private const string k_offensiveModeTip = "tip-fire-mode";
+    private const string k_productionModeTip = "tip-extract-mode";
 
     private VisualElement m_retrieveTip;
     private VisualElement m_fireTip;
-    private VisualElement m_fireModeTip;
-    private VisualElement m_extractModeTip;
+    private VisualElement m_offensiveModeTip;
+    private VisualElement m_productionModeTip;
 
     #endregion
 
-	#endregion
+    #endregion
 
 
-	#region Methods
+    #region Methods
 
-	#region Behaviour
+    #region Behaviour
 
     public void Initialize(Module module, VisualElement root)
     {
@@ -105,17 +105,16 @@ public class ModuleView
         m_root = root;
 
         InitializeVisualElements();
-        SetActive(false);
 
         SubscribeToModel();
+
+        CallbackChangeState(TurretStateType.Inactive);
     }
 
     private void InitializeVisualElements()
     {
         // Activable
         m_activableLabel = m_root.Q<Label>(k_activableLabel);
-
-        // Targeted
 
         // Status
         m_activeContainer = m_root.Q(k_activeContainer);
@@ -133,36 +132,35 @@ public class ModuleView
         // Tips
         m_retrieveTip = m_root.Q(k_retrieveTip);
         m_fireTip = m_root.Q(k_fireTip);
-        m_fireModeTip = m_root.Q(k_fireModeTip);
-        m_extractModeTip = m_root.Q(k_extractModeTip);
+        m_offensiveModeTip = m_root.Q(k_offensiveModeTip);
+        m_productionModeTip = m_root.Q(k_productionModeTip);
 
         m_retrieveTip.style.display = DisplayStyle.None;
         m_fireTip.style.display = DisplayStyle.None;
-        m_fireModeTip.style.display = DisplayStyle.None;
-        m_extractModeTip.style.display = DisplayStyle.None;
+        m_offensiveModeTip.style.display = DisplayStyle.None;
+        m_productionModeTip.style.display = DisplayStyle.None;
     }
 
     private void SubscribeToModel()
     {
         // Activable
-        m_module.onDroppable += CallbackIsActivable;
+        m_module.onIsDroppable += CallbackIsDroppable;
 
         // Targeted
-        m_module.onSetTargeted += CallbackIsTargeted;
+        m_module.onIsTargeted += CallbackIsTargeted;
 
         // Status
-        m_module.onSetActive += CallbackOnActivation;
+        m_module.onChangeState += CallbackChangeState;
 
         // Energy
         m_module.onAssignCrystal += CallbackAssignCrystal;
         m_module.onRemoveCrystal += CallbackRemoveCrystal;
 
         m_module.onRefreshEnergy += CallbackRefreshEnergy;
-
-        // Extraction
-        m_module.onExtraction += CallbackExtraction;
-
+        m_module.onProductionProgress += CallbackProductionProgress;
     }
+
+
 
     private void CallbackAssignCrystal()
     {
@@ -176,11 +174,11 @@ public class ModuleView
 
     private void UnsubscribeToModel() { }
 
-	#endregion
+    #endregion
 
     #region Activable
 
-    private void CallbackIsActivable()
+    private void CallbackIsDroppable()
     {
         m_activableLabel.text = (m_module.isDroppable) ? k_isActivableText : k_isNotActivableText;
     }
@@ -193,31 +191,79 @@ public class ModuleView
     {
         m_retrieveTip.style.display = m_module.isTargeted ? DisplayStyle.Flex : DisplayStyle.None;
 
-        m_extractModeTip.style.display =
-            m_module.isExtracting && m_module.isTargeted ? DisplayStyle.Flex : DisplayStyle.None;
+        TurretStateType state = (TurretStateType)m_module.currentState.type;
 
-        m_fireModeTip.style.display =
-            !m_module.isExtracting && m_module.isTargeted ? DisplayStyle.Flex : DisplayStyle.None;
+        if (m_module.isTargeted)
+        {
+            m_productionModeTip.style.display = state == TurretStateType.Offensive ? DisplayStyle.Flex : DisplayStyle.None;
+            m_offensiveModeTip.style.display = state == TurretStateType.Production ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+        else
+        {
+            m_productionModeTip.style.display = DisplayStyle.None;
+            m_offensiveModeTip.style.display = DisplayStyle.None;
+        }
     }
 
     #endregion
 
-	#region Activation
+    #region State
 
-    private void CallbackOnActivation()
+    private void CallbackChangeState(TurretStateType type)
     {
-        SetActive(m_module.isActive);
+        switch (type)
+        {
+            case TurretStateType.Inactive:
+                SetStateInactive();
+                break;
+            case TurretStateType.Offensive:
+                SetStateOffensive();
+                break;
+            case TurretStateType.Production:
+                SetStateProduction();
+                break;
+            case TurretStateType.Disabled:
+                SetStateDisabled();
+                break;
+        }
     }
 
-    private void SetActive(bool state)
+    private void SetStateInactive()
     {
-        m_activeContainer.style.display = state ? DisplayStyle.Flex : DisplayStyle.None;
-        m_inactiveContainer.style.display = state ? DisplayStyle.None : DisplayStyle.Flex;
+        m_activeContainer.style.display = DisplayStyle.None;
+        m_inactiveContainer.style.display = DisplayStyle.Flex;
+    }
+    private void SetStateOffensive()
+    {
+        m_activeContainer.style.display = DisplayStyle.Flex;
+        m_inactiveContainer.style.display = DisplayStyle.None;
+
+        m_modelLabel.text = "OFFENSIVE MODE";
+        m_extractionArrow.style.visibility = Visibility.Hidden;
+        m_fireTip.style.display = DisplayStyle.Flex;
     }
 
-	#endregion
+    private void SetStateProduction()
+    {
+        m_activeContainer.style.display = DisplayStyle.Flex;
+        m_inactiveContainer.style.display = DisplayStyle.None;
 
-    #region Energy
+        m_modelLabel.text = "PRODUCTION MODE";
+        m_extractionArrow.style.visibility = Visibility.Visible;
+        m_fireTip.style.display = DisplayStyle.None;
+    }
+
+    private void SetStateDisabled()
+    {
+        m_modelLabel.text = "NO ENERGY";
+
+        m_crystalEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+        m_storedEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+    }
+
+    #endregion
+
+    #region Production
 
     private void CallbackRefreshEnergy()
     {
@@ -242,33 +288,12 @@ public class ModuleView
         );
     }
 
-    #endregion
-
-    #region Extraction
-
-    private void CallbackExtraction()
+    private void CallbackProductionProgress(float value)
     {
-        if (m_module.isExtracting)
-            SetExtractionMode();
-        else
-            SetFireMode();
-    }
 
-    private void SetFireMode()
-    {
-        m_modelLabel.text = "OFFENSIVE MODE";
-        m_extractionArrow.style.visibility = Visibility.Hidden;
-        m_fireTip.style.display = DisplayStyle.Flex;
-    }
-
-    private void SetExtractionMode()
-    {
-        m_modelLabel.text = "REFFINE MODE";
-        m_extractionArrow.style.visibility = Visibility.Visible;
-        m_fireTip.style.display = DisplayStyle.None;
     }
 
     #endregion
 
-	#endregion
+    #endregion
 }

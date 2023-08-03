@@ -15,6 +15,7 @@ public class TurretOffensiveState : ATurretState
 
         m_turret.SetActive();
         m_turret.canonTransform.gameObject.SetActive(true);
+        m_turret.aimSprite.SetActive(true);
     }
 
     public override void Update()
@@ -22,6 +23,10 @@ public class TurretOffensiveState : ATurretState
         base.Update();
         m_turret.ComputeAimDirection();
         m_turret.canonTransform.up = m_turret.aimDirection;
+
+        if (!m_turret.hasEnergy)
+            ChangeState(TurretStateType.Disabled);
+
     }
 
 }

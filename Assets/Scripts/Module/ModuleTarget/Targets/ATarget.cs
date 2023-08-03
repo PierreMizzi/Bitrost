@@ -7,10 +7,10 @@ public enum TargetType
     CrystalShard
 }
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public abstract class ATarget : MonoBehaviour
 {
-	#region Fields
+    #region Fields
 
     [SerializeField]
     protected Transform m_origin;
@@ -30,9 +30,9 @@ public abstract class ATarget : MonoBehaviour
         get { return new Vector3(m_targeterScaleFactor, m_targeterScaleFactor, m_targeterScaleFactor); }
     }
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
-	#endregion
+    #endregion
 }
