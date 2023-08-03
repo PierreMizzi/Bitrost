@@ -25,7 +25,7 @@ using System.Collections.Generic;
 public partial class EnemyManager : MonoBehaviour
 {
 
-	#region Fields
+    #region Fields
 
     [SerializeField]
     private LevelChannel m_levelChannel = null;
@@ -65,18 +65,19 @@ public partial class EnemyManager : MonoBehaviour
 
     public bool areAllEnemiesKilled
     {
-        get {
+        get
+        {
             return m_stageKilledEnemyCount >= m_stageEnemyCount;
         }
     }
 
-	#endregion
+    #endregion
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
-	#region MonoBehaviour
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -151,9 +152,8 @@ public partial class EnemyManager : MonoBehaviour
     public void SpawnEnemy(GameObject prefab)
     {
         Enemy enemy = m_poolingChannel.onGetFromPool.Invoke(prefab).GetComponent<Enemy>();
-        enemy.OutOfPool(this);
-
         enemy.transform.position = GetCameraEdgeRandomPosition();
+        enemy.OutOfPool(this);
     }
 
     private void InitializeEnemyPools()
@@ -260,6 +260,6 @@ public partial class EnemyManager : MonoBehaviour
 
     #endregion
 
-	#endregion
+    #endregion
 
 }

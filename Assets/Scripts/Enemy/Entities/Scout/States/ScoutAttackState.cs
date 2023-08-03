@@ -1,8 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using DG.Tweening;
 using UnityEngine;
 
-public class ScoutAttackState : MonoBehaviour
+public class ScoutAttackState : AScoutState
 {
+	public ScoutAttackState(IStateMachine stateMachine) : base(stateMachine)
+	{
+		type = (int)EnemyStateType.Attack;
+	}
+
+	private Vector3 m_velocity;
+
+	private Tween m_attackTween;
+
+	protected override void DefaultEnter()
+	{
+		Debug.Log("ENTER - SCOUT ATTACK");
+		StartAttacking();
+	}
+
+	public override void Exit()
+	{
+		if (m_attackTween != null && m_attackTween.IsPlaying())
+			m_attackTween.Kill();
+	}
+
+	public override void Update()
+	{
+		m_this.transform.position = Vector3.SmoothDamp(m_this.transform.position, m_this.positionAroundPlayer, ref m_velocity, m_this.settings.speedTrackPlayer);
+		m_this.transform.up = m_this.directionTowardPlayer;
+	}
+
+	private void StartAttacking()
+	{
+		m_attackTween = DOVirtual.DelayedCall(m_this.settings.delayBetweenBullet, m_this.Fire)
+								 .SetLoops(-1);
+	}
 
 }

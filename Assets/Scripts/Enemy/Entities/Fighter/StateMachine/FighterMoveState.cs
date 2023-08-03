@@ -33,17 +33,7 @@ public class FighterMoveState : EnemyMoveState
     private void ApproachPlayer()
     {
         Vector3 playerPosition = m_fighter.levelChannel.player.transform.position;
-        Vector3 playerToFighter = (m_fighter.transform.position - playerPosition);
-
-        // Set Position
-        float randomAngle = Random.Range(
-            -m_fighter.settings.angleAroundPlayer,
-            m_fighter.settings.angleAroundPlayer
-        );
-        playerToFighter = Quaternion.AngleAxis(randomAngle, Vector3.forward) * playerToFighter;
-
-        m_endPosition =
-            playerPosition + (playerToFighter.normalized * m_fighter.settings.radiusAroundPlayer);
+        m_endPosition = m_fighter.CloseRandomPositionAroundPlayer(m_fighter.settings.radiusAroundPlayer, m_fighter.settings.angleAroundPlayer);
 
         // Duration of movement
         float duration = (playerPosition - m_endPosition).magnitude / m_fighter.settings.speed;

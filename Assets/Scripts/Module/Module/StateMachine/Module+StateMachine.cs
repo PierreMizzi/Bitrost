@@ -83,12 +83,6 @@ public partial class Module : MonoBehaviour, IStateMachine
     {
         bool result = true;
 
-        // Stored energy is full
-        bool canStoreEnergy = storedEnergy < m_settings.maxStoredEnergy;
-        result &= canStoreEnergy;
-        if (!canStoreEnergy)
-            Debug.LogWarning("CAN'T STORE ENERGY");
-
         // Crystal has energy ?
         result &= crystal.hasEnergy;
         if (!crystal.hasEnergy)

@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(HealthEntity))]
 public class Enemy : MonoBehaviour, IStateMachine
 {
-	#region Fields
+    #region Fields
 
     [SerializeField]
     protected LevelChannel m_levelChannel = null;
@@ -12,6 +12,11 @@ public class Enemy : MonoBehaviour, IStateMachine
     public LevelChannel levelChannel
     {
         get { return m_levelChannel; }
+    }
+
+    public Vector3 directionTowardPlayer
+    {
+        get { return (m_levelChannel.player.transform.position - transform.position).normalized; }
     }
 
     [SerializeField]
@@ -27,16 +32,16 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     public EnemySettings settings;
 
-	#region StateMachine
+    #region StateMachine
 
     public List<AState> states { get; set; } = new List<AState>();
     public AState currentState { get; set; }
 
     #endregion
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
     protected virtual void Update()
     {
@@ -60,15 +65,14 @@ public class Enemy : MonoBehaviour, IStateMachine
         };
     }
 
-    public void ChangeState(EnemyStateType previousState, EnemyStateType nextState)
+    public void ChangeState(EnemyStateType nextState, EnemyStateType previousState = EnemyStateType.None)
     {
         ChangeState((int)previousState, (int)nextState);
     }
 
     public void ChangeState(int previousState, int nextState)
     {
-        if (currentState != null)
-            currentState.Exit();
+        currentState?.Exit();
 
         currentState = states.Find((AState newState) => newState.type == nextState);
         if (currentState != null)
@@ -81,11 +85,10 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     public void UpdateState()
     {
-        if (currentState != null)
-            currentState.Update();
+        currentState?.Update();
     }
 
-	#endregion
+    #endregion
 
     #region Behaviour
 
@@ -101,18 +104,18 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     public virtual void OutOfPool(EnemyManager manager)
     {
-        if(!m_isInitialized)
+        if (!m_isInitialized)
             Initialize();
 
         m_healthEntity.maxHealth = settings.maxHealth;
         m_healthEntity.Reset();
         m_manager = manager;
-        ChangeState(EnemyStateType.None, EnemyStateType.Idle);
+        ChangeState(EnemyStateType.Idle);
     }
 
     #endregion
 
-        #region Health
+    #region Health
 
     protected virtual void SubscribeHealth()
     {
@@ -130,12 +133,40 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     protected virtual void CallbackNoHealth()
     {
+        ChangeState(EnemyStateType.Inactive);
         m_manager.KillEnemy(gameObject);
     }
 
     #endregion
 
+    #region Utils
 
+    public Vector3 CloseRandomPositionAroundPlayer(float radius, float angle)
+    {
 
-	#endregion
+        Vector3 playerPosition = m_levelChannel.player.transform.position;
+        Vector3 playerToEnemy = CloseRandomDirectionFromPlayer(angle);
+
+        return playerPosition + (playerToEnemy.normalized * radius);
+    }
+
+    public Vector3 PositionAroundPlayer(Vector3 direction, float radius)
+    {
+        Vector3 playerPosition = m_levelChannel.player.transform.position;
+
+        return playerPosition + (direction * radius);
+    }
+
+    public Vector3 CloseRandomDirectionFromPlayer(float angle)
+    {
+        float randomAngle = Random.Range(
+             -angle,
+             angle
+         );
+        return Quaternion.AngleAxis(randomAngle, Vector3.forward) * -directionTowardPlayer;
+    }
+
+    #endregion
+
+    #endregion
 }

@@ -23,3 +23,8 @@ MonoBehaviour:
       type: 3}
     defaultSize: 20
     maxSize: 100
+  - name: ScoutBullet
+    prefab: {fileID: 3741169766357441707, guid: 13fbd28be1495904da0f0ac48e1d7ff3,
+      type: 3}
+    defaultSize: 20
+    maxSize: 100

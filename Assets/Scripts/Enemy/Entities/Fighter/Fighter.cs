@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Fighter : Enemy, IBulletLauncher
 {
-	#region Fields
+    #region Fields
 
     [Header("Fighter")]
     public Transform bulletOrigin;
@@ -15,16 +15,11 @@ public class Fighter : Enemy, IBulletLauncher
         get { return base.settings as FighterSettings; }
     }
 
-    public Vector3 directionTowardPlayer
-    {
-        get { return (m_levelChannel.player.transform.position - transform.position).normalized; }
-    }
+    #endregion
 
-	#endregion
+    #region Methods
 
-	#region Methods
-
-	#region State Machine
+    #region State Machine
 
     public override void InitiliazeStates()
     {
@@ -37,7 +32,7 @@ public class Fighter : Enemy, IBulletLauncher
         };
     }
 
-	#endregion
+    #endregion
 
     #region IBulletLauncher
 
@@ -64,5 +59,5 @@ public class Fighter : Enemy, IBulletLauncher
 
     #endregion
 
-	#endregion
+    #endregion
 }

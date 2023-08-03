@@ -9,8 +9,7 @@ public class HarvesterSettings : EnemySettings
     [SerializeField]
     private float rangeAroundPlayer = 10f;
 
-	[HideInInspector]
-    public float rangeAroundPlayerSqr;
+    public float rangeAroundPlayerSqr { get; private set; }
 
     public float offsetFromShard = 0.5f;
 

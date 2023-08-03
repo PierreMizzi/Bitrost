@@ -17,7 +17,8 @@ public class BulletChannel : ScriptableObject
             Bullet prefab,
             Vector3 position,
             Vector3 orientation
-        ) => { };
+        ) =>
+        { };
         onReleaseBullet = (Bullet bullet) => { };
     }
 }
