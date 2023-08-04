@@ -7,11 +7,18 @@ public delegate void ModuleDelegate(Module module);
 public delegate void TurretStateDelegate(TurretStateType type);
 
 // TODO : Small message when can't fire because extract mode
-public partial class Module : MonoBehaviour, IBulletLauncher
+public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
 {
     #region Fields
 
     #region Behaviour
+
+    [Header("Channels")]
+    [SerializeField]
+    private BulletChannel m_bulletChannel;
+
+    [SerializeField]
+    private LevelChannel m_levelChannel;
 
     [Header("Behaviour")]
     [SerializeField]
@@ -22,15 +29,41 @@ public partial class Module : MonoBehaviour, IBulletLauncher
         get { return m_settings; }
     }
 
-    [SerializeField]
-    private BulletChannel m_bulletChannel;
-
-    private ModuleManager m_manager;
-
     public CrystalShard crystal { get; private set; }
 
+    [SerializeField]
+    private ModuleTarget m_target;
 
-    [SerializeField] private ModuleTarget m_target;
+    [SerializeField]
+    private GameObject m_spritesContainer = null;
+
+    [SerializeField]
+    private GameObject m_aimSprite;
+    private bool m_isDroppable;
+    private bool m_isTargeted = false;
+
+    public GameObject aimSprite { get { return m_aimSprite; } }
+
+    public bool isDroppable
+    {
+        get { return m_isDroppable; }
+        set
+        {
+            m_isDroppable = value;
+            onIsDroppable?.Invoke();
+        }
+    }
+    public bool isTargeted
+    {
+        get { return m_isTargeted; }
+        set
+        {
+            m_isTargeted = value;
+            onIsTargeted?.Invoke();
+        }
+    }
+
+    public bool isPaused { get; set; }
 
     #endregion
 
@@ -59,9 +92,7 @@ public partial class Module : MonoBehaviour, IBulletLauncher
 
     #endregion
 
-    #endregion
-
-    #region Extracting
+    #region Production
 
     private float m_productionProgress;
     public float productionProgress
@@ -97,42 +128,7 @@ public partial class Module : MonoBehaviour, IBulletLauncher
 
     #endregion
 
-    #region Reworked UI
-
-    [SerializeField]
-    private GameObject m_spritesContainer = null;
-    [SerializeField]
-    private GameObject m_aimSprite;
-    private bool m_isDroppable;
-    [SerializeField]
-    private bool m_isTargeted = false;
-
-    public GameObject aimSprite { get { return m_aimSprite; } }
-    public bool isDroppable
-    {
-        get { return m_isDroppable; }
-        set
-        {
-            m_isDroppable = value;
-            onIsDroppable?.Invoke();
-        }
-    }
-    public bool isTargeted
-    {
-        get { return m_isTargeted; }
-        set
-        {
-            m_isTargeted = value;
-            onIsTargeted?.Invoke();
-        }
-    }
-
-    // Activation
-    public bool isActive
-    {
-        get { return (TurretStateType)currentState.type != TurretStateType.Inactive; }
-    }
-
+    #region UI events
     // Keep
     public Action onIsDroppable = null;
     public Action onIsTargeted = null;
@@ -147,11 +143,12 @@ public partial class Module : MonoBehaviour, IBulletLauncher
 
     #endregion
 
+    #endregion
+
     #region Methods
 
     public void Initialize(ModuleManager manager)
     {
-        m_manager = manager;
         camera = Camera.main;
 
         storedEnergy = 0;
@@ -279,6 +276,23 @@ public partial class Module : MonoBehaviour, IBulletLauncher
             Debug.LogWarning("IS NOT IN OFFENSIVE STATE");
 
         return result;
+    }
+
+    #endregion
+
+    #region Pause
+
+
+    public void Pause()
+    {
+        isPaused = true;
+        currentState.Pause();
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+        currentState.Resume();
     }
 
     #endregion

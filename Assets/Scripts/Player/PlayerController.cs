@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPausable
 {
     #region Fields
 
@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private Camera m_camera;
 
-	#region Inputs
+    #region Inputs
 
     [SerializeField]
     private InputActionReference m_locomotionActionReference = null;
@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private InputActionReference m_mousePositionActionReference = null;
 
-	#endregion
+    #endregion
 
-	#region Locomotion
+    #region Locomotion
 
     [SerializeField]
     private Vector3 m_locomotionActionValue;
@@ -31,13 +31,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 m_screenSpacePosition;
     private Vector3 m_orientation;
 
-	#endregion
+    public bool isPaused { get; set; }
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #endregion
 
-	#region Monobehaviour
+    #region Methods
+
+    #region Monobehaviour
 
     private void Start()
     {
@@ -46,22 +48,25 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        ReadInputs();
+        if (!isPaused)
+            ReadInputs();
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (!isPaused)
+            Move();
     }
 
     private void LateUpdate()
     {
-        Rotate();
+        if (!isPaused)
+            Rotate();
     }
 
-	#endregion
+    #endregion
 
-	#region Locomotion
+    #region Locomotion
 
     private void Move()
     {
@@ -80,7 +85,7 @@ public class PlayerController : MonoBehaviour
         transform.right = m_orientation;
     }
 
-	#endregion
+    #endregion
 
     private void ReadInputs()
     {
@@ -88,5 +93,19 @@ public class PlayerController : MonoBehaviour
         m_mousePositionActionValue = m_mousePositionActionReference.action.ReadValue<Vector2>();
     }
 
-	#endregion
+    #region Pause
+
+    #endregion
+
+    public void Pause()
+    {
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+    }
+
+    #endregion
 }

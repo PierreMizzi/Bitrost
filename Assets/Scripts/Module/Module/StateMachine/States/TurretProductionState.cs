@@ -37,6 +37,18 @@ public class TurretProductionState : ATurretState
             m_productionCycleTween.Kill();
     }
 
+    public override void Pause()
+    {
+        if (m_productionCycleTween != null && m_productionCycleTween.IsPlaying())
+            m_productionCycleTween.Pause();
+    }
+
+    public override void Resume()
+    {
+        if (m_productionCycleTween != null && !m_productionCycleTween.IsPlaying())
+            m_productionCycleTween.Play();
+    }
+
     private void StartProduction()
     {
         m_turret.productionProgress = 0;

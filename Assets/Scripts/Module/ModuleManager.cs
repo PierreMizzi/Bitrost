@@ -13,12 +13,14 @@ using UnityEngine.UIElements;
 
 */
 
-public class ModuleManager : MonoBehaviour
+public class ModuleManager : MonoBehaviour, IPausable
 {
     #region Fields
 
     [SerializeField]
     private LevelChannel m_levelChannel = null;
+
+    public bool isPaused { get; set; }
 
     #region Inputs
 
@@ -28,23 +30,18 @@ public class ModuleManager : MonoBehaviour
     private ModuleSettings m_settings = null;
 
     [Header("Inputs")]
-    [SerializeField]
-    private ContactFilter2D m_crystalShardFilter;
 
     [SerializeField]
-    private InputActionReference m_mousePositionActionReference = null;
+    private InputActionReference m_mousePositionInput = null;
 
     [SerializeField]
-    private InputActionReference m_dropNodeActionReference = null;
+    private InputActionReference m_dropRetrieveTurretInput = null;
 
     [SerializeField]
-    private InputActionReference m_retrieveNodeActionReference = null;
+    private InputActionReference m_fireInput = null;
 
     [SerializeField]
-    private InputActionReference m_fireActionReference = null;
-
-    [SerializeField]
-    private InputActionReference m_extractActionReference = null;
+    private InputActionReference m_switchModeInput = null;
 
     #endregion
 
@@ -71,6 +68,7 @@ public class ModuleManager : MonoBehaviour
 
     #region Module Views
 
+    [Header("Turret Views")]
     [SerializeField]
     private UIDocument m_document = null;
 
@@ -87,7 +85,16 @@ public class ModuleManager : MonoBehaviour
 
     #region Module Target
 
+    [Header("Module Target")]
+    [SerializeField]
+    private ModuleTargeter m_moduleTargeter;
 
+    [SerializeField]
+    private ContactFilter2D m_targetFilter;
+
+    private ATarget m_currentTarget;
+
+    List<RaycastHit2D> potentialTargets = new List<RaycastHit2D>();
 
     #endregion
 
@@ -105,59 +112,70 @@ public class ModuleManager : MonoBehaviour
     private void Start()
     {
         m_remainingModuleCount = m_settings.startingModuleCount;
-        Subscribe();
+        SubscribeInputs();
 
         m_moduleViewsContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
 
         CreateTurret();
 
         if (m_levelChannel != null)
+        {
             m_levelChannel.onReset += CallbackReset;
+            m_levelChannel.onPauseGame += Pause;
+            m_levelChannel.onResumeGame += Resume;
+        }
 
-    }
-
-    private void Update()
-    {
-        ManageTarget();
     }
 
     private void OnDestroy()
     {
-        Unsubscribe();
+        UnsubscribeInputs();
 
         if (m_levelChannel != null)
+        {
             m_levelChannel.onReset -= CallbackReset;
+            m_levelChannel.onPauseGame -= Pause;
+            m_levelChannel.onResumeGame -= Resume;
+        }
     }
 
     #endregion
 
-    private void Subscribe()
-    {
-        if (m_dropNodeActionReference != null)
-            m_dropNodeActionReference.action.performed += CallbackActivateModule;
-
-        if (m_fireActionReference != null)
-            m_fireActionReference.action.performed += CallbackFireAction;
-
-        if (m_extractActionReference != null)
-            m_extractActionReference.action.performed += CallbackSwitchModeAction;
-    }
-
-    private void Unsubscribe()
-    {
-        if (m_dropNodeActionReference != null)
-            m_dropNodeActionReference.action.performed -= CallbackActivateModule;
-
-        if (m_fireActionReference != null)
-            m_fireActionReference.action.performed -= CallbackFireAction;
-
-        if (m_extractActionReference != null)
-            m_extractActionReference.action.performed -= CallbackSwitchModeAction;
-    }
-
     #region Inputs
 
-    private void CallbackActivateModule(InputAction.CallbackContext context)
+    private void SubscribeInputs()
+    {
+        if (m_mousePositionInput != null)
+            m_mousePositionInput.action.performed += CallbackMousePosition;
+
+        if (m_dropRetrieveTurretInput != null)
+            m_dropRetrieveTurretInput.action.performed += CallbackDropRetrieveTurret;
+
+        if (m_fireInput != null)
+            m_fireInput.action.performed += CallbackFire;
+
+        if (m_switchModeInput != null)
+            m_switchModeInput.action.performed += CallbackSwitchMode;
+    }
+
+
+
+    private void UnsubscribeInputs()
+    {
+        if (m_mousePositionInput != null)
+            m_mousePositionInput.action.performed -= CallbackMousePosition;
+
+        if (m_dropRetrieveTurretInput != null)
+            m_dropRetrieveTurretInput.action.performed -= CallbackDropRetrieveTurret;
+
+        if (m_fireInput != null)
+            m_fireInput.action.performed -= CallbackFire;
+
+        if (m_switchModeInput != null)
+            m_switchModeInput.action.performed -= CallbackSwitchMode;
+    }
+
+    private void CallbackDropRetrieveTurret(InputAction.CallbackContext context)
     {
         if (m_currentTarget == null)
             return;
@@ -197,13 +215,13 @@ public class ModuleManager : MonoBehaviour
         turret.ChangeState(TurretStateType.Inactive);
     }
 
-    private void CallbackFireAction(InputAction.CallbackContext context)
+    private void CallbackFire(InputAction.CallbackContext context)
     {
         foreach (Module turret in m_turrets)
             turret.Fire();
     }
 
-    private void CallbackSwitchModeAction(InputAction.CallbackContext context)
+    private void CallbackSwitchMode(InputAction.CallbackContext context)
     {
         if (m_currentTarget == null)
             return;
@@ -270,31 +288,21 @@ public class ModuleManager : MonoBehaviour
 
     #region ModuleTarget
 
-    [SerializeField]
-    private ModuleTargeter m_moduleTargeter;
-
-    [SerializeField]
-    private ContactFilter2D m_targetFilter;
-
-    private ATarget m_currentTarget;
-
-    List<RaycastHit2D> results = new List<RaycastHit2D>();
-
-    public void ManageTarget()
+    private void CallbackMousePosition(InputAction.CallbackContext context)
     {
-        Vector3 mouseScreenPosition = m_mousePositionActionReference.action.ReadValue<Vector2>();
+        Vector3 mouseScreenPosition = context.ReadValue<Vector2>();
         Vector3 raycastOrigin = ScreenPositionToRaycastOrigin(mouseScreenPosition);
 
-        if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_targetFilter, results) > 0)
+        if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_targetFilter, potentialTargets) > 0)
         {
-            ATarget target = FindFirst(results, TargetType.Turret);
+            ATarget target = FindFirst(potentialTargets, TargetType.Turret);
             if (target != null)
             {
                 ManageModuleTarget(target);
                 return;
             }
 
-            target = FindFirst(results, TargetType.CrystalShard);
+            target = FindFirst(potentialTargets, TargetType.CrystalShard);
             if (target != null)
             {
                 ManageCrystalTarget(target);
@@ -397,6 +405,28 @@ public class ModuleManager : MonoBehaviour
         m_remainingModuleCount = m_settings.startingModuleCount;
         CreateTurret();
 
+    }
+
+    #endregion
+
+    #region Pause
+
+    public void Pause()
+    {
+        isPaused = true;
+        UnsubscribeInputs();
+
+        foreach (Module turret in m_turrets)
+            turret.Pause();
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+        SubscribeInputs();
+
+        foreach (Module turret in m_turrets)
+            turret.Resume();
     }
 
     #endregion

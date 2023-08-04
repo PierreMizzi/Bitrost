@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8dd4d69d9916504192edde671b80bd2, type: 3}
-  m_Name: ModuleSettings
+  m_Name: TurretSettings
   m_EditorClassIdentifier: 
   startingModuleCount: 1
   storedEnergyCapacity: 10

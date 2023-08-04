@@ -18,10 +18,10 @@ public partial class Module : MonoBehaviour, IStateMachine
     {
         states = new List<AState>()
         {
-            new TurretInactiveState(this),
-            new TurretOffensiveState(this),
-            new TurretProductionState(this),
-            new TurretDisabledState(this),
+            new TurretInactiveState(this),          // Done
+            new TurretOffensiveState(this),         // Done
+            new TurretProductionState(this),        // Done
+            new TurretDisabledState(this),          // Done
         };
     }
 
@@ -51,7 +51,8 @@ public partial class Module : MonoBehaviour, IStateMachine
 
     public void UpdateState()
     {
-        currentState?.Update();
+        if (!isPaused)
+            currentState?.Update();
     }
 
     #endregion

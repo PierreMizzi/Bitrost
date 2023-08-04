@@ -54,7 +54,7 @@ public abstract class AState
 
     public virtual void Exit() { }
 
-    protected virtual void Pause() { }
+    public virtual void Pause() { }
 
-    protected virtual void Unpause() { }
+    public virtual void Resume() { }
 }

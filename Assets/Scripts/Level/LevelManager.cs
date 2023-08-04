@@ -5,18 +5,18 @@ using UnityEngine;
 using UnityEngine.Playables;
 
 [ExecuteInEditMode]
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour, IPausable
 {
     #region Fields
 
     [Header("Channels")]
-
     [SerializeField]
     private ApplicationChannel m_appChannel = null;
 
     [SerializeField]
     private LevelChannel m_levelChannel = null;
 
+    [Header("Arena")]
     [SerializeField]
     private float m_arenaDiameter = 10f;
 
@@ -24,23 +24,25 @@ public class LevelManager : MonoBehaviour
 
     public static float arenaRadiusSqr = 0f;
 
+    public bool isPaused { get; set; }
 
-
-    private bool isStageCompleted;
-
-    private bool m_isStageDurationOver;
+    public bool m_isGameOver = false;
 
     #region Time
 
     public float time { get; private set; }
 
-    public bool m_updateTime = false;
+    public bool canUpdateTime { get { return !isPaused && !m_isGameOver; } }
 
     #endregion
 
     #region Timeline
 
     private PlayableDirector m_director;
+
+    private bool isStageCompleted;
+
+    private bool m_isStageDurationOver;
 
     #endregion
 
@@ -68,14 +70,16 @@ public class LevelManager : MonoBehaviour
             m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
             m_levelChannel.onGameOver += CallbackGameOver;
             m_levelChannel.onReset += CallbackReset;
+
+            m_levelChannel.onPauseGame += Pause;
+            m_levelChannel.onResumeGame += Resume;
         }
 
-        m_updateTime = true;
     }
 
     private void Update()
     {
-        if (m_updateTime)
+        if (canUpdateTime)
             time += Time.unscaledDeltaTime;
     }
 
@@ -87,6 +91,8 @@ public class LevelManager : MonoBehaviour
             m_levelChannel.onGameOver -= CallbackGameOver;
             m_levelChannel.onReset -= CallbackReset;
 
+            m_levelChannel.onPauseGame -= Pause;
+            m_levelChannel.onResumeGame -= Resume;
         }
     }
 
@@ -160,10 +166,6 @@ public class LevelManager : MonoBehaviour
 
     #endregion
 
-    #region Name
-
-    #endregion
-
     #region Game Over
 
     /*
@@ -233,10 +235,25 @@ public class LevelManager : MonoBehaviour
     {
         // Time
         time = 0;
-        m_updateTime = true;
 
         // Stage
         ResetStage();
+    }
+
+    #endregion
+
+    #region Pause
+
+    public void Pause()
+    {
+        isPaused = true;
+        m_director.Pause();
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+        m_director.Play();
     }
 
     #endregion

@@ -15,18 +15,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "DropTurret",
+                    "name": "DropRetrieveTurret",
                     "type": "Button",
                     "id": "56314524-0e8a-44d4-83c5-d409c390b237",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RecallBTN",
-                    "type": "Button",
-                    "id": "612a7e80-cd07-486d-aeef-b3726368715e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -123,18 +114,7 @@
                     "interactions": "Tap",
                     "processors": "",
                     "groups": "",
-                    "action": "DropTurret",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f7e22526-80f7-402a-9d78-5c20c903b2ff",
-                    "path": "<Keyboard>/e",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RecallBTN",
+                    "action": "DropRetrieveTurret",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

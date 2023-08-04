@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(HealthEntity))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPausable
 {
     #region Fields
 
@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     private HealthEntity m_healthEntity = null;
 
     public HealthEntity healthEntity { get { return m_healthEntity; } }
+
+    public bool isPaused { get; set; }
 
     [SerializeField]
     private PlayerSettings m_settings = null;
@@ -37,7 +39,11 @@ public class Player : MonoBehaviour
         SubscribeHealthEntity();
 
         if (m_levelChannel != null)
+        {
             m_levelChannel.onReset += CallbackReset;
+            m_levelChannel.onPauseGame += Pause;
+            m_levelChannel.onResumeGame += Resume;
+        }
     }
 
     private void OnDestroy()
@@ -45,7 +51,12 @@ public class Player : MonoBehaviour
         UnsubscribeHealthEntity();
 
         if (m_levelChannel != null)
+        {
             m_levelChannel.onReset -= CallbackReset;
+            m_levelChannel.onPauseGame -= Pause;
+            m_levelChannel.onResumeGame -= Resume;
+
+        }
     }
 
     #region Health
@@ -85,6 +96,16 @@ public class Player : MonoBehaviour
         m_healthEntity.Reset();
         transform.position = Vector3.zero;
         m_controller.enabled = true;
+    }
+
+    public void Pause()
+    {
+        m_controller.Pause();
+    }
+
+    public void Resume()
+    {
+        m_controller.Resume();
     }
 
     #endregion
