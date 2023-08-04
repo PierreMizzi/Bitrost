@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CodesmithWorkshop.Useful;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -15,6 +16,9 @@ using UnityEngine.UIElements;
 public class ModuleManager : MonoBehaviour
 {
     #region Fields
+
+    [SerializeField]
+    private LevelChannel m_levelChannel = null;
 
     #region Inputs
 
@@ -65,17 +69,17 @@ public class ModuleManager : MonoBehaviour
 
     #endregion
 
-    #region ModuleViews
+    #region Module Views
 
     [SerializeField]
     private UIDocument m_document = null;
 
     private const string k_moduleViewVisualContainer = "module-container";
 
-    public VisualElement moduleViewVisualContainer { get; private set; }
+    public VisualElement m_moduleViewsContainer;
 
     [SerializeField]
-    private VisualTreeAsset m_moduleViewAsset;
+    private VisualTreeAsset m_moduleViewTemplate;
 
     public List<ModuleView> m_moduleViews = new List<ModuleView>();
 
@@ -103,9 +107,13 @@ public class ModuleManager : MonoBehaviour
         m_remainingModuleCount = m_settings.startingModuleCount;
         Subscribe();
 
-        moduleViewVisualContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
+        m_moduleViewsContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
 
         CreateTurret();
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset += CallbackReset;
+
     }
 
     private void Update()
@@ -116,6 +124,9 @@ public class ModuleManager : MonoBehaviour
     private void OnDestroy()
     {
         Unsubscribe();
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset -= CallbackReset;
     }
 
     #endregion
@@ -216,7 +227,6 @@ public class ModuleManager : MonoBehaviour
 
     #endregion
 
-
     #region Turret
 
     private void CreateTurret()
@@ -228,8 +238,8 @@ public class ModuleManager : MonoBehaviour
 
         // Instiate View, link it to model
         ModuleView turretView = new ModuleView();
-        VisualElement turretViewVisual = m_moduleViewAsset.Instantiate();
-        moduleViewVisualContainer.Add(turretViewVisual);
+        VisualElement turretViewVisual = m_moduleViewTemplate.Instantiate();
+        m_moduleViewsContainer.Add(turretViewVisual);
         turretView.Initialize(turret, turretViewVisual);
         m_moduleViews.Add(turretView);
     }
@@ -368,6 +378,25 @@ public class ModuleManager : MonoBehaviour
         Vector3 raycastOrigin = m_camera.ScreenToWorldPoint(screenPosition);
         raycastOrigin.z = m_camera.transform.position.z;
         return raycastOrigin;
+    }
+
+    #endregion
+
+    #region Reset
+
+    public void CallbackReset()
+    {
+        UtilsClass.EmptyTransform(m_moduleContainer);
+        m_turrets.Clear();
+
+        // Turrets View
+        m_moduleViews.Clear();
+        m_moduleViewsContainer.Clear();
+
+        // Turrets
+        m_remainingModuleCount = m_settings.startingModuleCount;
+        CreateTurret();
+
     }
 
     #endregion

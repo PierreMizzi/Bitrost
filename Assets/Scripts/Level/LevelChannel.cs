@@ -8,19 +8,25 @@ public class LevelChannel : ScriptableObject
 {
     public CrystalShardsManager crystalManager = null;
 
-    public GameObject player = null;
+    public Player player = null;
 
     public Action onAllEnemiesKilled = null;
 
-
     public Action onGameOver;
-
     public GameOverDelegate onGameOverPanel;
+
+    public Action onReset;
+    public Action onRestart;
 
     private void OnEnable()
     {
         onAllEnemiesKilled = () => { };
+
+        // Game Over
         onGameOver = () => { };
         onGameOverPanel = (GameOverData data) => { };
+
+        onReset = () => { };
+        onRestart = () => { };
     }
 }

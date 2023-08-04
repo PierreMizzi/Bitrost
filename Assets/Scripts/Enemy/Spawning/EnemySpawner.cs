@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -20,7 +21,6 @@ public class EnemySpawner : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-
             m_config = config;
             currentCount = config.count;
             StartSpawning();
@@ -72,5 +72,12 @@ public class EnemySpawner : MonoBehaviour
             else
                 yield return new WaitForSeconds(m_config.spawnFrequency);
         }
+    }
+
+    public void Reset()
+    {
+        m_config = new EnemySpawnConfig();
+        currentCount = 0;
+        StopSpawning();
     }
 }

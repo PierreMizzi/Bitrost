@@ -71,7 +71,6 @@ public class ModuleView
 
     #endregion
 
-
     #region Methods
 
     #region Behaviour
@@ -276,5 +275,10 @@ public class ModuleView
 
     #endregion
 
+    #region Destroy
+
     #endregion
+
+    #endregion
+
 }

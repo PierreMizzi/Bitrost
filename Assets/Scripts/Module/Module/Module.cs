@@ -220,7 +220,7 @@ public partial class Module : MonoBehaviour, IBulletLauncher
         crystal.SetAvailable();
 
         if (!crystal.hasEnergy)
-            crystal.Release();
+            crystal.Destroy();
 
         onRemoveCrystal.Invoke();
         crystal = null;

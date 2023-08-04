@@ -8,7 +8,7 @@ public delegate CrystalShard GetCrystalShardDelegate();
 
 public class CrystalShardsManager : MonoBehaviour
 {
-	#region Fields
+    #region Fields
 
     [SerializeField]
     private PoolingChannel m_poolingChannel = null;
@@ -22,10 +22,10 @@ public class CrystalShardsManager : MonoBehaviour
     [SerializeField]
     private CrystalShardsSettings m_settings = null;
 
-    private List<CrystalShard> m_crystals = new List<CrystalShard>();
-    public List<CrystalShard> crystals
+    private List<CrystalShard> m_activeCrystals = new List<CrystalShard>();
+    public List<CrystalShard> activeCrystals
     {
-        get { return m_crystals; }
+        get { return m_activeCrystals; }
     }
 
     [SerializeField]
@@ -38,22 +38,35 @@ public class CrystalShardsManager : MonoBehaviour
         get { return m_unavailableCrystals; }
     }
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
+
+    #region Restart
 
     private IEnumerator Start()
     {
         m_levelChannel.crystalManager = this;
-        ClearCrystalShards();
 
         yield return new WaitForEndOfFrame();
         m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
 
+        if (m_levelChannel != null)
+            m_levelChannel.onReset += CallbackReset;
+
+
         DebugSpawn();
     }
 
-    private void OnDestroy() { }
+    private void OnDestroy()
+    {
+        if (m_levelChannel != null)
+            m_levelChannel.onReset -= CallbackReset;
+    }
+
+    #endregion
+
+    #region Spawning
 
     public void SpawnCrystalShards(SpawnCrystalShardsConfig config)
     {
@@ -86,20 +99,24 @@ public class CrystalShardsManager : MonoBehaviour
         crystal.transform.localScale = Vector3.one * energy * m_settings.quantityToScaleRatio;
 
         crystal.Initialize(this, energy);
-        m_crystals.Add(crystal);
+        m_activeCrystals.Add(crystal);
     }
+
+
+    #endregion
+
 
     /// <summary>
     /// Might be useful !
     /// </summary>
     private bool IsValidPosition(Vector3 position)
     {
-        if (m_crystals.Count == 0)
+        if (m_activeCrystals.Count == 0)
             return true;
 
         float distance = 0;
 
-        foreach (CrystalShard crystal in m_crystals)
+        foreach (CrystalShard crystal in m_activeCrystals)
         {
             distance = (position - crystal.transform.position).magnitude;
 
@@ -124,8 +141,8 @@ public class CrystalShardsManager : MonoBehaviour
 
     public void DestroyCrystal(CrystalShard crystal)
     {
-        if (m_crystals.Contains(crystal))
-            m_crystals.Remove(crystal);
+        if (m_activeCrystals.Contains(crystal))
+            m_activeCrystals.Remove(crystal);
 
         RemoveUnavailableCrystal(crystal);
 
@@ -135,8 +152,23 @@ public class CrystalShardsManager : MonoBehaviour
     public void ClearCrystalShards()
     {
         UtilsClass.EmptyTransform(m_container, true);
-        m_crystals.Clear();
+        m_activeCrystals.Clear();
     }
+
+    #region Reset
+
+    public void CallbackReset()
+    {
+        foreach (CrystalShard crystal in m_activeCrystals)
+        {
+            crystal.Reset();
+            m_poolingChannel.onReleaseFromPool(crystal.gameObject);
+        }
+
+        m_activeCrystals.Clear();
+    }
+
+    #endregion
 
     #region Debug
 
@@ -152,5 +184,5 @@ public class CrystalShardsManager : MonoBehaviour
 
     #endregion
 
-	#endregion
+    #endregion
 }

@@ -134,7 +134,7 @@ public class Enemy : MonoBehaviour, IStateMachine
     protected virtual void CallbackNoHealth()
     {
         ChangeState(EnemyStateType.Inactive);
-        m_manager.KillEnemy(gameObject);
+        m_manager.KillEnemy(this);
     }
 
     #endregion

@@ -46,7 +46,7 @@ public class Harvester : Enemy
             goto Found;
 
         // If none, picks from all crystals
-        crystal = PickRandomValidCrystal(m_levelChannel.crystalManager.crystals);
+        crystal = PickRandomValidCrystal(m_levelChannel.crystalManager.activeCrystals);
         if (crystal != null)
             goto Found;
 
@@ -78,7 +78,7 @@ public class Harvester : Enemy
         Vector3 playerPosition = levelChannel.player.transform.position;
         float sqrDistance;
 
-        foreach (CrystalShard crystal in levelChannel.crystalManager.crystals)
+        foreach (CrystalShard crystal in levelChannel.crystalManager.activeCrystals)
         {
             sqrDistance = (playerPosition - crystal.transform.position).sqrMagnitude;
 

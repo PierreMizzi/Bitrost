@@ -65,6 +65,8 @@ public class GameOverPanel : MonoBehaviour
 	private void CallbackRestartButton()
 	{
 		Debug.Log("Restart Button");
+		m_levelChannel.onReset.Invoke();
+		Hide();
 	}
 
 	private void CallbackMenuButton()

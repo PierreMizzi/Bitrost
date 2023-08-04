@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 public class PlayerHUDView : MonoBehaviour
 {
-	#region Fields
+    #region Fields
 
     [SerializeField]
     private UIDocument m_document = null;
@@ -18,38 +18,26 @@ public class PlayerHUDView : MonoBehaviour
     [SerializeField]
     private LevelChannel m_levelChannel = null;
 
-    private HealthEntity m_playerHealth = null;
+    private HealthEntity playerHealth { get { return m_levelChannel.player.healthEntity; } }
 
     [Range(0f, 1f)]
     [SerializeField]
     private float d_normalizedHealth = 0f;
 
-	#endregion
+    #endregion
 
-	#region Methods
-
-    private void Awake()
-    {
-        m_playerHealth = m_levelChannel.player.GetComponent<HealthEntity>();
-    }
+    #region Methods
 
     private void Start()
     {
-        m_playerHealth.onHealedHealth += CallbackHealthChanged;
-        m_playerHealth.onLostHealth += CallbackHealthChanged;
+        playerHealth.onChangeHealth += CallbackHealthChanged;
 
         InitializeVisualElements();
     }
 
-    // private void OnValidate()
-    // {
-    //     UpdateProgessBar(d_normalizedHealth);
-    // }
-
     private void OnDestroy()
     {
-        m_playerHealth.onHealedHealth -= CallbackHealthChanged;
-        m_playerHealth.onLostHealth -= CallbackHealthChanged;
+        playerHealth.onChangeHealth += CallbackHealthChanged;
     }
 
     private void InitializeVisualElements()
@@ -60,7 +48,7 @@ public class PlayerHUDView : MonoBehaviour
 
     public void CallbackHealthChanged()
     {
-        UpdateProgessBar(m_playerHealth.normalizedHealth);
+        UpdateProgessBar(playerHealth.normalizedHealth);
     }
 
     public void UpdateProgessBar(float normalized)
@@ -69,5 +57,5 @@ public class PlayerHUDView : MonoBehaviour
         m_progressBar.style.right = m_progressBarLength;
     }
 
-	#endregion
+    #endregion
 }

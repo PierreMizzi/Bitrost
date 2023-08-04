@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // TODO : Spawn enemy not on a border but on an area -> TO TEST
 
 [ExecuteInEditMode]
-public partial class EnemyManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
 
     #region Fields
@@ -28,6 +28,8 @@ public partial class EnemyManager : MonoBehaviour
 
     private Dictionary<EnemyType, EnemySpawner> m_enemyTypeToSpawner =
         new Dictionary<EnemyType, EnemySpawner>();
+
+    private List<Enemy> m_activeEnemies = new List<Enemy>();
 
     #region Spawn Bounds
 
@@ -78,6 +80,9 @@ public partial class EnemyManager : MonoBehaviour
     private void Start()
     {
         InitializeEnemyPools();
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset += CallbackReset;
     }
 
     private void Update()
@@ -90,7 +95,11 @@ public partial class EnemyManager : MonoBehaviour
         UpdateEnemySpawnBounds();
     }
 
-    private void OnDestroy() { }
+    private void OnDestroy()
+    {
+        if (m_levelChannel != null)
+            m_levelChannel.onReset -= CallbackReset;
+    }
 
     private void OnDrawGizmos()
     {
@@ -125,6 +134,9 @@ public partial class EnemyManager : MonoBehaviour
         Enemy enemy = m_poolingChannel.onGetFromPool.Invoke(prefab).GetComponent<Enemy>();
         enemy.transform.position = GetCameraEdgeRandomPosition();
         enemy.OutOfPool(this);
+
+        if (!m_activeEnemies.Contains(enemy))
+            m_activeEnemies.Add(enemy);
     }
 
     private void InitializeEnemyPools()
@@ -145,6 +157,12 @@ public partial class EnemyManager : MonoBehaviour
 
         if (!m_enemyTypeToSpawner.ContainsKey(config.type))
             m_enemyTypeToSpawner.Add(config.type, spawner);
+    }
+
+    public void ResetEnemySpawner()
+    {
+        foreach (KeyValuePair<EnemyType, EnemySpawner> pair in m_enemyTypeToSpawner)
+            pair.Value.Reset();
     }
 
     #endregion
@@ -224,21 +242,42 @@ public partial class EnemyManager : MonoBehaviour
 
     #endregion
 
-    #region DestroyEnemy
+    #region Killing
 
 
-    public void KillEnemy(GameObject gameObject)
+    public void KillEnemy(Enemy enemy)
     {
-        Release(gameObject);
+        m_poolingChannel.onReleaseFromPool.Invoke(enemy.gameObject);
+
+        if (m_activeEnemies.Contains(enemy))
+            m_activeEnemies.Remove(enemy);
+
         m_stageKilledEnemyCount += 1;
 
         if (areAllEnemiesKilled)
             m_levelChannel.onAllEnemiesKilled.Invoke();
     }
 
-    public void Release(GameObject gameObject)
+    #endregion
+
+    #region Reset
+
+    public void CallbackReset()
     {
-        m_poolingChannel.onReleaseFromPool.Invoke(gameObject);
+        ResetEnemySpawner();
+
+        ReleaseActiveEnemies();
+    }
+
+    public void ReleaseActiveEnemies()
+    {
+        foreach (Enemy enemy in m_activeEnemies)
+        {
+            enemy.ChangeState(EnemyStateType.Inactive);
+            m_poolingChannel.onReleaseFromPool.Invoke(enemy.gameObject);
+        }
+
+        m_activeEnemies.Clear();
     }
 
     #endregion

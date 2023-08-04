@@ -26,7 +26,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="bolt-container" style="position: absolute; width: 100%; height: 100%; flex-direction: row; justify-content: space-between;">
+            <ui:VisualElement name="bolt-container" picking-mode="Ignore" style="position: absolute; width: 100%; height: 100%; flex-direction: row; justify-content: space-between;">
                 <ui:VisualElement name="bolt-top-left" class="bolt-top" />
                 <ui:VisualElement name="bolt-top-right" class="bolt-top" style="left: auto; right: 20px;" />
                 <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom" />

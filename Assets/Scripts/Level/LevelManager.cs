@@ -9,6 +9,14 @@ public class LevelManager : MonoBehaviour
 {
     #region Fields
 
+    [Header("Channels")]
+
+    [SerializeField]
+    private ApplicationChannel m_appChannel = null;
+
+    [SerializeField]
+    private LevelChannel m_levelChannel = null;
+
     [SerializeField]
     private float m_arenaDiameter = 10f;
 
@@ -16,8 +24,7 @@ public class LevelManager : MonoBehaviour
 
     public static float arenaRadiusSqr = 0f;
 
-    [SerializeField]
-    private LevelChannel m_levelChannel = null;
+
 
     private bool isStageCompleted;
 
@@ -26,6 +33,8 @@ public class LevelManager : MonoBehaviour
     #region Time
 
     public float time { get; private set; }
+
+    public bool m_updateTime = false;
 
     #endregion
 
@@ -38,6 +47,8 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     #region Methods
+
+    #region MonoBehaviour
 
     private void OnEnable()
     {
@@ -54,13 +65,19 @@ public class LevelManager : MonoBehaviour
     {
         if (m_levelChannel != null)
         {
-
             m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
             m_levelChannel.onGameOver += CallbackGameOver;
+            m_levelChannel.onReset += CallbackReset;
         }
+
+        m_updateTime = true;
     }
 
-
+    private void Update()
+    {
+        if (m_updateTime)
+            time += Time.unscaledDeltaTime;
+    }
 
     private void OnDestroy()
     {
@@ -68,13 +85,14 @@ public class LevelManager : MonoBehaviour
         {
             m_levelChannel.onAllEnemiesKilled -= CallbackAllEnemiesKilled;
             m_levelChannel.onGameOver -= CallbackGameOver;
+            m_levelChannel.onReset -= CallbackReset;
+
         }
     }
 
-    private void Update()
-    {
-        time += Time.unscaledDeltaTime;
-    }
+    #endregion
+
+    #region Arena
 
     public static bool IsInsideArena(Vector3 position)
     {
@@ -104,6 +122,8 @@ public class LevelManager : MonoBehaviour
         return positions;
     }
 
+    #endregion
+
     #region Stage Management
 
     private void PlayStage()
@@ -132,6 +152,16 @@ public class LevelManager : MonoBehaviour
             PlayStage();
     }
 
+    private void ResetStage()
+    {
+        m_director.Stop();
+        m_director.Play();
+    }
+
+    #endregion
+
+    #region Name
+
     #endregion
 
     #region Game Over
@@ -144,30 +174,49 @@ public class LevelManager : MonoBehaviour
         // TODO : Pause the game
                     -> LevelManager
                         -> Pause the time
-        // TODO : Show Death Screen
-                    -> Highscore
-                    -> Time
-                    -> Restart
-                    -> Menu
+        // TODO : Show GAME OVER Screen                                 DONE
+                    -> Highscore                                    
+                    -> Time                                         DONE
+                    -> Restart                                      WIP
+                    -> Menu                                         
 
         // TODO : Restart
-                    -> Player
+                    -> Player                                       DONE
+                        -> Position                                 DONE
+                        -> Health                                   DONE
+                    -> Camera
                         -> Position
-                    -> Module Manager
-                        -> RemainingModule back to 1
-                        -> Retrieve Module
-                        -> Reset Module Stored Energy
-                    -> EnemyManager
-                        -> Release enemies
-                        -> Empty pools
+                    -> Module Manager                               DONE
+                        -> RemainingModule back to 1                DONE
+                        -> Retrieve Module                          DONE
+                        -> Reset Module Stored Energy               DONE
+                    -> EnemyManager                                 DONE
+                        -> Release enemies                          DONE
+                        -> Empty pools                              DONE
                     -> BulletManager
-                        -> Release bullet
-                        -> Empty pools
-                    -> CrystalShardsManager
-                        -> Release crystals
-                        -> Empty pools
+                        -> Release bullet                           DONE
+                        -> Empty pools                              ????
+                    -> CrystalShardsManager                         DONE
+                        -> Release crystals                         DONE
+                        -> Empty pools                              ????
         // TODO : Menu
                     -> Unload scene
+
+
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset += CallbackReset;
+        if (m_levelChannel != null)
+            m_levelChannel.onReset -= CallbackReset;
+
+        #region Reset
+
+        public void CallbackReset()
+        {
+
+        }
+
+        #endregion
 
     */
 
@@ -175,7 +224,19 @@ public class LevelManager : MonoBehaviour
     {
         GameOverData data = new GameOverData(time);
 
+        m_appChannel.onSetCursor.Invoke(CursorType.Normal);
+
         m_levelChannel.onGameOverPanel.Invoke(data);
+    }
+
+    private void CallbackReset()
+    {
+        // Time
+        time = 0;
+        m_updateTime = true;
+
+        // Stage
+        ResetStage();
     }
 
     #endregion

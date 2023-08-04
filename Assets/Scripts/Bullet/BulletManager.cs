@@ -21,6 +21,11 @@ public class BulletManager : MonoBehaviour
     [SerializeField]
     private PoolingChannel m_poolingChannel = null;
 
+    [SerializeField]
+    private LevelChannel m_levelChannel = null;
+
+    private List<Bullet> m_activeBullets = new List<Bullet>();
+
     private IEnumerator Start()
     {
         if (m_bulletChannel != null)
@@ -28,6 +33,10 @@ public class BulletManager : MonoBehaviour
             m_bulletChannel.onInstantiateBullet += CallbackInstantiateBullet;
             m_bulletChannel.onReleaseBullet += CallbackReleaseBullet;
         }
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset += CallbackReset;
+
 
         yield return new WaitForEndOfFrame();
 
@@ -41,6 +50,9 @@ public class BulletManager : MonoBehaviour
             m_bulletChannel.onInstantiateBullet -= CallbackInstantiateBullet;
             m_bulletChannel.onReleaseBullet -= CallbackReleaseBullet;
         }
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset -= CallbackReset;
     }
 
     private void InitializeBulletPools()
@@ -63,10 +75,27 @@ public class BulletManager : MonoBehaviour
         bullet.AssignLauncher(launcher);
         bullet.transform.position = position;
         bullet.transform.up = orientation;
+
+        if (!m_activeBullets.Contains(bullet))
+            m_activeBullets.Add(bullet);
     }
 
     public void CallbackReleaseBullet(Bullet bullet)
     {
+        if (m_activeBullets.Contains(bullet))
+            m_activeBullets.Remove(bullet);
         m_poolingChannel.onReleaseFromPool.Invoke(bullet.gameObject);
     }
+
+    #region Reset
+
+    public void CallbackReset()
+    {
+        foreach (Bullet bullet in m_activeBullets)
+            m_poolingChannel.onReleaseFromPool.Invoke(bullet.gameObject);
+
+        m_activeBullets.Clear();
+    }
+
+    #endregion
 }

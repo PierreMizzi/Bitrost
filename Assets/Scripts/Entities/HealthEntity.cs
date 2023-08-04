@@ -3,7 +3,7 @@ using System;
 
 public class HealthEntity : MonoBehaviour
 {
-	#region Fields
+    #region Fields
 
     public float currentHealth { get; private set; }
     public float maxHealth { get; set; }
@@ -17,15 +17,18 @@ public class HealthEntity : MonoBehaviour
     public Action onHealedHealth = null;
     public Action onNoHealth = null;
 
-	#endregion
+    public Action onChangeHealth = null;
 
-	#region Methods
+    #endregion
+
+    #region Methods
 
     private void Awake()
     {
         onLostHealth = () => { };
         onHealedHealth = () => { };
         onNoHealth = () => { };
+        onChangeHealth = () => { };
     }
 
     public void Initialize(float maxHealth)
@@ -37,12 +40,14 @@ public class HealthEntity : MonoBehaviour
     public void Reset()
     {
         currentHealth = maxHealth;
+        onChangeHealth?.Invoke();
     }
 
     public void LoseHealth(float lost)
     {
         currentHealth -= lost;
         onLostHealth.Invoke();
+        onChangeHealth.Invoke();
 
         if (currentHealth <= 0)
         {
@@ -55,10 +60,11 @@ public class HealthEntity : MonoBehaviour
     {
         currentHealth += healed;
         onHealedHealth.Invoke();
+        onChangeHealth.Invoke();
 
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
     }
 
-	#endregion
+    #endregion
 }

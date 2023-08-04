@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     private HealthEntity m_healthEntity = null;
 
+    public HealthEntity healthEntity { get { return m_healthEntity; } }
+
     [SerializeField]
     private PlayerSettings m_settings = null;
 
@@ -23,22 +25,27 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        m_levelChannel.player = gameObject;
+        m_levelChannel.player = this;
 
         m_controller = GetComponent<PlayerController>();
-
         m_healthEntity = GetComponent<HealthEntity>();
-        m_healthEntity.Initialize(m_settings.maxHealth);
     }
 
     private void Start()
     {
+        m_healthEntity.Initialize(m_settings.maxHealth);
         SubscribeHealthEntity();
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset += CallbackReset;
     }
 
     private void OnDestroy()
     {
         UnsubscribeHealthEntity();
+
+        if (m_levelChannel != null)
+            m_levelChannel.onReset -= CallbackReset;
     }
 
     #region Health
@@ -67,6 +74,17 @@ public class Player : MonoBehaviour
         Debug.LogWarning("PLAYER HAS DIED !");
         m_levelChannel.onGameOver.Invoke();
         m_controller.enabled = false;
+    }
+
+    #endregion
+
+    #region Reset - Restart
+
+    public void CallbackReset()
+    {
+        m_healthEntity.Reset();
+        transform.position = Vector3.zero;
+        m_controller.enabled = true;
     }
 
     #endregion

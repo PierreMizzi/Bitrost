@@ -50,8 +50,9 @@ public class CrystalShard : MonoBehaviour
         m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
     }
 
-    public void Release()
+    public void Destroy()
     {
+        Reset();
         m_manager.DestroyCrystal(this);
     }
 
@@ -87,11 +88,14 @@ public class CrystalShard : MonoBehaviour
         m_propertyBlock.SetProperty(k_energyPercentProperty, energyPercentage);
     }
 
-    [SerializeField]
-    private float d_percentage = 0f;
-
-    private void OnValidate()
+    public void Reset()
     {
-        SetVisualEnergy();
+        remainingEnergyCount = 0;
+        totalEnergyCount = 0;
+        isAvailable = true;
+
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
     }
 }
