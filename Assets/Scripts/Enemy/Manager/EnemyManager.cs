@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // TODO : Spawn enemy not on a border but on an area -> TO TEST
 
 [ExecuteInEditMode]
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour, IPausable
 {
 
     #region Fields
@@ -59,6 +59,12 @@ public class EnemyManager : MonoBehaviour
 
     #endregion
 
+    #region Pause
+
+    public bool isPaused { get; set; }
+
+    #endregion
+
     #endregion
 
     #region Methods
@@ -82,7 +88,11 @@ public class EnemyManager : MonoBehaviour
         InitializeEnemyPools();
 
         if (m_levelChannel != null)
+        {
             m_levelChannel.onReset += CallbackReset;
+            m_levelChannel.onPauseGame += Pause;
+            m_levelChannel.onResumeGame += Resume;
+        }
     }
 
     private void Update()
@@ -98,7 +108,11 @@ public class EnemyManager : MonoBehaviour
     private void OnDestroy()
     {
         if (m_levelChannel != null)
+        {
             m_levelChannel.onReset -= CallbackReset;
+            m_levelChannel.onPauseGame -= Pause;
+            m_levelChannel.onResumeGame -= Resume;
+        }
     }
 
     private void OnDrawGizmos()
@@ -159,11 +173,8 @@ public class EnemyManager : MonoBehaviour
             m_enemyTypeToSpawner.Add(config.type, spawner);
     }
 
-    public void ResetEnemySpawner()
-    {
-        foreach (KeyValuePair<EnemyType, EnemySpawner> pair in m_enemyTypeToSpawner)
-            pair.Value.Reset();
-    }
+
+
 
     #endregion
 
@@ -244,7 +255,6 @@ public class EnemyManager : MonoBehaviour
 
     #region Killing
 
-
     public void KillEnemy(Enemy enemy)
     {
         m_poolingChannel.onReleaseFromPool.Invoke(enemy.gameObject);
@@ -258,6 +268,8 @@ public class EnemyManager : MonoBehaviour
             m_levelChannel.onAllEnemiesKilled.Invoke();
     }
 
+
+
     #endregion
 
     #region Reset
@@ -266,10 +278,16 @@ public class EnemyManager : MonoBehaviour
     {
         ResetEnemySpawner();
 
-        ReleaseActiveEnemies();
+        ResetActiveEnemies();
     }
 
-    public void ReleaseActiveEnemies()
+    public void ResetEnemySpawner()
+    {
+        foreach (KeyValuePair<EnemyType, EnemySpawner> pair in m_enemyTypeToSpawner)
+            pair.Value.Reset();
+    }
+
+    public void ResetActiveEnemies()
     {
         foreach (Enemy enemy in m_activeEnemies)
         {
@@ -278,6 +296,51 @@ public class EnemyManager : MonoBehaviour
         }
 
         m_activeEnemies.Clear();
+    }
+
+    #endregion
+
+    #region Pause
+
+
+    public void Pause()
+    {
+        isPaused = true;
+
+        PauseActiveEnemies();
+        PauseEnemySpawners();
+    }
+
+    private void PauseEnemySpawners()
+    {
+        foreach (KeyValuePair<EnemyType, EnemySpawner> pair in m_enemyTypeToSpawner)
+            pair.Value.Pause();
+    }
+
+    private void PauseActiveEnemies()
+    {
+        foreach (Enemy enemy in m_activeEnemies)
+            enemy.Pause();
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+
+        ResumeActiveEnemies();
+        ResumeEnemySpawners();
+    }
+
+    private void ResumeEnemySpawners()
+    {
+        foreach (KeyValuePair<EnemyType, EnemySpawner> pair in m_enemyTypeToSpawner)
+            pair.Value.Resume();
+    }
+
+    private void ResumeActiveEnemies()
+    {
+        foreach (Enemy enemy in m_activeEnemies)
+            enemy.Resume();
     }
 
     #endregion

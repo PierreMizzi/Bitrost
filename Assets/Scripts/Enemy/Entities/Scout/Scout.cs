@@ -28,9 +28,8 @@ public class Scout : Enemy, IBulletLauncher
         get { return base.settings as ScoutSettings; }
     }
 
-
-
-    [SerializeField] private BulletChannel m_bulletChannel = null;
+    [SerializeField]
+    private BulletChannel m_bulletChannel = null;
 
     public BulletChannel bulletChannel { get { return m_bulletChannel; } }
 
@@ -62,21 +61,16 @@ public class Scout : Enemy, IBulletLauncher
 
     }
 
-    protected override void Update()
-    {
-
-    }
-
     protected void LateUpdate()
     {
-        currentState?.Update();
+        if (!isPaused)
+            currentState?.Update();
     }
 
     public void Fire()
     {
         if (CanFire())
         {
-            Debug.Log("Fire");
             bulletChannel.onInstantiateBullet.Invoke(this, settings.bulletPrefab, transform.position, transform.up);
         }
     }
@@ -85,10 +79,6 @@ public class Scout : Enemy, IBulletLauncher
     {
         return true;
     }
-
-    #region State Machine
-
-    #endregion
 
     #endregion
 

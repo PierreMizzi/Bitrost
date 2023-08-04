@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, IPausable
 {
     private EnemyManager m_manager = null;
 
@@ -11,6 +11,8 @@ public class EnemySpawner : MonoBehaviour
     private int currentCount;
 
     private IEnumerator m_spawnCoroutine;
+
+    public bool isPaused { get; set; }
 
     public void Initialize(EnemyManager manager)
     {
@@ -79,5 +81,17 @@ public class EnemySpawner : MonoBehaviour
         m_config = new EnemySpawnConfig();
         currentCount = 0;
         StopSpawning();
+    }
+
+    public void Pause()
+    {
+        isPaused = true;
+        PauseSpawning();
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+        PlaySpawning();
     }
 }

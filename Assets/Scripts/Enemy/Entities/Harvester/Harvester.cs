@@ -4,7 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Harvester : Enemy
 {
-    // [Header("Header")]
+
+    #region Fields 
+
     public new HarvesterSettings settings
     {
         get { return base.settings as HarvesterSettings; }
@@ -13,6 +15,14 @@ public class Harvester : Enemy
     public CrystalShard targetCrystal { get; private set; }
 
     public Animator animator { get; private set; }
+
+    #endregion
+
+    #region Methods 
+
+    #endregion
+
+    #region Behaviour
 
     protected override void Initialize()
     {
@@ -30,6 +40,17 @@ public class Harvester : Enemy
             new HarvesterAttackState(this),
         };
     }
+
+    protected override void CallbackNoHealth()
+    {
+        targetCrystal = null;
+        ChangeState((EnemyStateType)currentState.type, EnemyStateType.Inactive);
+        base.CallbackNoHealth();
+    }
+
+    #endregion
+
+    #region Crystal Shards
 
     public void SearchCrystalShard()
     {
@@ -89,10 +110,21 @@ public class Harvester : Enemy
         return crystals;
     }
 
-    protected override void CallbackNoHealth()
+    #endregion
+
+    #region Pause
+
+    public override void Pause()
     {
-        targetCrystal = null;
-        ChangeState((EnemyStateType)currentState.type, EnemyStateType.Inactive);
-        base.CallbackNoHealth();
+        base.Pause();
+        animator.speed = 0;
     }
+
+    public override void Resume()
+    {
+        base.Resume();
+        animator.speed = 1;
+    }
+
+    #endregion
 }

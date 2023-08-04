@@ -43,4 +43,16 @@ public class ScoutMoveState : AScoutState
 		ChangeState((int)EnemyStateType.Attack);
 	}
 
+	public override void Pause()
+	{
+		if (m_approachPlayerTween != null && m_approachPlayerTween.IsPlaying())
+			m_approachPlayerTween.Pause();
+	}
+
+	public override void Resume()
+	{
+		if (m_approachPlayerTween != null && !m_approachPlayerTween.IsPlaying())
+			m_approachPlayerTween.Play();
+	}
+
 }

@@ -15,7 +15,6 @@ public class ScoutAttackState : AScoutState
 
 	protected override void DefaultEnter()
 	{
-		Debug.Log("ENTER - SCOUT ATTACK");
 		StartAttacking();
 	}
 
@@ -35,6 +34,18 @@ public class ScoutAttackState : AScoutState
 	{
 		m_attackTween = DOVirtual.DelayedCall(m_this.settings.delayBetweenBullet, m_this.Fire)
 								 .SetLoops(-1);
+	}
+
+	public override void Pause()
+	{
+		if (m_attackTween != null && m_attackTween.IsPlaying())
+			m_attackTween.Pause();
+	}
+
+	public override void Resume()
+	{
+		if (m_attackTween != null && !m_attackTween.IsPlaying())
+			m_attackTween.Play();
 	}
 
 }

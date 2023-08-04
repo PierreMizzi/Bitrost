@@ -11,8 +11,7 @@ public class HarvesterMoveState : EnemyMoveState
 
     private Harvester m_harvester = null;
 
-
-    private Tween m_moveTween;
+    private Tween m_approachCrystal;
 
     protected override void DefaultEnter()
     {
@@ -32,7 +31,26 @@ public class HarvesterMoveState : EnemyMoveState
                 * m_harvester.settings.offsetFromShard
             );
         m_harvester.transform.up = direction.normalized;
-        m_moveTween = m_harvester.transform.DOMove(endPosition, duration).OnComplete(OnCompleteMovement);
+        m_approachCrystal = m_harvester.transform.DOMove(endPosition, duration).OnComplete(OnCompleteMovement);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        if (m_approachCrystal != null && m_approachCrystal.IsPlaying())
+            m_approachCrystal.Kill();
+    }
+
+    public override void Pause()
+    {
+        if (m_approachCrystal != null && m_approachCrystal.IsPlaying())
+            m_approachCrystal.Pause();
+    }
+
+    public override void Resume()
+    {
+        if (m_approachCrystal != null && !m_approachCrystal.IsPlaying())
+            m_approachCrystal.Play();
     }
 
     public void OnCompleteMovement()
@@ -40,10 +58,7 @@ public class HarvesterMoveState : EnemyMoveState
         ChangeState((int)EnemyStateType.Attack);
     }
 
-	public override void Exit()
-	{
-		base.Exit();
-        if(m_moveTween != null && m_moveTween.IsPlaying())
-            m_moveTween.Kill();
-	}
+
+
+
 }

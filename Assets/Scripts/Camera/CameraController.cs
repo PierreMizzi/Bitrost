@@ -3,22 +3,27 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [ExecuteInEditMode]
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, IPausable
 {
     #region Fields
 
     [SerializeField]
-    private Transform m_target = null;
+    private LevelChannel m_levelChannel;
 
     [SerializeField]
-    private float m_distance = 4f;
+    private Transform m_target = null;
 
+    private Vector3 m_targetPosition;
+
+    private Camera m_camera = null;
+
+    #region Mouse Position 
+
+    [Header("Inputs")]
     [SerializeField]
     private InputActionReference m_mousePositionActionReference = null;
 
     private Vector3 m_mousePositionValue;
-
-    private Camera m_camera = null;
 
     private Vector3 mousePositionScreenCenter
     {
@@ -30,6 +35,10 @@ public class CameraController : MonoBehaviour
             );
         }
     }
+
+    #endregion
+
+    #region Screen Edge panning
 
     [SerializeField]
     private float m_treshold = 0.75f;
@@ -45,35 +54,66 @@ public class CameraController : MonoBehaviour
 
     private float m_offset;
 
-    private Vector3 m_targetPosition;
+    private Vector3 velocity;
+
+    private Vector3 m_cameraOffsetPosition;
+    private Vector3 m_previousCameraOffsetPosition;
+
+    #endregion
+
+    public bool isPaused { get; set; }
 
     #endregion
 
     #region Methods
+
+    #region MonoBehaviour
 
     private void Awake()
     {
         m_camera = Camera.main;
     }
 
+    private void Start()
+    {
+        if (m_levelChannel != null)
+        {
+            m_levelChannel.onPauseGame += Pause;
+            m_levelChannel.onResumeGame += Resume;
+
+        }
+    }
+
     private void Update()
     {
-        m_mousePositionValue = m_mousePositionActionReference.action.ReadValue<Vector2>();
+        if (!isPaused)
+            m_mousePositionValue = m_mousePositionActionReference.action.ReadValue<Vector2>();
     }
 
     private void LateUpdate()
     {
-        m_targetPosition = m_target.position;
-        m_targetPosition.z = -1;
+        if (!isPaused)
+        {
+            m_targetPosition = m_target.position;
+            m_targetPosition.z = -1;
 
-        ManageCameraOffset();
-        transform.position = m_targetPosition + m_cameraOffsetPosition;
+            ManageCameraOffset();
+            transform.position = m_targetPosition + m_cameraOffsetPosition;
+        }
     }
 
-    private Vector3 velocity;
+    private void OnDestroy()
+    {
+        if (m_levelChannel != null)
+        {
+            m_levelChannel.onPauseGame -= Pause;
+            m_levelChannel.onResumeGame -= Resume;
+        }
+    }
 
-    private Vector3 m_cameraOffsetPosition;
-    private Vector3 m_previousCameraOffsetPosition;
+    #endregion
+
+    #region Screen Edge panning
 
     private void ManageCameraOffset()
     {
@@ -93,9 +133,6 @@ public class CameraController : MonoBehaviour
             1f
         );
         m_offset = Mathf.Clamp01(m_offset);
-
-        // m_cameraPosition = m_target.position;
-        // m_cameraPosition.z = -1;
 
         m_cameraOffsetPosition =
             mousePositionScreenCenter.normalized * m_offset * m_offsetMagnitude;
@@ -124,6 +161,23 @@ public class CameraController : MonoBehaviour
 
         return magnitude;
     }
+
+    #endregion
+
+    #region Pause
+
+
+    public void Pause()
+    {
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+    }
+
+    #endregion
 
     #endregion
 }

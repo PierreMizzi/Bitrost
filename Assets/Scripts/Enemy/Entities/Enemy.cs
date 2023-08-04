@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(HealthEntity))]
-public class Enemy : MonoBehaviour, IStateMachine
+public class Enemy : MonoBehaviour, IStateMachine, IPausable
 {
     #region Fields
 
@@ -31,6 +31,9 @@ public class Enemy : MonoBehaviour, IStateMachine
     protected EnemyManager m_manager = null;
 
     public EnemySettings settings;
+
+    public bool isPaused { get; set; }
+
 
     #region StateMachine
 
@@ -85,7 +88,8 @@ public class Enemy : MonoBehaviour, IStateMachine
 
     public void UpdateState()
     {
-        currentState?.Update();
+        if (!isPaused)
+            currentState?.Update();
     }
 
     #endregion
@@ -164,6 +168,24 @@ public class Enemy : MonoBehaviour, IStateMachine
              angle
          );
         return Quaternion.AngleAxis(randomAngle, Vector3.forward) * -directionTowardPlayer;
+    }
+
+    #endregion
+
+    #region Pause
+
+    public virtual void Pause()
+    {
+        isPaused = true;
+
+        currentState.Pause();
+    }
+
+    public virtual void Resume()
+    {
+        isPaused = false;
+
+        currentState.Resume();
     }
 
     #endregion

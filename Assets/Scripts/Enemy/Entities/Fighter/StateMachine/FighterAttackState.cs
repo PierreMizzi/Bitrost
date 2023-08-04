@@ -12,8 +12,6 @@ public class FighterAttackState : EnemyAttackState
 
     private Fighter m_fighter = null;
 
-    private Tween m_attackTween = null;
-
     private IEnumerator m_attackCoroutine = null;
 
     protected override void DefaultEnter()
@@ -28,12 +26,22 @@ public class FighterAttackState : EnemyAttackState
         m_fighter.transform.up = m_fighter.directionTowardPlayer;
     }
 
-    private void AttackComplete()
+    public override void Exit()
     {
-        m_fighter.StopCoroutine(m_attackCoroutine);
-        m_attackCoroutine = null;
+        base.Exit();
+        StopAttack();
+    }
 
-        ChangeState((int)EnemyStateType.Move);
+    public override void Pause()
+    {
+        if (m_attackCoroutine != null)
+            m_fighter.StopCoroutine(m_attackCoroutine);
+    }
+
+    public override void Resume()
+    {
+        if (m_attackCoroutine != null)
+            m_fighter.StartCoroutine(m_attackCoroutine);
     }
 
     private void StartAttack()
@@ -42,9 +50,14 @@ public class FighterAttackState : EnemyAttackState
         m_fighter.StartCoroutine(m_attackCoroutine);
     }
 
+    private void StopAttack()
+    {
+        m_fighter.StopCoroutine(m_attackCoroutine);
+        m_attackCoroutine = null;
+    }
+
     private IEnumerator AttackCoroutine()
     {
-        
         for (int i = 0; i < m_fighter.settings.bulletSalvoCount; i++)
         {
             m_fighter.Fire();
@@ -54,4 +67,12 @@ public class FighterAttackState : EnemyAttackState
         yield return new WaitForSeconds(m_fighter.settings.delayBetweenSalvo);
         AttackComplete();
     }
+
+    private void AttackComplete()
+    {
+        ChangeState((int)EnemyStateType.Move);
+    }
+
+
+
 }

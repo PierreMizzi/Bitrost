@@ -9,11 +9,11 @@ public class FighterMoveState : EnemyMoveState
         m_fighter = m_stateMachine.gameObject.GetComponent<Fighter>();
     }
 
-    private Fighter m_fighter = null;
+    private Fighter m_fighter;
 
     private Vector3 m_endPosition;
 
-    private Tween m_tween;
+    private Tween m_approachPlayerTween;
 
     protected override void DefaultEnter()
     {
@@ -27,7 +27,20 @@ public class FighterMoveState : EnemyMoveState
 
     public override void Exit()
     {
-        m_tween.Kill();
+        if (m_approachPlayerTween != null && m_approachPlayerTween.IsPlaying())
+            m_approachPlayerTween.Kill();
+    }
+
+    public override void Pause()
+    {
+        if (m_approachPlayerTween != null && m_approachPlayerTween.IsPlaying())
+            m_approachPlayerTween.Pause();
+    }
+
+    public override void Resume()
+    {
+        if (m_approachPlayerTween != null && !m_approachPlayerTween.IsPlaying())
+            m_approachPlayerTween.Play();
     }
 
     private void ApproachPlayer()
@@ -38,7 +51,7 @@ public class FighterMoveState : EnemyMoveState
         // Duration of movement
         float duration = (playerPosition - m_endPosition).magnitude / m_fighter.settings.speed;
 
-        m_tween = m_fighter.transform
+        m_approachPlayerTween = m_fighter.transform
             .DOMove(m_endPosition, duration)
             .OnComplete(ApproachPlayerComplete);
     }
@@ -47,4 +60,7 @@ public class FighterMoveState : EnemyMoveState
     {
         ChangeState((int)EnemyStateType.Attack);
     }
+
+
+
 }

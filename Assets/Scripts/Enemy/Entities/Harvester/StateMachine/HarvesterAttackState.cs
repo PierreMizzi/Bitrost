@@ -11,7 +11,7 @@ public class HarvesterAttackState : EnemyAttackState
 
     private Harvester m_harvester = null;
 
-    private Sequence attackSequence = null;
+    private Sequence m_attackSequence = null;
 
     private const string IS_ATTACKING_BOOL = "IsAttacking";
 
@@ -21,17 +21,29 @@ public class HarvesterAttackState : EnemyAttackState
         Attack();
     }
 
-	public override void Exit()
-	{
-		base.Exit();
+    public override void Exit()
+    {
+        base.Exit();
         m_harvester.animator.SetBool(IS_ATTACKING_BOOL, false);
-        attackSequence.Kill();
-	}
+        m_attackSequence.Kill();
+    }
+
+    public override void Pause()
+    {
+        if (m_attackSequence != null && m_attackSequence.IsPlaying())
+            m_attackSequence.Pause();
+    }
+
+    public override void Resume()
+    {
+        if (m_attackSequence != null && !m_attackSequence.IsPlaying())
+            m_attackSequence.Play();
+    }
 
     public void Attack()
     {
-        attackSequence = DOTween.Sequence();
-        attackSequence
+        m_attackSequence = DOTween.Sequence();
+        m_attackSequence
             .AppendInterval(m_harvester.settings.attackDelay)
             .AppendCallback(StartAttack)
             .AppendInterval(m_harvester.settings.attackSpeed)
@@ -53,4 +65,6 @@ public class HarvesterAttackState : EnemyAttackState
         else
             ChangeState((int)EnemyStateType.Idle);
     }
+
+
 }

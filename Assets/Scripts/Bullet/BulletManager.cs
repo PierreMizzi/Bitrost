@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using System.Collections.Generic;
 using System.Collections;
 
@@ -12,9 +11,9 @@ public delegate void InstantiateBulletDelegate(
 
 public delegate void ReleaseBulletDelegate(Bullet bullet);
 
-public class BulletManager : MonoBehaviour
+public class BulletManager : MonoBehaviour, IPausable
 {
-
+    [Header("Channels")]
     [SerializeField]
     private BulletChannel m_bulletChannel = null;
 
@@ -26,6 +25,11 @@ public class BulletManager : MonoBehaviour
 
     private List<Bullet> m_activeBullets = new List<Bullet>();
 
+    public bool isPaused { get; set; }
+
+
+    #region MonoBehaviour
+
     private IEnumerator Start()
     {
         if (m_bulletChannel != null)
@@ -35,7 +39,11 @@ public class BulletManager : MonoBehaviour
         }
 
         if (m_levelChannel != null)
+        {
+            m_levelChannel.onPauseGame += Pause;
+            m_levelChannel.onResumeGame += Resume;
             m_levelChannel.onReset += CallbackReset;
+        }
 
 
         yield return new WaitForEndOfFrame();
@@ -52,8 +60,16 @@ public class BulletManager : MonoBehaviour
         }
 
         if (m_levelChannel != null)
+        {
+            m_levelChannel.onPauseGame -= Pause;
+            m_levelChannel.onResumeGame -= Resume;
             m_levelChannel.onReset -= CallbackReset;
+        }
     }
+
+    #endregion
+
+
 
     private void InitializeBulletPools()
     {
@@ -95,6 +111,24 @@ public class BulletManager : MonoBehaviour
             m_poolingChannel.onReleaseFromPool.Invoke(bullet.gameObject);
 
         m_activeBullets.Clear();
+    }
+
+    #endregion
+
+    #region Pause
+
+    public void Pause()
+    {
+        isPaused = true;
+        foreach (Bullet bullet in m_activeBullets)
+            bullet.Pause();
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+        foreach (Bullet bullet in m_activeBullets)
+            bullet.Resume();
     }
 
     #endregion

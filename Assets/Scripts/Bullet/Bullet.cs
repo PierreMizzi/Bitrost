@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IPausable
 {
     #region Fields
 
@@ -31,6 +31,8 @@ public class Bullet : MonoBehaviour
 
     #endregion
 
+    public bool isPaused { get; set; }
+
     #endregion
 
     #region Methods
@@ -42,6 +44,9 @@ public class Bullet : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (isPaused)
+            return;
+
         transform.position += transform.up * m_speed * Time.deltaTime;
 
         CheckInsideArena();
@@ -66,6 +71,20 @@ public class Bullet : MonoBehaviour
     #region Collision
 
     public void RaycastForCollision() { }
+
+    #endregion
+
+    #region Pause
+
+    public void Pause()
+    {
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        isPaused = false;
+    }
 
     #endregion
 
