@@ -3,7 +3,7 @@ using CodesmithWorkshop.Useful;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GameOverPanel : MonoBehaviour
+public class GameOverPanel : APanel
 {
 
 	#region Fields 
@@ -11,18 +11,11 @@ public class GameOverPanel : MonoBehaviour
 	[SerializeField]
 	private LevelChannel m_levelChannel;
 
-	[SerializeField]
-	private UIDocument m_document;
-
-	private VisualElement m_root;
-
 	private Label m_timeLabel;
 	private Label m_scoreLabel;
 
 	private Button m_restartButton;
 	private Button m_menuBUtton;
-
-	private const string k_root = "game-over-panel";
 
 	private const string k_timeLabel = "time-label";
 	private const string k_scoreLabel = "score-label";
@@ -34,9 +27,9 @@ public class GameOverPanel : MonoBehaviour
 
 	#region Methods 
 
-	private void Awake()
+	protected override void Awake()
 	{
-		m_root = m_document.rootVisualElement.Q(k_root);
+		base.Awake();
 
 		m_timeLabel = m_root.Q<Label>(k_timeLabel);
 		m_scoreLabel = m_root.Q<Label>(k_scoreLabel);
@@ -45,8 +38,6 @@ public class GameOverPanel : MonoBehaviour
 
 		m_restartButton.clicked += CallbackRestartButton;
 		m_menuBUtton.clicked += CallbackMenuButton;
-
-		Hide();
 	}
 
 	private void Start()
@@ -82,12 +73,12 @@ public class GameOverPanel : MonoBehaviour
 		Display();
 	}
 
-	private void Display()
+	protected override void Display()
 	{
 		m_root.style.display = DisplayStyle.Flex;
 	}
 
-	private void Hide()
+	protected override void Hide()
 	{
 		m_root.style.display = DisplayStyle.None;
 	}

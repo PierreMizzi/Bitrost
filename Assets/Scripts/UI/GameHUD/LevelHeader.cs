@@ -6,12 +6,15 @@ using CodesmithWorkshop.Useful;
 
 public class LevelHeader : MonoBehaviour
 {
-	#region Fields
+    #region Fields
+
+    [SerializeField]
+    private LevelChannel m_levelChannel = null;
 
     [SerializeField]
     private LevelManager m_levelManager;
 
-	private IEnumerator m_updateTimeCoroutine;
+    private IEnumerator m_updateTimeCoroutine;
 
     [SerializeField]
     private UIDocument m_document = null;
@@ -24,38 +27,40 @@ public class LevelHeader : MonoBehaviour
     private Label m_timeLabel;
     private VisualElement m_difficultyContainer;
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
     private void Awake()
     {
-		// Visual Elements
+        // Visual Elements
         m_pauseButton = m_document.rootVisualElement.Q<Button>(k_pauseButton);
         m_timeLabel = m_document.rootVisualElement.Q<Label>(k_timeLabel);
         m_difficultyContainer = m_document.rootVisualElement.Q(k_difficultyContainer);
-		
-		// Time
-		m_updateTimeCoroutine = UpdateTime();
-		StartCoroutine(m_updateTimeCoroutine);
 
-		// Pause
-		m_pauseButton.clicked += CallbackPauseClicked;
+        // Time
+        m_updateTimeCoroutine = UpdateTime();
+        StartCoroutine(m_updateTimeCoroutine);
+
+        // Pause
+        m_pauseButton.clicked += CallbackPauseClicked;
     }
 
-	private void CallbackPauseClicked()
-	{
-		Debug.LogWarning("Pause Clicked !!!");
-	}
+    private void CallbackPauseClicked()
+    {
+        Debug.LogWarning("Pause Clicked !!!");
 
-	private IEnumerator UpdateTime()
+        m_levelChannel.onPauseGame.Invoke();
+    }
+
+    private IEnumerator UpdateTime()
     {
         while (true)
         {
-			m_timeLabel.text = UtilsClass.SecondsToTextTime(m_levelManager.time);
+            m_timeLabel.text = UtilsClass.SecondsToTextTime(m_levelManager.time);
             yield return new WaitForSeconds(0.5f);
         }
     }
 
-	#endregion
+    #endregion
 }

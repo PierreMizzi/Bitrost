@@ -18,6 +18,9 @@ public class LevelChannel : ScriptableObject
     public Action onReset;
     public Action onRestart;
 
+    public Action onPauseGame;
+    public Action onResumeGame;
+
     private void OnEnable()
     {
         onAllEnemiesKilled = () => { };
@@ -28,5 +31,8 @@ public class LevelChannel : ScriptableObject
 
         onReset = () => { };
         onRestart = () => { };
+
+        onPauseGame = () => { };
+        onResumeGame = () => { };
     }
 }
