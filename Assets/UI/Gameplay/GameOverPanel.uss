@@ -1,0 +1,62 @@
+.bolt-top {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(188, 86, 19, 255);
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+
+.bolt-bottom {
+    left: auto;
+    right: 20px;
+    top: auto;
+    bottom: 20px;
+    background-color: rgba(152, 157, 164, 255);
+    width: 10px;
+    height: 10px;
+    position: absolute;
+}
+
+.metrics-container {
+    width: auto;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    max-width: 250px;
+}
+
+.metrics-icon {
+    background-image: url('project://database/Assets/Sprites/UI/Gameplay/GameOver/Stopwatch.png?fileID=2800000&guid=252c8f545d2b5e04d80ad1ac7f4bbc83&type=3#Stopwatch');
+    width: 60px;
+    height: 60px;
+    -unity-background-image-tint-color: rgba(135, 135, 135, 255);
+    -unity-background-scale-mode: scale-to-fit;
+    margin-left: 0;
+    margin-right: 11px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.metrics-label {
+    color: rgba(88, 88, 88, 255);
+    height: auto;
+    -unity-text-align: middle-left;
+    font-size: 42px;
+}
+
+.custom-button {
+    font-size: 34px;
+    width: 66%;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    scale: 1 1;
+}
+
+.custom-button:hover {
+    color: blue;
+    scale: 1.1 1.1;
+}

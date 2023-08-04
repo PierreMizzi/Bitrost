@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.Playables;
 [ExecuteInEditMode]
 public class LevelManager : MonoBehaviour
 {
-	#region Fields
+    #region Fields
 
     [SerializeField]
     private float m_arenaDiameter = 10f;
@@ -34,9 +35,9 @@ public class LevelManager : MonoBehaviour
 
     #endregion
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
     private void OnEnable()
     {
@@ -52,13 +53,22 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         if (m_levelChannel != null)
+        {
+
             m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
+            m_levelChannel.onGameOver += CallbackGameOver;
+        }
     }
+
+
 
     private void OnDestroy()
     {
         if (m_levelChannel != null)
+        {
             m_levelChannel.onAllEnemiesKilled -= CallbackAllEnemiesKilled;
+            m_levelChannel.onGameOver -= CallbackGameOver;
+        }
     }
 
     private void Update()
@@ -124,5 +134,51 @@ public class LevelManager : MonoBehaviour
 
     #endregion
 
-	#endregion
+    #region Game Over
+
+    /*
+    
+        // TODO
+        // TODO : Highscore
+                    -> Track kill count, score per enemy type
+        // TODO : Pause the game
+                    -> LevelManager
+                        -> Pause the time
+        // TODO : Show Death Screen
+                    -> Highscore
+                    -> Time
+                    -> Restart
+                    -> Menu
+
+        // TODO : Restart
+                    -> Player
+                        -> Position
+                    -> Module Manager
+                        -> RemainingModule back to 1
+                        -> Retrieve Module
+                        -> Reset Module Stored Energy
+                    -> EnemyManager
+                        -> Release enemies
+                        -> Empty pools
+                    -> BulletManager
+                        -> Release bullet
+                        -> Empty pools
+                    -> CrystalShardsManager
+                        -> Release crystals
+                        -> Empty pools
+        // TODO : Menu
+                    -> Unload scene
+
+    */
+
+    private void CallbackGameOver()
+    {
+        GameOverData data = new GameOverData(time);
+
+        m_levelChannel.onGameOverPanel.Invoke(data);
+    }
+
+    #endregion
+
+    #endregion
 }

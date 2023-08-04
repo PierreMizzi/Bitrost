@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(HealthEntity))]
 public class Player : MonoBehaviour
 {
-	#region Fields
+    #region Fields
 
     [SerializeField]
     private LevelChannel m_levelChannel = null;
@@ -17,9 +17,9 @@ public class Player : MonoBehaviour
 
     private PlayerController m_controller = null;
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
     private void Awake()
     {
@@ -61,13 +61,15 @@ public class Player : MonoBehaviour
 
     private void CallbackLostHealth() { }
 
+    [ContextMenu("CallbackNoHealth")]
     private void CallbackNoHealth()
     {
         Debug.LogWarning("PLAYER HAS DIED !");
+        m_levelChannel.onGameOver.Invoke();
         m_controller.enabled = false;
     }
 
-	#endregion
+    #endregion
 
-	#endregion
+    #endregion
 }

@@ -1,11 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="PlayerHUD" src="project://database/Assets/UI/Gameplay/PlayerHUD.uxml?fileID=9197481963319205126&amp;guid=bd1c302b1154c0c4f9bed1d9383ba449&amp;type=3#PlayerHUD" />
     <ui:Template name="LevelHUD" src="project://database/Assets/UI/Gameplay/LevelHUD.uxml?fileID=9197481963319205126&amp;guid=055ce8bc630c9484e9971942d551c1ed&amp;type=3#LevelHUD" />
+    <ui:Template name="GameOverPanel" src="project://database/Assets/UI/Gameplay/GameOverPanel.uxml?fileID=9197481963319205126&amp;guid=480da0a6ade9d644f903eba89c515805&amp;type=3#GameOverPanel" />
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:Instance template="PlayerHUD" name="PlayerHUD" style="flex-grow: 0; flex-shrink: 0; position: absolute; left: 0; bottom: 0;" />
         <ui:VisualElement name="VisualElement" style="flex-direction: row; justify-content: flex-end; flex-grow: 1; align-items: center;">
             <ui:VisualElement name="module-container" style="flex-grow: 0; height: 75%; width: 20%; position: absolute; justify-content: flex-end; right: 25px;" />
         </ui:VisualElement>
         <ui:Instance template="LevelHUD" name="LevelHUD" style="position: absolute; width: 100%; top: 0;" />
+        <ui:Instance template="GameOverPanel" name="GameOverPanel" style="position: absolute; width: 100%; height: 100%;" />
     </ui:VisualElement>
 </ui:UXML>

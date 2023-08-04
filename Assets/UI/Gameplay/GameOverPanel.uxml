@@ -1,0 +1,37 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Gameplay/GameOverPanel.uss?fileID=7433441132597879392&amp;guid=db7829885e5133f4e916ed7b2bda074c&amp;type=3#GameOverPanel" />
+    <ui:VisualElement name="game-over-panel" style="position: absolute; width: 100%; height: 100%; align-items: center; justify-content: center;">
+        <ui:VisualElement name="game-over-container" style="width: 40%; height: 50%; background-color: rgba(180, 255, 227, 0.2); padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+            <ui:VisualElement name="top-part" style="flex-grow: 0; background-color: rgb(231, 106, 24); border-top-left-radius: 20px; border-top-right-radius: 20px; height: 25%; flex-direction: row; align-items: center; justify-content: center;">
+                <ui:Label text="GAME OVER" display-tooltip-when-elided="true" name="title-label" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; color: rgb(255, 255, 255); font-size: 60px; -unity-font-style: bold;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="bottom-part" style="flex-grow: 0; background-color: rgb(214, 222, 231); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; height: 75%; flex-direction: row; justify-content: center;">
+                <ui:VisualElement name="bottom-part-container" style="width: 66%; justify-content: space-between; padding-top: 5%; padding-bottom: 5%; align-items: center;">
+                    <ui:VisualElement name="metrics-container" style="width: 100%;">
+                        <ui:Label text="Score" display-tooltip-when-elided="true" name="metrics-title" class="metrics-label" style="white-space: nowrap; -unity-text-align: middle-center; margin-bottom: 14px;" />
+                        <ui:VisualElement name="metrics-container" style="flex-direction: row; justify-content: space-between; padding-left: 0; padding-right: 0; width: 100%; padding-top: 0; padding-bottom: 0;">
+                            <ui:VisualElement name="metrics-time" class="metrics-container">
+                                <ui:VisualElement name="time-icon" class="metrics-icon" />
+                                <ui:Label text="01:36" display-tooltip-when-elided="true" name="time-label" class="metrics-label" />
+                            </ui:VisualElement>
+                            <ui:VisualElement name="metrics-score" class="metrics-container">
+                                <ui:VisualElement name="score-icon" class="metrics-icon" style="background-image: url(&apos;project://database/Assets/Sprites/UI/Gameplay/GameOver/Killcount.png?fileID=2800000&amp;guid=a7216486412974c48a839bfc5cc085b2&amp;type=3#Killcount&apos;);" />
+                                <ui:Label text="65999" display-tooltip-when-elided="true" name="score-label" class="metrics-label" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="button-container" style="width: 100%; flex-direction: column; justify-content: center; align-items: center;">
+                        <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="custom-button" style="margin-bottom: 28px;" />
+                        <ui:Button text="Menu" display-tooltip-when-elided="true" name="menu-button" class="custom-button" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="bolt-container" style="position: absolute; width: 100%; height: 100%; flex-direction: row; justify-content: space-between;">
+                <ui:VisualElement name="bolt-top-left" class="bolt-top" />
+                <ui:VisualElement name="bolt-top-right" class="bolt-top" style="left: auto; right: 20px;" />
+                <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom" />
+                <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom" style="left: 20px; right: auto; top: auto; bottom: 20px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

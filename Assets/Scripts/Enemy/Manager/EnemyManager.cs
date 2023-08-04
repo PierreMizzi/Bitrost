@@ -2,24 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-/*
-
-    Use timeline
-    Each tracks manages the spawn rate of each enemies
-    Special event for special waves
-    Controlable
-
-*/
-
-// : Add up maxCount of all EnemySpawnerConfig
-// to know how many enemy will be killed at eaxh stage
-
-// : Decrement the number when enemy killed
-
-// TODO : Tell LevelManager when to continue
 
 // TODO : Spawn enemy not on a border but on an area -> TO TEST
-
 
 [ExecuteInEditMode]
 public partial class EnemyManager : MonoBehaviour
