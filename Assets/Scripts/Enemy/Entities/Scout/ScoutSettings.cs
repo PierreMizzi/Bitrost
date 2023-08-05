@@ -8,7 +8,8 @@ public class ScoutSettings : EnemySettings
 	public float radiusAroundPlayer = 10f;
 	public float angleAroundPlayer;
 
-	public float speedTrackPlayer = 0.33f;
+	public float minSpeedTrackPlayer;
+	public float maxSpeedTrackPlayer;
 
 	public float delayBetweenBullet = 4f;
 

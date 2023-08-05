@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -186,6 +187,7 @@ public class LevelManager : MonoBehaviour, IPausable
 
         m_appChannel.onSetCursor.Invoke(CursorType.Normal);
 
+        m_levelChannel.onPauseGame.Invoke();
         m_levelChannel.onGameOverPanel.Invoke(data);
     }
 
@@ -196,6 +198,8 @@ public class LevelManager : MonoBehaviour, IPausable
 
         // Stage
         ResetStage();
+
+        m_levelChannel.onResumeGame.Invoke();
     }
 
     #endregion

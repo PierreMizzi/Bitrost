@@ -37,6 +37,8 @@ public class Scout : Enemy, IBulletLauncher
 
     public Vector3 positionAroundPlayer { get { return m_levelChannel.player.transform.position + (m_randomDirectionAroundPlayer * settings.radiusAroundPlayer); } }
 
+    public float speedTrackPlayer { get; private set; }
+
     #endregion
 
     #region Methods 
@@ -45,6 +47,7 @@ public class Scout : Enemy, IBulletLauncher
     {
         base.OutOfPool(manager);
         m_randomDirectionAroundPlayer = CloseRandomDirectionFromPlayer(settings.angleAroundPlayer);
+        speedTrackPlayer = Random.Range(settings.minSpeedTrackPlayer, settings.maxSpeedTrackPlayer);
     }
 
     public override void InitiliazeStates()

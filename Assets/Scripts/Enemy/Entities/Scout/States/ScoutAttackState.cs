@@ -26,7 +26,7 @@ public class ScoutAttackState : AScoutState
 
 	public override void Update()
 	{
-		m_this.transform.position = Vector3.SmoothDamp(m_this.transform.position, m_this.positionAroundPlayer, ref m_velocity, m_this.settings.speedTrackPlayer);
+		m_this.transform.position = Vector3.SmoothDamp(m_this.transform.position, m_this.positionAroundPlayer, ref m_velocity, m_this.speedTrackPlayer);
 		m_this.transform.up = m_this.directionTowardPlayer;
 	}
 

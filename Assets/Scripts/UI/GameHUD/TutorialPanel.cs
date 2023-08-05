@@ -33,12 +33,16 @@ public class TutorialPanel : SimpleSlideshow
 	{
 		base.Display();
 		m_applicationChannel.onSetCursor.Invoke(CursorType.Normal);
+
+		m_levelChannel.onPauseGame.Invoke();
 	}
 
 	protected override void CallbackStartClicked()
 	{
 		base.CallbackStartClicked();
 		m_applicationChannel.onSetCursor.Invoke(CursorType.Attack);
+
+		m_levelChannel.onResumeGame.Invoke();
 	}
 
 

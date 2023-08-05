@@ -17,6 +17,8 @@ MonoBehaviour:
   radiusAroundPlayer: 7
   angleAroundPlayer: 10
   speedTrackPlayer: 1
+  minSpeedTrackPlayer: 0.8
+  maxSpeedTrackPlayer: 1.2
   delayBetweenBullet: 4
   bulletPrefab: {fileID: 2571815961913954840, guid: 13fbd28be1495904da0f0ac48e1d7ff3,
     type: 3}
