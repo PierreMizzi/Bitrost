@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -15,6 +16,8 @@ public class LevelManager : MonoBehaviour, IPausable
 
     [SerializeField]
     private LevelChannel m_levelChannel = null;
+
+    [SerializeField] private EnemyChannel m_enemyChannel;
 
     [Header("Arena")]
     [SerializeField]
@@ -46,6 +49,10 @@ public class LevelManager : MonoBehaviour, IPausable
 
     #endregion
 
+    [Header("Tutorial")]
+    [SerializeField] private bool m_displayTutorial = true;
+
+
     #endregion
 
     #region Methods
@@ -63,7 +70,7 @@ public class LevelManager : MonoBehaviour, IPausable
         m_director = GetComponent<PlayableDirector>();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         if (m_levelChannel != null)
         {
@@ -74,6 +81,13 @@ public class LevelManager : MonoBehaviour, IPausable
             m_levelChannel.onPauseGame += Pause;
             m_levelChannel.onResumeGame += Resume;
         }
+
+        yield return new WaitForSeconds(0.2f);
+
+        if (m_displayTutorial)
+            m_levelChannel.onDisplayTutorial.Invoke();
+
+        yield return null;
 
     }
 
@@ -110,9 +124,7 @@ public class LevelManager : MonoBehaviour, IPausable
         float randomAngle = UnityEngine.Random.Range(0f, Mathf.PI * 2f);
         float randomLength = UnityEngine.Random.Range(0f, 1f);
 
-        return origin + new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0)
-            * radius
-            * randomLength;
+        return origin + radius * randomLength * new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
     }
 
     public static List<Vector3> RandomPositions(int count, float radius)
@@ -168,63 +180,9 @@ public class LevelManager : MonoBehaviour, IPausable
 
     #region Game Over
 
-    /*
-    
-        // TODO
-        // TODO : Highscore
-                    -> Track kill count, score per enemy type
-        // TODO : Pause the game
-                    -> LevelManager
-                        -> Pause the time
-        // TODO : Show GAME OVER Screen                                 DONE
-                    -> Highscore                                    
-                    -> Time                                         DONE
-                    -> Restart                                      WIP
-                    -> Menu                                         
-
-        // TODO : Restart
-                    -> Player                                       DONE
-                        -> Position                                 DONE
-                        -> Health                                   DONE
-                    -> Camera
-                        -> Position
-                    -> Module Manager                               DONE
-                        -> RemainingModule back to 1                DONE
-                        -> Retrieve Module                          DONE
-                        -> Reset Module Stored Energy               DONE
-                    -> EnemyManager                                 DONE
-                        -> Release enemies                          DONE
-                        -> Empty pools                              DONE
-                    -> BulletManager
-                        -> Release bullet                           DONE
-                        -> Empty pools                              ????
-                    -> CrystalShardsManager                         DONE
-                        -> Release crystals                         DONE
-                        -> Empty pools                              ????
-        // TODO : Menu
-                    -> Unload scene
-
-
-
-        if (m_levelChannel != null)
-            m_levelChannel.onReset += CallbackReset;
-        if (m_levelChannel != null)
-            m_levelChannel.onReset -= CallbackReset;
-
-        #region Reset
-
-        public void CallbackReset()
-        {
-
-        }
-
-        #endregion
-
-    */
-
     private void CallbackGameOver()
     {
-        GameOverData data = new GameOverData(time);
+        GameOverData data = new GameOverData(time, m_enemyChannel.killCount);
 
         m_appChannel.onSetCursor.Invoke(CursorType.Normal);
 

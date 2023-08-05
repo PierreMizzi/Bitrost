@@ -11,17 +11,23 @@ public class EnemyManager : MonoBehaviour, IPausable
 
     #region Fields
 
+    [Header("Channels")]
     [SerializeField]
     private LevelChannel m_levelChannel = null;
 
+    [SerializeField]
+    private EnemyChannel m_enemyChannel;
+
     private Camera m_camera = null;
 
+    [Header("Pooling")]
     [SerializeField]
     private PoolingChannel m_poolingChannel = null;
 
     [SerializeField]
     private List<EnemyPoolConfig> m_enemyPoolConfigs = new List<EnemyPoolConfig>();
 
+    [Header("Debug")]
     [SerializeField]
     private List<EnemySpawnShortcutConfig> m_enemySpawnShortcutConfigs =
         new List<EnemySpawnShortcutConfig>();
@@ -43,7 +49,7 @@ public class EnemyManager : MonoBehaviour, IPausable
 
     #endregion
 
-    #region Enemy Kill Count
+    #region Stage Enemy Kill Count
 
     private int m_stageEnemyCount;
 
@@ -85,6 +91,7 @@ public class EnemyManager : MonoBehaviour, IPausable
 
     private void Start()
     {
+        m_enemyChannel.killCount = 0;
         InitializeEnemyPools();
 
         if (m_levelChannel != null)
@@ -264,11 +271,11 @@ public class EnemyManager : MonoBehaviour, IPausable
 
         m_stageKilledEnemyCount += 1;
 
+        m_enemyChannel.killCount++;
+
         if (areAllEnemiesKilled)
             m_levelChannel.onAllEnemiesKilled.Invoke();
     }
-
-
 
     #endregion
 
@@ -276,6 +283,9 @@ public class EnemyManager : MonoBehaviour, IPausable
 
     public void CallbackReset()
     {
+
+        m_enemyChannel.killCount = 0;
+
         ResetEnemySpawner();
 
         ResetActiveEnemies();

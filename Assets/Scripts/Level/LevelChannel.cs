@@ -12,6 +12,8 @@ public class LevelChannel : ScriptableObject
 
     public Action onAllEnemiesKilled = null;
 
+    public Action onDisplayTutorial;
+
     public Action onGameOver;
     public GameOverDelegate onGameOverPanel;
 
@@ -24,6 +26,8 @@ public class LevelChannel : ScriptableObject
     private void OnEnable()
     {
         onAllEnemiesKilled = () => { };
+
+        onDisplayTutorial = () => { };
 
         // Game Over
         onGameOver = () => { };

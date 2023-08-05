@@ -68,7 +68,7 @@ public class GameOverPanel : APanel
 	private void CallbackGameOverPanel(GameOverData data)
 	{
 		m_timeLabel.text = UtilsClass.SecondsToTextTime(data.totalTime);
-		m_scoreLabel.text = data.totalScore.ToString();
+		m_scoreLabel.text = data.killCount.ToString();
 
 		Display();
 	}
