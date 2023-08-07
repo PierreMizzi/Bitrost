@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using UnityEngine;
 
 [RequireComponent(typeof(HealthEntity))]
@@ -42,9 +43,31 @@ public class Enemy : MonoBehaviour, IStateMachine, IPausable
 
     #endregion
 
+    #region Sounds
+
+    protected List<string> m_deathSounds = new List<string>();
+
+    protected List<string> m_hitSounds = new List<string>();
+
+    #endregion
+
     #endregion
 
     #region Methods
+
+    protected virtual void Awake()
+    {
+        m_deathSounds = new List<string>(){
+            SoundDataIDStatic.ENEMY_DEATH_01,
+            SoundDataIDStatic.ENEMY_DEATH_02,
+            SoundDataIDStatic.ENEMY_DEATH_03,
+            SoundDataIDStatic.ENEMY_DEATH_04,
+            SoundDataIDStatic.ENEMY_DEATH_05,
+            SoundDataIDStatic.ENEMY_DEATH_06,
+            SoundDataIDStatic.ENEMY_DEATH_07,
+            SoundDataIDStatic.ENEMY_DEATH_08,
+        };
+    }
 
     protected virtual void Update()
     {
@@ -115,6 +138,7 @@ public class Enemy : MonoBehaviour, IStateMachine, IPausable
         m_healthEntity.Reset();
         m_manager = manager;
         ChangeState(EnemyStateType.Idle);
+
     }
 
     #endregion
@@ -133,12 +157,16 @@ public class Enemy : MonoBehaviour, IStateMachine, IPausable
         m_healthEntity.onNoHealth -= CallbackNoHealth;
     }
 
-    protected virtual void CallbackLostHealth() { }
+    protected virtual void CallbackLostHealth()
+    {
+        SoundManager.PlayRandomSound(m_hitSounds);
+    }
 
     protected virtual void CallbackNoHealth()
     {
         ChangeState(EnemyStateType.Inactive);
         m_manager.KillEnemy(this);
+        SoundManager.PlayRandomSound(m_deathSounds);
     }
 
     #endregion

@@ -16,18 +16,18 @@ public class SimpleSlideshow : APanel
 
 	private const string k_slideContainerName = "slide-container-";
 
-	private VisualElement m_slidesContainer;
+	protected VisualElement m_slidesContainer;
 
-	private Button m_previousButton;
-	private Button m_startButton;
-	private Button m_nextButton;
+	protected Button m_previousButton;
+	protected Button m_startButton;
+	protected Button m_nextButton;
 
-	private int m_slideCount;
-	private int m_slideIndex;
+	protected int m_slideCount;
+	protected int m_slideIndex;
 
-	private List<VisualElement> m_slides = new List<VisualElement>();
+	protected List<VisualElement> m_slides = new List<VisualElement>();
 
-	private bool IsFirstSlide
+	protected bool IsFirstSlide
 	{
 		get
 		{
@@ -35,7 +35,7 @@ public class SimpleSlideshow : APanel
 		}
 	}
 
-	private bool IsLastSlide
+	protected bool IsLastSlide
 	{
 		get
 		{
@@ -100,7 +100,7 @@ public class SimpleSlideshow : APanel
 
 	#endregion
 
-	private void StoreSlides()
+	protected void StoreSlides()
 	{
 		for (int i = 0; i < m_slideCount; i++)
 		{
@@ -109,7 +109,7 @@ public class SimpleSlideshow : APanel
 		}
 	}
 
-	private void SelectSlide(int slideIndex)
+	protected void SelectSlide(int slideIndex)
 	{
 		for (int i = 0; i < m_slideCount; i++)
 		{
@@ -120,7 +120,7 @@ public class SimpleSlideshow : APanel
 		ManageButtons();
 	}
 
-	private void ManageButtons()
+	protected void ManageButtons()
 	{
 		m_previousButton.style.visibility = IsFirstSlide ? Visibility.Hidden : Visibility.Visible;
 		m_startButton.style.visibility = IsLastSlide ? Visibility.Visible : Visibility.Hidden;

@@ -1,4 +1,6 @@
+using PierreMizzi.SoundManager;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TutorialPanel : SimpleSlideshow
 {
@@ -15,6 +17,13 @@ public class TutorialPanel : SimpleSlideshow
 	#endregion
 
 	#region Methods 
+
+	protected override void Awake()
+	{
+		base.Awake();
+
+		m_root.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+	}
 
 	protected void Start()
 	{
@@ -37,12 +46,40 @@ public class TutorialPanel : SimpleSlideshow
 		m_levelChannel.onPauseGame.Invoke();
 	}
 
+	protected override void CallbackPreviousClicked()
+	{
+		base.CallbackPreviousClicked();
+		SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+
+	}
+
 	protected override void CallbackStartClicked()
 	{
 		base.CallbackStartClicked();
 		m_applicationChannel.onSetCursor.Invoke(CursorType.Attack);
 
 		m_levelChannel.onResumeGame.Invoke();
+
+		SoundManager.PlaySound(SoundDataIDStatic.U_I_START_CLICK);
+	}
+
+	protected override void CallbackNextClicked()
+	{
+		base.CallbackNextClicked();
+		SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+	}
+
+	private void CallbackOnMouseOver(MouseOverEvent evt)
+	{
+		VisualElement element = (VisualElement)evt.currentTarget;
+
+		if (element == m_previousButton ||
+			element == m_startButton ||
+			element == m_nextButton
+		)
+		{
+			SoundManager.PlaySound(SoundDataIDStatic.U_I_HOVER);
+		}
 	}
 
 

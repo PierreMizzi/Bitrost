@@ -152,17 +152,14 @@ namespace PierreMizzi.SoundManager
 			return source;
 		}
 
-		//public static void StopSound(string soundDataID)
-		//{
+		public static SoundSource PlayRandomSound(List<string> soundDataIDs, bool isLooping = false, float fadeDuration = -1f)
+		{
+			int randomIndex = Random.Range(0, soundDataIDs.Count);
 
-		//	if(!m_isInitialized)
-		//		return;
+			string randomID = soundDataIDs[randomIndex];
 
-		//	List<SoundSource> playingSources = SoundSourcesPlayingSoundID(soundDataID);
-
-		//	foreach(SoundSource source in playingSources)
-		//		source.Stop();
-		//}
+			return PlaySound(randomID, isLooping, fadeDuration);
+		}
 
 		public static void StopSound(string soundDataID, float fadeDuration = -1f)
 		{
@@ -177,18 +174,6 @@ namespace PierreMizzi.SoundManager
 			foreach (SoundSource source in playingSources)
 				source.FadeOut(fadeDuration);
 		}
-
-		//public static void BlendSound(string IDFadeOut, string IDFadeIn, float blendDuration)
-		//{
-		//	StopSound(IDFadeOut, blendDuration);
-		//	PlaySound(IDFadeIn,false blendDuration);
-		//}
-
-		//public static void BlendSound(string IDFadeOut, string IDFadeIn, float durationFadeIn, float durationFadeOut)
-		//{
-		//	StopSound(IDFadeOut, durationFadeOut);
-		//	PlaySound(IDFadeIn, durationFadeIn);
-		//}
 
 		#endregion
 

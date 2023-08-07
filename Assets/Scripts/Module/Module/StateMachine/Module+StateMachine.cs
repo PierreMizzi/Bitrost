@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using UnityEngine;
 
 public partial class Module : MonoBehaviour, IStateMachine
@@ -18,10 +19,10 @@ public partial class Module : MonoBehaviour, IStateMachine
     {
         states = new List<AState>()
         {
-            new TurretInactiveState(this),          // Done
-            new TurretOffensiveState(this),         // Done
-            new TurretProductionState(this),        // Done
-            new TurretDisabledState(this),          // Done
+            new TurretInactiveState(this),
+            new TurretOffensiveState(this),
+            new TurretProductionState(this),
+            new TurretDisabledState(this),
         };
     }
 
@@ -63,15 +64,40 @@ public partial class Module : MonoBehaviour, IStateMachine
         switch (currentStateType)
         {
             case TurretStateType.Offensive:
-                if (CanBeOffensive())
-                    ChangeState(TurretStateType.Production, currentStateType);
+                OffensiveToProduction();
                 break;
 
             case TurretStateType.Production:
-                if (CanBeProduction())
-                    ChangeState(TurretStateType.Offensive, currentStateType);
+                ProductionToOffensive();
                 break;
         }
+    }
+
+    private void OffensiveToProduction()
+    {
+        if (CanBeProduction())
+            SetProductionMode();
+        else
+            SoundManager.PlaySound(SoundDataIDStatic.TURRET_WRONG_ACTION);
+    }
+
+    private void ProductionToOffensive()
+    {
+        if (CanBeOffensive())
+            SetOffensiveMode();
+        else
+            SoundManager.PlaySound(SoundDataIDStatic.TURRET_WRONG_ACTION);
+    }
+
+    public void SetOffensiveMode()
+    {
+        ChangeState(TurretStateType.Offensive, TurretStateType.Production);
+
+    }
+
+    private void SetProductionMode()
+    {
+        ChangeState(TurretStateType.Production, TurretStateType.Offensive);
     }
 
     public bool CanBeOffensive()

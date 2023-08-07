@@ -1,3 +1,4 @@
+using PierreMizzi.SoundManager;
 using UnityEngine;
 
 public class TurretOffensiveState : ATurretState
@@ -16,6 +17,8 @@ public class TurretOffensiveState : ATurretState
         m_turret.SetActive();
         m_turret.canonTransform.gameObject.SetActive(true);
         m_turret.aimSprite.SetActive(true);
+
+        SoundManager.PlaySound(SoundDataIDStatic.TURRET_FIRE_MODE);
     }
 
     public override void Update()

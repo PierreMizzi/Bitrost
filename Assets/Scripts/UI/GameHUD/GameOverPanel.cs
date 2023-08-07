@@ -1,4 +1,5 @@
 using System;
+using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -6,7 +7,7 @@ using UnityEngine.UIElements;
 public class GameOverPanel : APanel
 {
 
-	#region Fields 
+	#region Fields
 
 	[SerializeField]
 	private LevelChannel m_levelChannel;
@@ -15,7 +16,7 @@ public class GameOverPanel : APanel
 	private Label m_scoreLabel;
 
 	private Button m_restartButton;
-	private Button m_menuBUtton;
+	private Button m_menuButton;
 
 	private const string k_timeLabel = "time-label";
 	private const string k_scoreLabel = "score-label";
@@ -25,7 +26,7 @@ public class GameOverPanel : APanel
 
 	#endregion
 
-	#region Methods 
+	#region Methods
 
 	protected override void Awake()
 	{
@@ -34,11 +35,16 @@ public class GameOverPanel : APanel
 		m_timeLabel = m_root.Q<Label>(k_timeLabel);
 		m_scoreLabel = m_root.Q<Label>(k_scoreLabel);
 		m_restartButton = m_root.Q<Button>(k_restartButton);
-		m_menuBUtton = m_root.Q<Button>(k_menuBUtton);
+		m_menuButton = m_root.Q<Button>(k_menuBUtton);
 
 		m_restartButton.clicked += CallbackRestartButton;
-		m_menuBUtton.clicked += CallbackMenuButton;
+		m_menuButton.clicked += CallbackMenuButton;
+
+		m_root.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+
 	}
+
+
 
 	private void Start()
 	{
@@ -53,16 +59,27 @@ public class GameOverPanel : APanel
 			m_levelChannel.onGameOverPanel -= CallbackGameOverPanel;
 	}
 
+	private void CallbackOnMouseOver(MouseOverEvent evt)
+	{
+		VisualElement element = (VisualElement)evt.currentTarget;
+
+		if (element == m_menuButton || element == m_restartButton)
+			SoundManager.PlaySound(SoundDataIDStatic.U_I_HOVER);
+	}
+
+
 	private void CallbackRestartButton()
 	{
 		Debug.Log("Restart Button");
 		m_levelChannel.onReset.Invoke();
 		Hide();
+		SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
 	}
 
 	private void CallbackMenuButton()
 	{
 		Debug.Log("Menu Button");
+		SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
 	}
 
 	private void CallbackGameOverPanel(GameOverData data)

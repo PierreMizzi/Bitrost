@@ -1,21 +1,6 @@
 using System.Collections.Generic;
-using PierreMizzi.Useful;
+using PierreMizzi.SoundManager;
 using UnityEngine;
-
-/*
-
-    // TODO : Refacto Bullet behaviour
-
-    Scout
-
-    Appear -> Find a positions around the Player
-    Move -> Reach the position around the player
-    Attack -> Track this position and occasionaly fire at the player
-
-    Bullet -> Slow and 15 dmg
-
-
-*/
 
 public class Scout : Enemy, IBulletLauncher
 {
@@ -43,6 +28,22 @@ public class Scout : Enemy, IBulletLauncher
 
     #region Methods 
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        m_hitSounds = new List<string>(){
+            SoundDataIDStatic.SCOUT_HIT_01,
+            SoundDataIDStatic.SCOUT_HIT_02,
+        };
+    }
+
+    protected void LateUpdate()
+    {
+        if (!isPaused)
+            currentState?.Update();
+    }
+
     public override void OutOfPool(EnemyManager manager)
     {
         base.OutOfPool(manager);
@@ -64,17 +65,12 @@ public class Scout : Enemy, IBulletLauncher
 
     }
 
-    protected void LateUpdate()
-    {
-        if (!isPaused)
-            currentState?.Update();
-    }
-
     public void Fire()
     {
         if (CanFire())
         {
             bulletChannel.onInstantiateBullet.Invoke(this, settings.bulletPrefab, transform.position, transform.up);
+            SoundManager.PlaySound(SoundDataIDStatic.SCOUT_BULLET);
         }
     }
 

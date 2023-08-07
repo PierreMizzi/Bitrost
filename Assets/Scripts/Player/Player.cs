@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
@@ -21,6 +23,8 @@ public class Player : MonoBehaviour, IPausable
 
     private PlayerController m_controller = null;
 
+    private List<string> m_hitSounds = new List<string>();
+
     #endregion
 
     #region Methods
@@ -31,6 +35,11 @@ public class Player : MonoBehaviour, IPausable
 
         m_controller = GetComponent<PlayerController>();
         m_healthEntity = GetComponent<HealthEntity>();
+
+        m_hitSounds = new List<string>(){
+            SoundDataIDStatic.PLAYER_HIT_01,
+            SoundDataIDStatic.PLAYER_HIT_02,
+        };
     }
 
     private void Start()
@@ -77,7 +86,10 @@ public class Player : MonoBehaviour, IPausable
 
     private void CallbackHealedHealth() { }
 
-    private void CallbackLostHealth() { }
+    private void CallbackLostHealth()
+    {
+        SoundManager.PlayRandomSound(m_hitSounds);
+    }
 
     [ContextMenu("CallbackNoHealth")]
     private void CallbackNoHealth()
@@ -85,6 +97,8 @@ public class Player : MonoBehaviour, IPausable
         Debug.LogWarning("PLAYER HAS DIED !");
         m_levelChannel.onGameOver.Invoke();
         m_controller.enabled = false;
+
+        SoundManager.PlaySound(SoundDataIDStatic.PLAYER_DEATH);
     }
 
     #endregion

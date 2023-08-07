@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using UnityEngine;
 
 public class Fighter : Enemy, IBulletLauncher
@@ -21,6 +22,16 @@ public class Fighter : Enemy, IBulletLauncher
 
     #region State Machine
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        m_hitSounds = new List<string>(){
+            SoundDataIDStatic.FIGHTER_HIT_01,
+            SoundDataIDStatic.FIGHTER_HIT_02,
+        };
+    }
+
     public override void InitiliazeStates()
     {
         states = new List<AState>()
@@ -33,6 +44,7 @@ public class Fighter : Enemy, IBulletLauncher
     }
 
     #endregion
+
 
     #region IBulletLauncher
 
@@ -54,6 +66,8 @@ public class Fighter : Enemy, IBulletLauncher
                 bulletOrigin.position,
                 fighterToPlayer.normalized
             );
+
+            SoundManager.PlaySound(SoundDataIDStatic.FIGHTER_BULLET);
         }
     }
 

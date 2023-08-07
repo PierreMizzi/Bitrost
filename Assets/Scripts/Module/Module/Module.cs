@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using UnityEngine.InputSystem;
+using PierreMizzi.SoundManager;
 
 public delegate void ModuleDelegate(Module module);
 public delegate void TurretStateDelegate(TurretStateType type);
@@ -190,7 +191,6 @@ public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
         m_target.gameObject.SetActive(true);
         m_spritesContainer.SetActive(true);
 
-
         onRefreshEnergy.Invoke();
     }
 
@@ -198,7 +198,6 @@ public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
     {
         m_target.gameObject.SetActive(false);
         m_spritesContainer.SetActive(false);
-
     }
 
     public void AssignCrystal(CrystalShard crystal)
@@ -222,12 +221,6 @@ public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
         onRemoveCrystal.Invoke();
         crystal = null;
     }
-
-    #endregion
-
-    #region Targeted
-
-
 
     #endregion
 
@@ -262,6 +255,9 @@ public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
 
             if (!hasEnergy)
                 ChangeState(TurretStateType.Disabled);
+
+            SoundManager.PlaySound(SoundDataIDStatic.TURRET_BULLET);
+
         }
     }
 

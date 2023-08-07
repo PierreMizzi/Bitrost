@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -24,6 +25,16 @@ public class Harvester : Enemy
 
     #region Behaviour
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        m_hitSounds = new List<string>(){
+            SoundDataIDStatic.HARVESTER_HIT_01,
+            SoundDataIDStatic.HARVESTER_HIT_02,
+        };
+    }
+
     protected override void Initialize()
     {
         animator = GetComponent<Animator>();
@@ -44,7 +55,6 @@ public class Harvester : Enemy
     protected override void CallbackNoHealth()
     {
         targetCrystal = null;
-        ChangeState((EnemyStateType)currentState.type, EnemyStateType.Inactive);
         base.CallbackNoHealth();
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -183,36 +184,14 @@ public class ModuleManager : MonoBehaviour, IPausable
         switch (m_currentTarget.type)
         {
             case TargetType.CrystalShard:
-                ActivateAvailableModule();
+                DropTurret();
                 break;
             case TargetType.Turret:
-                InactivateTurret();
+                RetrieveTurret();
                 break;
             default:
                 break;
         }
-    }
-
-    private void ActivateAvailableModule()
-    {
-        CrystalShard crystal = ((CrystalShardTarget)m_currentTarget).crystal;
-
-        if (crystal.isAvailable)
-        {
-            if (hasAvailableTurret)
-                DeployTurret(crystal);
-            else
-            { /* TODO : Redeploy Turret*/
-            }
-        }
-    }
-
-    private void InactivateTurret()
-    {
-        Module turret = ((ModuleTarget)m_currentTarget).turret;
-
-        turret.RemoveCrystal();
-        turret.ChangeState(TurretStateType.Inactive);
     }
 
     private void CallbackFire(InputAction.CallbackContext context)
@@ -262,15 +241,36 @@ public class ModuleManager : MonoBehaviour, IPausable
         m_moduleViews.Add(turretView);
     }
 
-    private void DeployTurret(CrystalShard crystal)
+    private void DropTurret()
     {
-        Module turret = GetInactiveTurret();
+        CrystalShard crystal = ((CrystalShardTarget)m_currentTarget).crystal;
 
-        if (turret != null)
+        if (crystal.isAvailable)
         {
-            turret.AssignCrystal(crystal);
-            turret.ChangeState(TurretStateType.Offensive);
+            if (hasAvailableTurret)
+            {
+                Module turret = GetInactiveTurret();
+
+                if (turret != null)
+                {
+                    turret.AssignCrystal(crystal);
+                    turret.ChangeState(TurretStateType.Offensive);
+                    SoundManager.PlaySound(SoundDataIDStatic.TURRET_DROP);
+                }
+            }
+            else
+            { /* TODO : Redeploy Turret*/
+            }
         }
+    }
+
+    private void RetrieveTurret()
+    {
+        Module turret = ((ModuleTarget)m_currentTarget).turret;
+
+        turret.RemoveCrystal();
+        turret.ChangeState(TurretStateType.Inactive);
+        SoundManager.PlaySound(SoundDataIDStatic.TURRET_RETRIEVE);
     }
 
     private Module GetInactiveTurret()
