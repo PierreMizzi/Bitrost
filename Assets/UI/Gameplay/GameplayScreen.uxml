@@ -12,6 +12,6 @@
         <ui:Instance template="LevelHUD" name="LevelHUD" style="position: absolute; width: 100%; top: 0;" />
         <ui:Instance template="GameOverPanel" name="game-over-panel" style="position: absolute; width: 100%; height: 100%; display: none;" />
         <ui:Instance template="PausePanel" name="pause-panel" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: none;" />
-        <ui:Instance template="TutorialPanel" name="tutorial-panel" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0;" />
+        <ui:Instance template="TutorialPanel" name="tutorial-panel" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: none;" />
     </ui:VisualElement>
 </ui:UXML>
