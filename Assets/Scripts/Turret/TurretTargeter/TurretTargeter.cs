@@ -1,29 +1,29 @@
 using UnityEngine;
 
 
-public class ModuleTargeter : MonoBehaviour
+public class TurretTargeter : MonoBehaviour
 {
-	#region Fields
+    #region Fields
 
     private Animator m_animator;
 
     [SerializeField]
     private GameObject m_sprite;
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
     private void Awake()
     {
         m_animator = GetComponent<Animator>();
-		Hide();
+        Hide();
     }
 
     public void Target(ATarget target)
     {
         transform.position = target.transform.position;
-		transform.rotation = target.transform.rotation;
+        transform.rotation = target.transform.rotation;
 
         transform.localScale = target.targeterScale;
 
@@ -35,5 +35,5 @@ public class ModuleTargeter : MonoBehaviour
         m_sprite.SetActive(false);
     }
 
-	#endregion
+    #endregion
 }

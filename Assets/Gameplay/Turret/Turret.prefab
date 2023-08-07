@@ -195,17 +195,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d6333aada030049b08eccefedd3798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_settings: {fileID: 11400000, guid: f02b5e9ff94dbe2439122dca132ad81c, type: 2}
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
+  m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
+  m_settings: {fileID: 11400000, guid: f02b5e9ff94dbe2439122dca132ad81c, type: 2}
   m_target: {fileID: 6127655386794914548}
+  m_spritesContainer: {fileID: 7352402879377549824}
+  m_aimSprite: {fileID: 4521125801839092321}
   m_mousePositionInput: {fileID: -4717243020878214388, guid: b31e137cb3947c244992c71078d944dc,
     type: 3}
   m_canonTransform: {fileID: 6585395777087232122}
   m_bulletOriginTransform: {fileID: 2603461646432851164}
   m_storedEnergy: 0
-  m_spritesContainer: {fileID: 7352402879377549824}
-  m_aimSprite: {fileID: 4521125801839092321}
-  m_isTargeted: 0
 --- !u!1 &6585395777033767244
 GameObject:
   m_ObjectHideFlags: 0

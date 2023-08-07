@@ -1,12 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ModuleSettings", menuName = "Bitrost/ModuleSettings", order = 0)]
-public class ModuleSettings : ScriptableObject
+[CreateAssetMenu(fileName = "TurretSettings", menuName = "Bitrost/Gameplay/TurretSettings", order = 0)]
+public class TurretSettings : ScriptableObject
 {
-    [Header("Module Manager")]
-    public int startingModuleCount = 1;
+    [Header("Turret Manager")]
+    public int startingTurretCount = 1;
 
-    [Header("Module")]
+    [Header("Turret")]
     [Header("Energy")]
     public int maxStoredEnergy = 5;
     public float productionDuration = 3;

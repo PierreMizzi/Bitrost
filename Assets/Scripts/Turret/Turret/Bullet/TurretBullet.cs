@@ -1,19 +1,19 @@
 using UnityEngine;
 using PierreMizzi.Useful;
 
-public class ModuleBullet : Bullet
+public class TurretBullet : Bullet
 {
-    [Header("Module Bullet")]
+    [Header("Turret Bullet")]
     [SerializeField]
-    private ModuleSettings m_settings = null;
+    private TurretSettings m_settings = null;
 
     private CrystalShard m_originCrystal;
 
     public override void AssignLauncher(IBulletLauncher launcher)
     {
         base.AssignLauncher(launcher);
-        Module module = m_launcher.gameObject.GetComponent<Module>();
-        m_originCrystal = module.crystal;
+        Turret turret = m_launcher.gameObject.GetComponent<Turret>();
+        m_originCrystal = turret.crystal;
         m_speed = m_settings.bulletSpeed;
     }
 

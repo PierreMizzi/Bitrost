@@ -4,11 +4,11 @@ using System;
 using UnityEngine.InputSystem;
 using PierreMizzi.SoundManager;
 
-public delegate void ModuleDelegate(Module module);
+public delegate void TurretDelegate(Turret turret);
 public delegate void TurretStateDelegate(TurretStateType type);
 
 // TODO : Small message when can't fire because extract mode
-public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
+public partial class Turret : MonoBehaviour, IBulletLauncher, IPausable
 {
     #region Fields
 
@@ -23,9 +23,9 @@ public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
 
     [Header("Behaviour")]
     [SerializeField]
-    private ModuleSettings m_settings;
+    private TurretSettings m_settings;
 
-    public ModuleSettings settings
+    public TurretSettings settings
     {
         get { return m_settings; }
     }
@@ -33,7 +33,7 @@ public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
     public CrystalShard crystal { get; private set; }
 
     [SerializeField]
-    private ModuleTarget m_target;
+    private TurretTarget m_target;
 
     [SerializeField]
     private GameObject m_spritesContainer = null;
@@ -148,7 +148,7 @@ public partial class Module : MonoBehaviour, IBulletLauncher, IPausable
 
     #region Methods
 
-    public void Initialize(ModuleManager manager)
+    public void Initialize(TurretManager manager)
     {
         camera = Camera.main;
 

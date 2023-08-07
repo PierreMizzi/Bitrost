@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using PierreMizzi.SoundManager;
 using UnityEngine;
 
-public partial class Module : MonoBehaviour, IStateMachine
+public partial class Turret : MonoBehaviour, IStateMachine
 {
     #region Fields
 

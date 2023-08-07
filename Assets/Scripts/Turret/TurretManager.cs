@@ -6,15 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-/*
-
-    - Controller : Inputs from mouse, checks closer Module
-    - Model : Manages available controllers
-    - View : Creates ModuleHUD VisualElements, links them to Module
-
-*/
-
-public class ModuleManager : MonoBehaviour, IPausable
+public class TurretManager : MonoBehaviour, IPausable
 {
     #region Fields
 
@@ -28,7 +20,7 @@ public class ModuleManager : MonoBehaviour, IPausable
     private Camera m_camera;
 
     [SerializeField]
-    private ModuleSettings m_settings = null;
+    private TurretSettings m_settings = null;
 
     [Header("Inputs")]
 
@@ -46,56 +38,55 @@ public class ModuleManager : MonoBehaviour, IPausable
 
     #endregion
 
-    #region Modules
+    #region Turret
 
-    [Header("Modules")]
+    [Header("Turret")]
     [SerializeField]
-    private Module m_modulePrefab = null;
-
-    [SerializeField]
-    private Transform m_moduleContainer = null;
+    private Turret m_turretPrefab = null;
 
     [SerializeField]
-    private List<Module> m_turrets = new List<Module>();
+    private Transform m_turretContainer = null;
 
-    private int m_remainingModuleCount = 0;
+    private List<Turret> m_turrets = new List<Turret>();
+
+    private int m_remainingTurretCount = 0;
 
     private bool hasAvailableTurret
     {
-        get { return m_remainingModuleCount > 0; }
+        get { return m_remainingTurretCount > 0; }
     }
 
     #endregion
 
-    #region Module Views
+    #region Turret Views
 
     [Header("Turret Views")]
     [SerializeField]
     private UIDocument m_document = null;
 
-    private const string k_moduleViewVisualContainer = "module-container";
+    private const string k_turretViewVisualContainer = "module-container";
 
-    public VisualElement m_moduleViewsContainer;
+    public VisualElement m_turretVisualsContainer;
 
     [SerializeField]
-    private VisualTreeAsset m_moduleViewTemplate;
+    private VisualTreeAsset m_turretVisualTemplate;
 
-    public List<ModuleView> m_moduleViews = new List<ModuleView>();
+    public List<TurretView> m_turretViews = new List<TurretView>();
 
     #endregion
 
-    #region Module Target
+    #region Turret targeter
 
-    [Header("Module Target")]
+    [Header("Turret Targeter")]
     [SerializeField]
-    private ModuleTargeter m_moduleTargeter;
+    private TurretTargeter m_turretTargeter;
 
     [SerializeField]
-    private ContactFilter2D m_targetFilter;
+    private ContactFilter2D m_targeterFilter;
 
     private ATarget m_currentTarget;
 
-    List<RaycastHit2D> potentialTargets = new List<RaycastHit2D>();
+    private List<RaycastHit2D> m_potentialTargets = new List<RaycastHit2D>();
 
     #endregion
 
@@ -112,10 +103,10 @@ public class ModuleManager : MonoBehaviour, IPausable
 
     private void Start()
     {
-        m_remainingModuleCount = m_settings.startingModuleCount;
+        m_remainingTurretCount = m_settings.startingTurretCount;
         SubscribeInputs();
 
-        m_moduleViewsContainer = m_document.rootVisualElement.Q(k_moduleViewVisualContainer);
+        m_turretVisualsContainer = m_document.rootVisualElement.Q(k_turretViewVisualContainer);
 
         CreateTurret();
 
@@ -196,7 +187,7 @@ public class ModuleManager : MonoBehaviour, IPausable
 
     private void CallbackFire(InputAction.CallbackContext context)
     {
-        foreach (Module turret in m_turrets)
+        foreach (Turret turret in m_turrets)
             turret.Fire();
     }
 
@@ -210,6 +201,8 @@ public class ModuleManager : MonoBehaviour, IPausable
             case TargetType.Turret:
                 SwitchTurretMode();
                 break;
+            case TargetType.CrystalShard:
+            // TODO Redrop on asteroid
             default:
                 break;
         }
@@ -217,7 +210,7 @@ public class ModuleManager : MonoBehaviour, IPausable
 
     private void SwitchTurretMode()
     {
-        Module turret = ((ModuleTarget)m_currentTarget).turret;
+        Turret turret = ((TurretTarget)m_currentTarget).turret;
 
         turret.SwitchMode();
     }
@@ -229,16 +222,16 @@ public class ModuleManager : MonoBehaviour, IPausable
     private void CreateTurret()
     {
         // Instantiate Model
-        Module turret = Instantiate(m_modulePrefab, m_moduleContainer);
+        Turret turret = Instantiate(m_turretPrefab, m_turretContainer);
         turret.Initialize(this);
         m_turrets.Add(turret);
 
         // Instiate View, link it to model
-        ModuleView turretView = new ModuleView();
-        VisualElement turretViewVisual = m_moduleViewTemplate.Instantiate();
-        m_moduleViewsContainer.Add(turretViewVisual);
+        TurretView turretView = new TurretView();
+        VisualElement turretViewVisual = m_turretVisualTemplate.Instantiate();
+        m_turretVisualsContainer.Add(turretViewVisual);
         turretView.Initialize(turret, turretViewVisual);
-        m_moduleViews.Add(turretView);
+        m_turretViews.Add(turretView);
     }
 
     private void DropTurret()
@@ -249,7 +242,7 @@ public class ModuleManager : MonoBehaviour, IPausable
         {
             if (hasAvailableTurret)
             {
-                Module turret = GetInactiveTurret();
+                Turret turret = GetInactiveTurret();
 
                 if (turret != null)
                 {
@@ -266,14 +259,14 @@ public class ModuleManager : MonoBehaviour, IPausable
 
     private void RetrieveTurret()
     {
-        Module turret = ((ModuleTarget)m_currentTarget).turret;
+        Turret turret = ((TurretTarget)m_currentTarget).turret;
 
         turret.RemoveCrystal();
         turret.ChangeState(TurretStateType.Inactive);
         SoundManager.PlaySound(SoundDataIDStatic.TURRET_RETRIEVE);
     }
 
-    private Module GetInactiveTurret()
+    private Turret GetInactiveTurret()
     {
         int count = m_turrets.Count;
         for (int i = 0; i < count; i++)
@@ -286,23 +279,23 @@ public class ModuleManager : MonoBehaviour, IPausable
 
     #endregion
 
-    #region ModuleTarget
+    #region Turret Targeter
 
     private void CallbackMousePosition(InputAction.CallbackContext context)
     {
         Vector3 mouseScreenPosition = context.ReadValue<Vector2>();
         Vector3 raycastOrigin = ScreenPositionToRaycastOrigin(mouseScreenPosition);
 
-        if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_targetFilter, potentialTargets) > 0)
+        if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_targeterFilter, m_potentialTargets) > 0)
         {
-            ATarget target = FindFirst(potentialTargets, TargetType.Turret);
+            ATarget target = FindFirst(m_potentialTargets, TargetType.Turret);
             if (target != null)
             {
-                ManageModuleTarget(target);
+                ManageTurretTarget(target);
                 return;
             }
 
-            target = FindFirst(potentialTargets, TargetType.CrystalShard);
+            target = FindFirst(m_potentialTargets, TargetType.CrystalShard);
             if (target != null)
             {
                 ManageCrystalTarget(target);
@@ -310,61 +303,64 @@ public class ModuleManager : MonoBehaviour, IPausable
             }
         }
         else
-        {
-            if (m_currentTarget != null)
-            {
-                switch (m_currentTarget.type)
-                {
-                    case TargetType.CrystalShard:
-                        UnsetCrystalTarget();
-                        break;
-                    case TargetType.Turret:
-                        UnsetModuleTarget();
-                        break;
-                }
-            }
-        }
+            ManageNoTarget();
     }
 
     private void ManageCrystalTarget(ATarget target)
     {
-        m_moduleTargeter.Target(target);
+        m_turretTargeter.Target(target);
         m_currentTarget = target;
 
-        if (m_remainingModuleCount > 0)
+        if (m_remainingTurretCount > 0)
         {
-            Module module = GetInactiveTurret();
-            if (module != null)
-                module.isDroppable = true;
+            Turret turret = GetInactiveTurret();
+            if (turret != null)
+                turret.isDroppable = true;
         }
     }
 
-    private void ManageModuleTarget(ATarget target)
+    private void ManageTurretTarget(ATarget target)
     {
-        m_moduleTargeter.Target(target);
+        m_turretTargeter.Target(target);
         m_currentTarget = target;
 
-        ((ModuleTarget)m_currentTarget).turret.isTargeted = true;
+        ((TurretTarget)m_currentTarget).turret.isTargeted = true;
+    }
+
+    private void ManageNoTarget()
+    {
+        if (m_currentTarget != null)
+        {
+            switch (m_currentTarget.type)
+            {
+                case TargetType.CrystalShard:
+                    UnsetCrystalTarget();
+                    break;
+                case TargetType.Turret:
+                    UnsetTurretTarget();
+                    break;
+            }
+        }
     }
 
     private void UnsetCrystalTarget()
     {
-        m_moduleTargeter.Hide();
+        m_turretTargeter.Hide();
         m_currentTarget = null;
 
-        if (m_remainingModuleCount > 0)
+        if (m_remainingTurretCount > 0)
         {
-            Module module = GetInactiveTurret();
-            if (module != null)
-                module.isDroppable = false;
+            Turret turret = GetInactiveTurret();
+            if (turret != null)
+                turret.isDroppable = false;
         }
     }
 
-    private void UnsetModuleTarget()
+    private void UnsetTurretTarget()
     {
-        ((ModuleTarget)m_currentTarget).turret.isTargeted = false;
+        ((TurretTarget)m_currentTarget).turret.isTargeted = false;
 
-        m_moduleTargeter.Hide();
+        m_turretTargeter.Hide();
         m_currentTarget = null;
     }
 
@@ -372,7 +368,7 @@ public class ModuleManager : MonoBehaviour, IPausable
     {
         foreach (RaycastHit2D hit in results)
         {
-            if (hit.collider.TryGetComponent<ATarget>(out ATarget target))
+            if (hit.collider.TryGetComponent(out ATarget target))
             {
                 if (target.type == type)
                     return target;
@@ -394,15 +390,15 @@ public class ModuleManager : MonoBehaviour, IPausable
 
     public void CallbackReset()
     {
-        UtilsClass.EmptyTransform(m_moduleContainer);
+        UtilsClass.EmptyTransform(m_turretContainer);
         m_turrets.Clear();
 
         // Turrets View
-        m_moduleViews.Clear();
-        m_moduleViewsContainer.Clear();
+        m_turretViews.Clear();
+        m_turretVisualsContainer.Clear();
 
         // Turrets
-        m_remainingModuleCount = m_settings.startingModuleCount;
+        m_remainingTurretCount = m_settings.startingTurretCount;
         CreateTurret();
 
     }
@@ -416,7 +412,7 @@ public class ModuleManager : MonoBehaviour, IPausable
         isPaused = true;
         UnsubscribeInputs();
 
-        foreach (Module turret in m_turrets)
+        foreach (Turret turret in m_turrets)
             turret.Pause();
     }
 
@@ -425,7 +421,7 @@ public class ModuleManager : MonoBehaviour, IPausable
         isPaused = false;
         SubscribeInputs();
 
-        foreach (Module turret in m_turrets)
+        foreach (Turret turret in m_turrets)
             turret.Resume();
     }
 

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ModuleView
+public class TurretView
 {
 
     #region Fields
@@ -10,7 +10,7 @@ public class ModuleView
     #region Behaviour
 
     private VisualElement m_root;
-    private Module m_turret;
+    private Turret m_turret;
 
     #endregion
 
@@ -19,7 +19,7 @@ public class ModuleView
     private const string k_droppableLabel = "module-hud-inactive__label";
     private Label m_droppableLabel;
     private const string k_isNotDroppableText = "Search asteroid";
-    private const string k_isDroppableText = "<b>Right click</b> to drop module";
+    private const string k_isDroppableText = "<b>Right click</b> to drop turret";
 
     #endregion
 
@@ -75,9 +75,9 @@ public class ModuleView
 
     #region Behaviour
 
-    public void Initialize(Module module, VisualElement root)
+    public void Initialize(Turret turret, VisualElement root)
     {
-        m_turret = module;
+        m_turret = turret;
 
         // Instantiate Visual Asset
         m_root = root;
