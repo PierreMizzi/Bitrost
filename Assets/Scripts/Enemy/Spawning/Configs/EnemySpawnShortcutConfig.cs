@@ -1,10 +1,14 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public struct EnemySpawnShortcutConfig
+namespace Bitfrost.Gameplay.Enemies
 {
-    public Enemy prefab;
 
-    public KeyCode quickSpawnKey;
+    [Serializable]
+    public struct EnemySpawnShortcutConfig
+    {
+        public Enemy prefab;
+
+        public KeyCode quickSpawnKey;
+    }
 }

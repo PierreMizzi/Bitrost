@@ -1,8 +1,13 @@
-public class EnemyMoveState : AState
+using PierreMizzi.Useful.StateMachines;
+
+namespace Bitfrost.Gameplay.Enemies
 {
-    public EnemyMoveState(IStateMachine stateMachine)
-        : base(stateMachine)
+    public class EnemyMoveState : AState
     {
-        type = (int)EnemyStateType.Move;
+        public EnemyMoveState(IStateMachine stateMachine)
+            : base(stateMachine)
+        {
+            type = (int)EnemyStateType.Move;
+        }
     }
 }

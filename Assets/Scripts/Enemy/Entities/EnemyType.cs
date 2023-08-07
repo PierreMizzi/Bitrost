@@ -1,7 +1,11 @@
-public enum EnemyType
+namespace Bitfrost.Gameplay.Enemies
 {
-    None,
-    Harvester,
-    Fighter,
-    Scout,
+
+    public enum EnemyType
+    {
+        None,
+        Harvester,
+        Fighter,
+        Scout,
+    }
 }

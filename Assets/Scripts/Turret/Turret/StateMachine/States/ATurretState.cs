@@ -1,15 +1,20 @@
-public class ATurretState : AState
+using PierreMizzi.Useful.StateMachines;
+
+namespace Bitfrost.Gameplay.Turrets
 {
-    public ATurretState(IStateMachine stateMachine)
-        : base(stateMachine)
+    public class ATurretState : AState
     {
-        m_turret = stateMachine.gameObject.GetComponent<Turret>();
-    }
+        public ATurretState(IStateMachine stateMachine)
+            : base(stateMachine)
+        {
+            m_turret = stateMachine.gameObject.GetComponent<Turret>();
+        }
 
-    protected Turret m_turret;
+        protected Turret m_turret;
 
-    public void ChangeState(TurretStateType state)
-    {
-        ChangeState((int)state);
+        public void ChangeState(TurretStateType state)
+        {
+            ChangeState((int)state);
+        }
     }
 }

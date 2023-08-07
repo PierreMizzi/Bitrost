@@ -1,14 +1,18 @@
+using Bitfrost.Gameplay;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ApplicationChannel", menuName = "Bitrost/Architecture/ApplicationChannel", order = 0)]
-public class ApplicationChannel : ScriptableObject
+namespace Bitfrost.Application
 {
-
-	public CursorDelegate onSetCursor;
-
-	private void OnEnable()
+	[CreateAssetMenu(fileName = "ApplicationChannel", menuName = "Bitrost/Architecture/ApplicationChannel", order = 0)]
+	public class ApplicationChannel : ScriptableObject
 	{
-		onSetCursor = (CursorType type) => { };
-	}
 
+		public CursorDelegate onSetCursor;
+
+		private void OnEnable()
+		{
+			onSetCursor = (CursorType type) => { };
+		}
+
+	}
 }

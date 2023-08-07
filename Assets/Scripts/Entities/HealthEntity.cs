@@ -1,70 +1,74 @@
 using UnityEngine;
 using System;
 
-public class HealthEntity : MonoBehaviour
+namespace Bitfrost.Gameplay
 {
-    #region Fields
 
-    public float currentHealth { get; private set; }
-    public float maxHealth { get; set; }
-
-    public float normalizedHealth
+    public class HealthEntity : MonoBehaviour
     {
-        get { return Mathf.Clamp01(currentHealth / maxHealth); }
-    }
+        #region Fields
 
-    public Action onLostHealth = null;
-    public Action onHealedHealth = null;
-    public Action onNoHealth = null;
+        public float currentHealth { get; private set; }
+        public float maxHealth { get; set; }
 
-    public Action onChangeHealth = null;
-
-    #endregion
-
-    #region Methods
-
-    private void Awake()
-    {
-        onLostHealth = () => { };
-        onHealedHealth = () => { };
-        onNoHealth = () => { };
-        onChangeHealth = () => { };
-    }
-
-    public void Initialize(float maxHealth)
-    {
-        this.maxHealth = maxHealth;
-        Reset();
-    }
-
-    public void Reset()
-    {
-        currentHealth = maxHealth;
-        onChangeHealth?.Invoke();
-    }
-
-    public void LoseHealth(float lost)
-    {
-        currentHealth -= lost;
-        onLostHealth.Invoke();
-        onChangeHealth.Invoke();
-
-        if (currentHealth <= 0)
+        public float normalizedHealth
         {
-            currentHealth = 0;
-            onNoHealth.Invoke();
+            get { return Mathf.Clamp01(currentHealth / maxHealth); }
         }
-    }
 
-    public void HealHealth(float healed)
-    {
-        currentHealth += healed;
-        onHealedHealth.Invoke();
-        onChangeHealth.Invoke();
+        public Action onLostHealth = null;
+        public Action onHealedHealth = null;
+        public Action onNoHealth = null;
 
-        if (currentHealth > maxHealth)
+        public Action onChangeHealth = null;
+
+        #endregion
+
+        #region Methods
+
+        private void Awake()
+        {
+            onLostHealth = () => { };
+            onHealedHealth = () => { };
+            onNoHealth = () => { };
+            onChangeHealth = () => { };
+        }
+
+        public void Initialize(float maxHealth)
+        {
+            this.maxHealth = maxHealth;
+            Reset();
+        }
+
+        public void Reset()
+        {
             currentHealth = maxHealth;
-    }
+            onChangeHealth?.Invoke();
+        }
 
-    #endregion
+        public void LoseHealth(float lost)
+        {
+            currentHealth -= lost;
+            onLostHealth.Invoke();
+            onChangeHealth.Invoke();
+
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                onNoHealth.Invoke();
+            }
+        }
+
+        public void HealHealth(float healed)
+        {
+            currentHealth += healed;
+            onHealedHealth.Invoke();
+            onChangeHealth.Invoke();
+
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
+        }
+
+        #endregion
+    }
 }

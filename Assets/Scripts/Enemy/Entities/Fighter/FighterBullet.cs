@@ -1,40 +1,45 @@
+using Bitfrost.Gameplay.Bullets;
 using PierreMizzi.Useful;
 using UnityEngine;
 
-public class FighterBullet : Bullet
+namespace Bitfrost.Gameplay.Enemies
 {
-    #region Fields
 
-    [SerializeField]
-    private FighterSettings m_settings = null;
-
-    #endregion
-
-    #region Methods
-
-    private void Start()
+    public class FighterBullet : Bullet
     {
-        m_speed = m_settings.bulletSpeed;
-    }
+        #region Fields
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (m_hasHit)
-            return;
+        [SerializeField]
+        private FighterSettings m_settings = null;
 
-        if (UtilsClass.CheckLayer(m_collisionFilter.layerMask.value, other.gameObject.layer))
+        #endregion
+
+        #region Methods
+
+        private void Start()
         {
-            if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))
-                HitPlayer(healthEntity);
+            m_speed = m_settings.bulletSpeed;
         }
-    }
 
-    private void HitPlayer(HealthEntity healthEntity)
-    {
-        healthEntity.LoseHealth(m_settings.bulletDamage);
-        Release();
-        m_hasHit = true;
-    }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (m_hasHit)
+                return;
 
-    #endregion
+            if (UtilsClass.CheckLayer(m_collisionFilter.layerMask.value, other.gameObject.layer))
+            {
+                if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))
+                    HitPlayer(healthEntity);
+            }
+        }
+
+        private void HitPlayer(HealthEntity healthEntity)
+        {
+            healthEntity.LoseHealth(m_settings.bulletDamage);
+            Release();
+            m_hasHit = true;
+        }
+
+        #endregion
+    }
 }

@@ -2,100 +2,103 @@ using System;
 using UnityEngine;
 using PierreMizzi.Rendering;
 
-public class CrystalShard : MonoBehaviour
+namespace Bitfrost.Gameplay.Energy
 {
-    private CrystalShardsManager m_manager;
-
-    public float scale { get; private set; }
-
-    public int totalEnergyCount { get; private set; }
-
-    public int remainingEnergyCount { get; private set; }
-
-    public float energyPercentage
+    public class CrystalShard : MonoBehaviour
     {
-        get { return remainingEnergyCount / (float)totalEnergyCount; }
-    }
+        private CrystalShardsManager m_manager;
 
-    public bool hasEnergy
-    {
-        get { return remainingEnergyCount > 0; }
-    }
+        public float scale { get; private set; }
 
-    public Action onRefreshEnergy = null;
+        public int totalEnergyCount { get; private set; }
 
-    public bool isAvailable = true;
+        public int remainingEnergyCount { get; private set; }
 
-    #region Rendering
+        public float energyPercentage
+        {
+            get { return remainingEnergyCount / (float)totalEnergyCount; }
+        }
 
-    [SerializeField]
-    private MaterialPropertyBlockModifier m_propertyBlock = null;
+        public bool hasEnergy
+        {
+            get { return remainingEnergyCount > 0; }
+        }
 
-    private const string k_energyPercentProperty = "_EnergyPercent";
-    private const string k_noiseOffsetProperty = "_NoiseOffset";
+        public Action onRefreshEnergy = null;
 
-    #endregion
+        public bool isAvailable = true;
 
-    private void Awake()
-    {
-        onRefreshEnergy = () => { };
-    }
+        #region Rendering
 
-    [ContextMenu("Start")]
-    private void Start()
-    {
-        Vector4 noiseOffset = new Vector4();
-        noiseOffset.x = UnityEngine.Random.Range(0f, 100f);
-        noiseOffset.y = UnityEngine.Random.Range(0f, 100f);
-        m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
-    }
+        [SerializeField]
+        private MaterialPropertyBlockModifier m_propertyBlock = null;
 
-    public void Destroy()
-    {
-        Reset();
-        m_manager.DestroyCrystal(this);
-    }
+        private const string k_energyPercentProperty = "_EnergyPercent";
+        private const string k_noiseOffsetProperty = "_NoiseOffset";
 
-    public void Initialize(CrystalShardsManager manager, int startingEnergyCount)
-    {
-        m_manager = manager;
-        totalEnergyCount = startingEnergyCount;
-        remainingEnergyCount = startingEnergyCount;
-        SetVisualEnergy();
-    }
+        #endregion
 
-    public void SetUnavailable()
-    {
-        isAvailable = false;
-        m_manager.AddUnavailableCrystal(this);
-    }
+        private void Awake()
+        {
+            onRefreshEnergy = () => { };
+        }
 
-    public void SetAvailable()
-    {
-        isAvailable = true;
-        m_manager.RemoveUnavailableCrystal(this);
-    }
+        [ContextMenu("Start")]
+        private void Start()
+        {
+            Vector4 noiseOffset = new Vector4();
+            noiseOffset.x = UnityEngine.Random.Range(0f, 100f);
+            noiseOffset.y = UnityEngine.Random.Range(0f, 100f);
+            m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
+        }
 
-    public void DecrementEnergy()
-    {
-        remainingEnergyCount--;
-        SetVisualEnergy();
-        onRefreshEnergy.Invoke();
-    }
+        public void Destroy()
+        {
+            Reset();
+            m_manager.DestroyCrystal(this);
+        }
 
-    private void SetVisualEnergy()
-    {
-        m_propertyBlock.SetProperty(k_energyPercentProperty, energyPercentage);
-    }
+        public void Initialize(CrystalShardsManager manager, int startingEnergyCount)
+        {
+            m_manager = manager;
+            totalEnergyCount = startingEnergyCount;
+            remainingEnergyCount = startingEnergyCount;
+            SetVisualEnergy();
+        }
 
-    public void Reset()
-    {
-        remainingEnergyCount = 0;
-        totalEnergyCount = 0;
-        isAvailable = true;
+        public void SetUnavailable()
+        {
+            isAvailable = false;
+            m_manager.AddUnavailableCrystal(this);
+        }
 
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.identity;
-        transform.localScale = Vector3.one;
+        public void SetAvailable()
+        {
+            isAvailable = true;
+            m_manager.RemoveUnavailableCrystal(this);
+        }
+
+        public void DecrementEnergy()
+        {
+            remainingEnergyCount--;
+            SetVisualEnergy();
+            onRefreshEnergy.Invoke();
+        }
+
+        private void SetVisualEnergy()
+        {
+            m_propertyBlock.SetProperty(k_energyPercentProperty, energyPercentage);
+        }
+
+        public void Reset()
+        {
+            remainingEnergyCount = 0;
+            totalEnergyCount = 0;
+            isAvailable = true;
+
+            transform.position = Vector3.zero;
+            transform.rotation = Quaternion.identity;
+            transform.localScale = Vector3.one;
+        }
     }
 }

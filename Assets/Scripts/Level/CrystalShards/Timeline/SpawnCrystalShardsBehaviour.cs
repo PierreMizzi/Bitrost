@@ -1,21 +1,24 @@
 using UnityEngine.Playables;
 
-public class SpawnCrystalShardsBehaviour : PlayableBehaviour
+namespace Bitfrost.Gameplay.Energy
 {
-    private bool m_isDone;
-
-    public SpawnCrystalShardsConfig spawnConfig;
-
-	public CrystalShardsManager m_manager = null;
-
-    public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+    public class SpawnCrystalShardsBehaviour : PlayableBehaviour
     {
-        if (!m_isDone)
-        {
-            m_manager = playerData as CrystalShardsManager;
-            m_manager.SpawnCrystalShards(spawnConfig);
+        private bool m_isDone;
 
-            m_isDone = true;
+        public SpawnCrystalShardsConfig spawnConfig;
+
+        public CrystalShardsManager m_manager = null;
+
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        {
+            if (!m_isDone)
+            {
+                m_manager = playerData as CrystalShardsManager;
+                m_manager.SpawnCrystalShards(spawnConfig);
+
+                m_isDone = true;
+            }
         }
     }
 }

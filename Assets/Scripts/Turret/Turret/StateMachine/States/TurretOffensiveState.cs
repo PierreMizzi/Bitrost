@@ -1,35 +1,39 @@
 using PierreMizzi.SoundManager;
-using UnityEngine;
+using PierreMizzi.Useful.StateMachines;
 
-public class TurretOffensiveState : ATurretState
+namespace Bitfrost.Gameplay.Turrets
 {
-    public TurretOffensiveState(IStateMachine stateMachine)
-        : base(stateMachine)
+
+    public class TurretOffensiveState : ATurretState
     {
-        type = (int)TurretStateType.Offensive;
+        public TurretOffensiveState(IStateMachine stateMachine)
+            : base(stateMachine)
+        {
+            type = (int)TurretStateType.Offensive;
+        }
+
+
+        protected override void DefaultEnter()
+        {
+            base.DefaultEnter();
+
+            m_turret.SetActive();
+            m_turret.canonTransform.gameObject.SetActive(true);
+            m_turret.aimSprite.SetActive(true);
+
+            SoundManager.PlaySound(SoundDataIDStatic.TURRET_FIRE_MODE);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            m_turret.ComputeAimDirection();
+            m_turret.canonTransform.up = m_turret.aimDirection;
+
+            if (!m_turret.hasEnergy)
+                ChangeState(TurretStateType.Disabled);
+
+        }
+
     }
-
-
-    protected override void DefaultEnter()
-    {
-        base.DefaultEnter();
-
-        m_turret.SetActive();
-        m_turret.canonTransform.gameObject.SetActive(true);
-        m_turret.aimSprite.SetActive(true);
-
-        SoundManager.PlaySound(SoundDataIDStatic.TURRET_FIRE_MODE);
-    }
-
-    public override void Update()
-    {
-        base.Update();
-        m_turret.ComputeAimDirection();
-        m_turret.canonTransform.up = m_turret.aimDirection;
-
-        if (!m_turret.hasEnergy)
-            ChangeState(TurretStateType.Disabled);
-
-    }
-
 }

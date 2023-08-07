@@ -1,8 +1,12 @@
-public enum EnemyStateType
+namespace Bitfrost.Gameplay.Enemies
 {
-	None = 0,
-	Inactive = 1,
-	Idle = 2,
-	Move = 3,
-	Attack = 4
+
+	public enum EnemyStateType
+	{
+		None = 0,
+		Inactive = 1,
+		Idle = 2,
+		Move = 3,
+		Attack = 4
+	}
 }

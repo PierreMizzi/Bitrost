@@ -1,8 +1,13 @@
-public class EnemyInactiveState : AState
+using PierreMizzi.Useful.StateMachines;
+
+namespace Bitfrost.Gameplay.Enemies
 {
-    public EnemyInactiveState(IStateMachine stateMachine)
-        : base(stateMachine)
+    public class EnemyInactiveState : AState
     {
-        type = (int)EnemyStateType.Inactive;
+        public EnemyInactiveState(IStateMachine stateMachine)
+            : base(stateMachine)
+        {
+            type = (int)EnemyStateType.Inactive;
+        }
     }
 }

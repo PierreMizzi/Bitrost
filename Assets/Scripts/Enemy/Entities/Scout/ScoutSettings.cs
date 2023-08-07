@@ -1,18 +1,23 @@
+using Bitfrost.Gameplay.Bullets;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ScoutSettings", menuName = "Bitrost/Enemies/Scout Settings", order = 0)]
-public class ScoutSettings : EnemySettings
+namespace Bitfrost.Gameplay.Enemies
 {
 
-	[Header("Search Crystal")]
-	public float radiusAroundPlayer = 10f;
-	public float angleAroundPlayer;
+	[CreateAssetMenu(fileName = "ScoutSettings", menuName = "Bitrost/Enemies/Scout Settings", order = 0)]
+	public class ScoutSettings : EnemySettings
+	{
 
-	public float minSpeedTrackPlayer;
-	public float maxSpeedTrackPlayer;
+		[Header("Search Crystal")]
+		public float radiusAroundPlayer = 10f;
+		public float angleAroundPlayer;
 
-	public float delayBetweenBullet = 4f;
+		public float minSpeedTrackPlayer;
+		public float maxSpeedTrackPlayer;
 
-	public Bullet bulletPrefab;
+		public float delayBetweenBullet = 4f;
 
+		public Bullet bulletPrefab;
+
+	}
 }

@@ -1,20 +1,24 @@
+using Bitfrost.Gameplay.Energy;
 using UnityEngine;
 
-public class CrystalShardTarget : ATarget
+namespace Bitfrost.Gameplay.Turrets
 {
-	#region Fields
-
-    public CrystalShard crystal { get; private set; }
-
-	#endregion
-
-	#region Methods
-
-    private void Awake()
+    public class CrystalShardTarget : ATarget
     {
-        crystal = m_origin.GetComponent<CrystalShard>();
-        m_targeterScaleFactor *= m_origin.localScale.x;
-    }
+        #region Fields
 
-	#endregion
+        public CrystalShard crystal { get; private set; }
+
+        #endregion
+
+        #region Methods
+
+        private void Awake()
+        {
+            crystal = m_origin.GetComponent<CrystalShard>();
+            m_targeterScaleFactor *= m_origin.localScale.x;
+        }
+
+        #endregion
+    }
 }

@@ -1,6 +1,11 @@
-public enum BulletType
+namespace Bitfrost.Gameplay.Bullets
 {
-	None,
-	Player,
-	Fighter
+
+
+	public enum BulletType
+	{
+		None,
+		Player,
+		Fighter
+	}
 }

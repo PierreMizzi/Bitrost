@@ -2,96 +2,100 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class EnemySpawner : MonoBehaviour, IPausable
+namespace Bitfrost.Gameplay.Enemies
 {
-    private EnemyManager m_manager = null;
 
-    private EnemySpawnConfig m_config;
-
-    private int currentCount;
-
-    private IEnumerator m_spawnCoroutine;
-
-    public bool isPaused { get; set; }
-
-    public void Initialize(EnemyManager manager)
+    public class EnemySpawner : MonoBehaviour, IPausable
     {
-        m_manager = manager;
-    }
+        private EnemyManager m_manager = null;
 
-    public void ChangeConfig(EnemySpawnConfig config)
-    {
-        if (Application.isPlaying)
+        private EnemySpawnConfig m_config;
+
+        private int currentCount;
+
+        private IEnumerator m_spawnCoroutine;
+
+        public bool isPaused { get; set; }
+
+        public void Initialize(EnemyManager manager)
         {
-            m_config = config;
-            currentCount = config.count;
-            StartSpawning();
+            m_manager = manager;
         }
-    }
 
-    public void StartSpawning()
-    {
-        if (m_spawnCoroutine == null)
+        public void ChangeConfig(EnemySpawnConfig config)
         {
-            m_spawnCoroutine = SpawningCoroutine();
-            StartCoroutine(m_spawnCoroutine);
-        }
-    }
-
-    public void StopSpawning()
-    {
-        if (m_spawnCoroutine != null)
-        {
-            StopCoroutine(m_spawnCoroutine);
-            m_spawnCoroutine = null;
-        }
-    }
-
-    public void PlaySpawning()
-    {
-        if (m_spawnCoroutine != null)
-            StartCoroutine(m_spawnCoroutine);
-    }
-
-    public void PauseSpawning()
-    {
-        if (m_spawnCoroutine != null)
-            StopCoroutine(m_spawnCoroutine);
-    }
-
-    public IEnumerator SpawningCoroutine()
-    {
-        while (true)
-        {
-            m_manager.SpawnEnemy(m_config.prefab.gameObject, m_config.batchCount);
-            currentCount -= m_config.batchCount;
-
-            if (currentCount <= 0)
+            if (UnityEngine.Application.isPlaying)
             {
-                StopSpawning();
-                yield break;
+                m_config = config;
+                currentCount = config.count;
+                StartSpawning();
             }
-            else
-                yield return new WaitForSeconds(m_config.spawnFrequency);
         }
-    }
 
-    public void Reset()
-    {
-        m_config = new EnemySpawnConfig();
-        currentCount = 0;
-        StopSpawning();
-    }
+        public void StartSpawning()
+        {
+            if (m_spawnCoroutine == null)
+            {
+                m_spawnCoroutine = SpawningCoroutine();
+                StartCoroutine(m_spawnCoroutine);
+            }
+        }
 
-    public void Pause()
-    {
-        isPaused = true;
-        PauseSpawning();
-    }
+        public void StopSpawning()
+        {
+            if (m_spawnCoroutine != null)
+            {
+                StopCoroutine(m_spawnCoroutine);
+                m_spawnCoroutine = null;
+            }
+        }
 
-    public void Resume()
-    {
-        isPaused = false;
-        PlaySpawning();
+        public void PlaySpawning()
+        {
+            if (m_spawnCoroutine != null)
+                StartCoroutine(m_spawnCoroutine);
+        }
+
+        public void PauseSpawning()
+        {
+            if (m_spawnCoroutine != null)
+                StopCoroutine(m_spawnCoroutine);
+        }
+
+        public IEnumerator SpawningCoroutine()
+        {
+            while (true)
+            {
+                m_manager.SpawnEnemy(m_config.prefab.gameObject, m_config.batchCount);
+                currentCount -= m_config.batchCount;
+
+                if (currentCount <= 0)
+                {
+                    StopSpawning();
+                    yield break;
+                }
+                else
+                    yield return new WaitForSeconds(m_config.spawnFrequency);
+            }
+        }
+
+        public void Reset()
+        {
+            m_config = new EnemySpawnConfig();
+            currentCount = 0;
+            StopSpawning();
+        }
+
+        public void Pause()
+        {
+            isPaused = true;
+            PauseSpawning();
+        }
+
+        public void Resume()
+        {
+            isPaused = false;
+            PlaySpawning();
+        }
     }
 }

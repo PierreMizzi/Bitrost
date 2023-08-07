@@ -1,9 +1,9 @@
 using System;
-using UnityEngine;
+using PierreMizzi.Useful.PoolingObjects;
 
-[Serializable]
-public class BulletPoolConfig : PoolConfig
+namespace Bitfrost.Gameplay.Bullets
 {
-
-
+	[Serializable]
+	public class BulletPoolConfig : PoolConfig
+	{ }
 }

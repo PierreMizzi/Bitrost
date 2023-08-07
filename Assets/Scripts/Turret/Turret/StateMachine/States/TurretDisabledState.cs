@@ -1,17 +1,22 @@
+using PierreMizzi.Useful.StateMachines;
 using UnityEngine;
 
-public class TurretDisabledState : ATurretState
+namespace Bitfrost.Gameplay.Turrets
 {
-    public TurretDisabledState(IStateMachine stateMachine)
-        : base(stateMachine)
-    {
-        type = (int)TurretStateType.Disabled;
-    }
 
-    protected override void DefaultEnter()
+    public class TurretDisabledState : ATurretState
     {
-        base.DefaultEnter();
-        m_turret.canonTransform.up = Vector2.down;
-        m_turret.aimSprite.SetActive(false);
+        public TurretDisabledState(IStateMachine stateMachine)
+            : base(stateMachine)
+        {
+            type = (int)TurretStateType.Disabled;
+        }
+
+        protected override void DefaultEnter()
+        {
+            base.DefaultEnter();
+            m_turret.canonTransform.up = Vector2.down;
+            m_turret.aimSprite.SetActive(false);
+        }
     }
 }

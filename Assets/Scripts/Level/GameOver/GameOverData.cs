@@ -1,12 +1,17 @@
-public struct GameOverData
+namespace Bitfrost.Gameplay
 {
 
-	public GameOverData(float totalTime, int totalScore = 0)
-	{
-		this.totalTime = totalTime;
-		this.killCount = totalScore;
-	}
 
-	public float totalTime;
-	public int killCount;
+	public struct GameOverData
+	{
+
+		public GameOverData(float totalTime, int totalScore = 0)
+		{
+			this.totalTime = totalTime;
+			this.killCount = totalScore;
+		}
+
+		public float totalTime;
+		public int killCount;
+	}
 }

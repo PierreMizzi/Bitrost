@@ -1,10 +1,13 @@
-public interface IPausable
+namespace Bitfrost.Gameplay
 {
-	public bool isPaused { get; set; }
+	public interface IPausable
+	{
+		public bool isPaused { get; set; }
 
-	public void Pause();
-	public void Resume();
+		public void Pause();
+		public void Resume();
 
+	}
 }
 
 /*

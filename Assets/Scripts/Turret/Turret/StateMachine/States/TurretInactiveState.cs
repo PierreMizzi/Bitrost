@@ -1,13 +1,19 @@
-public class TurretInactiveState : ATurretState
-{
-    public TurretInactiveState(IStateMachine stateMachine)
-        : base(stateMachine)
-    {
-        type = (int)TurretStateType.Inactive;
-    }
+using PierreMizzi.Useful.StateMachines;
 
-    protected override void DefaultEnter()
+namespace Bitfrost.Gameplay.Turrets
+{
+
+    public class TurretInactiveState : ATurretState
     {
-		m_turret.SetInactive();
+        public TurretInactiveState(IStateMachine stateMachine)
+            : base(stateMachine)
+        {
+            type = (int)TurretStateType.Inactive;
+        }
+
+        protected override void DefaultEnter()
+        {
+            m_turret.SetInactive();
+        }
     }
 }

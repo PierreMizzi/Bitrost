@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class EnemySpawnerAsset : PlayableAsset
+namespace Bitfrost.Gameplay.Enemies
 {
-    public EnemySpawnConfig spawnConfig;
-
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+    public class EnemySpawnerAsset : PlayableAsset
     {
-        var playable = ScriptPlayable<EnemySpawnerBehaviour>.Create(graph);
+        public EnemySpawnConfig spawnConfig;
 
-        EnemySpawnerBehaviour behaviour = playable.GetBehaviour();
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+        {
+            var playable = ScriptPlayable<EnemySpawnerBehaviour>.Create(graph);
 
-        spawnConfig.duration = (float)playable.GetDuration();
-        behaviour.spawnConfig = spawnConfig;
+            EnemySpawnerBehaviour behaviour = playable.GetBehaviour();
 
-        return playable;
+            spawnConfig.duration = (float)playable.GetDuration();
+            behaviour.spawnConfig = spawnConfig;
+
+            return playable;
+        }
     }
 }

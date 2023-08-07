@@ -1,11 +1,14 @@
 using System;
 
-[Serializable]
-public struct SpawnCrystalShardsConfig
+namespace Bitfrost.Gameplay.Energy
 {
-    public int count;
-    public int minEnergy;
-    public int maxEnergy;
+    [Serializable]
+    public struct SpawnCrystalShardsConfig
+    {
+        public int count;
+        public int minEnergy;
+        public int maxEnergy;
 
-    public float radius; 
+        public float radius;
+    }
 }

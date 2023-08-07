@@ -4,63 +4,67 @@ using System;
 using System.Collections;
 using PierreMizzi.Useful;
 
-public class LevelHeader : MonoBehaviour
+namespace Bitfrost.Gameplay.UI
 {
-    #region Fields
 
-    [SerializeField]
-    private LevelChannel m_levelChannel = null;
-
-    [SerializeField]
-    private LevelManager m_levelManager;
-
-    private IEnumerator m_updateTimeCoroutine;
-
-    [SerializeField]
-    private UIDocument m_document = null;
-
-    private const string k_pauseButton = "pause-button";
-    private const string k_timeLabel = "time-label";
-    private const string k_difficultyContainer = "difficulty-container";
-
-    private Button m_pauseButton;
-    private Label m_timeLabel;
-    private VisualElement m_difficultyContainer;
-
-    #endregion
-
-    #region Methods
-
-    private void Awake()
+    public class LevelHeader : MonoBehaviour
     {
-        // Visual Elements
-        m_pauseButton = m_document.rootVisualElement.Q<Button>(k_pauseButton);
-        m_timeLabel = m_document.rootVisualElement.Q<Label>(k_timeLabel);
-        m_difficultyContainer = m_document.rootVisualElement.Q(k_difficultyContainer);
+        #region Fields
 
-        // Time
-        m_updateTimeCoroutine = UpdateTime();
-        StartCoroutine(m_updateTimeCoroutine);
+        [SerializeField]
+        private LevelChannel m_levelChannel = null;
 
-        // Pause
-        m_pauseButton.clicked += CallbackPauseClicked;
-    }
+        [SerializeField]
+        private LevelManager m_levelManager;
 
-    private void CallbackPauseClicked()
-    {
-        Debug.LogWarning("Pause Clicked !!!");
+        private IEnumerator m_updateTimeCoroutine;
 
-        m_levelChannel.onPauseGame.Invoke();
-    }
+        [SerializeField]
+        private UIDocument m_document = null;
 
-    private IEnumerator UpdateTime()
-    {
-        while (true)
+        private const string k_pauseButton = "pause-button";
+        private const string k_timeLabel = "time-label";
+        private const string k_difficultyContainer = "difficulty-container";
+
+        private Button m_pauseButton;
+        private Label m_timeLabel;
+        private VisualElement m_difficultyContainer;
+
+        #endregion
+
+        #region Methods
+
+        private void Awake()
         {
-            m_timeLabel.text = UtilsClass.SecondsToTextTime(m_levelManager.time);
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
+            // Visual Elements
+            m_pauseButton = m_document.rootVisualElement.Q<Button>(k_pauseButton);
+            m_timeLabel = m_document.rootVisualElement.Q<Label>(k_timeLabel);
+            m_difficultyContainer = m_document.rootVisualElement.Q(k_difficultyContainer);
 
-    #endregion
+            // Time
+            m_updateTimeCoroutine = UpdateTime();
+            StartCoroutine(m_updateTimeCoroutine);
+
+            // Pause
+            m_pauseButton.clicked += CallbackPauseClicked;
+        }
+
+        private void CallbackPauseClicked()
+        {
+            Debug.LogWarning("Pause Clicked !!!");
+
+            m_levelChannel.onPauseGame.Invoke();
+        }
+
+        private IEnumerator UpdateTime()
+        {
+            while (true)
+            {
+                m_timeLabel.text = UtilsClass.SecondsToTextTime(m_levelManager.time);
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+
+        #endregion
+    }
 }

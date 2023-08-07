@@ -1,14 +1,17 @@
 using UnityEngine;
 using System;
 
-[Serializable]
-public class PoolConfig
+namespace PierreMizzi.Useful.PoolingObjects
 {
-    public string name;
+    [Serializable]
+    public class PoolConfig
+    {
+        public string name;
 
-    public GameObject prefab;
+        public GameObject prefab;
 
-    public int defaultSize;
+        public int defaultSize;
 
-    public int maxSize;
+        public int maxSize;
+    }
 }

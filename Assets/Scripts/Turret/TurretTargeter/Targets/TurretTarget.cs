@@ -1,17 +1,20 @@
-public class TurretTarget : ATarget
+namespace Bitfrost.Gameplay.Turrets
 {
-    #region Fields
-
-    public Turret turret { get; private set; }
-
-    #endregion
-
-    #region Methods
-
-    private void Awake()
+    public class TurretTarget : ATarget
     {
-        turret = m_origin.GetComponent<Turret>();
-    }
+        #region Fields
 
-    #endregion
+        public Turret turret { get; private set; }
+
+        #endregion
+
+        #region Methods
+
+        private void Awake()
+        {
+            turret = m_origin.GetComponent<Turret>();
+        }
+
+        #endregion
+    }
 }

@@ -1,6 +1,11 @@
-public enum CursorType
+
+namespace Bitfrost.Gameplay
 {
-	None,
-	Normal,
-	Attack,
+
+	public enum CursorType
+	{
+		None,
+		Normal,
+		Attack,
+	}
 }

@@ -1,8 +1,11 @@
-public enum TurretStateType
+namespace Bitfrost.Gameplay.Turrets
 {
-	None,
-	Inactive,
-	Offensive,
-	Production,
-	Disabled 
+	public enum TurretStateType
+	{
+		None,
+		Inactive,
+		Offensive,
+		Production,
+		Disabled
+	}
 }

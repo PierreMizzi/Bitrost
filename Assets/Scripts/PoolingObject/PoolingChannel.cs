@@ -1,25 +1,30 @@
 using UnityEngine;
 
-public delegate void CreatePool(PoolConfig config);
-public delegate GameObject GetFromPool(GameObject gameObject);
-public delegate void ReleaseFromPool(GameObject gameObject);
-
-[CreateAssetMenu(fileName = "PoolingChannel", menuName = "Bitrost/PoolingChannel", order = 0)]
-public class PoolingChannel : ScriptableObject
+namespace PierreMizzi.Useful.PoolingObjects
 {
-    public CreatePool onCreatePool = null;
 
-    public GetFromPool onGetFromPool = null;
 
-    public ReleaseFromPool onReleaseFromPool = null;
+    public delegate void CreatePool(PoolConfig config);
+    public delegate GameObject GetFromPool(GameObject gameObject);
+    public delegate void ReleaseFromPool(GameObject gameObject);
 
-    private void OnEnable()
+    [CreateAssetMenu(fileName = "PoolingChannel", menuName = "Bitrost/PoolingChannel", order = 0)]
+    public class PoolingChannel : ScriptableObject
     {
-        onCreatePool = (PoolConfig config) => { };
-        onGetFromPool = (GameObject gameObject) =>
+        public CreatePool onCreatePool = null;
+
+        public GetFromPool onGetFromPool = null;
+
+        public ReleaseFromPool onReleaseFromPool = null;
+
+        private void OnEnable()
         {
-            return null;
-        };
-        onReleaseFromPool = (GameObject gameObject) => { };
+            onCreatePool = (PoolConfig config) => { };
+            onGetFromPool = (GameObject gameObject) =>
+            {
+                return null;
+            };
+            onReleaseFromPool = (GameObject gameObject) => { };
+        }
     }
 }

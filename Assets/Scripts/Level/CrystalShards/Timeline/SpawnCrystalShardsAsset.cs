@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class SpawnCrystalShardsAsset : PlayableAsset
+namespace Bitfrost.Gameplay.Energy
 {
-	public SpawnCrystalShardsConfig spawnConfig;
-
-    public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+    public class SpawnCrystalShardsAsset : PlayableAsset
     {
-        var playable = ScriptPlayable<SpawnCrystalShardsBehaviour>.Create(graph);
+        public SpawnCrystalShardsConfig spawnConfig;
 
-        SpawnCrystalShardsBehaviour behaviour = playable.GetBehaviour();
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+        {
+            var playable = ScriptPlayable<SpawnCrystalShardsBehaviour>.Create(graph);
 
-        behaviour.spawnConfig = spawnConfig;
+            SpawnCrystalShardsBehaviour behaviour = playable.GetBehaviour();
 
-        return playable;
+            behaviour.spawnConfig = spawnConfig;
+
+            return playable;
+        }
     }
 }

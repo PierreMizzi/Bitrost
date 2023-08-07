@@ -1,52 +1,57 @@
 using UnityEngine;
 using PierreMizzi.Useful;
+using Bitfrost.Gameplay.Bullets;
+using Bitfrost.Gameplay.Energy;
 
-public class TurretBullet : Bullet
+namespace Bitfrost.Gameplay.Turrets
 {
-    [Header("Turret Bullet")]
-    [SerializeField]
-    private TurretSettings m_settings = null;
-
-    private CrystalShard m_originCrystal;
-
-    public override void AssignLauncher(IBulletLauncher launcher)
+    public class TurretBullet : Bullet
     {
-        base.AssignLauncher(launcher);
-        Turret turret = m_launcher.gameObject.GetComponent<Turret>();
-        m_originCrystal = turret.crystal;
-        m_speed = m_settings.bulletSpeed;
-    }
+        [Header("Turret Bullet")]
+        [SerializeField]
+        private TurretSettings m_settings = null;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (m_hasHit)
-            return;
+        private CrystalShard m_originCrystal;
 
-        if (UtilsClass.CheckLayer(m_collisionFilter.layerMask.value, other.gameObject.layer))
+        public override void AssignLauncher(IBulletLauncher launcher)
         {
-            if (other.gameObject.TryGetComponent(out CrystalShard crystal))
-            {
-                if (crystal == m_originCrystal)
-                    return;
-
-                HitCrystal(crystal);
-            }
-            else if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))
-                HitHealthEntity(healthEntity);
+            base.AssignLauncher(launcher);
+            Turret turret = m_launcher.gameObject.GetComponent<Turret>();
+            m_originCrystal = turret.crystal;
+            m_speed = m_settings.bulletSpeed;
         }
-    }
 
-    private void HitCrystal(CrystalShard crystal)
-    {
-        crystal.DecrementEnergy();
-        Release();
-        m_hasHit = true;
-    }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (m_hasHit)
+                return;
 
-    private void HitHealthEntity(HealthEntity healthEntity)
-    {
-        healthEntity.LoseHealth(m_settings.bulletDamage);
-        Release();
-        m_hasHit = true;
+            if (UtilsClass.CheckLayer(m_collisionFilter.layerMask.value, other.gameObject.layer))
+            {
+                if (other.gameObject.TryGetComponent(out CrystalShard crystal))
+                {
+                    if (crystal == m_originCrystal)
+                        return;
+
+                    HitCrystal(crystal);
+                }
+                else if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))
+                    HitHealthEntity(healthEntity);
+            }
+        }
+
+        private void HitCrystal(CrystalShard crystal)
+        {
+            crystal.DecrementEnergy();
+            Release();
+            m_hasHit = true;
+        }
+
+        private void HitHealthEntity(HealthEntity healthEntity)
+        {
+            healthEntity.LoseHealth(m_settings.bulletDamage);
+            Release();
+            m_hasHit = true;
+        }
     }
 }

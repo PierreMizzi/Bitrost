@@ -1,12 +1,15 @@
-
 using System;
 
-[Serializable]
-public struct BulletConfig
+namespace Bitfrost.Gameplay.Bullets
 {
-	public Bullet prefab;
 
-	public float speed;
+	[Serializable]
+	public struct BulletConfig
+	{
+		public Bullet prefab;
 
-	public float damage;
+		public float speed;
+
+		public float damage;
+	}
 }

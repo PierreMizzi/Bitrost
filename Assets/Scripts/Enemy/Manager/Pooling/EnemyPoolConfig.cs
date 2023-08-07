@@ -1,11 +1,15 @@
 using System;
-using UnityEngine;
+using PierreMizzi.Useful.PoolingObjects;
 
-[Serializable]
-public class EnemyPoolConfig : PoolConfig
+namespace Bitfrost.Gameplay.Enemies
 {
-	public EnemyType type
+
+	[Serializable]
+	public class EnemyPoolConfig : PoolConfig
 	{
-		get { return prefab.GetComponent<Enemy>().type; }
+		public EnemyType type
+		{
+			get { return prefab.GetComponent<Enemy>().type; }
+		}
 	}
 }

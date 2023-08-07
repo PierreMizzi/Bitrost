@@ -1,22 +1,26 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public struct EnemySpawnConfig
+namespace Bitfrost.Gameplay.Enemies
 {
-    public Enemy prefab;
 
-    public int count;
-
-    [Range(1, 10)]
-    public int batchCount;
-
-    [HideInInspector]
-    public float duration;
-
-    public float spawnFrequency
+    [Serializable]
+    public struct EnemySpawnConfig
     {
-        get { return (duration / (float)count) * (float)batchCount; }
-    }
+        public Enemy prefab;
 
+        public int count;
+
+        [Range(1, 10)]
+        public int batchCount;
+
+        [HideInInspector]
+        public float duration;
+
+        public float spawnFrequency
+        {
+            get { return (duration / (float)count) * (float)batchCount; }
+        }
+
+    }
 }

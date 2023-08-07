@@ -1,10 +1,14 @@
 using UnityEngine;
 
-public interface IBulletLauncher
+namespace Bitfrost.Gameplay.Bullets
 {
-    public GameObject gameObject { get; }
 
-    public void Fire();
+    public interface IBulletLauncher
+    {
+        public GameObject gameObject { get; }
 
-    public bool CanFire();
+        public void Fire();
+
+        public bool CanFire();
+    }
 }
