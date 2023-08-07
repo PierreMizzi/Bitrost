@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71626e1bf6022824785d1dcdf242e28b, type: 3}
+  m_Name: SoundManagerToolSettings
+  m_EditorClassIdentifier: 
+  m_audioMixerControllers:
+  - m_name: Music
+    m_type: 2
+    m_mixer: {fileID: 24100000, guid: 44b7dcad74cf93a42a32264f40570e63, type: 2}
+  - m_name: Game SFX
+    m_type: 4
+    m_mixer: {fileID: 24100000, guid: bf602f178d618db4e8b403472ded6e41, type: 2}
+  - m_name: Menu SFX
+    m_type: 8
+    m_mixer: {fileID: 24100000, guid: 1f6594b1418b81a4daa9233d61701e07, type: 2}
+  m_baseFadeInDuration: 1
+  m_baseFadeOutDuration: 1
+  m_soundDataLibraries:
+  - {fileID: 11400000, guid: d3dd63bbba86b9d46a76fe2732f8f1ff, type: 2}
+  - {fileID: 11400000, guid: c84d505373f18424191d063f5d4c976a, type: 2}
+  - {fileID: 11400000, guid: daf8c696100d2794ea74d603b7e61c40, type: 2}
+  - {fileID: 11400000, guid: 1da067a66d39d3f428213887e246c20c, type: 2}
+  - {fileID: 11400000, guid: 35283191c3e43a344835b6d9caf455b8, type: 2}
+  _path: SoundManager

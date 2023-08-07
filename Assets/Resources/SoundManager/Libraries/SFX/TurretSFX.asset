@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf2351776f653b4b9d3eb40701b378c, type: 3}
+  m_Name: TurretSFX
+  m_EditorClassIdentifier: 
+  m_description: 
+  m_type: 4
+  m_soundDatas:
+  - m_ID: TurretBullet
+    m_clip: {fileID: 8300000, guid: df23380064b8466419e70304dc9fecdb, type: 3}
+    m_mixer: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: TurretDrop
+    m_clip: {fileID: 8300000, guid: cfd1602022ea9034e80a00b4a9251b20, type: 3}
+    m_mixer: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: TurretFireMode
+    m_clip: {fileID: 8300000, guid: af35e79285a2b4d4db21c7f51334e84a, type: 3}
+    m_mixer: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: TurretProductionLoop
+    m_clip: {fileID: 8300000, guid: 5e5468ed29ea4ab48ae73edee7440b5b, type: 3}
+    m_mixer: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: TurretProductionMode
+    m_clip: {fileID: 8300000, guid: acfcbadb8c5b8f344984ec697243fa14, type: 3}
+    m_mixer: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: TurretRetrieve
+    m_clip: {fileID: 8300000, guid: 241ad4b617b20cd43a2489996de41ff1, type: 3}
+    m_mixer: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: TurretWrongAction
+    m_clip: {fileID: 8300000, guid: 2a53b90a3fb360841a9c0d922d9bb24c, type: 3}
+    m_mixer: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  m_generateStatic: 1
+  m_audioClips: []
+  m_mixerGroup: {fileID: 7088472153965072805, guid: bf602f178d618db4e8b403472ded6e41,
+    type: 2}

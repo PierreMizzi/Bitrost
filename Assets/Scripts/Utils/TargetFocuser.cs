@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodesmithWorkshop.Useful
+namespace PierreMizzi.Useful
 {
 	/// <summary>
 	/// Simple behaviour to point a forward of any transform to another one

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VirtuoseReality.Rendering
+namespace PierreMizzi.Rendering
 {
     [RequireComponent(typeof(Renderer))]
     public class MaterialPropertyBlockModifier : MonoBehaviour
@@ -111,18 +110,18 @@ namespace VirtuoseReality.Rendering
         public void SetProperty(string propertyName, float value)
         {
             Property property = m_propreties.Find(item => item.name == propertyName);
-            if(property != null)
+            if (property != null)
             {
                 property.floatValue = value;
                 ApplyProperties();
             }
         }
 
-        
+
         public void SetProperty(string propertyName, Color value)
         {
             Property property = m_propreties.Find(item => item.name == propertyName);
-            if(property != null)
+            if (property != null)
             {
                 property.colorValue = value;
                 ApplyProperties();
@@ -132,7 +131,7 @@ namespace VirtuoseReality.Rendering
         public void SetProperty(string propertyName, Vector4 value)
         {
             Property property = m_propreties.Find(item => item.name == propertyName);
-            if(property != null)
+            if (property != null)
             {
                 property.vectorValue = value;
                 ApplyProperties();

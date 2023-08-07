@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _CosmicFieldTex:
-        m_Texture: {fileID: 2800000, guid: 66246941a3144274fa8176cfca1bfd95, type: 3}
+        m_Texture: {fileID: 2800000, guid: dada19a597c32f44295a6cabb4069252, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _StarTex:
@@ -61,7 +61,7 @@ Material:
     m_Colors:
     - _CosmicFieldSpeed: {r: 1, g: 1, b: 0, a: 0}
     - _CosmicFieldTilling: {r: 1, g: 1, b: 0, a: 0}
-    - _NebulaColor: {r: 0.8396226, g: 0.33796126, b: 0.57248396, a: 0}
+    - _NebulaColor: {r: 0.20416513, g: 0.63035935, b: 0.8773585, a: 0}
     - _NebulaSmoothstep: {r: 0.53, g: 0.75, b: 0, a: 0}
     - _StarsSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _StarsTexSpeed: {r: 1, g: 1, b: 0, a: 0}

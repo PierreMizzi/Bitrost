@@ -1,5 +1,5 @@
 using UnityEngine;
-using CodesmithWorkshop.Useful;
+using PierreMizzi.Useful;
 
 public class ModuleBullet : Bullet
 {

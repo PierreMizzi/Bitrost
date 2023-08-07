@@ -1,16 +1,16 @@
-using CodesmithWorkshop.Useful;
+using PierreMizzi.Useful;
 using UnityEngine;
 
 public class FighterBullet : Bullet
 {
-	#region Fields
+    #region Fields
 
     [SerializeField]
     private FighterSettings m_settings = null;
 
-	#endregion
+    #endregion
 
-	#region Methods
+    #region Methods
 
     private void Start()
     {
@@ -36,5 +36,5 @@ public class FighterBullet : Bullet
         m_hasHit = true;
     }
 
-	#endregion
+    #endregion
 }

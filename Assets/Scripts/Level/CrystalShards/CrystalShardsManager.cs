@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-using CodesmithWorkshop.Useful;
+using PierreMizzi.Useful;
 
 public delegate void SetCrystalShardDelegate(CrystalShard crystal);
 public delegate CrystalShard GetCrystalShardDelegate();

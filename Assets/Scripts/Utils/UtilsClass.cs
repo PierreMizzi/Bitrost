@@ -7,11 +7,11 @@ using UnityEngine;
 /// <summary>
 /// Written by Pierre Mizzi
 /// </summary>
-namespace CodesmithWorkshop.Useful
+namespace PierreMizzi.Useful
 {
     public static class UtilsClass
     {
-		#region Maths
+        #region Maths
 
         public static Quaternion k_flipQuaternion = Quaternion.Euler(0f, 180f, 0f);
 
@@ -133,7 +133,7 @@ namespace CodesmithWorkshop.Useful
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
 
-		#endregion
+        #endregion
 
         public static void FillListFromType<T>(Transform container, List<T> list)
         {
@@ -262,7 +262,7 @@ namespace CodesmithWorkshop.Useful
             );
         }
 
-		#region Visual
+        #region Visual
 
         public static string MainTexProperty = "_MainTex";
         public static string TintProperty = "_Tint";
@@ -281,9 +281,9 @@ namespace CodesmithWorkshop.Useful
             return new Color(col.r, col.g, col.b, alpha);
         }
 
-		#endregion
+        #endregion
 
-		#region Monobehaviour
+        #region Monobehaviour
 
         public static void EmptyTransform(Transform transform, bool isImmediate = true)
         {
@@ -298,7 +298,7 @@ namespace CodesmithWorkshop.Useful
             }
         }
 
-		#endregion
+        #endregion
 
         #region Collision
 
@@ -314,7 +314,7 @@ namespace CodesmithWorkshop.Useful
 
         #endregion
 
-		#region Bitwise Operation
+        #region Bitwise Operation
 
         public static int SetFlag(int a, int b)
         {
@@ -341,9 +341,9 @@ namespace CodesmithWorkshop.Useful
             return false;
         }
 
-		#endregion
+        #endregion
 
-		#region Regex
+        #region Regex
 
         public static string lineBreak = " \r\n";
 
@@ -403,6 +403,6 @@ namespace CodesmithWorkshop.Useful
             return Regex.Replace(text, "(\\B[A-Z])", " $1");
         }
 
-		#endregion
+        #endregion
     }
 }

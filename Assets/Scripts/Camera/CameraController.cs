@@ -1,4 +1,4 @@
-using CodesmithWorkshop.Useful;
+using PierreMizzi.Useful;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

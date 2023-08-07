@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf2351776f653b4b9d3eb40701b378c, type: 3}
+  m_Name: EnemiesSFX
+  m_EditorClassIdentifier: 
+  m_description: 
+  m_type: 4
+  m_soundDatas:
+  - m_ID: EnemyDeath_01
+    m_clip: {fileID: 8300000, guid: 04649eb176a682b4fac371a2d66933e3, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: EnemyDeath_02
+    m_clip: {fileID: 8300000, guid: cba2a52e493f82445882ca9cf9d972ac, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: EnemyDeath_03
+    m_clip: {fileID: 8300000, guid: 695848bcd6a3761418fe0a406666fc60, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: EnemyDeath_04
+    m_clip: {fileID: 8300000, guid: afa9d7239eeb6504b8b223c11b5b302d, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: EnemyDeath_05
+    m_clip: {fileID: 8300000, guid: ba326345af3655e41b1bb838eca50fd6, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: EnemyDeath_06
+    m_clip: {fileID: 8300000, guid: 554080e73d713894ba5a4c6e9655cb18, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: EnemyDeath_07
+    m_clip: {fileID: 8300000, guid: 8ff81e24009550645b60cb98e7992891, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: EnemyDeath_08
+    m_clip: {fileID: 8300000, guid: e0ccd58d73d735944991aae62418a05d, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: HarvesterHit_01
+    m_clip: {fileID: 8300000, guid: 91b163d077e5c9c4bbc2b2596c8ec81a, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: HarvesterHit_02
+    m_clip: {fileID: 8300000, guid: 16ef5a9fbfe302d4ebc76e635ea04b8a, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: HarvesterHit_03
+    m_clip: {fileID: 8300000, guid: c8635bbb62318694da43c989960a3273, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: ScoutBullet
+    m_clip: {fileID: 8300000, guid: ceb36e2bae9879b4d8c47e698592baa9, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: ScoutHit_01
+    m_clip: {fileID: 8300000, guid: 359eea6d313eb904abae88e5fcbcb845, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: ScoutHit_02
+    m_clip: {fileID: 8300000, guid: c4581541c6027d746a35b472b6469eab, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: FighterBullet
+    m_clip: {fileID: 8300000, guid: 93de1274539d2f040b28893c10fb6256, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: FighterHit_01
+    m_clip: {fileID: 8300000, guid: 7e014eb0accca364e895486c5d60856a, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: FighterHit_02
+    m_clip: {fileID: 8300000, guid: c8fc97394a44baa44972a3e43c527ce7, type: 3}
+    m_mixer: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  m_generateStatic: 1
+  m_audioClips: []
+  m_mixerGroup: {fileID: 6133403057688828403, guid: bf602f178d618db4e8b403472ded6e41,
+    type: 2}

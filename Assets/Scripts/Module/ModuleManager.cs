@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CodesmithWorkshop.Useful;
+using PierreMizzi.Useful;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;

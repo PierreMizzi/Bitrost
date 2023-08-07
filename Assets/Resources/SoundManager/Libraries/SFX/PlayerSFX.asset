@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf2351776f653b4b9d3eb40701b378c, type: 3}
+  m_Name: PlayerSFX
+  m_EditorClassIdentifier: 
+  m_description: 
+  m_type: 4
+  m_soundDatas:
+  - m_ID: PlayerDeath
+    m_clip: {fileID: 8300000, guid: 310f50d699ae36e48a5175e89b753b49, type: 3}
+    m_mixer: {fileID: -951362960853884837, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: PlayerHit_01
+    m_clip: {fileID: 8300000, guid: 07e8491dc8d9395479d6ef3ce6f8f5f1, type: 3}
+    m_mixer: {fileID: -951362960853884837, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  - m_ID: PlayerHit_02
+    m_clip: {fileID: 8300000, guid: c9507257d32a0dc48bfd2617da7f1337, type: 3}
+    m_mixer: {fileID: -951362960853884837, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
+  m_generateStatic: 1
+  m_audioClips:
+  - {fileID: 8300000, guid: 310f50d699ae36e48a5175e89b753b49, type: 3}
+  - {fileID: 8300000, guid: 07e8491dc8d9395479d6ef3ce6f8f5f1, type: 3}
+  - {fileID: 8300000, guid: c9507257d32a0dc48bfd2617da7f1337, type: 3}
+  m_mixerGroup: {fileID: -951362960853884837, guid: bf602f178d618db4e8b403472ded6e41,
+    type: 2}

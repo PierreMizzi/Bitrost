@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf2351776f653b4b9d3eb40701b378c, type: 3}
+  m_Name: MenuSFX
+  m_EditorClassIdentifier: 
+  m_description: 
+  m_type: 8
+  m_soundDatas:
+  - m_ID: UIClick
+    m_clip: {fileID: 8300000, guid: bd953526c7abe61408afe648d0d0254c, type: 3}
+    m_mixer: {fileID: 24300002, guid: 1f6594b1418b81a4daa9233d61701e07, type: 2}
+  - m_ID: UIHover
+    m_clip: {fileID: 8300000, guid: 60ded5f16617d14489805dc98857e78d, type: 3}
+    m_mixer: {fileID: 24300002, guid: 1f6594b1418b81a4daa9233d61701e07, type: 2}
+  - m_ID: UIStartClick
+    m_clip: {fileID: 8300000, guid: 1cc40e23bb5bc964aae76277a0ae5100, type: 3}
+    m_mixer: {fileID: 24300002, guid: 1f6594b1418b81a4daa9233d61701e07, type: 2}
+  m_generateStatic: 1
+  m_audioClips: []
+  m_mixerGroup: {fileID: 0}
