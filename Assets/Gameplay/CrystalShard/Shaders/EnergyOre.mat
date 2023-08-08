@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnergyQuantity
-  m_Shader: {fileID: -6465566751694194690, guid: 776d71ec25395a348a45e672085dd1e6,
+  m_Name: EnergyOre
+  m_Shader: {fileID: -6465566751694194690, guid: c2c2ab1502222844186c9c576fdcee22,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -22,15 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 7a4af8fe2f2369f409c04a8cdda7c4f3, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpriteMask:
-        m_Texture: {fileID: 2800000, guid: 99d4e2b8a8c2a7242a3a2f3100bfbc5f, type: 3}
+        m_Texture: {fileID: 2800000, guid: e95919f5edfc56f409802cb6da06cad0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -47,22 +39,25 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _EnergyMaxPercent: 0.38
     - _EnergyPercent: 1
-    - _EnergyQuantity: 1
-    - _MaxStep: 0.44
-    - _MinStep: 0.18
-    - _NoiseScale: 1.93
-    - _NoiseTilling: 1
-    - _NormlizedQuantity: 1
+    - _NoiseOffset: 0
+    - _NoiseTiling: 16.8
+    - _OreDenity: 0.18
+    - _OreDensity: 1
+    - _OreMaxDensity: 0.33
+    - _OreOffset: 0
+    - _OreRotation: 44.34
+    - _OreScale: 16.4
+    - _OreTiling: 20
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Rotation: 45
     m_Colors:
-    - _EnergyTint: {r: 0.4213835, g: 1, b: 0.9401432, a: 0.6156863}
-    - _NoiseOffset: {r: 22.82, g: 1.15, b: 0, a: 0}
-    - _Tint: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
-    - _UVOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _EnergyTint: {r: 0, g: 1, b: 0.89707994, a: 1}
+    - _OreTint: {r: 1, g: 0.15723264, b: 0.31938347, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &8319618214631196400
+--- !u!114 &5789625398326457662
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

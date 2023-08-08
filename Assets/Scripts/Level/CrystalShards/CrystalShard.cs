@@ -46,9 +46,7 @@ namespace Bitfrost.Gameplay.Energy
         [ContextMenu("Start")]
         private void Start()
         {
-            Vector4 noiseOffset = new Vector4();
-            noiseOffset.x = UnityEngine.Random.Range(0f, 100f);
-            noiseOffset.y = UnityEngine.Random.Range(0f, 100f);
+            float noiseOffset = UnityEngine.Random.Range(0f, 100f);
             m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
         }
 
