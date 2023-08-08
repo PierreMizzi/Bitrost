@@ -1,0 +1,16 @@
+{
+    "name": "SoundManager",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75381efa514545f4fa4ecc725a0e742c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

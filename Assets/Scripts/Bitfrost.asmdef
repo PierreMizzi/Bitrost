@@ -1,0 +1,22 @@
+{
+    "name": "Bitfrost",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:f0c5b9556c09eaa48ab2faf657411e2d",
+        "GUID:de5d9cbeaf986554f996d263a06de4e8",
+        "GUID:d1a58fcdfeb7a1d49b2c27d5d27d7598",
+        "GUID:a403fb32eb7feec46abce71731bd4086"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
