@@ -120,7 +120,7 @@ public class CameraController : MonoBehaviour, IPausable
 	{
 		float angle = Mathf.Atan2(mousePositionScreenCenter.y, mousePositionScreenCenter.x);
 
-		float edgeMagnitude = MagnitudeFromAngle(angle);
+		float edgeMagnitude = m_camera.MagnitudeToEdge(angle);
 
 		float thresholdEdgeMagnitude = edgeMagnitude * m_treshold;
 
@@ -146,21 +146,6 @@ public class CameraController : MonoBehaviour, IPausable
 			m_smoothDampMaxSpeed
 		);
 		m_previousCameraOffsetPosition = m_cameraOffsetPosition;
-	}
-
-	public float MagnitudeFromAngle(float angle)
-	{
-		float absCosAngle = Mathf.Abs(Mathf.Cos(angle));
-		float absSinAngle = Mathf.Abs(Mathf.Sin(angle));
-
-		float magnitude = 0f;
-
-		if (m_camera.pixelWidth / 2f * absSinAngle <= m_camera.pixelHeight / 2f * absCosAngle)
-			magnitude = m_camera.pixelWidth / 2f / absCosAngle;
-		else
-			magnitude = m_camera.pixelHeight / 2f / absSinAngle;
-
-		return magnitude;
 	}
 
 	#endregion
