@@ -149,6 +149,14 @@ namespace Bitfrost.Gameplay.Turrets
 
         #endregion
 
+        #region Screen Edge Info
+
+        [Header("Screen Edge Info")]
+        [SerializeField]
+        private TurretScreenEdgeSubject m_screenEdgeSubject = null;
+
+        #endregion
+
         #endregion
 
         #region Methods
@@ -195,6 +203,7 @@ namespace Bitfrost.Gameplay.Turrets
         {
             m_target.gameObject.SetActive(true);
             m_spritesContainer.SetActive(true);
+            m_screenEdgeSubject.gameObject.SetActive(true);
 
             onRefreshEnergy.Invoke();
         }
@@ -203,6 +212,7 @@ namespace Bitfrost.Gameplay.Turrets
         {
             m_target.gameObject.SetActive(false);
             m_spritesContainer.SetActive(false);
+            m_screenEdgeSubject.gameObject.SetActive(false);
         }
 
         public void AssignCrystal(CrystalShard crystal)

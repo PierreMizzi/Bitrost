@@ -17,8 +17,8 @@ TagManager:
   - Enemy
   - Player
   - Turret
-  - 
-  - 
+  - TurretRendering
+  - TurretMiniature
   - 
   - 
   - 
@@ -58,6 +58,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3889497491
+    locked: 0
+  - name: ScreenEdgeInfo
+    uniqueID: 4007184077
     locked: 0
   - name: HUD
     uniqueID: 913941713

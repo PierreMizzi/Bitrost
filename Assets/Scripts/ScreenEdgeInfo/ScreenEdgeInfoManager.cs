@@ -17,7 +17,7 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 
 		#endregion
 
-		#region Methods 
+		#region Methods e
 
 		#region MonoBehaviour
 

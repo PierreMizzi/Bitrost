@@ -9,19 +9,19 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 		#region Fields 
 
 		[SerializeField]
-		private ScreenEdgeInfoChannel m_infoChannel;
+		protected ScreenEdgeInfoChannel m_infoChannel;
 
 		protected ScreenEdgeInfoManager m_manager = null;
 
 		[SerializeField]
-		private ScreenEdgeRenderer m_screenEdgeRenderer = null;
+		protected ScreenEdgeRenderer m_screenEdgeRenderer = null;
 
 		/*
 			All values below are in Screen Space, 
 			with the middle of the screen as the origin
 		*/
 
-		private Vector3 m_position;
+		protected Vector3 m_position;
 		protected float m_magnitudeToSelf;
 
 		/// <summary> 
@@ -34,7 +34,7 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 		public bool isOutOfScreen { get; private set; }
 
 		[SerializeField]
-		private bool m_destroyOnScreen;
+		protected bool m_destroyOnScreen;
 
 		#endregion
 
@@ -42,7 +42,7 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 
 		#region MonoBehaviour
 
-		private IEnumerator Start()
+		protected virtual IEnumerator Start()
 		{
 			yield return new WaitForSeconds(0.2f);
 
@@ -50,19 +50,22 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 				m_infoChannel.onInitializeSubject.Invoke(this);
 		}
 
-		private void LateUpdate()
+		protected void LateUpdate()
 		{
 			ComputeProperties();
 		}
 
 		#endregion
 
-		public void Initialize(ScreenEdgeInfoManager manager)
+		public virtual void Initialize(ScreenEdgeInfoManager manager)
 		{
 			m_manager = manager;
 
 			// Renderer
 			m_screenEdgeRenderer.Initialize(manager, this);
+
+
+
 		}
 
 		protected void ComputeProperties()

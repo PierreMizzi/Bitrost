@@ -1,12 +1,6 @@
-/*
-
-	ScreenEdgeInfo
-
-
-*/
-
 using System;
 using UnityEngine;
+
 namespace Bitfrost.Gameplay.ScreenEdgeInfo
 {
 
@@ -18,41 +12,21 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 
 		protected ScreenEdgeSubject m_subject = null;
 
-
-
-		[Obsolete]
-		private Vector3 m_subjectScreenPosition;
-
-		[Obsolete]
-		protected Vector3 m_cameraToSubject;
-
-		[Obsolete]
-		protected float m_cameraToSubjectMagnitude;
-
-		/// <summary> 
-		/// In Radians
-		[Obsolete]
-		protected float m_cameraToSubjectAngle;
-
 		[SerializeField]
-		[Obsolete]
-		private bool m_isOutOfScreen;
+		protected GameObject m_rendererObject = null;
 
-		[SerializeField]
-		private GameObject m_renderer = null;
-
-		private Vector3 m_positionScreenEdge;
-		private Vector3 m_positionElipse;
-		private Vector3 m_lerpedPosition;
+		protected Vector3 m_positionScreenEdge;
+		protected Vector3 m_positionElipse;
+		protected Vector3 m_lerpedPosition;
 
 		[Range(0f, 1f)]
 		[SerializeField]
-		private float m_edgeElipseLerp;
+		protected float m_edgeElipseLerp;
 
 		[SerializeField]
-		private float m_elipseSize = 0.8f;
-		private float m_elipseHorizontalSize;
-		private float m_elipseVerticalSize;
+		protected float m_elipseSize = 0.8f;
+		protected float m_elipseHorizontalSize;
+		protected float m_elipseVerticalSize;
 
 		#endregion
 
@@ -60,7 +34,7 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 
 		#region MonoBehaviour
 
-		private void LateUpdate()
+		protected virtual void LateUpdate()
 		{
 			UpdatePosition();
 			UpdateVisibility();
@@ -70,48 +44,11 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 
 		#region Behaviour
 
-		public void Initialize(ScreenEdgeInfoManager manager, ScreenEdgeSubject subject)
+		public virtual void Initialize(ScreenEdgeInfoManager manager, ScreenEdgeSubject subject)
 		{
 			m_manager = manager;
 			m_subject = subject;
 			ComputeElipseSize();
-			Debug.Log("Renderer Initialized");
-		}
-
-		[SerializeField]
-		private float magnitudeToEdge;
-
-		protected void ComputeProperties()
-		{
-			if (m_manager != null)
-			{
-				m_subjectScreenPosition = m_manager.camera.WorldToScreenPoint(m_subject.transform.position);
-
-				m_cameraToSubject = (m_subjectScreenPosition - m_manager.screenCenter).normalized;
-				m_cameraToSubjectMagnitude = (m_subjectScreenPosition - m_manager.screenCenter).magnitude;
-
-				m_cameraToSubjectAngle = Mathf.Atan2(m_cameraToSubject.y, m_cameraToSubject.x);
-				magnitudeToEdge = m_manager.MagnitudeToEdge(m_cameraToSubjectAngle);
-				m_isOutOfScreen = m_manager.MagnitudeToEdge(m_cameraToSubjectAngle) < m_cameraToSubjectMagnitude;
-			}
-		}
-
-
-
-		protected virtual void UpdatePositioOld()
-		{
-			if (m_manager != null && m_isOutOfScreen)
-			{
-				ComputeElipseSize();
-
-				m_positionScreenEdge = magnitudeToEdge * m_cameraToSubject;
-				m_positionElipse = GetPositionOnElipse(m_cameraToSubjectAngle);
-				m_lerpedPosition = Vector3.Lerp(m_positionScreenEdge, m_positionElipse, m_edgeElipseLerp);
-
-				m_lerpedPosition = m_manager.camera.ScreenToWorldPoint(m_manager.screenCenter + m_lerpedPosition);
-				m_lerpedPosition.z = 0;
-				transform.position = m_lerpedPosition;
-			}
 		}
 
 		protected virtual void UpdatePosition()
@@ -133,7 +70,7 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 		protected virtual void UpdateVisibility()
 		{
 			if (m_subject != null)
-				m_renderer.SetActive(m_subject.isOutOfScreen);
+				m_rendererObject.SetActive(m_subject.isOutOfScreen);
 		}
 
 		#endregion
