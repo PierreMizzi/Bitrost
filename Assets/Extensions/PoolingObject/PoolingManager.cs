@@ -45,7 +45,7 @@ namespace PierreMizzi.Useful.PoolingObjects
             {
                 m_poolingChannel.onCreatePool += CallbackCreateInPool;
                 m_poolingChannel.onGetFromPool += CallbackGetFromPool;
-                m_poolingChannel.onReleaseFromPool += CallbackReleaseFromPool;
+                m_poolingChannel.onReleaseToPool += CallbackReleaseToPool;
             }
         }
 
@@ -55,11 +55,11 @@ namespace PierreMizzi.Useful.PoolingObjects
             {
                 m_poolingChannel.onCreatePool -= CallbackCreateInPool;
                 m_poolingChannel.onGetFromPool -= CallbackGetFromPool;
-                m_poolingChannel.onReleaseFromPool -= CallbackReleaseFromPool;
+                m_poolingChannel.onReleaseToPool -= CallbackReleaseToPool;
             }
         }
 
-        private void CallbackReleaseFromPool(GameObject gameObject)
+        private void CallbackReleaseToPool(GameObject gameObject)
         {
             if (m_objectPools.ContainsKey(gameObject.name))
             {

@@ -12,7 +12,7 @@ namespace Bitfrost.Gameplay.Enemies
             type = (int)EnemyStateType.Idle;
         }
 
-        private Tween m_delayTween;
+        protected Tween m_delayTween;
 
         protected override void DefaultEnter()
         {

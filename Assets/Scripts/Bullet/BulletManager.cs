@@ -104,7 +104,7 @@ namespace Bitfrost.Gameplay.Bullets
         {
             if (m_activeBullets.Contains(bullet))
                 m_activeBullets.Remove(bullet);
-            m_poolingChannel.onReleaseFromPool.Invoke(bullet.gameObject);
+            m_poolingChannel.onReleaseToPool.Invoke(bullet.gameObject);
         }
 
         #region Reset
@@ -112,7 +112,7 @@ namespace Bitfrost.Gameplay.Bullets
         public void CallbackReset()
         {
             foreach (Bullet bullet in m_activeBullets)
-                m_poolingChannel.onReleaseFromPool.Invoke(bullet.gameObject);
+                m_poolingChannel.onReleaseToPool.Invoke(bullet.gameObject);
 
             m_activeBullets.Clear();
         }

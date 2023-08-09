@@ -24,6 +24,12 @@ namespace Bitfrost.Gameplay.Enemies
             Attack();
         }
 
+        public override void Update()
+        {
+            if (!m_harvester.isCrystalValid)
+                ChangeState((int)EnemyStateType.Idle);
+        }
+
         public override void Exit()
         {
             base.Exit();

@@ -26,6 +26,8 @@ namespace Bitfrost.Gameplay.Energy
 
         public Action onRefreshEnergy = null;
 
+        public Action onNoEnergy = null;
+
         public bool isAvailable = true;
 
         #region Rendering
@@ -50,10 +52,10 @@ namespace Bitfrost.Gameplay.Energy
             m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
         }
 
-        public void Destroy()
+        public void ReleaseToPool()
         {
             Reset();
-            m_manager.DestroyCrystal(this);
+            m_manager.ReleaseCrystal(this);
         }
 
         public void Initialize(CrystalShardsManager manager, int startingEnergyCount)
@@ -79,6 +81,7 @@ namespace Bitfrost.Gameplay.Energy
         public void DecrementEnergy()
         {
             remainingEnergyCount--;
+
             SetVisualEnergy();
             onRefreshEnergy.Invoke();
         }

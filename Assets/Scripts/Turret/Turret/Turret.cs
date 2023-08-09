@@ -231,7 +231,7 @@ namespace Bitfrost.Gameplay.Turrets
             crystal.SetAvailable();
 
             if (!crystal.hasEnergy)
-                crystal.Destroy();
+                crystal.ReleaseToPool();
 
             onRemoveCrystal.Invoke();
             crystal = null;

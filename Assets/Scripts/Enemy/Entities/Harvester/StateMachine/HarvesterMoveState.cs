@@ -20,7 +20,6 @@ namespace Bitfrost.Gameplay.Enemies
         protected override void DefaultEnter()
         {
             base.DefaultEnter();
-            m_harvester.SearchCrystalShard();
 
             Vector3 direction =
                 m_harvester.targetCrystal.transform.position - m_harvester.transform.position;
@@ -36,6 +35,14 @@ namespace Bitfrost.Gameplay.Enemies
                 );
             m_harvester.transform.up = direction.normalized;
             m_approachCrystal = m_harvester.transform.DOMove(endPosition, duration).OnComplete(OnCompleteMovement);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (!m_harvester.isCrystalValid)
+                ChangeState((int)EnemyStateType.Idle);
         }
 
         public override void Exit()

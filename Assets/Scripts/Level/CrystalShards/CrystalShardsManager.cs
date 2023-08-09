@@ -152,14 +152,14 @@ namespace Bitfrost.Gameplay.Energy
                 m_unavailableCrystals.Remove(crystal);
         }
 
-        public void DestroyCrystal(CrystalShard crystal)
+        public void ReleaseCrystal(CrystalShard crystal)
         {
             if (m_activeCrystals.Contains(crystal))
                 m_activeCrystals.Remove(crystal);
 
             RemoveUnavailableCrystal(crystal);
 
-            m_poolingChannel.onReleaseFromPool(crystal.gameObject);
+            m_poolingChannel.onReleaseToPool(crystal.gameObject);
         }
 
         public void ClearCrystalShards()
@@ -175,7 +175,7 @@ namespace Bitfrost.Gameplay.Energy
             foreach (CrystalShard crystal in m_activeCrystals)
             {
                 crystal.Reset();
-                m_poolingChannel.onReleaseFromPool(crystal.gameObject);
+                m_poolingChannel.onReleaseToPool(crystal.gameObject);
             }
 
             m_activeCrystals.Clear();

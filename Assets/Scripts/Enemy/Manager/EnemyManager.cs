@@ -265,7 +265,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         public void KillEnemy(Enemy enemy)
         {
-            m_poolingChannel.onReleaseFromPool.Invoke(enemy.gameObject);
+            m_poolingChannel.onReleaseToPool.Invoke(enemy.gameObject);
 
             if (m_activeEnemies.Contains(enemy))
                 m_activeEnemies.Remove(enemy);
@@ -303,7 +303,7 @@ namespace Bitfrost.Gameplay.Enemies
             foreach (Enemy enemy in m_activeEnemies)
             {
                 enemy.ChangeState(EnemyStateType.Inactive);
-                m_poolingChannel.onReleaseFromPool.Invoke(enemy.gameObject);
+                m_poolingChannel.onReleaseToPool.Invoke(enemy.gameObject);
             }
 
             m_activeEnemies.Clear();

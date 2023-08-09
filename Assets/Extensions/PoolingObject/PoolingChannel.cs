@@ -15,7 +15,7 @@ namespace PierreMizzi.Useful.PoolingObjects
 
         public GetFromPool onGetFromPool = null;
 
-        public ReleaseFromPool onReleaseFromPool = null;
+        public ReleaseFromPool onReleaseToPool = null;
 
         private void OnEnable()
         {
@@ -24,7 +24,7 @@ namespace PierreMizzi.Useful.PoolingObjects
             {
                 return null;
             };
-            onReleaseFromPool = (GameObject gameObject) => { };
+            onReleaseToPool = (GameObject gameObject) => { };
         }
     }
 }

@@ -20,6 +20,14 @@ namespace Bitfrost.Gameplay.Enemies
 
         public CrystalShard targetCrystal { get; private set; }
 
+        public bool isCrystalValid
+        {
+            get
+            {
+                return targetCrystal != null && targetCrystal.hasEnergy;
+            }
+        }
+
         public Animator animator { get; private set; }
 
         #endregion
@@ -35,9 +43,9 @@ namespace Bitfrost.Gameplay.Enemies
             base.Awake();
 
             m_hitSounds = new List<string>(){
-            SoundDataIDStatic.HARVESTER_HIT_01,
-            SoundDataIDStatic.HARVESTER_HIT_02,
-        };
+                SoundDataIDStatic.HARVESTER_HIT_01,
+                SoundDataIDStatic.HARVESTER_HIT_02,
+            };
         }
 
         protected override void Initialize()
@@ -49,12 +57,12 @@ namespace Bitfrost.Gameplay.Enemies
         public override void InitiliazeStates()
         {
             states = new List<AState>()
-        {
-            new EnemyInactiveState(this),
-            new EnemyIdleState(this),
-            new HarvesterMoveState(this),
-            new HarvesterAttackState(this),
-        };
+            {
+                new EnemyInactiveState(this),
+                new HarvesterIdleState(this),
+                new HarvesterMoveState(this),
+                new HarvesterAttackState(this),
+            };
         }
 
         protected override void CallbackNoHealth()
