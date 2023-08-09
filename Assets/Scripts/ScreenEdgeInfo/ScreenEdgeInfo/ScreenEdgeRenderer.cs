@@ -34,6 +34,11 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 
 		#region MonoBehaviour
 
+		protected virtual void Awake()
+		{
+			m_rendererObject.SetActive(false);
+		}
+
 		protected virtual void LateUpdate()
 		{
 			UpdatePosition();

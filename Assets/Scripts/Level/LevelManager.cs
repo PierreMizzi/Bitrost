@@ -126,6 +126,11 @@ namespace Bitfrost.Gameplay
             return position.sqrMagnitude < arenaRadiusSqr;
         }
 
+        public static Vector3 RandomPositionInArena(float edgeRadius)
+        {
+            return RandomPosition(Vector3.zero, arenaRadius - edgeRadius);
+        }
+
         public static Vector3 RandomPosition(Vector3 origin, float radius)
         {
             float randomAngle = UnityEngine.Random.Range(0f, Mathf.PI * 2f);
@@ -134,10 +139,8 @@ namespace Bitfrost.Gameplay
             return origin + radius * randomLength * new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
         }
 
-        public static List<Vector3> RandomPositions(int count, float radius)
+        public static List<Vector3> RandomPositions(Vector3 origin, int count, float radius)
         {
-            Vector3 origin = RandomPosition(Vector3.zero, arenaRadius - radius);
-
             List<Vector3> positions = new List<Vector3>();
 
             for (int i = 0; i < count; i++)

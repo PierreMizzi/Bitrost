@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using PierreMizzi.Useful;
 using PierreMizzi.Useful.PoolingObjects;
-
-
+using Bitfrost.Gameplay.ScreenEdgeInfo;
 
 namespace Bitfrost.Gameplay.Energy
 {
@@ -43,6 +42,10 @@ namespace Bitfrost.Gameplay.Energy
             get { return m_unavailableCrystals; }
         }
 
+        [Header("Screen Edge Info")]
+        [SerializeField]
+        private ScreenEdgeSubject m_crystalsSubjectPrefab = null;
+
         #endregion
 
         #region Methods
@@ -78,13 +81,18 @@ namespace Bitfrost.Gameplay.Energy
             if (!UnityEngine.Application.isPlaying)
                 return;
 
-            List<Vector3> randomPositions = LevelManager.RandomPositions(config.count, config.radius);
+            Vector3 origin = LevelManager.RandomPositionInArena(config.radius);
+
+            List<Vector3> randomPositions = LevelManager.RandomPositions(origin, config.count, config.radius);
 
             for (int i = 0; i < config.count; i++)
             {
                 int energy = Random.Range(config.minEnergy, config.maxEnergy + 1);
                 SpawnCrystalShard(randomPositions[i], energy);
             }
+
+            // Spawn Crystal Edge
+            Instantiate(m_crystalsSubjectPrefab, origin, Quaternion.identity, transform);
         }
 
         private void SpawnCrystalShard(Vector3 position, int energy)

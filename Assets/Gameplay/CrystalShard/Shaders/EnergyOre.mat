@@ -54,7 +54,7 @@ Material:
     - _QueueOffset: 0
     - _Rotation: 45
     m_Colors:
-    - _EnergyTint: {r: 0, g: 1, b: 0.89707994, a: 1}
+    - _EnergyTint: {r: 0.54402506, g: 1, b: 0.9535085, a: 1}
     - _OreTint: {r: 1, g: 0.15723264, b: 0.31938347, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5789625398326457662

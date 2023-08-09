@@ -259,7 +259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1053473144
 Transform:
   m_ObjectHideFlags: 0
@@ -618,7 +618,7 @@ MonoBehaviour:
   m_canonTransform: {fileID: 6585395777087232122}
   m_bulletOriginTransform: {fileID: 2603461646432851164}
   m_storedEnergy: 0
-  m_screenEdgeSubject: {fileID: 0}
+  m_screenEdgeSubject: {fileID: 714602877}
 --- !u!1 &6585395777033767244
 GameObject:
   m_ObjectHideFlags: 0

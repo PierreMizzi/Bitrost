@@ -31,7 +31,7 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 		public Vector3 direction { get; private set; }
 		public float magnitudeToEdge { get; private set; }
 
-		public bool isOutOfScreen { get; private set; }
+		public bool isOutOfScreen { get; private set; } = true;
 
 		[SerializeField]
 		protected bool m_destroyOnScreen;
@@ -53,6 +53,9 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 		protected void LateUpdate()
 		{
 			ComputeProperties();
+
+			if (!isOutOfScreen && m_destroyOnScreen)
+				DestroyOnScreen();
 		}
 
 		#endregion
@@ -63,9 +66,6 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 
 			// Renderer
 			m_screenEdgeRenderer.Initialize(manager, this);
-
-
-
 		}
 
 		protected void ComputeProperties()
@@ -81,6 +81,12 @@ namespace Bitfrost.Gameplay.ScreenEdgeInfo
 				magnitudeToEdge = m_manager.MagnitudeToEdge(angle);
 				isOutOfScreen = magnitudeToEdge < m_magnitudeToSelf;
 			}
+		}
+
+
+		protected virtual void DestroyOnScreen()
+		{
+			Destroy(gameObject);
 		}
 
 		#endregion
