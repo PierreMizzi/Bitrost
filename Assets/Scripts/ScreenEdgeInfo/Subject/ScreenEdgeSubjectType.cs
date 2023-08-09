@@ -1,4 +1,4 @@
-public enum ScreenEdgeInfoType
+public enum ScreenEdgeSubjectType
 {
 	None,
 	Turret,
