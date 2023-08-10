@@ -157,6 +157,16 @@ namespace Bitfrost.Gameplay.Turrets
 
         #endregion
 
+        #region Audio
+
+        [Header("Audio")]
+        [SerializeField]
+        private SoundSource m_fireBulletSource = null;
+        [SerializeField]
+        private SoundSource m_wrongActionSource = null;
+
+        #endregion
+
         #endregion
 
         #region Methods
@@ -178,6 +188,7 @@ namespace Bitfrost.Gameplay.Turrets
 
             InitiliazeStates();
 
+
             onIsDroppable = () => { };
             onIsTargeted = () => { };
 
@@ -190,6 +201,17 @@ namespace Bitfrost.Gameplay.Turrets
             onProductionProgress = (float normalized) => { };
         }
 
+        protected void Start()
+        {
+            m_fireBulletSource.SetSoundData(SoundDataIDStatic.TURRET_BULLET);
+            m_fireBulletSource.stopOnAudioClipEnded = false;
+            m_fireBulletSource.destroyOnAudioClipEnded = false;
+
+            m_wrongActionSource.SetSoundData(SoundDataIDStatic.TURRET_WRONG_ACTION);
+            m_wrongActionSource.stopOnAudioClipEnded = false;
+            m_wrongActionSource.destroyOnAudioClipEnded = false;
+        }
+
         public void Update()
         {
             UpdateState();
@@ -199,6 +221,13 @@ namespace Bitfrost.Gameplay.Turrets
 
         #region Activation
 
+        public void Drop(CrystalShard crystal)
+        {
+            AssignCrystal(crystal);
+            ChangeState(TurretStateType.Offensive);
+            SoundManager.PlaySound(SoundDataIDStatic.TURRET_DROP);
+        }
+
         public void SetActive()
         {
             m_target.gameObject.SetActive(true);
@@ -206,6 +235,13 @@ namespace Bitfrost.Gameplay.Turrets
             m_screenEdgeSubject.gameObject.SetActive(true);
 
             onRefreshEnergy.Invoke();
+        }
+
+        public void Retrieve()
+        {
+            RemoveCrystal();
+            ChangeState(TurretStateType.Inactive);
+            SoundManager.PlaySound(SoundDataIDStatic.TURRET_RETRIEVE);
         }
 
         public void SetInactive()
@@ -271,9 +307,11 @@ namespace Bitfrost.Gameplay.Turrets
                 if (!hasEnergy)
                     ChangeState(TurretStateType.Disabled);
 
-                SoundManager.PlaySound(SoundDataIDStatic.TURRET_BULLET);
-
+                m_fireBulletSource.Play();
             }
+            else
+                m_wrongActionSource.Play();
+
         }
 
         public bool CanFire()
@@ -305,6 +343,12 @@ namespace Bitfrost.Gameplay.Turrets
             isPaused = false;
             currentState.Resume();
         }
+
+        #endregion
+
+        #region Sounds Sources
+
+
 
         #endregion
 

@@ -59,6 +59,9 @@ TagManager:
   - name: Player
     uniqueID: 3889497491
     locked: 0
+  - name: Particles
+    uniqueID: 1473311831
+    locked: 0
   - name: ScreenEdgeInfo
     uniqueID: 4007184077
     locked: 0

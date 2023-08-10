@@ -248,11 +248,7 @@ namespace Bitfrost.Gameplay.Turrets
                     Turret turret = GetInactiveTurret();
 
                     if (turret != null)
-                    {
-                        turret.AssignCrystal(crystal);
-                        turret.ChangeState(TurretStateType.Offensive);
-                        SoundManager.PlaySound(SoundDataIDStatic.TURRET_DROP);
-                    }
+                        turret.Drop(crystal);
                 }
                 else
                 { /* TODO : Redeploy Turret*/
@@ -264,9 +260,8 @@ namespace Bitfrost.Gameplay.Turrets
         {
             Turret turret = ((TurretTarget)m_currentTarget).turret;
 
-            turret.RemoveCrystal();
-            turret.ChangeState(TurretStateType.Inactive);
-            SoundManager.PlaySound(SoundDataIDStatic.TURRET_RETRIEVE);
+            turret.Retrieve();
+
         }
 
         private Turret GetInactiveTurret()

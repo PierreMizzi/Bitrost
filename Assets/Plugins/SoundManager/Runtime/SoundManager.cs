@@ -270,7 +270,7 @@ namespace PierreMizzi.SoundManager
 			SoundSource newSource = newObject.AddComponent<SoundSource>();
 			newSource.name = string.Format("{0}_{1}", type.ToString(), GetSoundSources(type).Count);
 			newSource.Initialize(type);
-			newSource.SetDestroyOnClipEnded(true);
+			newSource.destroyOnAudioClipEnded = true;
 
 			return newSource;
 		}

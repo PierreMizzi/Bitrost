@@ -52,19 +52,19 @@ namespace Bitfrost.Gameplay.Players
         private void Update()
         {
             if (!isPaused)
-                ReadInputs();
-        }
-
-        private void FixedUpdate()
-        {
-            if (!isPaused)
+            {
+                ReadLocomotionInputs();
                 Move();
+            }
         }
 
         private void LateUpdate()
         {
             if (!isPaused)
+            {
+                ReadMousePositionInputs();
                 Rotate();
+            }
         }
 
         #endregion
@@ -90,9 +90,13 @@ namespace Bitfrost.Gameplay.Players
 
         #endregion
 
-        private void ReadInputs()
+        private void ReadLocomotionInputs()
         {
             m_locomotionActionValue = m_locomotionActionReference.action.ReadValue<Vector2>();
+        }
+
+        private void ReadMousePositionInputs()
+        {
             m_mousePositionActionValue = m_mousePositionActionReference.action.ReadValue<Vector2>();
         }
 

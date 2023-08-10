@@ -46,16 +46,19 @@ namespace PierreMizzi.SoundManager
 			}
 		}
 
+		public bool stopOnAudioClipEnded;
+
 		/// <summary>
 		/// Will this SoundSource destroy itself when the clip is done playing
 		/// </summary>
-		private bool m_destroyOnClipEnded = false;
+		public bool destroyOnAudioClipEnded;
+
 
 		#region Callbacks
 
-		public Action OnAudioClipEnded { get; set; }
-		public Action OnFadeInCompleted { get; set; }
-		public Action OnFadeOutCompleted { get; set; }
+		public Action OnAudioClipEnded;
+		public Action OnFadeInCompleted;
+		public Action OnFadeOutCompleted;
 
 		#endregion
 
@@ -85,7 +88,7 @@ namespace PierreMizzi.SoundManager
 		{
 			if (m_audioSource.clip != null)
 			{
-				if ((m_audioSource.clip.length - m_audioSource.time) < 0.1f)
+				if ((m_audioSource.clip.length - m_audioSource.time) < 0.01f)
 					AudioClipEnded();
 			}
 		}
@@ -129,7 +132,6 @@ namespace PierreMizzi.SoundManager
 
 		public void Play(string soundDataID)
 		{
-			Debug.Log($"Play Sound : {soundDataID}");
 			SetSoundData(soundDataID);
 
 			if (m_audioSource.clip != null)
@@ -164,8 +166,7 @@ namespace PierreMizzi.SoundManager
 			m_audioSource.outputAudioMixerGroup = null;
 			m_status = ActivityStatus.Stop;
 
-			if (m_destroyOnClipEnded)
-				Destroy();
+
 		}
 
 		public void FadeInFromZero(float duration, float toVolume = 1)
@@ -234,13 +235,16 @@ namespace PierreMizzi.SoundManager
 
 		protected virtual void AudioClipEnded()
 		{
-			//Debug.LogFormat("AudioClipEnded : {0} \r Loop : {1}", name, m_audioSource.loop);
-
 			if (m_audioSource.loop)
 				return;
 
 			OnAudioClipEnded?.Invoke();
-			Stop();
+
+			if (destroyOnAudioClipEnded)
+				Destroy();
+
+			if (stopOnAudioClipEnded)
+				Stop();
 		}
 
 		#endregion
@@ -253,8 +257,9 @@ namespace PierreMizzi.SoundManager
 		/// <param name="data">Given SoundData</param>
 		public void SetSoundData(SoundData data)
 		{
-			//Debug.LogFormat("SoundSource : {0} | Data : {1} ", name, data.ID);
-			if (m_audioSource != null && data.Clip != null)
+			CheckAudioSource();
+
+			if (data != null && data.Clip != null)
 			{
 				m_currentSoundData = data;
 				m_audioSource.clip = m_currentSoundData.Clip;
@@ -266,12 +271,7 @@ namespace PierreMizzi.SoundManager
 		{
 			SoundData data = SoundManager.GetSoundData(ID);
 
-			if (data != null && m_audioSource != null && data.Clip != null)
-			{
-				m_currentSoundData = data;
-				m_audioSource.clip = data.Clip;
-				m_audioSource.outputAudioMixerGroup = data.Mixer;
-			}
+			SetSoundData(data);
 		}
 
 		public void SetLooping(bool isLooping)
@@ -284,11 +284,6 @@ namespace PierreMizzi.SoundManager
 		{
 			CheckAudioSource();
 			m_audioSource.volume = volume;
-		}
-
-		public void SetDestroyOnClipEnded(bool destroyOnClipEnded)
-		{
-			m_destroyOnClipEnded = destroyOnClipEnded;
 		}
 
 		public void Unmute()
