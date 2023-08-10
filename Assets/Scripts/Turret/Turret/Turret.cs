@@ -203,11 +203,11 @@ namespace Bitfrost.Gameplay.Turrets
 
         protected void Start()
         {
-            m_fireBulletSource.SetSoundData(SoundDataIDStatic.TURRET_BULLET);
+            m_fireBulletSource.SetSoundData(SoundDataID.TURRET_BULLET);
             m_fireBulletSource.stopOnAudioClipEnded = false;
             m_fireBulletSource.destroyOnAudioClipEnded = false;
 
-            m_wrongActionSource.SetSoundData(SoundDataIDStatic.TURRET_WRONG_ACTION);
+            m_wrongActionSource.SetSoundData(SoundDataID.TURRET_WRONG_ACTION);
             m_wrongActionSource.stopOnAudioClipEnded = false;
             m_wrongActionSource.destroyOnAudioClipEnded = false;
         }
@@ -225,7 +225,7 @@ namespace Bitfrost.Gameplay.Turrets
         {
             AssignCrystal(crystal);
             ChangeState(TurretStateType.Offensive);
-            SoundManager.PlaySound(SoundDataIDStatic.TURRET_DROP);
+            SoundManager.PlaySFX(SoundDataID.TURRET_DROP);
         }
 
         public void SetActive()
@@ -239,9 +239,13 @@ namespace Bitfrost.Gameplay.Turrets
 
         public void Retrieve()
         {
+            Debug.Log("Retrieve");
+            storedEnergy = 0;
+            onRefreshEnergy.Invoke();
             RemoveCrystal();
+
             ChangeState(TurretStateType.Inactive);
-            SoundManager.PlaySound(SoundDataIDStatic.TURRET_RETRIEVE);
+            SoundManager.PlaySFX(SoundDataID.TURRET_RETRIEVE);
         }
 
         public void SetInactive()

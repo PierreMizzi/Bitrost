@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Bitfrost.Gameplay.Energy;
-using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -122,6 +120,12 @@ namespace Bitfrost.Gameplay.Turrets
 
         }
 
+        public void Update()
+        {
+            if (!isPaused)
+                ManagerCurrentTarget();
+        }
+
         private void OnDestroy()
         {
             UnsubscribeInputs();
@@ -140,9 +144,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void SubscribeInputs()
         {
-            if (m_mousePositionInput != null)
-                m_mousePositionInput.action.performed += CallbackMousePosition;
-
             if (m_dropRetrieveTurretInput != null)
                 m_dropRetrieveTurretInput.action.performed += CallbackDropRetrieveTurret;
 
@@ -157,9 +158,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void UnsubscribeInputs()
         {
-            if (m_mousePositionInput != null)
-                m_mousePositionInput.action.performed -= CallbackMousePosition;
-
             if (m_dropRetrieveTurretInput != null)
                 m_dropRetrieveTurretInput.action.performed -= CallbackDropRetrieveTurret;
 
@@ -260,8 +258,8 @@ namespace Bitfrost.Gameplay.Turrets
         {
             Turret turret = ((TurretTarget)m_currentTarget).turret;
 
+            m_levelChannel.onTurretRetrieved.Invoke(turret.storedEnergy);
             turret.Retrieve();
-
         }
 
         private Turret GetInactiveTurret()
@@ -279,9 +277,9 @@ namespace Bitfrost.Gameplay.Turrets
 
         #region Turret Targeter
 
-        private void CallbackMousePosition(InputAction.CallbackContext context)
+        private void ManagerCurrentTarget()
         {
-            Vector3 mouseScreenPosition = context.ReadValue<Vector2>();
+            Vector3 mouseScreenPosition = m_mousePositionInput.action.ReadValue<Vector2>();
             Vector3 raycastOrigin = ScreenPositionToRaycastOrigin(mouseScreenPosition);
 
             if (Physics2D.Raycast(raycastOrigin, Vector3.forward, m_targeterFilter, m_potentialTargets) > 0)

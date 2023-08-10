@@ -27,7 +27,9 @@ namespace Bitfrost.Gameplay.UI
 		{
 			base.Awake();
 
-			m_root.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+			m_previousButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+			m_startButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+			m_nextButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
 		}
 
 		protected void Start()
@@ -54,7 +56,7 @@ namespace Bitfrost.Gameplay.UI
 		protected override void CallbackPreviousClicked()
 		{
 			base.CallbackPreviousClicked();
-			SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 
 		}
 
@@ -65,26 +67,18 @@ namespace Bitfrost.Gameplay.UI
 
 			m_levelChannel.onResumeGame.Invoke();
 
-			SoundManager.PlaySound(SoundDataIDStatic.U_I_START_CLICK);
+			SoundManager.PlaySFX(SoundDataID.U_I_START_CLICK);
 		}
 
 		protected override void CallbackNextClicked()
 		{
 			base.CallbackNextClicked();
-			SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}
 
 		private void CallbackOnMouseOver(MouseOverEvent evt)
 		{
-			VisualElement element = (VisualElement)evt.currentTarget;
-
-			if (element == m_previousButton ||
-				element == m_startButton ||
-				element == m_nextButton
-			)
-			{
-				SoundManager.PlaySound(SoundDataIDStatic.U_I_HOVER);
-			}
+			SoundManager.PlaySFX(SoundDataID.U_I_HOVER);
 		}
 
 

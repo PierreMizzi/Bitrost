@@ -22,8 +22,8 @@ namespace Bitfrost.Gameplay.Turrets
             m_turret.canonTransform.gameObject.SetActive(false);
             StartProduction();
 
-            SoundManager.PlaySound(SoundDataIDStatic.TURRET_PRODUCTION_MODE);
-            SoundManager.PlaySound(SoundDataIDStatic.TURRET_PRODUCTION_LOOP, true);
+            SoundManager.PlaySFX(SoundDataID.TURRET_PRODUCTION_MODE);
+            SoundManager.PlaySound(SoundDataID.TURRET_PRODUCTION_LOOP, true);
         }
 
         public override void Update()
@@ -43,7 +43,7 @@ namespace Bitfrost.Gameplay.Turrets
             if (m_productionCycleTween != null && m_productionCycleTween.IsPlaying())
                 m_productionCycleTween.Kill();
 
-            SoundManager.StopSound(SoundDataIDStatic.TURRET_PRODUCTION_LOOP);
+            SoundManager.StopSound(SoundDataID.TURRET_PRODUCTION_LOOP);
         }
 
         public override void Pause()

@@ -62,14 +62,14 @@ namespace Bitfrost.Gameplay.Enemies
         protected virtual void Awake()
         {
             m_deathSounds = new List<string>(){
-            SoundDataIDStatic.ENEMY_DEATH_01,
-            SoundDataIDStatic.ENEMY_DEATH_02,
-            SoundDataIDStatic.ENEMY_DEATH_03,
-            SoundDataIDStatic.ENEMY_DEATH_04,
-            SoundDataIDStatic.ENEMY_DEATH_05,
-            SoundDataIDStatic.ENEMY_DEATH_06,
-            SoundDataIDStatic.ENEMY_DEATH_07,
-            SoundDataIDStatic.ENEMY_DEATH_08,
+            SoundDataID.ENEMY_DEATH_01,
+            SoundDataID.ENEMY_DEATH_02,
+            SoundDataID.ENEMY_DEATH_03,
+            SoundDataID.ENEMY_DEATH_04,
+            SoundDataID.ENEMY_DEATH_05,
+            SoundDataID.ENEMY_DEATH_06,
+            SoundDataID.ENEMY_DEATH_07,
+            SoundDataID.ENEMY_DEATH_08,
         };
         }
 

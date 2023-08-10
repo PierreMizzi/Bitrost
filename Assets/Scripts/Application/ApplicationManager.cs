@@ -16,7 +16,7 @@ namespace Bitfrost.Application
 
 		private void Start()
 		{
-			SoundManager.PlaySound(SoundDataIDStatic.GAME_LOOP, true);
+			SoundManager.PlaySound(SoundDataID.GAME_LOOP, true);
 		}
 
 		#endregion

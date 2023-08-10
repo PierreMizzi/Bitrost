@@ -31,8 +31,8 @@ namespace Bitfrost.Gameplay.Enemies
             base.Awake();
 
             m_hitSounds = new List<string>(){
-            SoundDataIDStatic.FIGHTER_HIT_01,
-            SoundDataIDStatic.FIGHTER_HIT_02,
+            SoundDataID.FIGHTER_HIT_01,
+            SoundDataID.FIGHTER_HIT_02,
         };
         }
 
@@ -71,7 +71,7 @@ namespace Bitfrost.Gameplay.Enemies
                     fighterToPlayer.normalized
                 );
 
-                SoundManager.PlaySFX(SoundDataIDStatic.FIGHTER_BULLET);
+                SoundManager.PlaySFX(SoundDataID.FIGHTER_BULLET);
             }
         }
 

@@ -10,9 +10,12 @@ namespace Bitfrost.Gameplay.Players
         [Header("Health")]
 
         public float maxHealth = 300;
+        public float healedHealthPerStoredEnergy = 5;
 
         [Header("Controller")]
         public float speed;
+
+
 
     }
 

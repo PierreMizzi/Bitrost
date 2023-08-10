@@ -40,8 +40,8 @@ namespace Bitfrost.Gameplay.Players
             m_healthEntity = GetComponent<HealthEntity>();
 
             m_hitSounds = new List<string>(){
-            SoundDataIDStatic.PLAYER_HIT_01,
-            SoundDataIDStatic.PLAYER_HIT_02,
+            SoundDataID.PLAYER_HIT_01,
+            SoundDataID.PLAYER_HIT_02,
         };
         }
 
@@ -55,6 +55,8 @@ namespace Bitfrost.Gameplay.Players
                 m_levelChannel.onReset += CallbackReset;
                 m_levelChannel.onPauseGame += Pause;
                 m_levelChannel.onResumeGame += Resume;
+
+                m_levelChannel.onTurretRetrieved += CallbackTurretRetrieved;
             }
         }
 
@@ -68,6 +70,7 @@ namespace Bitfrost.Gameplay.Players
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
 
+                m_levelChannel.onTurretRetrieved -= CallbackTurretRetrieved;
             }
         }
 
@@ -87,7 +90,10 @@ namespace Bitfrost.Gameplay.Players
             m_healthEntity.onNoHealth -= CallbackNoHealth;
         }
 
-        private void CallbackHealedHealth() { }
+        private void CallbackHealedHealth()
+        {
+            SoundManager.PlaySFX(SoundDataID.PLAYER_HEALED);
+        }
 
         private void CallbackLostHealth()
         {
@@ -97,11 +103,10 @@ namespace Bitfrost.Gameplay.Players
         [ContextMenu("CallbackNoHealth")]
         private void CallbackNoHealth()
         {
-            Debug.LogWarning("PLAYER HAS DIED !");
             m_levelChannel.onGameOver.Invoke();
             m_controller.enabled = false;
 
-            SoundManager.PlaySound(SoundDataIDStatic.PLAYER_DEATH);
+            SoundManager.PlaySFX(SoundDataID.PLAYER_DEATH);
         }
 
         #endregion
@@ -126,6 +131,12 @@ namespace Bitfrost.Gameplay.Players
         }
 
         #endregion
+
+        private void CallbackTurretRetrieved(int storedEnergy)
+        {
+            if (!m_healthEntity.isMaxHealth && storedEnergy > 0)
+                m_healthEntity.HealHealth(storedEnergy * m_settings.healedHealthPerStoredEnergy);
+        }
 
         #endregion
     }

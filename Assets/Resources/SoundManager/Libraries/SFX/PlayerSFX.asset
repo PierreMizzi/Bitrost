@@ -27,10 +27,11 @@ MonoBehaviour:
     m_clip: {fileID: 8300000, guid: c9507257d32a0dc48bfd2617da7f1337, type: 3}
     m_mixer: {fileID: -951362960853884837, guid: bf602f178d618db4e8b403472ded6e41,
       type: 2}
+  - m_ID: PlayerHealed
+    m_clip: {fileID: 8300000, guid: 25a86e268b9d931479b6c928d630fa78, type: 3}
+    m_mixer: {fileID: -951362960853884837, guid: bf602f178d618db4e8b403472ded6e41,
+      type: 2}
   m_generateStatic: 1
-  m_audioClips:
-  - {fileID: 8300000, guid: 310f50d699ae36e48a5175e89b753b49, type: 3}
-  - {fileID: 8300000, guid: 07e8491dc8d9395479d6ef3ce6f8f5f1, type: 3}
-  - {fileID: 8300000, guid: c9507257d32a0dc48bfd2617da7f1337, type: 3}
+  m_audioClips: []
   m_mixerGroup: {fileID: -951362960853884837, guid: bf602f178d618db4e8b403472ded6e41,
     type: 2}

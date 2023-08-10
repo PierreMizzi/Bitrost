@@ -21,7 +21,7 @@ namespace PierreMizzi.SoundManager
 
 		private const string TEMPLATE_SOUND_DATA_ID =
 			@"
-			public static class SoundDataIDStatic
+			public static class SoundDataID
 			{0}
 		";
 

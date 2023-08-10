@@ -21,7 +21,7 @@ namespace Bitfrost.Gameplay.Turrets
             m_turret.canonTransform.gameObject.SetActive(true);
             m_turret.aimSprite.SetActive(true);
 
-            SoundManager.PlaySound(SoundDataIDStatic.TURRET_FIRE_MODE);
+            SoundManager.PlaySFX(SoundDataID.TURRET_FIRE_MODE);
         }
 
         public override void Update()

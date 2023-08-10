@@ -40,15 +40,17 @@ namespace Bitfrost.Gameplay.UI
             m_restartButton.clicked += CallbackRestartButton;
             m_menuButton.clicked += CallbackMenuButton;
 
-            m_root.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+            m_resumeButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+            m_restartButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+            m_menuButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
         }
 
         private void Start()
         {
             if (m_levelChannel != null)
             {
-                m_levelChannel.onPauseGame += CallbackPauseGame;
-                m_levelChannel.onResumeGame += CallbackResumeGame;
+                m_levelChannel.onDisplayPausePanel += Display;
+                m_levelChannel.onHidePausePanel += Hide;
             }
         }
 
@@ -56,8 +58,8 @@ namespace Bitfrost.Gameplay.UI
         {
             if (m_levelChannel != null)
             {
-                m_levelChannel.onPauseGame -= CallbackPauseGame;
-                m_levelChannel.onResumeGame -= CallbackResumeGame;
+                m_levelChannel.onDisplayPausePanel -= Display;
+                m_levelChannel.onHidePausePanel -= Hide;
             }
         }
 
@@ -68,48 +70,28 @@ namespace Bitfrost.Gameplay.UI
         private void CallbackResumeButton()
         {
             m_levelChannel.onResumeGame.Invoke();
-            SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+            m_levelChannel.onHidePausePanel.Invoke();
+            SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
         }
 
         private void CallbackRestartButton()
         {
             Debug.Log("CallbackRestartButton");
-            SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+            SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
         }
 
         private void CallbackMenuButton()
         {
             Debug.Log("CallbackMenuButton");
-            SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+            SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
         }
 
         private void CallbackOnMouseOver(MouseOverEvent evt)
         {
-            VisualElement element = (VisualElement)evt.currentTarget;
-
-            if (element == m_resumeButton ||
-                element == m_menuButton ||
-                element == m_restartButton
-            )
-            {
-                SoundManager.PlaySound(SoundDataIDStatic.U_I_HOVER);
-            }
+            SoundManager.PlaySFX(SoundDataID.U_I_HOVER);
         }
 
         #endregion
-
-        private void CallbackPauseGame()
-        {
-            Debug.Log("CallbackPauseGame");
-            Display();
-        }
-
-        private void CallbackResumeGame()
-        {
-            Hide();
-        }
-
-
 
         #endregion
     }

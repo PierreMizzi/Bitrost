@@ -16,6 +16,14 @@ namespace Bitfrost.Gameplay
             get { return Mathf.Clamp01(currentHealth / maxHealth); }
         }
 
+        public bool isMaxHealth
+        {
+            get
+            {
+                return currentHealth == maxHealth;
+            }
+        }
+
         public Action onLostHealth = null;
         public Action onHealedHealth = null;
         public Action onNoHealth = null;

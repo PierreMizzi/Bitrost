@@ -27,7 +27,8 @@ namespace Bitfrost.Gameplay.Enemies
 
         public Vector3 positionAroundPlayer { get { return m_levelChannel.player.transform.position + (m_randomDirectionAroundPlayer * settings.radiusAroundPlayer); } }
 
-        public float speedTrackPlayer { get; private set; }
+
+        public float speedTrackPlayer;
 
         #endregion
 
@@ -38,8 +39,8 @@ namespace Bitfrost.Gameplay.Enemies
             base.Awake();
 
             m_hitSounds = new List<string>(){
-            SoundDataIDStatic.SCOUT_HIT_01,
-            SoundDataIDStatic.SCOUT_HIT_02,
+            SoundDataID.SCOUT_HIT_01,
+            SoundDataID.SCOUT_HIT_02,
         };
         }
 
@@ -61,13 +62,12 @@ namespace Bitfrost.Gameplay.Enemies
             base.InitiliazeStates();
 
             states = new List<AState>()
-        {
-            new EnemyInactiveState(this),
-            new EnemyIdleState(this),
-            new ScoutMoveState(this),
-            new ScoutAttackState(this),
-        };
-
+            {
+                new EnemyInactiveState(this),
+                new EnemyIdleState(this),
+                new ScoutMoveState(this),
+                new ScoutAttackState(this),
+            };
         }
 
         public void Fire()
@@ -75,7 +75,7 @@ namespace Bitfrost.Gameplay.Enemies
             if (CanFire())
             {
                 bulletChannel.onInstantiateBullet.Invoke(this, settings.bulletPrefab, transform.position, transform.up);
-                SoundManager.PlaySFX(SoundDataIDStatic.SCOUT_BULLET);
+                SoundManager.PlaySFX(SoundDataID.SCOUT_BULLET);
             }
         }
 

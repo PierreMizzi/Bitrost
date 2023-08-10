@@ -1,5 +1,5 @@
 
-public static class SoundDataIDStatic
+public static class SoundDataID
 {
 
 	/*
@@ -8,6 +8,7 @@ public static class SoundDataIDStatic
 	public static readonly string PLAYER_DEATH = "PlayerDeath";
 	public static readonly string PLAYER_HIT_01 = "PlayerHit_01";
 	public static readonly string PLAYER_HIT_02 = "PlayerHit_02";
+	public static readonly string PLAYER_HEALED = "PlayerHealed";
 
 	/*
 		TurretSFX

@@ -54,6 +54,7 @@ namespace Bitfrost.Gameplay.UI
             Debug.LogWarning("Pause Clicked !!!");
 
             m_levelChannel.onPauseGame.Invoke();
+            m_levelChannel.onDisplayPausePanel.Invoke();
         }
 
         private IEnumerator UpdateTime()

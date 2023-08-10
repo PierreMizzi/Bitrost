@@ -43,8 +43,8 @@ namespace Bitfrost.Gameplay.Enemies
             base.Awake();
 
             m_hitSounds = new List<string>(){
-                SoundDataIDStatic.HARVESTER_HIT_01,
-                SoundDataIDStatic.HARVESTER_HIT_02,
+                SoundDataID.HARVESTER_HIT_01,
+                SoundDataID.HARVESTER_HIT_02,
             };
         }
 

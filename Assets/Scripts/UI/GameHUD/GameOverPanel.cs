@@ -43,17 +43,14 @@ namespace Bitfrost.Gameplay.UI
 			m_restartButton.clicked += CallbackRestartButton;
 			m_menuButton.clicked += CallbackMenuButton;
 
-			m_root.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
-
+			m_restartButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+			m_menuButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
 		}
-
-
 
 		private void Start()
 		{
 			if (m_levelChannel != null)
 				m_levelChannel.onGameOverPanel += CallbackGameOverPanel;
-
 		}
 
 		private void OnDestroy()
@@ -64,25 +61,21 @@ namespace Bitfrost.Gameplay.UI
 
 		private void CallbackOnMouseOver(MouseOverEvent evt)
 		{
-			VisualElement element = (VisualElement)evt.currentTarget;
-
-			if (element == m_menuButton || element == m_restartButton)
-				SoundManager.PlaySound(SoundDataIDStatic.U_I_HOVER);
+			SoundManager.PlaySFX(SoundDataID.U_I_HOVER);
 		}
 
 
 		private void CallbackRestartButton()
 		{
-			Debug.Log("Restart Button");
 			m_levelChannel.onReset.Invoke();
 			Hide();
-			SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}
 
 		private void CallbackMenuButton()
 		{
 			Debug.Log("Menu Button");
-			SoundManager.PlaySound(SoundDataIDStatic.U_I_CLICK);
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}
 
 		private void CallbackGameOverPanel(GameOverData data)

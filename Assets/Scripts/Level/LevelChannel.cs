@@ -6,18 +6,17 @@ using UnityEngine;
 namespace Bitfrost.Gameplay
 {
 
-
-
     public delegate void GameOverDelegate(GameOverData data);
 
     [CreateAssetMenu(fileName = "LevelChannel", menuName = "Bitrost/LevelChannel", order = 0)]
     public class LevelChannel : ScriptableObject
     {
-        public CrystalShardsManager crystalManager = null;
+        public CrystalShardsManager crystalManager;
 
-        public Player player = null;
+        public Player player;
+        public IntDelegate onTurretRetrieved;
 
-        public Action onAllEnemiesKilled = null;
+        public Action onAllEnemiesKilled;
 
         public Action onDisplayTutorial;
 
@@ -30,8 +29,13 @@ namespace Bitfrost.Gameplay
         public Action onPauseGame;
         public Action onResumeGame;
 
+        public Action onDisplayPausePanel;
+        public Action onHidePausePanel;
+
         private void OnEnable()
         {
+            onTurretRetrieved = (int storedEnergy) => { };
+
             onAllEnemiesKilled = () => { };
 
             onDisplayTutorial = () => { };
@@ -45,6 +49,9 @@ namespace Bitfrost.Gameplay
 
             onPauseGame = () => { };
             onResumeGame = () => { };
+
+            onDisplayPausePanel = () => { };
+            onHidePausePanel = () => { };
         }
     }
 }
