@@ -14,6 +14,8 @@ namespace Bitfrost.Gameplay.Enemies
 
 		private Harvester m_harvester;
 
+		private Tween m_delayTween;
+
 		protected override void DefaultEnter()
 		{
 			base.DefaultEnter();

@@ -1,5 +1,5 @@
 .skull-icon {
-    background-image: url('project://database/Assets/Sprites/UI/Gameplay/skull.png?fileID=2800000&guid=07b41a6cdc3945a44bc896ba86e655af&type=3#skull');
+    background-image: url('project://database/Assets/Sprites/UI/Gameplay/LevelHeader/skull.png?fileID=2800000&guid=07b41a6cdc3945a44bc896ba86e655af&type=3#skull');
     width: 40px;
     height: 40px;
 }
@@ -13,7 +13,7 @@
     padding-right: 0;
     padding-top: 0;
     padding-bottom: 0;
-    background-image: url('project://database/Assets/Sprites/UI/Gameplay/pause.png?fileID=2800000&guid=480df46b14b3f834eae43fe5dcef1444&type=3#pause');
+    background-image: url('project://database/Assets/Sprites/UI/Gameplay/LevelHeader/pause.png?fileID=2800000&guid=480df46b14b3f834eae43fe5dcef1444&type=3#pause');
     -unity-background-scale-mode: scale-to-fit;
     width: 100px;
     height: 100px;
