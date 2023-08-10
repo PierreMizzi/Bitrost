@@ -71,7 +71,7 @@ namespace Bitfrost.Gameplay.Enemies
                     fighterToPlayer.normalized
                 );
 
-                SoundManager.PlaySound(SoundDataIDStatic.FIGHTER_BULLET);
+                SoundManager.PlaySFX(SoundDataIDStatic.FIGHTER_BULLET);
             }
         }
 

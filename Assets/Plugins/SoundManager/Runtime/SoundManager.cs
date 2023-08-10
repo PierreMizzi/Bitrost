@@ -86,37 +86,6 @@ namespace PierreMizzi.SoundManager
 
 		#region Control
 
-
-		///// <summary>
-		///// Play a sound identified by it's ID
-		///// </summary>
-		///// <param name="soundDataID"> ID of the sound</param>
-		///// <returns>SoundSource for specific behaviour</returns>
-		//public static SoundSource PlaySound(string soundDataID, bool isLooping = false)
-		//{
-		//	if(!m_isInitialized)
-		//		return null;
-
-		//	Debug.Log("Play Sound");
-
-		//	// Check if all libraries has this ID stored
-		//	SoundData soundData = GetSoundData(soundDataID);
-		//	if(soundData == null)
-		//	{
-		//		Debug.LogError(string.Format("Can't play SoundData with ID {0}, because it's null", soundDataID));
-		//		return null;
-		//	}
-		//	//Debug.Log(soundData.Clip.length);
-
-		//	// Find a non playing SoundSource to play the sound
-		//	SoundSource source = GetNonPlayingSoundSource(soundData.Type);
-		//	source.SetLooping(isLooping);
-
-		//	source.Play(soundData);
-
-		//	return source;
-		//}
-
 		/// <summary>
 		/// Play a sound identified by it's ID
 		/// </summary>
@@ -152,13 +121,37 @@ namespace PierreMizzi.SoundManager
 			return source;
 		}
 
-		public static SoundSource PlayRandomSound(List<string> soundDataIDs, bool isLooping = false, float fadeDuration = -1f)
+		public static SoundSource PlaySFX(string soundDataID)
+		{
+			if (!m_isInitialized)
+				return null;
+
+			// Debug.Log("Play : " + soundDataID);
+
+			// Check if all libraries has this ID stored
+			SoundData soundData = GetSoundData(soundDataID);
+			if (soundData == null)
+			{
+				Debug.LogError(string.Format("SoundData with ID {0} doesn't exists", soundDataID));
+				return null;
+			}
+
+			// Find a non playing SoundSource to play the sound
+			SoundSource source = GetNonPlayingSoundSource(soundData.Type);
+			source.SetSoundData(soundData);
+			source.destroyOnAudioClipEnded = true;
+			source.Play();
+
+			return source;
+		}
+
+		public static SoundSource PlayRandomSFX(List<string> soundDataIDs)
 		{
 			int randomIndex = Random.Range(0, soundDataIDs.Count);
 
 			string randomID = soundDataIDs[randomIndex];
 
-			return PlaySound(randomID, isLooping, fadeDuration);
+			return PlaySFX(randomID);
 		}
 
 		public static void StopSound(string soundDataID, float fadeDuration = -1f)

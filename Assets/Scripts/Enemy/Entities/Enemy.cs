@@ -163,14 +163,14 @@ namespace Bitfrost.Gameplay.Enemies
 
         protected virtual void CallbackLostHealth()
         {
-            SoundManager.PlayRandomSound(m_hitSounds);
+            SoundManager.PlayRandomSFX(m_hitSounds);
         }
 
         protected virtual void CallbackNoHealth()
         {
             ChangeState(EnemyStateType.Inactive);
             m_manager.KillEnemy(this);
-            SoundManager.PlayRandomSound(m_deathSounds);
+            SoundManager.PlayRandomSFX(m_deathSounds);
         }
 
         #endregion

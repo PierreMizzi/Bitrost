@@ -75,7 +75,7 @@ namespace Bitfrost.Gameplay.Enemies
             if (CanFire())
             {
                 bulletChannel.onInstantiateBullet.Invoke(this, settings.bulletPrefab, transform.position, transform.up);
-                SoundManager.PlaySound(SoundDataIDStatic.SCOUT_BULLET);
+                SoundManager.PlaySFX(SoundDataIDStatic.SCOUT_BULLET);
             }
         }
 

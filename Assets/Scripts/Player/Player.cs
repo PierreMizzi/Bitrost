@@ -91,7 +91,7 @@ namespace Bitfrost.Gameplay.Players
 
         private void CallbackLostHealth()
         {
-            SoundManager.PlayRandomSound(m_hitSounds);
+            SoundManager.PlayRandomSFX(m_hitSounds);
         }
 
         [ContextMenu("CallbackNoHealth")]

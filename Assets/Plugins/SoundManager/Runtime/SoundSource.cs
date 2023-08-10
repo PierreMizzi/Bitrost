@@ -46,11 +46,13 @@ namespace PierreMizzi.SoundManager
 			}
 		}
 
+		[HideInInspector]
 		public bool stopOnAudioClipEnded;
 
 		/// <summary>
 		/// Will this SoundSource destroy itself when the clip is done playing
 		/// </summary>
+		[HideInInspector]
 		public bool destroyOnAudioClipEnded;
 
 
@@ -68,12 +70,12 @@ namespace PierreMizzi.SoundManager
 
 		#region MonoBehaviour
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
 			Initialize();
 		}
 
-		protected virtual void OnDrawGizmos()
+		protected virtual void OnValidate()
 		{
 			if (!Application.isPlaying)
 				m_ID = name;
@@ -84,7 +86,7 @@ namespace PierreMizzi.SoundManager
 			SoundManager.RemoveSoundSource(this);
 		}
 
-		private void Update()
+		protected virtual void Update()
 		{
 			if (m_audioSource.clip != null)
 			{
@@ -100,7 +102,7 @@ namespace PierreMizzi.SoundManager
 		public void Initialize()
 		{
 			SoundManager.AddSoundSource(this);
-			m_audioSource = GetComponent<AudioSource>();
+			CheckAudioSource();
 		}
 
 		public void Initialize(SoundType type)
