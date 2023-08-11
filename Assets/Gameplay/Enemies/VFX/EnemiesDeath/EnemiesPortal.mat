@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EnemiesPortal
+  m_Shader: {fileID: -6465566751694194690, guid: 0918c24ba6bc73248ae3befa520027de,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Background:
+        m_Texture: {fileID: 2800000, guid: dd79d2decd895464e8b3c9797a4bb646, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Amplitude: 0.1
+    - _BackgroundSpeed: 0.1
+    - _EdgeAmplitude: 0.1
+    - _EdgeFrequency: 8
+    - _EdgeWidth: 0.04
+    - _Frequency: 7
+    - _NoiseScale: 11.3
+    - _NoiseSpeed: 1
+    - _Outline: 0.09
+    - _RotationSpeed: 3.75
+    m_Colors:
+    - _EdgeColor: {r: 0.46226418, g: 0.08576597, b: 0.1096111, a: 1}
+  m_BuildTextureStacks: []

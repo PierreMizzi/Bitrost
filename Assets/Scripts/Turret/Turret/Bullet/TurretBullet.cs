@@ -1,5 +1,4 @@
 using UnityEngine;
-using PierreMizzi.Useful;
 using Bitfrost.Gameplay.Bullets;
 using Bitfrost.Gameplay.Energy;
 
