@@ -39,7 +39,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EnergyMaxPercent: 0.38
+    - _EnergyMaxPercent: 0.3
     - _EnergyPercent: 1
     - _NoiseOffset: 0
     - _NoiseTiling: 16.8
@@ -54,8 +54,10 @@ Material:
     - _QueueOffset: 0
     - _Rotation: 45
     m_Colors:
-    - _EnergyTint: {r: 0.54402506, g: 1, b: 0.9535085, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EnergyTint: {r: 0.544025, g: 1, b: 0.95350844, a: 1}
     - _OreTint: {r: 1, g: 0.15723264, b: 0.31938347, a: 1}
+    - _Tint: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5789625398326457662
 MonoBehaviour:

@@ -34,8 +34,5 @@ namespace Bitfrost.Gameplay.Turrets
 
         #endregion
 
-        #region Methods
-
-        #endregion
     }
 }

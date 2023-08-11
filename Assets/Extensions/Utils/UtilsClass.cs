@@ -56,6 +56,11 @@ namespace PierreMizzi.Useful
             return Random.Range(range.x, range.y);
         }
 
+        public static bool FlipCoin()
+        {
+            return UnityEngine.Random.Range(0, 2) == 0;
+        }
+
         public static float GetNoiseValue(float value, int offset = 0)
         {
             float f = value % 1.0f;
@@ -247,10 +252,24 @@ namespace PierreMizzi.Useful
         public static Quaternion RandomRotation()
         {
             return Quaternion.Euler(
-                Random.Range(0f, 359f),
-                Random.Range(0f, 359f),
-                Random.Range(0f, 359f)
+                RandomAngle(),
+                RandomAngle(),
+                RandomAngle()
             );
+        }
+
+        public static Quaternion RandomRotation2D()
+        {
+            return Quaternion.Euler(
+                0f,
+                0f,
+                RandomAngle()
+            );
+        }
+
+        public static float RandomAngle()
+        {
+            return Random.Range(0f, 360f);
         }
 
         public static Quaternion RandomRotation(Vector3 minRotation, Vector3 maxRotation)

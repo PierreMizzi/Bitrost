@@ -35,11 +35,11 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private Transform m_container;
 
-        private List<CrystalShard> m_unavailableCrystals = new List<CrystalShard>();
+        private List<CrystalShard> m_occupiedCrystals = new List<CrystalShard>();
 
         public List<CrystalShard> unavailableCrystals
         {
-            get { return m_unavailableCrystals; }
+            get { return m_occupiedCrystals; }
         }
 
         [Header("Screen Edge Info")]
@@ -57,11 +57,11 @@ namespace Bitfrost.Gameplay.Energy
             m_levelChannel.crystalManager = this;
 
             yield return new WaitForEndOfFrame();
+            m_crystalPoolConfig.onGetFromPool = GetFromPool;
             m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
 
             if (m_levelChannel != null)
                 m_levelChannel.onReset += CallbackReset;
-
 
             DebugSpawn();
         }
@@ -76,6 +76,14 @@ namespace Bitfrost.Gameplay.Energy
 
         #region Spawning
 
+        public void GetFromPool(GameObject gameObject)
+        {
+            CrystalShard crystal = gameObject.GetComponent<CrystalShard>();
+            crystal.Hide();
+
+            crystal.gameObject.SetActive(true);
+        }
+
         public void SpawnCrystalShards(SpawnCrystalShardsConfig config)
         {
             if (!UnityEngine.Application.isPlaying)
@@ -84,40 +92,34 @@ namespace Bitfrost.Gameplay.Energy
             Vector3 origin = LevelManager.RandomPositionInArena(config.radius);
 
             List<Vector3> randomPositions = LevelManager.RandomPositions(origin, config.count, config.radius);
+            Quaternion randomRotation = UtilsClass.RandomRotation2D();
 
             for (int i = 0; i < config.count; i++)
             {
                 int energy = Random.Range(config.minEnergy, config.maxEnergy + 1);
-                SpawnCrystalShard(randomPositions[i], energy);
+                SpawnCrystalShard(randomPositions[i], randomRotation, energy);
             }
 
             // Spawn Crystal Edge
             Instantiate(m_crystalsSubjectPrefab, origin, Quaternion.identity, transform);
         }
 
-        private void SpawnCrystalShard(Vector3 position, int energy)
+        private void SpawnCrystalShard(Vector3 randomPosition, Quaternion randomRotation, int energyCount)
         {
             // Get From Pool
             CrystalShard crystal = m_poolingChannel.onGetFromPool
                 .Invoke(m_crystalPoolConfig.prefab)
                 .GetComponent<CrystalShard>();
 
-            // Set Random Position
-            crystal.transform.position = position;
+            crystal.transform.SetPositionAndRotation(randomPosition, randomRotation);
+            crystal.transform.localScale = Vector3.one * m_settings.GetRandomScale();
 
-            // Set Random Rotation
-            Quaternion rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360));
-            crystal.transform.rotation = rotation;
-
-            crystal.transform.localScale = Vector3.one * energy * m_settings.quantityToScaleRatio;
-
-            crystal.Initialize(this, energy);
+            crystal.OutOfPool(this, energyCount);
             m_activeCrystals.Add(crystal);
         }
 
 
         #endregion
-
 
         /// <summary>
         /// Might be useful !
@@ -140,16 +142,16 @@ namespace Bitfrost.Gameplay.Energy
             return true;
         }
 
-        public void AddUnavailableCrystal(CrystalShard crystal)
+        public void AddOccupiedCrystal(CrystalShard crystal)
         {
-            if (!m_unavailableCrystals.Contains(crystal))
-                m_unavailableCrystals.Add(crystal);
+            if (!m_occupiedCrystals.Contains(crystal))
+                m_occupiedCrystals.Add(crystal);
         }
 
-        public void RemoveUnavailableCrystal(CrystalShard crystal)
+        public void RemoveOccupiedCrystal(CrystalShard crystal)
         {
-            if (m_unavailableCrystals.Contains(crystal))
-                m_unavailableCrystals.Remove(crystal);
+            if (m_occupiedCrystals.Contains(crystal))
+                m_occupiedCrystals.Remove(crystal);
         }
 
         public void ReleaseCrystal(CrystalShard crystal)
@@ -157,7 +159,7 @@ namespace Bitfrost.Gameplay.Energy
             if (m_activeCrystals.Contains(crystal))
                 m_activeCrystals.Remove(crystal);
 
-            RemoveUnavailableCrystal(crystal);
+            RemoveOccupiedCrystal(crystal);
 
             m_poolingChannel.onReleaseToPool(crystal.gameObject);
         }

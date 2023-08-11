@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDistanceBetweenCrystals: 0
   quantityToScaleRatio: 0.2
+  m_minRotationSpeed: 2
+  m_maxRotationSpeed: 17

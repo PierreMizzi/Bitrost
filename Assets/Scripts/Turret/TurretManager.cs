@@ -154,8 +154,6 @@ namespace Bitfrost.Gameplay.Turrets
                 m_switchModeInput.action.performed += CallbackSwitchMode;
         }
 
-
-
         private void UnsubscribeInputs()
         {
             if (m_dropRetrieveTurretInput != null)
@@ -239,7 +237,7 @@ namespace Bitfrost.Gameplay.Turrets
         {
             CrystalShard crystal = ((CrystalShardTarget)m_currentTarget).crystal;
 
-            if (crystal.isAvailable)
+            if (!crystal.isOccupied)
             {
                 if (hasAvailableTurret)
                 {

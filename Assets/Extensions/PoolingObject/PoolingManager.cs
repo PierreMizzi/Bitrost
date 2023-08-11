@@ -6,6 +6,7 @@ using System;
 namespace PierreMizzi.Useful.PoolingObjects
 {
 
+    public delegate void GameObjectDelegate(GameObject value);
 
     public class PoolingManager : MonoBehaviour
     {
@@ -100,9 +101,9 @@ namespace PierreMizzi.Useful.PoolingObjects
                 // Create a new pool
                 ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
                     create,
-                    GetFromPool,
-                    ReleaseToPool,
-                    DestroyFromPool,
+                    config.onGetFromPool ?? GetFromPool,
+                    config.onReleaseToPool ?? ReleaseToPool,
+                    config.onDestroyInPool ?? DestroyInPool,
                     true,
                     config.defaultSize,
                     config.maxSize
@@ -123,7 +124,7 @@ namespace PierreMizzi.Useful.PoolingObjects
             poolObject.SetActive(true);
         }
 
-        private void DestroyFromPool(GameObject poolObject)
+        private void DestroyInPool(GameObject poolObject)
         {
             Destroy(poolObject);
         }
