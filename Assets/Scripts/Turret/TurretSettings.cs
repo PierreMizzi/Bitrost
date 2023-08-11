@@ -17,9 +17,7 @@ namespace Bitfrost.Gameplay.Turrets
         public int productionRatio = 2;
 
         [Header("Bullet")]
-        public Bullet bulletPrefab = null;
-        public float bulletSpeed;
-        public float bulletDamage = 50;
+        public BulletConfig bulletConfig;
     }
 
 }

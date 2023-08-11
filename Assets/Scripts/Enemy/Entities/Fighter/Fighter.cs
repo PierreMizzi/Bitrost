@@ -62,13 +62,13 @@ namespace Bitfrost.Gameplay.Enemies
             if (CanFire())
             {
                 Vector3 playerPosition = levelChannel.player.transform.position;
-                Vector3 fighterToPlayer = playerPosition - transform.position;
+                Vector3 fighterToPlayer = (playerPosition - transform.position).normalized;
 
-                bulletChannel.onInstantiateBullet(
+                bulletChannel.onFireBullet(
+                    settings.bulletConfig,
                     this,
-                    settings.bulletPrefab,
                     bulletOrigin.position,
-                    fighterToPlayer.normalized
+                    fighterToPlayer
                 );
 
                 SoundManager.PlaySFX(SoundDataID.FIGHTER_BULLET);

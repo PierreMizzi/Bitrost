@@ -126,9 +126,14 @@ namespace Bitfrost.Gameplay.Turrets
             }
         }
 
+        public bool hasStoredEnergy
+        {
+            get { return m_storedEnergy > 0; }
+        }
+
         public bool hasEnergy
         {
-            get { return crystal.hasEnergy || m_storedEnergy > 0; }
+            get { return crystal.hasEnergy || hasStoredEnergy; }
         }
 
         #endregion
@@ -292,16 +297,16 @@ namespace Bitfrost.Gameplay.Turrets
         {
             if (CanFire())
             {
-                if (storedEnergy > 0)
+                if (hasStoredEnergy)
                     storedEnergy--;
                 else
                     crystal.DecrementEnergy();
 
                 onRefreshEnergy();
 
-                m_bulletChannel.onInstantiateBullet.Invoke(
+                m_bulletChannel.onFireBullet.Invoke(
+                    m_settings.bulletConfig,
                     this,
-                    m_settings.bulletPrefab,
                     m_bulletOriginTransform.position,
                     aimDirection
                 );
@@ -345,12 +350,6 @@ namespace Bitfrost.Gameplay.Turrets
             isPaused = false;
             currentState.Resume();
         }
-
-        #endregion
-
-        #region Sounds Sources
-
-
 
         #endregion
 

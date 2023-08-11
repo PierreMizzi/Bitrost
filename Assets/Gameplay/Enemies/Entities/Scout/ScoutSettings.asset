@@ -18,6 +18,9 @@ MonoBehaviour:
   angleAroundPlayer: 10
   minSpeedTrackPlayer: 1.2
   maxSpeedTrackPlayer: 3.5
+  bulletConfig:
+    prefab: {fileID: 2491727762690367159, guid: f85d070aacc883c42b97b82a01838423,
+      type: 3}
+    speed: 7
+    damage: 15
   delayBetweenBullet: 4
-  bulletPrefab: {fileID: 2571815961913954840, guid: 13fbd28be1495904da0f0ac48e1d7ff3,
-    type: 3}

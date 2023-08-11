@@ -15,9 +15,8 @@ namespace Bitfrost.Gameplay.Enemies
 		public float minSpeedTrackPlayer;
 		public float maxSpeedTrackPlayer;
 
+		public BulletConfig bulletConfig;
+
 		public float delayBetweenBullet = 4f;
-
-		public Bullet bulletPrefab;
-
 	}
 }

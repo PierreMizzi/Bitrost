@@ -16,10 +16,11 @@ MonoBehaviour:
   speed: 8
   radiusAroundPlayer: 8
   angleAroundPlayer: 66
-  bulletPrefab: {fileID: 2571815961913954840, guid: f85d070aacc883c42b97b82a01838423,
-    type: 3}
-  bulletSpeed: 5
-  bulletDamage: 15
+  bulletConfig:
+    prefab: {fileID: 2491727762690367159, guid: f85d070aacc883c42b97b82a01838423,
+      type: 3}
+    speed: 7
+    damage: 15
   bulletSalvoCount: 3
   bulletSalvoRateOfFire: 0.5
   delayBetweenSalvo: 4

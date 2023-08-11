@@ -13,18 +13,24 @@ MonoBehaviour:
   m_Name: BulletChannel
   m_EditorClassIdentifier: 
   bulletPoolConfigs:
-  - name: PlayerBullet
+  - name: TurretBullet
     prefab: {fileID: 2902073254673733947, guid: a0519969b01c1db4a856f4edb5d51775,
       type: 3}
     defaultSize: 20
     maxSize: 100
-  - name: FighterBullet
+  - name: EnemyBullet
     prefab: {fileID: 3741169766357441707, guid: f85d070aacc883c42b97b82a01838423,
       type: 3}
     defaultSize: 20
     maxSize: 100
-  - name: ScoutBullet
-    prefab: {fileID: 3741169766357441707, guid: 13fbd28be1495904da0f0ac48e1d7ff3,
+  impactPoolConfigs:
+  - name: TurretBulletImpact
+    prefab: {fileID: 9117383935823736125, guid: 3e19859fd8df1f341816e705b336256b,
       type: 3}
     defaultSize: 20
-    maxSize: 100
+    maxSize: 40
+  - name: EnemyBulletImpact
+    prefab: {fileID: 2761632966979247357, guid: 26dd843ca4e0a5740b1ed92d7d4501ea,
+      type: 3}
+    defaultSize: 20
+    maxSize: 40

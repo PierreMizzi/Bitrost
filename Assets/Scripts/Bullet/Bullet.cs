@@ -1,3 +1,4 @@
+using PierreMizzi.Useful;
 using UnityEngine;
 
 namespace Bitfrost.Gameplay.Bullets
@@ -8,22 +9,19 @@ namespace Bitfrost.Gameplay.Bullets
         #region Fields
 
         [Header("Bullet")]
-        [SerializeField]
-        protected BulletChannel m_bulletChannel = null;
-
-        [SerializeField]
-        protected BulletType m_type = BulletType.None;
-        public BulletType type
-        {
-            get { return m_type; }
-        }
-
         protected BulletManager m_manager = null;
+
+        [SerializeField] protected BulletChannel m_bulletChannel = null;
+
+        [SerializeField] protected float m_speed;
+        [SerializeField] protected float m_damage;
 
         protected IBulletLauncher m_launcher;
 
+        [Header("Impact")]
+
         [SerializeField]
-        protected float m_speed;
+        private BulletImpact m_impactPrefab;
 
         #region Collision
 
@@ -40,6 +38,8 @@ namespace Bitfrost.Gameplay.Bullets
 
         #region Methods
 
+        #region MonoBehaviour
+
         protected virtual void OnEnable()
         {
             m_hasHit = false;
@@ -47,12 +47,42 @@ namespace Bitfrost.Gameplay.Bullets
 
         protected virtual void Update()
         {
-            if (isPaused)
+            if (!isPaused)
+            {
+                transform.position += m_speed * Time.deltaTime * transform.up;
+                CheckInsideArena();
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (m_hasHit)
                 return;
 
-            transform.position += transform.up * m_speed * Time.deltaTime;
+            if (UtilsClass.CheckLayer(m_collisionFilter.layerMask.value, other.gameObject.layer))
+                OnCollision(other);
+        }
 
-            CheckInsideArena();
+        #endregion
+
+        public void OufOfPool(
+            BulletConfig config,
+            IBulletLauncher launcher,
+            Vector3 position,
+            Vector3 orientation)
+        {
+            m_speed = config.speed;
+            m_damage = config.damage;
+
+            AssignLauncher(launcher);
+
+            transform.position = position;
+            transform.up = orientation;
+        }
+
+        public virtual void AssignLauncher(IBulletLauncher launcher)
+        {
+            m_launcher = launcher;
         }
 
         protected void CheckInsideArena()
@@ -66,14 +96,30 @@ namespace Bitfrost.Gameplay.Bullets
             m_bulletChannel.onReleaseBullet.Invoke(this);
         }
 
-        public virtual void AssignLauncher(IBulletLauncher launcher)
-        {
-            m_launcher = launcher;
-        }
 
         #region Collision
 
-        public void RaycastForCollision() { }
+        protected virtual void OnCollision(Collider2D other)
+        {
+            if (other.gameObject.TryGetComponent(out HealthEntity healthEntity))
+            {
+                HitHealthEntity(healthEntity);
+                ReleaseOnCollision(other);
+            }
+        }
+
+        protected virtual void ReleaseOnCollision(Collider2D other)
+        {
+            Release();
+            m_hasHit = true;
+
+            m_bulletChannel.onDisplayImpact.Invoke(m_impactPrefab, other.ClosestPoint(transform.position));
+        }
+
+        protected virtual void HitHealthEntity(HealthEntity healthEntity)
+        {
+            healthEntity.LoseHealth(m_damage);
+        }
 
         #endregion
 

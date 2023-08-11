@@ -57,7 +57,7 @@ namespace Bitfrost.Gameplay.Energy
             m_levelChannel.crystalManager = this;
 
             yield return new WaitForEndOfFrame();
-            m_crystalPoolConfig.onGetFromPool = GetFromPool;
+            m_crystalPoolConfig.onGetFromPool = CrystalGetFromPool;
             m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
 
             if (m_levelChannel != null)
@@ -76,7 +76,7 @@ namespace Bitfrost.Gameplay.Energy
 
         #region Spawning
 
-        public void GetFromPool(GameObject gameObject)
+        public void CrystalGetFromPool(GameObject gameObject)
         {
             CrystalShard crystal = gameObject.GetComponent<CrystalShard>();
             crystal.Hide();

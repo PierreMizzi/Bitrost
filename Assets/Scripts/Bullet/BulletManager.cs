@@ -6,135 +6,183 @@ using PierreMizzi.Useful.PoolingObjects;
 namespace Bitfrost.Gameplay.Bullets
 {
 
-    public delegate void InstantiateBulletDelegate(
-    IBulletLauncher launcher,
-    Bullet prefab,
-    Vector3 position,
-    Vector3 orientation
-);
-
-    public delegate void ReleaseBulletDelegate(Bullet bullet);
-
-    public class BulletManager : MonoBehaviour, IPausable
-    {
-        [Header("Channels")]
-        [SerializeField]
-        private BulletChannel m_bulletChannel = null;
-
-        [SerializeField]
-        private PoolingChannel m_poolingChannel = null;
-
-        [SerializeField]
-        private LevelChannel m_levelChannel = null;
-
-        private List<Bullet> m_activeBullets = new List<Bullet>();
-
-        public bool isPaused { get; set; }
 
 
-        #region MonoBehaviour
+	public class BulletManager : MonoBehaviour, IPausable
+	{
+		[Header("Channels")]
 
-        private IEnumerator Start()
-        {
-            if (m_bulletChannel != null)
-            {
-                m_bulletChannel.onInstantiateBullet += CallbackInstantiateBullet;
-                m_bulletChannel.onReleaseBullet += CallbackReleaseBullet;
-            }
+		[SerializeField]
+		private BulletChannel m_bulletChannel = null;
 
-            if (m_levelChannel != null)
-            {
-                m_levelChannel.onPauseGame += Pause;
-                m_levelChannel.onResumeGame += Resume;
-                m_levelChannel.onReset += CallbackReset;
-            }
+		[SerializeField]
+		private PoolingChannel m_poolingChannel = null;
+
+		[SerializeField]
+		private LevelChannel m_levelChannel = null;
+
+		public bool isPaused { get; set; }
+
+		// Bullets
+		private List<Bullet> m_activeBullets = new List<Bullet>();
+
+		// BulletImapcts
+		private List<BulletImpact> m_activeImpacts = new List<BulletImpact>();
+
+		#region MonoBehaviour
+
+		private IEnumerator Start()
+		{
+			if (m_bulletChannel != null)
+			{
+				m_bulletChannel.onFireBullet += CallbackFireBullet;
+				m_bulletChannel.onReleaseBullet += CallbackReleaseBullet;
+
+				m_bulletChannel.onDisplayImpact += CallbackDisplayImpact;
+				m_bulletChannel.onReleaseImpact += CallbackReleaseImpact;
+			}
+
+			if (m_levelChannel != null)
+			{
+				m_levelChannel.onPauseGame += Pause;
+				m_levelChannel.onResumeGame += Resume;
+				m_levelChannel.onReset += CallbackReset;
+			}
+
+			yield return new WaitForEndOfFrame();
+
+			InitializePools();
+		}
+
+		private void OnDestroy()
+		{
+			if (m_bulletChannel != null)
+			{
+				m_bulletChannel.onFireBullet -= CallbackFireBullet;
+				m_bulletChannel.onReleaseBullet -= CallbackReleaseBullet;
+			}
+
+			if (m_levelChannel != null)
+			{
+				m_levelChannel.onPauseGame -= Pause;
+				m_levelChannel.onResumeGame -= Resume;
+				m_levelChannel.onReset -= CallbackReset;
+			}
+		}
+
+		#endregion
+
+		private void InitializePools()
+		{
+			foreach (PoolConfig config in m_bulletChannel.bulletPoolConfigs)
+				m_poolingChannel.onCreatePool.Invoke(config);
+
+			foreach (PoolConfig config in m_bulletChannel.impactPoolConfigs)
+			{
+				config.onGetFromPool = ImpactGetFromPool;
+				m_poolingChannel.onCreatePool.Invoke(config);
+			}
+		}
+
+		#region Bullets
+
+		public void CallbackFireBullet(
+			BulletConfig config,
+			IBulletLauncher launcher,
+			Vector3 position,
+			Vector3 orientation
+		)
+		{
+			Bullet bullet = m_poolingChannel.onGetFromPool
+				.Invoke(config.prefab.gameObject)
+				.GetComponent<Bullet>();
+
+			bullet.OufOfPool(config, launcher, position, orientation);
+
+			if (!m_activeBullets.Contains(bullet))
+				m_activeBullets.Add(bullet);
+		}
+
+		public void CallbackReleaseBullet(Bullet bullet)
+		{
+			if (m_activeBullets.Contains(bullet))
+				m_activeBullets.Remove(bullet);
+
+			m_poolingChannel.onReleaseToPool.Invoke(bullet.gameObject);
+		}
+
+		#endregion
+
+		#region Bullet Impacts
+
+		public void ImpactGetFromPool(GameObject gameObject)
+		{
+			BulletImpact impact = gameObject.GetComponent<BulletImpact>();
+			impact.Hide();
+
+			impact.gameObject.SetActive(true);
+		}
+
+		public void CallbackDisplayImpact(
+			BulletImpact prefab,
+			Vector3 position
+		)
+		{
+			BulletImpact impact = m_poolingChannel.onGetFromPool
+				.Invoke(prefab.gameObject)
+				.GetComponent<BulletImpact>();
+
+			impact.transform.position = position;
+
+			if (!m_activeImpacts.Contains(impact))
+				m_activeImpacts.Add(impact);
+		}
+
+		public void CallbackReleaseImpact(BulletImpact impact)
+		{
+			if (m_activeImpacts.Contains(impact))
+				m_activeImpacts.Remove(impact);
+			m_poolingChannel.onReleaseToPool.Invoke(impact.gameObject);
+		}
 
 
-            yield return new WaitForEndOfFrame();
-
-            InitializeBulletPools();
-        }
-
-        private void OnDestroy()
-        {
-            if (m_bulletChannel != null)
-            {
-                m_bulletChannel.onInstantiateBullet -= CallbackInstantiateBullet;
-                m_bulletChannel.onReleaseBullet -= CallbackReleaseBullet;
-            }
-
-            if (m_levelChannel != null)
-            {
-                m_levelChannel.onPauseGame -= Pause;
-                m_levelChannel.onResumeGame -= Resume;
-                m_levelChannel.onReset -= CallbackReset;
-            }
-        }
-
-        #endregion
+		#endregion
 
 
+		#region Reset
 
-        private void InitializeBulletPools()
-        {
-            foreach (BulletPoolConfig config in m_bulletChannel.bulletPoolConfigs)
-                m_poolingChannel.onCreatePool.Invoke(config);
-        }
+		public void CallbackReset()
+		{
+			foreach (Bullet bullet in m_activeBullets)
+				m_poolingChannel.onReleaseToPool.Invoke(bullet.gameObject);
 
-        public void CallbackInstantiateBullet(
-            IBulletLauncher launcher,
-            Bullet prefab,
-            Vector3 position,
-            Vector3 orientation
-        )
-        {
-            Bullet bullet = m_poolingChannel.onGetFromPool
-                .Invoke(prefab.gameObject)
-                .GetComponent<Bullet>();
+			m_activeBullets.Clear();
+		}
 
-            bullet.AssignLauncher(launcher);
-            bullet.transform.position = position;
-            bullet.transform.up = orientation;
+		#endregion
 
-            if (!m_activeBullets.Contains(bullet))
-                m_activeBullets.Add(bullet);
-        }
+		#region Pause
 
-        public void CallbackReleaseBullet(Bullet bullet)
-        {
-            if (m_activeBullets.Contains(bullet))
-                m_activeBullets.Remove(bullet);
-            m_poolingChannel.onReleaseToPool.Invoke(bullet.gameObject);
-        }
+		public void Pause()
+		{
+			isPaused = true;
+			foreach (Bullet bullet in m_activeBullets)
+				bullet.Pause();
 
-        #region Reset
+			foreach (BulletImpact impact in m_activeImpacts)
+				impact.Pause();
+		}
 
-        public void CallbackReset()
-        {
-            foreach (Bullet bullet in m_activeBullets)
-                m_poolingChannel.onReleaseToPool.Invoke(bullet.gameObject);
+		public void Resume()
+		{
+			isPaused = false;
+			foreach (Bullet bullet in m_activeBullets)
+				bullet.Resume();
 
-            m_activeBullets.Clear();
-        }
+			foreach (BulletImpact impact in m_activeImpacts)
+				impact.Resume();
+		}
 
-        #endregion
-
-        #region Pause
-
-        public void Pause()
-        {
-            isPaused = true;
-            foreach (Bullet bullet in m_activeBullets)
-                bullet.Pause();
-        }
-
-        public void Resume()
-        {
-            isPaused = false;
-            foreach (Bullet bullet in m_activeBullets)
-                bullet.Resume();
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -17,11 +17,7 @@ namespace Bitfrost.Gameplay.Enemies
         public float angleAroundPlayer;
 
         [Header("Attack")]
-        public Bullet bulletPrefab;
-
-        public float bulletSpeed;
-
-        public float bulletDamage;
+        public BulletConfig bulletConfig;
 
         /// <summary> 
         /// Amount of bullets in a salvo

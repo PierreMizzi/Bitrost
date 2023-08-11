@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HitPlayer
+  m_Name: Impact
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -58,7 +58,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Square
+    path: SpriteRenderer
   m_FloatCurves:
   - curve:
       serializedVersion: 2
@@ -103,7 +103,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: Square
+    path: SpriteRenderer
     classID: 212
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -115,14 +115,14 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3394203039
+      path: 1465295225
       attribute: 3
       script: {fileID: 0}
       typeID: 4
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3394203039
+      path: 1465295225
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
@@ -193,7 +193,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: Square
+    path: SpriteRenderer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -239,7 +239,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: Square
+    path: SpriteRenderer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -285,7 +285,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: Square
+    path: SpriteRenderer
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -331,7 +331,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: Square
+    path: SpriteRenderer
     classID: 212
     script: {fileID: 0}
   m_EulerEditorCurves: []
@@ -339,7 +339,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.25
-    functionName: 
+    functionName: AnimationEnded
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

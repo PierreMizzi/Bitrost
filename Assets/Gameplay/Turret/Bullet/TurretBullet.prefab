@@ -95,8 +95,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
-  m_type: 1
   m_speed: 0
+  m_damage: 0
+  m_impactPrefab: {fileID: 9117383935823736120, guid: 3e19859fd8df1f341816e705b336256b,
+    type: 3}
   m_collisionFilter:
     useTriggers: 0
     useLayerMask: 1
