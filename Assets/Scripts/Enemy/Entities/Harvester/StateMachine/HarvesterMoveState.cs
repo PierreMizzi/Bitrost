@@ -13,7 +13,7 @@ namespace Bitfrost.Gameplay.Enemies
             m_harvester = m_stateMachine.gameObject.GetComponent<Harvester>();
         }
 
-        private Harvester m_harvester = null;
+        private Harvester m_harvester;
 
         private Tween m_approachCrystal;
 
@@ -39,15 +39,15 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Update()
         {
-            base.Update();
-
             if (!m_harvester.isCrystalValid)
+            {
+                Debug.Log("target crystal is not valid !!!!!");
                 ChangeState((int)EnemyStateType.Idle);
+            }
         }
 
         public override void Exit()
         {
-            base.Exit();
             if (m_approachCrystal != null && m_approachCrystal.IsPlaying())
                 m_approachCrystal.Kill();
         }

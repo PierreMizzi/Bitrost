@@ -1,5 +1,7 @@
+using System.Collections;
 using DG.Tweening;
 using PierreMizzi.Useful.StateMachines;
+using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
@@ -14,30 +16,62 @@ namespace Bitfrost.Gameplay.Enemies
 
 		private Harvester m_harvester;
 
-		private Tween m_delayTween;
+		private IEnumerator m_searchTargetCoroutine;
+
 
 		protected override void DefaultEnter()
 		{
-			base.DefaultEnter();
-
-			SearchForCrystal();
-
-			m_delayTween = DOVirtual.DelayedCall(
-				1f,
-				() =>
-				{
-					SearchForCrystal();
-				}
-			).SetLoops(-1);
+			Debug.Log("ENTER HarvesterIdle");
+			SearchTargetCrystal();
 		}
 
-		protected void SearchForCrystal()
+		protected void SearchTargetCrystal()
 		{
 			m_harvester.SearchCrystalShard();
 
 			if (m_harvester.targetCrystal != null)
+			{
 				ChangeState((int)EnemyStateType.Move);
+			}
+			else
+				StartSearchingTarget();
 		}
+
+		public override void Exit()
+		{
+			StopSeachingTarget();
+		}
+
+		private void StartSearchingTarget()
+		{
+			if (m_searchTargetCoroutine == null)
+			{
+				m_searchTargetCoroutine = SearchTargetCrystalCoroutine();
+				m_harvester.StartCoroutine(m_searchTargetCoroutine);
+			}
+
+		}
+
+		private void StopSeachingTarget()
+		{
+			if (m_searchTargetCoroutine != null)
+			{
+				m_harvester.StopCoroutine(m_searchTargetCoroutine);
+				m_searchTargetCoroutine = null;
+			}
+
+		}
+
+		private IEnumerator SearchTargetCrystalCoroutine()
+		{
+			while (true)
+			{
+				yield return new WaitForSeconds(1f);
+				SearchTargetCrystal();
+			}
+		}
+
+
 	}
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.StateMachines;
@@ -39,6 +40,19 @@ namespace Bitfrost.Gameplay.Enemies
 
         public bool isPaused { get; set; }
 
+        [SerializeField]
+        private Animator m_animator;
+
+        public Animator animator
+        {
+            get
+            {
+                return m_animator;
+            }
+        }
+
+        public Action onDeathAnimEnded;
+
 
         #region StateMachine
 
@@ -62,15 +76,17 @@ namespace Bitfrost.Gameplay.Enemies
         protected virtual void Awake()
         {
             m_deathSounds = new List<string>(){
-            SoundDataID.ENEMY_DEATH_01,
-            SoundDataID.ENEMY_DEATH_02,
-            SoundDataID.ENEMY_DEATH_03,
-            SoundDataID.ENEMY_DEATH_04,
-            SoundDataID.ENEMY_DEATH_05,
-            SoundDataID.ENEMY_DEATH_06,
-            SoundDataID.ENEMY_DEATH_07,
-            SoundDataID.ENEMY_DEATH_08,
-        };
+                SoundDataID.ENEMY_DEATH_01,
+                SoundDataID.ENEMY_DEATH_02,
+                SoundDataID.ENEMY_DEATH_03,
+                SoundDataID.ENEMY_DEATH_04,
+                SoundDataID.ENEMY_DEATH_05,
+                SoundDataID.ENEMY_DEATH_06,
+                SoundDataID.ENEMY_DEATH_07,
+                SoundDataID.ENEMY_DEATH_08,
+            };
+
+            onDeathAnimEnded = () => { };
         }
 
         protected virtual void Update()
@@ -88,11 +104,11 @@ namespace Bitfrost.Gameplay.Enemies
         public virtual void InitiliazeStates()
         {
             states = new List<AState>()
-        {
-            new EnemyIdleState(this),
-            new EnemyMoveState(this),
-            new EnemyAttackState(this)
-        };
+            {
+                new EnemyIdleState(this),
+                new EnemyMoveState(this),
+                new EnemyAttackState(this)
+            };
         }
 
         public void ChangeState(EnemyStateType nextState, EnemyStateType previousState = EnemyStateType.None)
@@ -142,7 +158,12 @@ namespace Bitfrost.Gameplay.Enemies
             m_healthEntity.Reset();
             m_manager = manager;
             ChangeState(EnemyStateType.Idle);
+        }
 
+        public virtual void ReleaseToPool()
+        {
+            ChangeState(EnemyStateType.Inactive);
+            m_manager.ReleaseToPool(this);
         }
 
         #endregion
@@ -168,8 +189,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         protected virtual void CallbackNoHealth()
         {
-            ChangeState(EnemyStateType.Inactive);
-            m_manager.KillEnemy(this);
+            ChangeState(EnemyStateType.Dead);
             SoundManager.PlayRandomSFX(m_deathSounds);
         }
 
@@ -195,11 +215,20 @@ namespace Bitfrost.Gameplay.Enemies
 
         public Vector3 CloseRandomDirectionFromPlayer(float angle)
         {
-            float randomAngle = Random.Range(
+            float randomAngle = UnityEngine.Random.Range(
                  -angle,
                  angle
              );
             return Quaternion.AngleAxis(randomAngle, Vector3.forward) * -directionTowardPlayer;
+        }
+
+        #endregion
+
+        #region Death
+
+        public virtual void CallbackDeathAnimaEnd()
+        {
+            onDeathAnimEnded.Invoke();
         }
 
         #endregion

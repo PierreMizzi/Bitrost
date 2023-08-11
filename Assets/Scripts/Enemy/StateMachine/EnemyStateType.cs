@@ -7,6 +7,7 @@ namespace Bitfrost.Gameplay.Enemies
 		Inactive = 1,
 		Idle = 2,
 		Move = 3,
-		Attack = 4
+		Attack = 4,
+		Dead = 5,
 	}
 }

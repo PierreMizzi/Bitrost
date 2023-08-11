@@ -67,6 +67,7 @@ namespace Bitfrost.Gameplay.Enemies
                 new EnemyIdleState(this),
                 new ScoutMoveState(this),
                 new ScoutAttackState(this),
+                new EnemyDeadState(this),
             };
         }
 

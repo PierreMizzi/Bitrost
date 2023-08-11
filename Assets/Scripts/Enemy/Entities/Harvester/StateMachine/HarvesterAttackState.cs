@@ -27,7 +27,10 @@ namespace Bitfrost.Gameplay.Enemies
         public override void Update()
         {
             if (!m_harvester.isCrystalValid)
+            {
+                Debug.Log("target crystal is not valid !!!!! but in ATTACK");
                 ChangeState((int)EnemyStateType.Idle);
+            }
         }
 
         public override void Exit()

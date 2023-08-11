@@ -28,8 +28,6 @@ namespace Bitfrost.Gameplay.Enemies
             }
         }
 
-        public Animator animator { get; private set; }
-
         #endregion
 
         #region Methods 
@@ -48,20 +46,16 @@ namespace Bitfrost.Gameplay.Enemies
             };
         }
 
-        protected override void Initialize()
-        {
-            animator = GetComponent<Animator>();
-            base.Initialize();
-        }
-
         public override void InitiliazeStates()
         {
+            Debug.Log("InitiliazeStates");
             states = new List<AState>()
             {
                 new EnemyInactiveState(this),
                 new HarvesterIdleState(this),
                 new HarvesterMoveState(this),
                 new HarvesterAttackState(this),
+                new EnemyDeadState(this),
             };
         }
 

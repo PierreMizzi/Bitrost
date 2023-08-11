@@ -263,7 +263,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         #region Killing
 
-        public void KillEnemy(Enemy enemy)
+        public void ReleaseToPool(Enemy enemy)
         {
             m_poolingChannel.onReleaseToPool.Invoke(enemy.gameObject);
 
