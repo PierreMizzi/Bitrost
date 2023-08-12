@@ -3,6 +3,7 @@ using UnityEngine.UIElements;
 using System;
 using System.Collections;
 using PierreMizzi.Useful;
+using System.Collections.Generic;
 
 namespace Bitfrost.Gameplay.UI
 {
@@ -28,7 +29,9 @@ namespace Bitfrost.Gameplay.UI
 
         private Button m_pauseButton;
         private Label m_timeLabel;
-        private VisualElement m_difficultyContainer;
+
+        private VisualElement m_difficultyIconsContainer;
+        List<VisualElement> m_stageDifficultyIcons = new List<VisualElement>();
 
         #endregion
 
@@ -39,7 +42,10 @@ namespace Bitfrost.Gameplay.UI
             // Visual Elements
             m_pauseButton = m_document.rootVisualElement.Q<Button>(k_pauseButton);
             m_timeLabel = m_document.rootVisualElement.Q<Label>(k_timeLabel);
-            m_difficultyContainer = m_document.rootVisualElement.Q(k_difficultyContainer);
+
+            m_difficultyIconsContainer = m_document.rootVisualElement.Q(k_difficultyContainer);
+            m_stageDifficultyIcons = m_difficultyIconsContainer.Children() as List<VisualElement>;
+            CallbackChangeStageDifficulty(1);
 
             // Time
             m_updateTimeCoroutine = UpdateTime();
@@ -49,10 +55,43 @@ namespace Bitfrost.Gameplay.UI
             m_pauseButton.clicked += CallbackPauseClicked;
         }
 
+        private void Start()
+        {
+            if (m_levelChannel.onChangeStageDifficulty != null)
+            {
+
+                m_levelChannel.onReset += CallbackReset;
+                m_levelChannel.onChangeStageDifficulty += CallbackChangeStageDifficulty;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (m_levelChannel.onChangeStageDifficulty != null)
+            {
+                m_levelChannel.onReset -= CallbackReset;
+                m_levelChannel.onChangeStageDifficulty -= CallbackChangeStageDifficulty;
+            }
+        }
+
+        private void CallbackReset()
+        {
+            CallbackChangeStageDifficulty(1);
+        }
+
+        private void CallbackChangeStageDifficulty(int stageDifficulty)
+        {
+            int length = m_difficultyIconsContainer.childCount;
+            DisplayStyle displayOrHide;
+            for (int i = 0; i < length; i++)
+            {
+                displayOrHide = i < stageDifficulty ? DisplayStyle.Flex : DisplayStyle.None;
+                m_stageDifficultyIcons[i].style.display = displayOrHide;
+            }
+        }
+
         private void CallbackPauseClicked()
         {
-            Debug.LogWarning("Pause Clicked !!!");
-
             m_levelChannel.onPauseGame.Invoke();
             m_levelChannel.onDisplayPausePanel.Invoke();
         }
@@ -67,5 +106,6 @@ namespace Bitfrost.Gameplay.UI
         }
 
         #endregion
+
     }
 }

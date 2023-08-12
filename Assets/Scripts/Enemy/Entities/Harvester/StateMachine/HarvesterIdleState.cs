@@ -18,10 +18,8 @@ namespace Bitfrost.Gameplay.Enemies
 
 		private IEnumerator m_searchTargetCoroutine;
 
-
 		protected override void DefaultEnter()
 		{
-			Debug.Log("ENTER HarvesterIdle");
 			SearchTargetCrystal();
 		}
 
@@ -30,11 +28,8 @@ namespace Bitfrost.Gameplay.Enemies
 			m_harvester.SearchCrystalShard();
 
 			if (m_harvester.targetCrystal != null)
-			{
 				ChangeState((int)EnemyStateType.Move);
-			}
-			else
-				StartSearchingTarget();
+
 		}
 
 		public override void Exit()
@@ -59,7 +54,6 @@ namespace Bitfrost.Gameplay.Enemies
 				m_harvester.StopCoroutine(m_searchTargetCoroutine);
 				m_searchTargetCoroutine = null;
 			}
-
 		}
 
 		private IEnumerator SearchTargetCrystalCoroutine()

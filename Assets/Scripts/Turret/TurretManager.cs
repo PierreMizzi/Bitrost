@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Bitfrost.Gameplay.Energy;
 using PierreMizzi.Useful;
@@ -120,6 +121,8 @@ namespace Bitfrost.Gameplay.Turrets
 
         }
 
+
+
         public void Update()
         {
             if (!isPaused)
@@ -218,7 +221,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         #region Turret
 
-        private void CreateTurret()
+        public void CreateTurret()
         {
             // Instantiate Model
             Turret turret = Instantiate(m_turretPrefab, m_turretContainer);

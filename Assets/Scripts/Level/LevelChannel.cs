@@ -13,19 +13,28 @@ namespace Bitfrost.Gameplay
     {
         public CrystalShardsManager crystalManager;
 
+        // Tutorial
+        public Action onDisplayTutorial;
+
+        // Timeline stage
+        public IntDelegate onChangeStageDifficulty;
+
+        // Player & Turret
         public Player player;
         public IntDelegate onTurretRetrieved;
 
+        // Enemies
         public Action onAllEnemiesKilled;
 
-        public Action onDisplayTutorial;
-
+        // Game Over
         public Action onGameOver;
         public GameOverDelegate onGameOverPanel;
 
+        // Reset Game
         public Action onReset;
         public Action onRestart;
 
+        // Pause
         public Action onPauseGame;
         public Action onResumeGame;
 
@@ -34,19 +43,27 @@ namespace Bitfrost.Gameplay
 
         private void OnEnable()
         {
+            // Tutorial
+            onDisplayTutorial = () => { };
+
+            // Timeline stage
+            onChangeStageDifficulty = (int difficultyLevel) => { };
+
+            // Player & Turret
             onTurretRetrieved = (int storedEnergy) => { };
 
+            // Enemies
             onAllEnemiesKilled = () => { };
-
-            onDisplayTutorial = () => { };
 
             // Game Over
             onGameOver = () => { };
             onGameOverPanel = (GameOverData data) => { };
 
+            // Reset Game
             onReset = () => { };
             onRestart = () => { };
 
+            // Pause
             onPauseGame = () => { };
             onResumeGame = () => { };
 
