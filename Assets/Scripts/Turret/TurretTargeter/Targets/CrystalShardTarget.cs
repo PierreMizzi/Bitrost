@@ -9,6 +9,8 @@ namespace Bitfrost.Gameplay.Turrets
 
         public CrystalShard crystal { get; private set; }
 
+        private Quaternion m_offsetRotation = Quaternion.Euler(0, 0, -35f);
+
         #endregion
 
         #region Methods
@@ -20,10 +22,15 @@ namespace Bitfrost.Gameplay.Turrets
             m_targeterScaleFactor *= m_origin.localScale.x;
         }
 
+        public override Quaternion GetTargeterRotation()
+        {
+            return crystal.spriteRenderer.transform.rotation * m_offsetRotation;
+        }
+
         public override string GetInfos()
         {
-            string infos = "Asteroid \r\n";
-            infos += "Energy : " + crystal.remainingEnergyCount;
+            string infos = "ASTEROID \r\n";
+            infos += string.Format("<size=50%>ENERGY : {0} </size>", crystal.remainingEnergyCount);
             return infos;
         }
 

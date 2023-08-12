@@ -31,8 +31,8 @@ namespace Bitfrost.Gameplay
         public GameOverDelegate onGameOverPanel;
 
         // Reset Game
-        public Action onReset;
         public Action onRestart;
+        public Action onReset;
 
         // Pause
         public Action onPauseGame;

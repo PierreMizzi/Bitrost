@@ -67,7 +67,7 @@ namespace Bitfrost.Gameplay.UI
 
 		private void CallbackRestartButton()
 		{
-			m_levelChannel.onReset.Invoke();
+			m_levelChannel.onRestart.Invoke();
 			Hide();
 			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}

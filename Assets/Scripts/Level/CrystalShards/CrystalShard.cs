@@ -46,6 +46,8 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private SpriteRenderer m_spriteRenderer = null;
 
+        public SpriteRenderer spriteRenderer { get { return m_spriteRenderer; } }
+
         [SerializeField]
         private MaterialPropertyBlockModifier m_propertyBlock = null;
 

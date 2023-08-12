@@ -83,6 +83,7 @@ namespace Bitfrost.Gameplay
             {
                 m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
                 m_levelChannel.onGameOver += CallbackGameOver;
+                m_levelChannel.onRestart += CallbackRestart;
                 m_levelChannel.onReset += CallbackReset;
 
                 m_levelChannel.onPauseGame += Pause;
@@ -98,6 +99,8 @@ namespace Bitfrost.Gameplay
 
         }
 
+
+
         private void Update()
         {
             if (canUpdateTime)
@@ -111,6 +114,7 @@ namespace Bitfrost.Gameplay
                 m_levelChannel.onAllEnemiesKilled -= CallbackAllEnemiesKilled;
                 m_levelChannel.onGameOver -= CallbackGameOver;
                 m_levelChannel.onReset -= CallbackReset;
+                m_levelChannel.onRestart -= CallbackRestart;
 
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
@@ -200,6 +204,12 @@ namespace Bitfrost.Gameplay
             m_levelChannel.onGameOverPanel.Invoke(data);
         }
 
+        private void CallbackRestart()
+        {
+            m_levelChannel.onResumeGame.Invoke();
+            m_levelChannel.onReset.Invoke();
+        }
+
         private void CallbackReset()
         {
             // Time
@@ -207,8 +217,6 @@ namespace Bitfrost.Gameplay
 
             // Stage
             ResetStage();
-
-            m_levelChannel.onResumeGame.Invoke();
         }
 
         #endregion

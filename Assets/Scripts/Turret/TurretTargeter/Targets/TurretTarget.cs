@@ -16,6 +16,13 @@ namespace Bitfrost.Gameplay.Turrets
             turret = m_origin.GetComponent<Turret>();
         }
 
+        public override string GetInfos()
+        {
+            string infos = "TURRET \r\n";
+            infos += string.Format("<size=50%>STATUS : {0}</size>", (TurretStateType)turret.currentState.type);
+            return infos;
+        }
+
         #endregion
     }
 }

@@ -31,20 +31,18 @@ namespace Bitfrost.Gameplay.Turrets
             UnsetTarget();
         }
 
-
-
         private void Update()
         {
             if (currentTarget != null)
             {
                 UpdateRotation();
-                UpdatInfosPosition();
+                UpdatInfos();
             }
         }
 
         private void UpdateRotation()
         {
-            transform.rotation = currentTarget.GetTargeterRotation();
+            m_sprite.transform.rotation = currentTarget.GetTargeterRotation();
         }
 
         public void SetTarget(ATarget target)
@@ -53,13 +51,14 @@ namespace Bitfrost.Gameplay.Turrets
 
             // Visual
             m_sprite.color = currentTarget.targeterColor;
-            m_infoText.text = currentTarget.GetInfos();
+            m_infoText.color = currentTarget.targeterColor;
 
             // Transform
             transform.position = currentTarget.transform.position;
-            transform.localScale = currentTarget.targeterScale;
+            m_sprite.transform.localScale = currentTarget.targeterScale;
 
             m_sprite.gameObject.SetActive(true);
+            m_infoContainer.gameObject.SetActive(true);
         }
 
         public void UnsetTarget()
@@ -67,36 +66,43 @@ namespace Bitfrost.Gameplay.Turrets
             currentTarget = null;
 
             m_sprite.gameObject.SetActive(false);
+            m_infoContainer.gameObject.SetActive(false);
         }
 
         #region Info Position
 
+        [Header("Info Position")]
         [SerializeField]
-        private float m_spriteRotation;
-
         private Transform m_infoContainer;
 
         [SerializeField]
-        private Vector3 m_infoContainerStartingPosition;
+        private Vector3 m_infoContainerOffset;
         private Vector3 m_infoContainerPosition;
 
         private float rotationAngle;
-        public void OnValidate()
-        {
-            if (!enabled)
-                return;
-            m_sprite.transform.rotation = Quaternion.Euler(0f, 0f, m_spriteRotation);
-            UpdatInfosPosition();
-        }
 
-        private void UpdatInfosPosition()
-        {
-            m_sprite.transform.rotation = Quaternion.Euler(0f, 0f, m_spriteRotation);
+        // [SerializeField]
+        // private float m_spriteRotation;
 
-            rotationAngle = (UtilsClass.ToFullAngle(m_spriteRotation) % 90) - 45;
-            m_infoContainerPosition = Quaternion.AngleAxis(rotationAngle, Vector3.forward) * m_infoContainerStartingPosition;
+        // public void OnValidate()
+        // {
+        //     if (!enabled)
+        //         return;
+        //     m_sprite.transform.rotation = Quaternion.Euler(0f, 0f, m_spriteRotation);
+        //     UpdatInfosPosition();
+        // }
+
+        private void UpdatInfos()
+        {
+            // m_sprite.transform.rotation = Quaternion.Euler(0f, 0f, m_spriteRotation);
+
+            // Transform
+            rotationAngle = (UtilsClass.ToFullAngle(m_sprite.transform.rotation.eulerAngles.z) % 90) - 45;
+            m_infoContainerPosition = Quaternion.AngleAxis(rotationAngle, Vector3.forward) * m_infoContainerOffset;
             m_infoContainer.localPosition = m_infoContainerPosition * m_sprite.transform.localScale.x;
 
+            // Infos
+            m_infoText.text = currentTarget.GetInfos();
         }
 
         #endregion

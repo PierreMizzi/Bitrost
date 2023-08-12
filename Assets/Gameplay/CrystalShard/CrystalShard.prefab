@@ -164,6 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_origin: {fileID: 6620406873546702139}
   m_type: 2
+  m_targeterColor: {r: 0.18274586, g: 0.754717, b: 0.7027197, a: 1}
   m_targeterScaleFactor: 0.5
 --- !u!58 &1462603796
 CircleCollider2D:
