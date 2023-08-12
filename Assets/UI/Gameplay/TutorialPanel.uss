@@ -1,6 +1,6 @@
 .content-container {
-    justify-content: center;
-    align-items: stretch;
+    justify-content: space-around;
+    align-items: center;
     border-left-width: 5px;
     border-right-width: 5px;
     border-top-width: 5px;

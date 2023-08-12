@@ -10,8 +10,9 @@ namespace Bitfrost.Gameplay.Turrets
 
         #region Methods
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             turret = m_origin.GetComponent<Turret>();
         }
 

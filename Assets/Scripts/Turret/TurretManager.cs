@@ -305,7 +305,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void ManageCrystalTarget(ATarget target)
         {
-            m_turretTargeter.Target(target);
+            m_turretTargeter.SetTarget(target);
             m_currentTarget = target;
 
             if (m_remainingTurretCount > 0)
@@ -318,7 +318,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void ManageTurretTarget(ATarget target)
         {
-            m_turretTargeter.Target(target);
+            m_turretTargeter.SetTarget(target);
             m_currentTarget = target;
 
             ((TurretTarget)m_currentTarget).turret.isTargeted = true;
@@ -342,7 +342,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void UnsetCrystalTarget()
         {
-            m_turretTargeter.Hide();
+            m_turretTargeter.UnsetTarget();
             m_currentTarget = null;
 
             if (m_remainingTurretCount > 0)
@@ -357,7 +357,7 @@ namespace Bitfrost.Gameplay.Turrets
         {
             ((TurretTarget)m_currentTarget).turret.isTargeted = false;
 
-            m_turretTargeter.Hide();
+            m_turretTargeter.UnsetTarget();
             m_currentTarget = null;
         }
 

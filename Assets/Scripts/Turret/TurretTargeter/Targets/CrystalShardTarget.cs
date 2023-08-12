@@ -13,10 +13,18 @@ namespace Bitfrost.Gameplay.Turrets
 
         #region Methods
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             crystal = m_origin.GetComponent<CrystalShard>();
             m_targeterScaleFactor *= m_origin.localScale.x;
+        }
+
+        public override string GetInfos()
+        {
+            string infos = "Asteroid \r\n";
+            infos += "Energy : " + crystal.remainingEnergyCount;
+            return infos;
         }
 
         #endregion

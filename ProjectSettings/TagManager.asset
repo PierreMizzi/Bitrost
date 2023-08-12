@@ -62,7 +62,7 @@ TagManager:
   - name: Particles
     uniqueID: 1473311831
     locked: 0
-  - name: ScreenEdgeInfo
+  - name: OverlayData
     uniqueID: 4007184077
     locked: 0
   - name: HUD

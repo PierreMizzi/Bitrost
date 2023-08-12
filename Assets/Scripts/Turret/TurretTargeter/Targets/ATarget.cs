@@ -24,12 +24,36 @@ namespace Bitfrost.Gameplay.Turrets
             get { return m_type; }
         }
 
+        [Header("Visual")]
+        [SerializeField]
+        private Color m_targeterColor;
+
+        public Color targeterColor
+        {
+            get
+            {
+                return m_targeterColor;
+            }
+        }
+
+        [Header("Transform")]
         [SerializeField]
         protected float m_targeterScaleFactor = 1f;
+        public Vector3 targeterScale { get; private set; }
 
-        public Vector3 targeterScale
+        protected virtual void Awake()
         {
-            get { return new Vector3(m_targeterScaleFactor, m_targeterScaleFactor, m_targeterScaleFactor); }
+            targeterScale = new Vector3(m_targeterScaleFactor, m_targeterScaleFactor, m_targeterScaleFactor);
+        }
+
+        public virtual Quaternion GetTargeterRotation()
+        {
+            return transform.rotation;
+        }
+
+        public virtual string GetInfos()
+        {
+            return m_type.ToString();
         }
 
         #endregion
