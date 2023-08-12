@@ -46,6 +46,8 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private SpriteRenderer m_spriteRenderer = null;
 
+        private Color m_spriteRendererTint;
+
         public SpriteRenderer spriteRenderer { get { return m_spriteRenderer; } }
 
         [SerializeField]
@@ -68,6 +70,7 @@ namespace Bitfrost.Gameplay.Energy
         protected void Awake()
         {
             onRefreshEnergy = () => { };
+
         }
 
         protected void Start()
@@ -145,7 +148,9 @@ namespace Bitfrost.Gameplay.Energy
 
         public void Hide()
         {
-            m_spriteRenderer.color = UtilsClass.Transparent;
+            m_spriteRendererTint = m_spriteRenderer.color;
+            m_spriteRendererTint.a = 0;
+            m_spriteRenderer.color = m_spriteRendererTint;
         }
 
         #endregion

@@ -63,7 +63,6 @@ namespace Bitfrost.Gameplay.UI
 		protected override void CallbackStartClicked()
 		{
 			base.CallbackStartClicked();
-			m_applicationChannel.onSetCursor.Invoke(CursorType.Attack);
 
 			m_levelChannel.onResumeGame.Invoke();
 

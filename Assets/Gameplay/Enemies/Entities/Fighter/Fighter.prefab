@@ -94,10 +94,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea44f01d5e22b1488f4ac1a21aba3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 5fef314c02da33649882a22154889ac8, type: 2}
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_type: 2
-  settings: {fileID: 11400000, guid: 5fef314c02da33649882a22154889ac8, type: 2}
   m_animator: {fileID: 4531527313208452680}
+  m_collider: {fileID: 4318404297879891382}
   bulletOrigin: {fileID: 8116805840696305865}
   bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
 --- !u!50 &4318404297879891377

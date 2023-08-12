@@ -29,12 +29,14 @@ namespace Bitfrost.Gameplay.Turrets
         [SerializeField]
         private TurretSettings m_settings;
 
-        public TurretSettings settings
-        {
-            get { return m_settings; }
-        }
+        public TurretManager m_manager;
+
+        public TurretSettings settings { get { return m_settings; } }
+        public TurretManager manager { get { return m_manager; } }
 
         public CrystalShard crystal { get; private set; }
+
+
 
         [SerializeField]
         private TurretTarget m_target;
@@ -42,8 +44,6 @@ namespace Bitfrost.Gameplay.Turrets
         [SerializeField]
         private GameObject m_spritesContainer = null;
 
-        [SerializeField]
-        private GameObject m_aimSprite;
         private bool m_isDroppable;
         private bool m_isTargeted = false;
 
@@ -83,6 +83,9 @@ namespace Bitfrost.Gameplay.Turrets
 
         [SerializeField]
         private Transform m_bulletOriginTransform;
+
+        [SerializeField]
+        private GameObject m_aimSprite;
 
         private Vector3 m_mouseWorldSpace;
 
@@ -166,6 +169,7 @@ namespace Bitfrost.Gameplay.Turrets
         [Header("Audio")]
         [SerializeField]
         private SoundSource m_fireBulletSource = null;
+
         [SerializeField]
         private SoundSource m_wrongActionSource = null;
 
@@ -177,6 +181,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         public void Initialize(TurretManager manager)
         {
+            m_manager = manager;
             camera = Camera.main;
 
             storedEnergy = 0;

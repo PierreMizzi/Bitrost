@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Bitfrost.Application;
 using Bitfrost.Gameplay.Energy;
 using PierreMizzi.Useful;
 using UnityEngine;
@@ -15,6 +17,8 @@ namespace Bitfrost.Gameplay.Turrets
         [SerializeField]
         private LevelChannel m_levelChannel = null;
 
+        [SerializeField]
+        private ApplicationChannel m_applicationChannel;
         public bool isPaused { get; set; }
 
         #region Inputs
@@ -103,7 +107,7 @@ namespace Bitfrost.Gameplay.Turrets
             m_camera = Camera.main;
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
             m_remainingTurretCount = m_settings.startingTurretCount;
             SubscribeInputs();
@@ -118,6 +122,10 @@ namespace Bitfrost.Gameplay.Turrets
                 m_levelChannel.onPauseGame += Pause;
                 m_levelChannel.onResumeGame += Resume;
             }
+
+            yield return new WaitForEndOfFrame();
+
+            ManageCursor();
 
         }
 
@@ -397,7 +405,6 @@ namespace Bitfrost.Gameplay.Turrets
             // Turrets
             m_remainingTurretCount = m_settings.startingTurretCount;
             CreateTurret();
-
         }
 
         #endregion
@@ -415,12 +422,40 @@ namespace Bitfrost.Gameplay.Turrets
 
         public void Resume()
         {
+            ManageCursor();
             isPaused = false;
             SubscribeInputs();
 
             foreach (Turret turret in m_turrets)
                 turret.Resume();
         }
+
+        #endregion
+
+        #region Cursor
+
+        public bool hasOneOffensiveTurret
+        {
+            get
+            {
+                foreach (Turret turret in m_turrets)
+                {
+                    if (turret.currentState.type == (int)TurretStateType.Offensive)
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        public void ManageCursor()
+        {
+            if (hasOneOffensiveTurret)
+                m_applicationChannel.onSetCursor(CursorType.FirePossible);
+            else
+                m_applicationChannel.onSetCursor(CursorType.FireImpossible);
+        }
+
+
 
         #endregion
 

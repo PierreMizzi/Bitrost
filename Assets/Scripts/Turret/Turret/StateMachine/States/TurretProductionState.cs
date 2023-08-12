@@ -19,7 +19,7 @@ namespace Bitfrost.Gameplay.Turrets
         {
             base.DefaultEnter();
 
-            m_turret.canonTransform.gameObject.SetActive(false);
+            m_this.canonTransform.gameObject.SetActive(false);
             StartProduction();
 
             SoundManager.PlaySFX(SoundDataID.TURRET_PRODUCTION_MODE);
@@ -28,9 +28,9 @@ namespace Bitfrost.Gameplay.Turrets
 
         public override void Update()
         {
-            if (!m_turret.crystal.hasEnergy)
+            if (!m_this.crystal.hasEnergy)
             {
-                if (m_turret.hasEnergy)
+                if (m_this.hasEnergy)
                     ChangeState(TurretStateType.Offensive);
                 else
                     ChangeState(TurretStateType.Disabled);
@@ -39,7 +39,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         public override void Exit()
         {
-            m_turret.productionProgress = 0;
+            m_this.productionProgress = 0;
             if (m_productionCycleTween != null && m_productionCycleTween.IsPlaying())
                 m_productionCycleTween.Kill();
 
@@ -60,9 +60,9 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void StartProduction()
         {
-            m_turret.productionProgress = 0;
+            m_this.productionProgress = 0;
             m_productionCycleTween = DOVirtual
-                .Float(0, 1, m_turret.settings.productionDuration, ProductionUpdate)
+                .Float(0, 1, m_this.settings.productionDuration, ProductionUpdate)
                 .SetEase(Ease.Linear)
                 .SetLoops(-1)
                 .OnStepComplete(CompleteProductionCycle);
@@ -70,20 +70,20 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void ProductionUpdate(float value)
         {
-            m_turret.productionProgress = value;
+            m_this.productionProgress = value;
         }
 
         public void CompleteProductionCycle()
         {
-            m_turret.crystal.DecrementEnergy();
+            m_this.crystal.DecrementEnergy();
 
-            m_turret.storedEnergy += m_turret.settings.productionRatio;
+            m_this.storedEnergy += m_this.settings.productionRatio;
 
-            if (!m_turret.CanBeProduction())
+            if (!m_this.CanBeProduction())
                 ChangeState(TurretStateType.Offensive);
 
-            m_turret.productionProgress = 0;
-            m_turret.onRefreshEnergy.Invoke();
+            m_this.productionProgress = 0;
+            m_this.onRefreshEnergy.Invoke();
         }
     }
 }

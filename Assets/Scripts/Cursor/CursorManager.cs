@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Bitfrost.Application;
 using UnityEngine;
 
@@ -17,15 +18,17 @@ namespace Bitfrost.Gameplay
         [SerializeField]
         private LevelChannel m_levelChannel;
 
-        [SerializeField]
-        private Texture2D m_normalCursor;
+        [SerializeField] private List<CursorConfig> m_configs = new List<CursorConfig>();
 
-        [SerializeField]
-        private Texture2D m_attackCursor;
+        private Dictionary<CursorType, CursorConfig> m_typeToConfig = new Dictionary<CursorType, CursorConfig>();
 
         private void Start()
         {
-            SetCursor(CursorType.Attack);
+            foreach (CursorConfig config in m_configs)
+            {
+                if (!m_typeToConfig.ContainsKey(config.type))
+                    m_typeToConfig.Add(config.type, config);
+            }
 
             if (m_appChannel != null)
                 m_appChannel.onSetCursor += SetCursor;
@@ -33,10 +36,10 @@ namespace Bitfrost.Gameplay
             if (m_levelChannel != null)
             {
                 m_levelChannel.onGameOverPanel += CallbackGameOverPanel;
-                m_levelChannel.onReset += CallbackReset;
+                // m_levelChannel.onReset += CallbackReset;
 
                 m_levelChannel.onPauseGame += Pause;
-                m_levelChannel.onResumeGame += Resume;
+                // m_levelChannel.onResumeGame += Resume;
             }
         }
 
@@ -48,25 +51,19 @@ namespace Bitfrost.Gameplay
             if (m_levelChannel != null)
             {
                 m_levelChannel.onGameOverPanel -= CallbackGameOverPanel;
-                m_levelChannel.onReset -= CallbackReset;
+                // m_levelChannel.onReset -= CallbackReset;
 
                 m_levelChannel.onPauseGame -= Pause;
-                m_levelChannel.onResumeGame -= Resume;
+                // m_levelChannel.onResumeGame -= Resume;
             }
         }
 
         private void SetCursor(CursorType type)
         {
-            switch (type)
+            if (m_typeToConfig.ContainsKey(type))
             {
-                case CursorType.Normal:
-                    Cursor.SetCursor(m_normalCursor, Vector3.zero, CursorMode.Auto);
-                    break;
-                case CursorType.Attack:
-                    Cursor.SetCursor(m_attackCursor, Vector3.zero, CursorMode.Auto);
-                    break;
-                default:
-                    break;
+                CursorConfig config = m_typeToConfig[type];
+                Cursor.SetCursor(config.texture, config.hotspot, config.mode);
             }
         }
 
@@ -75,20 +72,20 @@ namespace Bitfrost.Gameplay
             SetCursor(CursorType.Normal);
         }
 
-        private void CallbackReset()
-        {
-            SetCursor(CursorType.Attack);
-        }
+        // private void CallbackReset()
+        // {
+        //     SetCursor(CursorType.FirePossible);
+        // }
 
         private void Pause()
         {
             SetCursor(CursorType.Normal);
         }
 
-        private void Resume()
-        {
-            SetCursor(CursorType.Attack);
-        }
+        // private void Resume()
+        // {
+        //     SetCursor(CursorType.FirePossible);
+        // }
 
     }
 }

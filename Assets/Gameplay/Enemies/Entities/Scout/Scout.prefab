@@ -294,10 +294,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e163bca8be5be04d9e9f68c75e9539d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 24ff658f71219af479d9637eab784465, type: 2}
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_type: 3
-  settings: {fileID: 11400000, guid: 24ff658f71219af479d9637eab784465, type: 2}
   m_animator: {fileID: 630302018}
+  m_collider: {fileID: 8889704073991165709}
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
   m_randomDirectionAroundPlayer: {x: 0, y: 0, z: 0}
   speedTrackPlayer: 0

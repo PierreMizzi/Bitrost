@@ -21,11 +21,14 @@ namespace Bitfrost.Gameplay.Enemies
 		protected override void DefaultEnter()
 		{
 			m_enemy.animator.SetBool(k_isDead, true);
+			m_enemy.SetNonHittable();
 		}
 
 		public override void Exit()
 		{
 			m_enemy.animator.SetBool(k_isDead, false);
+			m_enemy.collider.gameObject.SetActive(true);
+			m_enemy.SetHittable();
 		}
 
 		private void CallbackDeathAnimaEnd()

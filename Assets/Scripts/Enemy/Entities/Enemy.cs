@@ -7,250 +7,255 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Enemies
 {
 
-    [RequireComponent(typeof(HealthEntity))]
-    public class Enemy : MonoBehaviour, IStateMachine, IPausable
-    {
-        #region Fields
+	[RequireComponent(typeof(HealthEntity))]
+	public class Enemy : MonoBehaviour, IStateMachine, IPausable
+	{
+		#region Fields
 
-        [SerializeField]
-        protected LevelChannel m_levelChannel = null;
+		public EnemySettings settings;
+		protected EnemyManager m_manager = null;
+		protected HealthEntity m_healthEntity;
+		protected bool m_isInitialized;
 
-        public LevelChannel levelChannel
-        {
-            get { return m_levelChannel; }
-        }
+		[SerializeField]
+		protected LevelChannel m_levelChannel = null;
 
-        public Vector3 directionTowardPlayer
-        {
-            get { return (m_levelChannel.player.transform.position - transform.position).normalized; }
-        }
+		[SerializeField]
+		protected EnemyType m_type = EnemyType.None;
 
-        [SerializeField]
-        protected EnemyType m_type = EnemyType.None;
-        public EnemyType type
-        {
-            get { return m_type; }
-        }
+		[SerializeField]
+		private Animator m_animator;
 
-        protected HealthEntity m_healthEntity;
-        protected bool m_isInitialized;
-        protected EnemyManager m_manager = null;
+		[SerializeField]
+		private Collider2D m_collider;
 
-        public EnemySettings settings;
+		public LevelChannel levelChannel { get { return m_levelChannel; } }
 
-        public bool isPaused { get; set; }
+		public EnemyType type { get { return m_type; } }
 
-        [SerializeField]
-        private Animator m_animator;
+		public Animator animator { get { return m_animator; } }
 
-        public Animator animator
-        {
-            get
-            {
-                return m_animator;
-            }
-        }
-
-        public Action onDeathAnimEnded;
+		public new Collider2D collider { get { return m_collider; } }
 
 
-        #region StateMachine
+		public Vector3 directionTowardPlayer
+		{
+			get { return (m_levelChannel.player.transform.position - transform.position).normalized; }
+		}
 
-        public List<AState> states { get; set; } = new List<AState>();
-        public AState currentState { get; set; }
+		public bool isPaused { get; set; }
 
-        #endregion
+		public Action onDeathAnimEnded;
 
-        #region Sounds
 
-        protected List<string> m_deathSounds = new List<string>();
+		#region StateMachine
 
-        protected List<string> m_hitSounds = new List<string>();
+		public List<AState> states { get; set; } = new List<AState>();
+		public AState currentState { get; set; }
 
-        #endregion
+		#endregion
 
-        #endregion
+		#region Sounds
 
-        #region Methods
+		protected List<string> m_deathSounds = new List<string>();
 
-        protected virtual void Awake()
-        {
-            m_deathSounds = new List<string>(){
-                SoundDataID.ENEMY_DEATH_01,
-                SoundDataID.ENEMY_DEATH_02,
-                SoundDataID.ENEMY_DEATH_03,
-                SoundDataID.ENEMY_DEATH_04,
-                SoundDataID.ENEMY_DEATH_05,
-                SoundDataID.ENEMY_DEATH_06,
-                SoundDataID.ENEMY_DEATH_07,
-                SoundDataID.ENEMY_DEATH_08,
-            };
+		protected List<string> m_hitSounds = new List<string>();
 
-            onDeathAnimEnded = () => { };
-        }
+		#endregion
 
-        protected virtual void Update()
-        {
-            UpdateState();
-        }
+		#endregion
 
-        protected virtual void OnDestroy()
-        {
-            UnsubscribeHealth();
-        }
+		#region Methods
 
-        #region StateMachine
+		protected virtual void Awake()
+		{
+			m_deathSounds = new List<string>(){
+				SoundDataID.ENEMY_DEATH_01,
+				SoundDataID.ENEMY_DEATH_02,
+				SoundDataID.ENEMY_DEATH_03,
+				SoundDataID.ENEMY_DEATH_04,
+				SoundDataID.ENEMY_DEATH_05,
+				SoundDataID.ENEMY_DEATH_06,
+				SoundDataID.ENEMY_DEATH_07,
+				SoundDataID.ENEMY_DEATH_08,
+			};
 
-        public virtual void InitiliazeStates()
-        {
-            states = new List<AState>()
-            {
-                new EnemyIdleState(this),
-                new EnemyMoveState(this),
-                new EnemyAttackState(this)
-            };
-        }
+			onDeathAnimEnded = () => { };
+		}
 
-        public void ChangeState(EnemyStateType nextState, EnemyStateType previousState = EnemyStateType.None)
-        {
-            ChangeState((int)previousState, (int)nextState);
-        }
+		protected virtual void Update()
+		{
+			UpdateState();
+		}
 
-        public void ChangeState(int previousState, int nextState)
-        {
-            currentState?.Exit();
+		protected virtual void OnDestroy()
+		{
+			UnsubscribeHealth();
+		}
 
-            currentState = states.Find((AState newState) => newState.type == nextState);
-            if (currentState != null)
-                currentState.Enter(previousState);
-            else
-            {
-                Debug.LogError($"Couldn't find a new state of type : {nextState}. Going Inactive");
-            }
-        }
+		#region StateMachine
 
-        public void UpdateState()
-        {
-            if (!isPaused)
-                currentState?.Update();
-        }
+		public virtual void InitiliazeStates()
+		{
+			states = new List<AState>()
+			{
+				new EnemyIdleState(this),
+				new EnemyMoveState(this),
+				new EnemyAttackState(this)
+			};
+		}
 
-        #endregion
+		public void ChangeState(EnemyStateType nextState, EnemyStateType previousState = EnemyStateType.None)
+		{
+			ChangeState((int)previousState, (int)nextState);
+		}
 
-        #region Behaviour
+		public void ChangeState(int previousState, int nextState)
+		{
+			currentState?.Exit();
 
-        protected virtual void Initialize()
-        {
-            m_healthEntity = GetComponent<HealthEntity>();
-            SubscribeHealth();
+			currentState = states.Find((AState newState) => newState.type == nextState);
+			if (currentState != null)
+				currentState.Enter(previousState);
+			else
+			{
+				Debug.LogError($"Couldn't find a new state of type : {nextState}. Going Inactive");
+			}
+		}
 
-            InitiliazeStates();
+		public void UpdateState()
+		{
+			if (!isPaused)
+				currentState?.Update();
+		}
 
-            m_isInitialized = true;
-        }
+		#endregion
 
-        public virtual void OutOfPool(EnemyManager manager)
-        {
-            if (!m_isInitialized)
-                Initialize();
+		#region Behaviour
 
-            m_healthEntity.maxHealth = settings.maxHealth;
-            m_healthEntity.Reset();
-            m_manager = manager;
-            ChangeState(EnemyStateType.Idle);
-        }
+		protected virtual void Initialize(EnemyManager manager)
+		{
+			m_manager = manager;
+			m_healthEntity = GetComponent<HealthEntity>();
+			SubscribeHealth();
 
-        public virtual void ReleaseToPool()
-        {
-            ChangeState(EnemyStateType.Inactive);
-            m_manager.ReleaseToPool(this);
-        }
+			InitiliazeStates();
 
-        #endregion
+			m_isInitialized = true;
+		}
 
-        #region Health
+		public virtual void OutOfPool(EnemyManager manager)
+		{
+			if (!m_isInitialized)
+				Initialize(manager);
 
-        protected virtual void SubscribeHealth()
-        {
-            m_healthEntity.onLostHealth += CallbackLostHealth;
-            m_healthEntity.onNoHealth += CallbackNoHealth;
-        }
+			m_healthEntity.maxHealth = settings.maxHealth;
+			m_healthEntity.Reset();
+			SetHittable();
+			ChangeState(EnemyStateType.Idle);
+		}
 
-        protected virtual void UnsubscribeHealth()
-        {
-            m_healthEntity.onLostHealth -= CallbackLostHealth;
-            m_healthEntity.onNoHealth -= CallbackNoHealth;
-        }
+		public virtual void ReleaseToPool()
+		{
+			ChangeState(EnemyStateType.Inactive);
+			m_manager.ReleaseToPool(this);
+		}
 
-        protected virtual void CallbackLostHealth()
-        {
-            SoundManager.PlayRandomSFX(m_hitSounds);
-        }
+		#endregion
 
-        protected virtual void CallbackNoHealth()
-        {
-            ChangeState(EnemyStateType.Dead);
-            SoundManager.PlayRandomSFX(m_deathSounds);
-        }
+		#region Health
 
-        #endregion
+		public void SetHittable()
+		{
+			collider.enabled = true;
+		}
 
-        #region Utils
+		public void SetNonHittable()
+		{
+			collider.enabled = false;
+		}
 
-        public Vector3 CloseRandomPositionAroundPlayer(float radius, float angle)
-        {
+		protected virtual void SubscribeHealth()
+		{
+			m_healthEntity.onLostHealth += CallbackLostHealth;
+			m_healthEntity.onNoHealth += CallbackNoHealth;
+		}
 
-            Vector3 playerPosition = m_levelChannel.player.transform.position;
-            Vector3 playerToEnemy = CloseRandomDirectionFromPlayer(angle);
+		protected virtual void UnsubscribeHealth()
+		{
+			m_healthEntity.onLostHealth -= CallbackLostHealth;
+			m_healthEntity.onNoHealth -= CallbackNoHealth;
+		}
 
-            return playerPosition + (playerToEnemy.normalized * radius);
-        }
+		protected virtual void CallbackLostHealth()
+		{
+			SoundManager.PlayRandomSFX(m_hitSounds);
+		}
 
-        public Vector3 PositionAroundPlayer(Vector3 direction, float radius)
-        {
-            Vector3 playerPosition = m_levelChannel.player.transform.position;
+		protected virtual void CallbackNoHealth()
+		{
+			ChangeState(EnemyStateType.Dead);
+			SoundManager.PlayRandomSFX(m_deathSounds);
+		}
 
-            return playerPosition + (direction * radius);
-        }
+		#endregion
 
-        public Vector3 CloseRandomDirectionFromPlayer(float angle)
-        {
-            float randomAngle = UnityEngine.Random.Range(
-                 -angle,
-                 angle
-             );
-            return Quaternion.AngleAxis(randomAngle, Vector3.forward) * -directionTowardPlayer;
-        }
+		#region Utils
 
-        #endregion
+		public Vector3 CloseRandomPositionAroundPlayer(float radius, float angle)
+		{
 
-        #region Death
+			Vector3 playerPosition = m_levelChannel.player.transform.position;
+			Vector3 playerToEnemy = CloseRandomDirectionFromPlayer(angle);
 
-        public virtual void CallbackDeathAnimaEnd()
-        {
-            onDeathAnimEnded.Invoke();
-        }
+			return playerPosition + (playerToEnemy.normalized * radius);
+		}
 
-        #endregion
+		public Vector3 PositionAroundPlayer(Vector3 direction, float radius)
+		{
+			Vector3 playerPosition = m_levelChannel.player.transform.position;
 
-        #region Pause
+			return playerPosition + (direction * radius);
+		}
 
-        public virtual void Pause()
-        {
-            isPaused = true;
+		public Vector3 CloseRandomDirectionFromPlayer(float angle)
+		{
+			float randomAngle = UnityEngine.Random.Range(
+				 -angle,
+				 angle
+			 );
+			return Quaternion.AngleAxis(randomAngle, Vector3.forward) * -directionTowardPlayer;
+		}
 
-            currentState.Pause();
-        }
+		#endregion
 
-        public virtual void Resume()
-        {
-            isPaused = false;
+		#region Death
 
-            currentState.Resume();
-        }
+		public virtual void CallbackDeathAnimaEnd()
+		{
+			onDeathAnimEnded.Invoke();
+		}
 
-        #endregion
+		#endregion
 
-        #endregion
-    }
+		#region Pause
+
+		public virtual void Pause()
+		{
+			isPaused = true;
+
+			currentState.Pause();
+		}
+
+		public virtual void Resume()
+		{
+			isPaused = false;
+
+			currentState.Resume();
+		}
+
+		#endregion
+
+		#endregion
+	}
 }

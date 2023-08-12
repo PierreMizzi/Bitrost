@@ -17,9 +17,9 @@ namespace Bitfrost.Gameplay.Turrets
         {
             base.DefaultEnter();
 
-            m_turret.SetActive();
-            m_turret.canonTransform.gameObject.SetActive(true);
-            m_turret.aimSprite.SetActive(true);
+            m_this.SetActive();
+            m_this.canonTransform.gameObject.SetActive(true);
+            m_this.aimSprite.SetActive(true);
 
             SoundManager.PlaySFX(SoundDataID.TURRET_FIRE_MODE);
         }
@@ -27,10 +27,10 @@ namespace Bitfrost.Gameplay.Turrets
         public override void Update()
         {
             base.Update();
-            m_turret.ComputeAimDirection();
-            m_turret.canonTransform.up = m_turret.aimDirection;
+            m_this.ComputeAimDirection();
+            m_this.canonTransform.up = m_this.aimDirection;
 
-            if (!m_turret.hasEnergy)
+            if (!m_this.hasEnergy)
                 ChangeState(TurretStateType.Disabled);
 
         }

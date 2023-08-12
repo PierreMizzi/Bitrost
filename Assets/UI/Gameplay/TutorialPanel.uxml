@@ -2,11 +2,11 @@
     <Style src="project://database/Assets/UI/Gameplay/GameOverPanel.uss?fileID=7433441132597879392&amp;guid=db7829885e5133f4e916ed7b2bda074c&amp;type=3#GameOverPanel" />
     <Style src="project://database/Assets/UI/Gameplay/TutorialPanel.uss?fileID=7433441132597879392&amp;guid=a7021abcdfd978c4abec9c4b82541098&amp;type=3#TutorialPanel" />
     <ui:VisualElement name="tutorial-panel-root" style="position: absolute; width: 100%; height: 100%; align-items: center; justify-content: center;">
-        <ui:VisualElement name="background" style="position: absolute; left: 0; top: -2px; right: 0; bottom: 2px; background-color: rgba(0, 0, 0, 0.53);" />
+        <ui:VisualElement name="background" style="position: absolute; left: 0; top: -2px; right: 0; bottom: 2px; background-color: rgba(0, 0, 0, 0.53); display: none;" />
         <ui:VisualElement name="tutorial-panel-container" style="width: 60%; height: 80%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
             <ui:VisualElement name="top-part-justifier" style="height: 15%; flex-direction: row; align-items: center; justify-content: center;">
                 <ui:VisualElement name="top-part" style="height: 100%; background-color: rgb(18, 166, 44); width: 60%; border-top-left-radius: 20px; border-top-right-radius: 20px; max-width: none;">
-                    <ui:Label text="TUTORIAL" display-tooltip-when-elided="true" name="top-label" style="width: auto; height: 100%; -unity-text-align: middle-center; font-size: 43px; color: rgb(255, 255, 255);" />
+                    <ui:Label text="TUTORIAL" display-tooltip-when-elided="true" name="top-label" style="width: auto; height: 100%; -unity-text-align: middle-center; font-size: 74px; color: rgb(255, 255, 255); -unity-font-style: bold;" />
                     <ui:VisualElement name="bolt-container" style="position: absolute; width: 100%; height: 100%; flex-direction: row; justify-content: space-between;">
                         <ui:VisualElement name="bolt-top-left" class="bolt-top" style="background-color: rgb(12, 114, 30);" />
                         <ui:VisualElement name="bolt-top-right" class="bolt-top" style="left: auto; right: 20px; background-color: rgb(12, 114, 30);" />
@@ -15,26 +15,26 @@
             </ui:VisualElement>
             <ui:VisualElement name="bottom-part" style="flex-grow: 0; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; height: 85%; border-top-left-radius: 20px; border-top-right-radius: 20px; background-color: rgb(214, 222, 231); flex-direction: column; justify-content: space-around; align-items: center; padding-top: 0; padding-left: 0; padding-right: 0; padding-bottom: 0;">
                 <ui:VisualElement name="slides-container" style="width: 80%; height: 80%; justify-content: center; align-items: center; flex-direction: column; display: flex;">
-                    <ui:VisualElement name="slide-container-0" style="display: none;">
+                    <ui:VisualElement name="slide-container-0" style="display: flex;">
                         <ui:Label text="Welcome to &lt;b&gt;Bitfrost&lt;/b&gt; !" display-tooltip-when-elided="true" name="welcome-title" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left;" />
-                        <ui:Label text="Bitfrost is a minimalist arcade space shooter, with a hint of resource management." display-tooltip-when-elided="true" name="welcome-text-1" class="content-container-text" />
+                        <ui:Label text="Bitfrost is a minimalist &lt;b&gt;arcade space shooter&lt;/b&gt;, with a hint of &lt;b&gt;resource management&lt;/b&gt;." display-tooltip-when-elided="true" name="welcome-text-1" class="content-container-text" />
                         <ui:Label text="Deploy turrets on nearby asteroids, extract energy from it and defend yourself !" display-tooltip-when-elided="true" name="welcome-text-2" class="content-container-text" />
-                        <ui:Label text="Supported controllers are keyboard &amp; mouse (ZQSD)" display-tooltip-when-elided="true" name="welcome-text-controllers" class="content-container-text" />
+                        <ui:Label text="Supported controllers are &lt;b&gt;keyboard &amp; mouse&lt;/b&gt; (ZQSD)" display-tooltip-when-elided="true" name="welcome-text-controllers" class="content-container-text" />
                     </ui:VisualElement>
-                    <ui:VisualElement name="slide-container-1" class="content-container" style="display: flex;">
-                        <ui:Label text="Turrets" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
+                    <ui:VisualElement name="slide-container-1" class="content-container" style="display: none;">
+                        <ui:Label text="Turrets" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 0; -unity-text-align: upper-left; width: 100%; margin-left: 0; margin-right: 0; margin-top: 0;" />
                         <ui:VisualElement name="right-image-content" style="flex-direction: row; width: 80%; padding-right: 0;">
-                            <ui:Label text="Right click on asteroids to drop turret" display-tooltip-when-elided="true" class="content-container-text" style="width: 66%; -unity-text-align: middle-left; margin-right: 3%;" />
-                            <ui:VisualElement style="width: 33%; height: 150px; background-color: rgb(26, 41, 65); margin-right: 0;" />
+                            <ui:Label text="&lt;b&gt;Right click&lt;/b&gt; on asteroids to drop turret" display-tooltip-when-elided="true" class="content-container-text" style="width: 50%; -unity-text-align: middle-left; margin-right: 3%;" />
+                            <ui:VisualElement class="image-content" style="width: 300px; height: 200px; background-color: rgb(26, 41, 65); margin-right: 0; background-image: url(&apos;project://database/Assets/Sprites/UI/TutorialPanel/FocusAsteroid.png?fileID=2800000&amp;guid=46e76f5f1b3b8a14188fdafd5c3b18e7&amp;type=3#FocusAsteroid&apos;);" />
                         </ui:VisualElement>
-                        <ui:VisualElement name="left-image-content" style="flex-direction: row; width: 80%; padding-right: 0;">
-                            <ui:VisualElement style="width: 33%; height: 150px; background-color: rgb(26, 41, 65); margin-right: 3%;" />
-                            <ui:Label text="Left click on turrets to retrieve it" display-tooltip-when-elided="true" class="content-container-text" style="width: 66%; -unity-text-align: middle-left;" />
+                        <ui:VisualElement name="left-image-content" style="flex-direction: row; width: 80%; padding-right: 0; justify-content: space-between;">
+                            <ui:VisualElement class="image-content" />
+                            <ui:Label text="&lt;b&gt;Left click&lt;/b&gt; on turrets to retrieve it" display-tooltip-when-elided="true" class="content-container-text" style="width: 50%; -unity-text-align: middle-left;" />
                         </ui:VisualElement>
                     </ui:VisualElement>
-                    <ui:VisualElement name="slide-container-2" class="content-container" style="display: none;">
-                        <ui:Label text="Fire Mode" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
-                        <ui:Label text="Left click to fire from the turret. Stored energy is used before asteroid energy" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
+                    <ui:VisualElement name="slide-container-2" class="content-container" style="display: flex; top: 0; right: 2px; left: -1px; bottom: 0;">
+                        <ui:Label text="Offensive Mode" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
+                        <ui:Label text="&lt;b&gt;Left click&lt;/b&gt; to fire from the turret. Stored energy is used before asteroid energy" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                         <ui:VisualElement style="width: 60%; flex-direction: row; align-items: center; justify-content: space-between;">
                             <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: center;">
                                 <ui:Label text="-1" display-tooltip-when-elided="true" class="content-container-text" style="font-size: 80px; flex-grow: 0; flex-shrink: 0; padding-left: 0; padding-right: 0; margin-right: -21px;" />
@@ -56,7 +56,7 @@
                     </ui:VisualElement>
                     <ui:VisualElement name="slide-container-3" class="content-container" style="display: none;">
                         <ui:Label text="Production Mode" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
-                        <ui:Label text="Press E on turrets to switch between Production mode and Fire mode. Production mode extracts energy from asteroids and stores it" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
+                        <ui:Label text="&lt;b&gt;Press E&lt;/b&gt; on turrets to switch between modes. Production mode. &lt;b&gt;extracts energy&lt;/b&gt; from asteroids and stores it" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                         <ui:VisualElement style="width: 60%; flex-direction: row; align-items: center; justify-content: space-between;">
                             <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: center;">
                                 <ui:Label text="-1" display-tooltip-when-elided="true" class="content-container-text" style="font-size: 80px; flex-grow: 0; flex-shrink: 0; padding-left: 0; padding-right: 0; margin-right: -21px;" />
@@ -74,15 +74,15 @@
                     </ui:VisualElement>
                     <ui:VisualElement name="slide-container-4" class="content-container" style="display: none;">
                         <ui:Label text="Reparing" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
-                        <ui:Label text="Retrieving a turret with stored energy repairs player&apos;s ship, scaled on the amount of stored energy" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
+                        <ui:Label text="&lt;b&gt;Retrieving a turret with stored energy&lt;/b&gt; repairs player&apos;s ship, scaled on the amount of stored energy" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                         <ui:VisualElement />
                     </ui:VisualElement>
-                    <ui:VisualElement name="slide-container-5" class="content-container" style="display: none; align-items: flex-start;">
+                    <ui:VisualElement name="slide-container-5" class="content-container" style="display: none; align-items: flex-start; top: 0; right: -1px; left: 2px; bottom: 0;">
                         <ui:Label text="Mission" display-tooltip-when-elided="true" name="mission-title" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
-                        <ui:Label text="- System : Theta C95" display-tooltip-when-elided="true" name="mission-system-name" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
-                        <ui:Label text="- Coordinates :&#10; c : 89.89°&#10; p : 98.97°&#10; d : 34.76ly" display-tooltip-when-elided="true" name="mission-system-coords" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
-                        <ui:Label text="- Energy deposits : High" display-tooltip-when-elided="true" name="mission-energy-quantity" class="content-container-text" style="margin-bottom: 3%; width: auto;" />
-                        <ui:Label text="- Hostile presence : Very High" display-tooltip-when-elided="true" name="mission-hostile-presence" class="content-container-text" style="margin-bottom: 3%; width: auto;" />
+                        <ui:Label text="- &lt;b&gt;System&lt;/b&gt; : Theta C95" display-tooltip-when-elided="true" name="mission-system-name" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
+                        <ui:Label text="- &lt;b&gt;Coordinates&lt;/b&gt; :&#10; c : 89.89°&#10; p : 98.97°&#10; d : 34.76ly" display-tooltip-when-elided="true" name="mission-system-coords" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
+                        <ui:Label text="- &lt;b&gt;Energy deposits&lt;/b&gt; : High" display-tooltip-when-elided="true" name="mission-energy-quantity" class="content-container-text" style="margin-bottom: 3%; width: auto;" />
+                        <ui:Label text="- &lt;b&gt;Hostile presence&lt;/b&gt; : Very High" display-tooltip-when-elided="true" name="mission-hostile-presence" class="content-container-text" style="margin-bottom: 3%; width: auto;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="button-container" style="flex-direction: row; width: 70%; justify-content: space-around;">

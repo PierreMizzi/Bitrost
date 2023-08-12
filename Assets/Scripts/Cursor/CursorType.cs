@@ -6,6 +6,7 @@ namespace Bitfrost.Gameplay
 	{
 		None,
 		Normal,
-		Attack,
+		FirePossible,
+		FireImpossible,
 	}
 }

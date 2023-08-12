@@ -13,7 +13,8 @@ namespace Bitfrost.Gameplay.Turrets
 
         protected override void DefaultEnter()
         {
-            m_turret.SetInactive();
+            base.DefaultEnter();
+            m_this.SetInactive();
         }
     }
 }
