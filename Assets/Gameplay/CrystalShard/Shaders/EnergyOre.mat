@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e95919f5edfc56f409802cb6da06cad0, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -39,10 +39,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EnergyMaxPercent: 0.3
+    - _EnergyMaxPercent: 0.1
     - _EnergyPercent: 1
+    - _MarbleNoiseOffset: 5.38
+    - _MarbleNoiseScale: 2.4
     - _NoiseOffset: 0
-    - _NoiseTiling: 16.8
+    - _NoiseTiling: 15
     - _OreDenity: 0.18
     - _OreDensity: 1
     - _OreMaxDensity: 0.33
@@ -50,12 +52,13 @@ Material:
     - _OreRotation: 44.34
     - _OreScale: 16.4
     - _OreTiling: 20
+    - _PercentNoiseScale: 38.7
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Rotation: 45
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EnergyTint: {r: 0.544025, g: 1, b: 0.95350844, a: 1}
+    - _EnergyTint: {r: 0.54402494, g: 1, b: 0.95350844, a: 0.80784315}
     - _OreTint: {r: 1, g: 0.15723264, b: 0.31938347, a: 1}
     - _Tint: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   m_BuildTextureStacks: []

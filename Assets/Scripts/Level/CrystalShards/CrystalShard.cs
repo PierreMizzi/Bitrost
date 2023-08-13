@@ -54,7 +54,7 @@ namespace Bitfrost.Gameplay.Energy
         private MaterialPropertyBlockModifier m_propertyBlock = null;
 
         private const string k_energyPercentProperty = "_EnergyPercent";
-        private const string k_noiseOffsetProperty = "_NoiseOffset";
+        private const string k_noiseOffsetProperty = "_MarbleNoiseOffset";
 
         [SerializeField]
         private float m_rotationSpeed;
@@ -71,12 +71,6 @@ namespace Bitfrost.Gameplay.Energy
         {
             onRefreshEnergy = () => { };
 
-        }
-
-        protected void Start()
-        {
-            float noiseOffset = UnityEngine.Random.Range(0f, 100f);
-            m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
         }
 
         protected void Update()
@@ -96,6 +90,11 @@ namespace Bitfrost.Gameplay.Energy
             remainingEnergyCount = energyCount;
             SetVisualEnergy();
 
+            m_propertyBlock.SetProperty(UtilsClass.MainTexProperty, m_settings.GetRandomSprite());
+            m_spriteRenderer.color = m_settings.GetRandomTint();
+            float noiseOffset = UnityEngine.Random.Range(0f, 100f);
+            m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
+
             m_rotationSpeed = m_settings.GetRandomRotationSpeed();
         }
 
@@ -103,6 +102,7 @@ namespace Bitfrost.Gameplay.Energy
         {
             m_manager = manager;
             m_isInitialized = true;
+
         }
 
         public void ReleaseToPool()

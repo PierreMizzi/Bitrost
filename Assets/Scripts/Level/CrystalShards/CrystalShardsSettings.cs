@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using PierreMizzi.Useful;
 using UnityEngine;
 
@@ -17,6 +18,11 @@ namespace Bitfrost.Gameplay.Energy
         public float minDistanceBetweenCrystals;
 
         [Header("Crystal Shards")]
+
+        [SerializeField] private List<Texture> m_sprites = new List<Texture>();
+
+        [SerializeField] private List<Color> m_spriteTints = new List<Color>();
+
         [SerializeField]
         private float m_minRotationSpeed;
 
@@ -29,6 +35,15 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private float m_maxCrystalScale = 1.66f;
 
+        public Texture GetRandomSprite()
+        {
+            return UtilsClass.PickRandom(m_sprites);
+        }
+
+        public Color GetRandomTint()
+        {
+            return UtilsClass.PickRandom(m_spriteTints);
+        }
 
         public float GetRandomRotationSpeed()
         {
