@@ -38,7 +38,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         #region Mode
 
-        private const string k_modeLabel = "module-hud__mode-label";
         private const string k_crystalEnergyContainer = "resources-crystal-container";
         private const string k_storedEnergyContainer = "resources-stored-container";
         private const string k_crystalEnergyLabel = "resources-crystal-label";
@@ -46,7 +45,6 @@ namespace Bitfrost.Gameplay.Turrets
         private const string k_productionProgressContainer = "production-progress-container";
         private const string k_productionProgressFill = "production-progress-fill";
 
-        private Label m_modelLabel;
         private VisualElement m_crystalEnergyContainer;
         private VisualElement m_storedEnergyContainer;
         private Label m_crystalEnergyLabel;
@@ -55,6 +53,10 @@ namespace Bitfrost.Gameplay.Turrets
         private VisualElement m_productionProgressFill;
 
         private const string k_availableResourceClass = "available-resources";
+
+        public StyleScale m_availableScale;
+        public StyleScale m_nonAvailableScale;
+
 
         #endregion
 
@@ -90,6 +92,11 @@ namespace Bitfrost.Gameplay.Turrets
             SubscribeToModel();
 
             CallbackChangeState(TurretStateType.Inactive);
+
+            m_availableScale = new StyleScale();
+            m_availableScale.value = new Scale(Vector3.one);
+            m_nonAvailableScale = new StyleScale();
+            m_nonAvailableScale.value = new Scale(new Vector3(0.75f, 0.75f, 1f));
         }
 
         private void InitializeVisualElements()
@@ -101,7 +108,6 @@ namespace Bitfrost.Gameplay.Turrets
             m_activeContainer = m_root.Q(k_activeContainer);
             m_inactiveContainer = m_root.Q(k_inactiveContainer);
 
-            m_modelLabel = m_root.Q<Label>(k_modeLabel);
             m_productionProgressContainer = m_root.Q(k_productionProgressContainer);
             m_crystalEnergyContainer = m_root.Q(k_crystalEnergyContainer);
             m_storedEnergyContainer = m_root.Q(k_storedEnergyContainer);
@@ -140,6 +146,7 @@ namespace Bitfrost.Gameplay.Turrets
             m_turret.onRemoveCrystal += CallbackRemoveCrystal;
 
             m_turret.onRefreshEnergy += CallbackRefreshEnergy;
+
             m_turret.onProductionProgress += CallbackProductionProgress;
         }
 
@@ -147,12 +154,12 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void CallbackAssignCrystal()
         {
-            m_turret.crystal.onRefreshEnergy += CallbackRefreshEnergy;
+            m_turret.crystal.onRefreshEnergy += CallbackRefreshEnergyCrystal;
         }
 
         private void CallbackRemoveCrystal()
         {
-            m_turret.crystal.onRefreshEnergy -= CallbackRefreshEnergy;
+            m_turret.crystal.onRefreshEnergy -= CallbackRefreshEnergyCrystal;
         }
 
         private void UnsubscribeToModel() { }
@@ -216,12 +223,12 @@ namespace Bitfrost.Gameplay.Turrets
             m_activeContainer.style.display = DisplayStyle.None;
             m_inactiveContainer.style.display = DisplayStyle.Flex;
         }
+
         private void SetStateOffensive()
         {
             m_activeContainer.style.display = DisplayStyle.Flex;
             m_inactiveContainer.style.display = DisplayStyle.None;
 
-            m_modelLabel.text = "ATTACK";
             m_productionProgressContainer.style.visibility = Visibility.Hidden;
             m_fireTip.style.display = DisplayStyle.Flex;
         }
@@ -231,37 +238,79 @@ namespace Bitfrost.Gameplay.Turrets
             m_activeContainer.style.display = DisplayStyle.Flex;
             m_inactiveContainer.style.display = DisplayStyle.None;
 
-            m_modelLabel.text = "PRODUCE";
+            m_crystalEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+            m_storedEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+
+            m_crystalEnergyContainer.style.scale = m_availableScale;
+            m_storedEnergyContainer.style.scale = m_availableScale;
+
             m_productionProgressContainer.style.visibility = Visibility.Visible;
             m_fireTip.style.display = DisplayStyle.None;
         }
 
         private void SetStateDisabled()
         {
-            m_modelLabel.text = "NO ENERGY";
-
             m_crystalEnergyContainer.RemoveFromClassList(k_availableResourceClass);
             m_storedEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+
+            m_crystalEnergyContainer.style.scale = m_nonAvailableScale;
+            m_storedEnergyContainer.style.scale = m_nonAvailableScale;
+
+            m_fireTip.style.display = DisplayStyle.None;
         }
 
         #endregion
 
         #region Production
 
-        private void CallbackRefreshEnergy()
+        private void CallbackRefreshEnergy(TurretStateType type)
         {
             // Manages the priority resource
+            switch (type)
+            {
+                case TurretStateType.Offensive:
+                    RefreshEnergyOffensive();
+                    break;
+                case TurretStateType.Production:
+                    RefreshEnergyProduction();
+                    break;
+            }
+        }
+
+        public void RefreshEnergyProduction()
+        {
+            RefreshEnergyText();
+        }
+
+        public void RefreshEnergyOffensive()
+        {
             if (m_turret.storedEnergy > 0)
             {
                 m_crystalEnergyContainer.RemoveFromClassList(k_availableResourceClass);
                 m_storedEnergyContainer.AddToClassList(k_availableResourceClass);
+
+                m_crystalEnergyContainer.style.scale = m_nonAvailableScale;
+                m_storedEnergyContainer.style.scale = m_availableScale;
             }
             else
             {
                 m_crystalEnergyContainer.AddToClassList(k_availableResourceClass);
                 m_storedEnergyContainer.RemoveFromClassList(k_availableResourceClass);
+
+                m_crystalEnergyContainer.style.scale = m_availableScale;
+                m_storedEnergyContainer.style.scale = m_nonAvailableScale;
             }
 
+            RefreshEnergyText();
+        }
+
+        public void CallbackRefreshEnergyCrystal()
+        {
+            RefreshEnergyText();
+        }
+
+        public void RefreshEnergyText()
+        {
             m_crystalEnergyLabel.text = m_turret.crystal.remainingEnergyCount.ToString();
 
             m_storedEnergyLabel.text = string.Format(

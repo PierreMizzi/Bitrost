@@ -7,7 +7,7 @@
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:Instance template="PlayerHUD" name="PlayerHUD" style="flex-grow: 0; flex-shrink: 0; position: absolute; left: 0; bottom: 0;" />
         <ui:VisualElement name="turret-hud" style="flex-direction: row; justify-content: flex-end; flex-grow: 1; align-items: center;">
-            <ui:VisualElement name="module-container" style="flex-grow: 0; height: 75%; width: 20%; position: absolute; justify-content: flex-end; right: 25px;" />
+            <ui:VisualElement name="module-container" style="flex-grow: 0; height: 75%; width: 22%; position: absolute; justify-content: flex-end; right: -25px;" />
         </ui:VisualElement>
         <ui:Instance template="LevelHUD" name="LevelHUD" style="position: absolute; width: 100%; top: 0;" />
         <ui:Instance template="GameOverPanel" name="game-over-panel" style="position: absolute; width: 100%; height: 100%; display: none;" />

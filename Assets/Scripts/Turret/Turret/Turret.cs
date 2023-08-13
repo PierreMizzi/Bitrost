@@ -150,7 +150,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         public Action onAssignCrystal = null;
         public Action onRemoveCrystal = null;
-        public Action onRefreshEnergy = null;
+        public TurretStateDelegate onRefreshEnergy = null;
 
         public FloatDelegate onProductionProgress = null;
 
@@ -205,7 +205,7 @@ namespace Bitfrost.Gameplay.Turrets
 
             onAssignCrystal = () => { };
             onRemoveCrystal = () => { };
-            onRefreshEnergy = () => { };
+            onRefreshEnergy = (TurretStateType state) => { };
 
             onProductionProgress = (float normalized) => { };
         }
@@ -243,17 +243,17 @@ namespace Bitfrost.Gameplay.Turrets
             m_spritesContainer.SetActive(true);
             m_screenEdgeSubject.gameObject.SetActive(true);
 
-            onRefreshEnergy.Invoke();
+            onRefreshEnergy.Invoke(currentStateType);
         }
 
         public void Retrieve()
         {
-            storedEnergy = 0;
-            onRefreshEnergy.Invoke();
-            RemoveCrystal();
-
             ChangeState(TurretStateType.Inactive);
             SoundManager.PlaySFX(SoundDataID.TURRET_RETRIEVE);
+
+            storedEnergy = 0;
+            onRefreshEnergy.Invoke(currentStateType);
+            RemoveCrystal();
         }
 
         public void SetInactive()
@@ -307,7 +307,7 @@ namespace Bitfrost.Gameplay.Turrets
                 else
                     crystal.DecrementEnergy();
 
-                onRefreshEnergy();
+                onRefreshEnergy.Invoke(currentStateType);
 
                 m_bulletChannel.onFireBullet.Invoke(
                     m_settings.bulletConfig,

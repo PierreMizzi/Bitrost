@@ -10,6 +10,9 @@ namespace Bitfrost.Gameplay.Turrets
         #region Fields
 
         public AState currentState { get; set; }
+
+        public TurretStateType currentStateType { get { return (TurretStateType)currentState.type; } }
+
         public List<AState> states { get; set; }
 
         #endregion

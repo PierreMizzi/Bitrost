@@ -83,7 +83,7 @@ namespace Bitfrost.Gameplay.Turrets
                 ChangeState(TurretStateType.Offensive);
 
             m_this.productionProgress = 0;
-            m_this.onRefreshEnergy.Invoke();
+            m_this.onRefreshEnergy.Invoke(m_this.currentStateType);
         }
     }
 }
