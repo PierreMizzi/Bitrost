@@ -15,7 +15,6 @@ MonoBehaviour:
   maxHealth: 30
   speed: 3
   rangeAroundPlayer: 10
-  rangeAroundPlayerSqr: 100
-  offsetFromShard: 0.7
+  offsetFromShard: 1.5
   attackDelay: 1
   attackSpeed: 2

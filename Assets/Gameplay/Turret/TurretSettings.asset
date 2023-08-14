@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TurretSettings
   m_EditorClassIdentifier: 
   startingTurretCount: 1
-  maxStoredEnergy: 5
-  productionDuration: 3
+  maxStoredEnergy: 16
+  productionDuration: 4
   productionRatio: 2
   bulletConfig:
     prefab: {fileID: 883983956993748104, guid: a0519969b01c1db4a856f4edb5d51775, type: 3}

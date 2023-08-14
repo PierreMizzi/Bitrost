@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   maxHealth: 100
+  healedHealthPerStoredEnergy: 5
   speed: 10

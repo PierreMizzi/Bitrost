@@ -1277,7 +1277,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
       type: 3}
-    count: 5
+    count: 3
     batchCount: 1
     duration: Infinity
 --- !u!114 &-812820095677104028
@@ -1758,7 +1758,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 10
+    count: 8
     batchCount: 2
     duration: Infinity
 --- !u!114 &689123541725790499
