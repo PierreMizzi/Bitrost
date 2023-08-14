@@ -52,9 +52,9 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void OutOfPool(EnemyManager manager)
         {
-            base.OutOfPool(manager);
             m_randomDirectionAroundPlayer = CloseRandomDirectionFromPlayer(settings.angleAroundPlayer);
             speedTrackPlayer = Random.Range(settings.minSpeedTrackPlayer, settings.maxSpeedTrackPlayer);
+            base.OutOfPool(manager);
         }
 
         public override void InitiliazeStates()

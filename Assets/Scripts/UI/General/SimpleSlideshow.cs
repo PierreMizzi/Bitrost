@@ -9,8 +9,6 @@ namespace PierreMizzi.Useful.UI
 	{
 		#region Fields 
 
-
-
 		private const string k_slidesContainer = "slides-container";
 
 		private const string k_previousButton = "previous-button";

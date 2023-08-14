@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Gameplay/LevelHUD.uss?fileID=7433441132597879392&amp;guid=91a23fbbbb1365242b0e84330250fefb&amp;type=3#LevelHUD" />
     <ui:VisualElement name="root" style="width: 100%; height: 100%;">
+        <ui:VisualElement name="fake-background" focusable="false" style="position: absolute; width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Sprites/UI/Backgrounds/FakeGameBackground.cs.png?fileID=2800000&amp;guid=3364287d4952f2f47bc303aa8d058500&amp;type=3#FakeGameBackground.cs&apos;); display: none;" />
         <ui:VisualElement name="top-container" style="height: 100%; flex-direction: row; align-items: flex-start; justify-content: space-between; padding-left: 30px; padding-top: 30px; padding-right: 30px;">
             <ui:VisualElement name="left-side" style="margin-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0;">
                 <ui:Label text="1:00" display-tooltip-when-elided="true" name="time-label" style="font-size: 65px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 15px; -unity-text-align: middle-left; color: rgb(255, 255, 255);" />
@@ -16,6 +17,23 @@
                 <ui:Button display-tooltip-when-elided="true" name="pause-button" class="pauseButton" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="new-stage-container" style="position: absolute; width: 100%; height: 33%; top: 15%;" />
+        <ui:VisualElement name="popup-container" style="position: absolute; width: 100%; height: 100%; top: 0; align-items: center; justify-content: center; display: flex; left: 0; right: 0; bottom: 0;">
+            <ui:VisualElement name="popup-stage-cleared" style="width: 55%; height: 15%; display: flex; position: absolute; top: 10%; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <ui:VisualElement name="stage-cleared-background">
+                    <ui:VisualElement name="stage-cleared-bar-top" style="height: 5%; background-color: rgb(255, 255, 255); border-top-left-radius: 10px; border-bottom-left-radius: 0; border-top-right-radius: 10px; border-bottom-right-radius: 0;" />
+                    <ui:VisualElement name="stage-cleared-bar-bottom" style="height: 5%; background-color: rgb(255, 255, 255); border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;" />
+                </ui:VisualElement>
+                <ui:Label text="STAGE CLEARED" display-tooltip-when-elided="true" name="stage-cleared-title" style="display: flex;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="hostiles-incoming-popup" style="width: 100%; height: auto; display: flex; position: absolute; top: 25%;">
+                <ui:VisualElement name="hostiles-bar-container" class="hostiles-bar-container">
+                    <ui:VisualElement name="bar-top" class="warning-bar" />
+                    <ui:VisualElement name="bar-bottom" class="warning-bar" />
+                </ui:VisualElement>
+                <ui:VisualElement name="hostiles-title-container" style="margin-top: 5%; margin-bottom: 5%; align-items: center;">
+                    <ui:Label text="HOSTILES INCOMING" display-tooltip-when-elided="true" name="hostiles-title" class="hostiles-title" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -165,7 +165,7 @@ namespace Bitfrost.Gameplay
             isStageCompleted = false;
         }
 
-        // From Signal Emitter
+        // Linked to Signal Emitter
         public void CallbackStayStage()
         {
             m_isStageDurationOver = true;
@@ -174,6 +174,18 @@ namespace Bitfrost.Gameplay
                 m_director.Pause();
             else
                 PlayStage();
+        }
+
+        // Linked to Signal Emitter
+        public void DisplayStageCleared()
+        {
+            m_levelChannel?.onDisplayStageCleared.Invoke();
+        }
+
+        // Linked to Signal Emitter
+        public void DisplayHostileDetected()
+        {
+            m_levelChannel?.onDisplayHostilesDetected.Invoke();
         }
 
         public void CallbackAllEnemiesKilled()

@@ -9,7 +9,7 @@
         <ui:VisualElement name="turret-hud" style="flex-direction: row; justify-content: flex-end; flex-grow: 1; align-items: center;">
             <ui:VisualElement name="module-container" style="flex-grow: 0; height: 75%; width: 22%; position: absolute; justify-content: flex-end; right: -25px;" />
         </ui:VisualElement>
-        <ui:Instance template="LevelHUD" name="LevelHUD" style="position: absolute; width: 100%; top: 0;" />
+        <ui:Instance template="LevelHUD" name="LevelHUD" style="width: 100%; height: 100%; position: absolute;" />
         <ui:Instance template="GameOverPanel" name="game-over-panel" style="position: absolute; width: 100%; height: 100%; display: none;" />
         <ui:Instance template="PausePanel" name="pause-panel" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: none;" />
         <ui:Instance template="TutorialPanel" name="tutorial-panel" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: none;" />

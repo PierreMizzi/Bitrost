@@ -109,6 +109,7 @@ namespace PierreMizzi.Rendering
 
         public void SetProperty(string propertyName, float value)
         {
+            this.renderer.GetPropertyBlock(s_materialPropertyBlock, m_materialIndex);
             Property property = m_propreties.Find(item => item.name == propertyName);
             if (property != null)
             {
@@ -121,6 +122,7 @@ namespace PierreMizzi.Rendering
 
         public void SetProperty(string propertyName, Color value)
         {
+            this.renderer.GetPropertyBlock(s_materialPropertyBlock, m_materialIndex);
             Property property = m_propreties.Find(item => item.name == propertyName);
             if (property != null)
             {
@@ -132,6 +134,7 @@ namespace PierreMizzi.Rendering
 
         public void SetProperty(string propertyName, Vector4 value)
         {
+            this.renderer.GetPropertyBlock(s_materialPropertyBlock, m_materialIndex);
             Property property = m_propreties.Find(item => item.name == propertyName);
             if (property != null)
             {
@@ -143,6 +146,7 @@ namespace PierreMizzi.Rendering
 
         public void SetProperty(string propertyName, Texture value)
         {
+            this.renderer.GetPropertyBlock(s_materialPropertyBlock, m_materialIndex);
             Property property = m_propreties.Find(item => item.name == propertyName);
             if (property != null)
             {

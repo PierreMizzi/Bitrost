@@ -284,8 +284,9 @@ namespace Bitfrost.Gameplay.Enemies
 
         public void CallbackReset()
         {
-
             m_enemyChannel.killCount = 0;
+            m_stageEnemyCount = 0;
+            m_stageKilledEnemyCount = 0;
 
             ResetEnemySpawner();
 

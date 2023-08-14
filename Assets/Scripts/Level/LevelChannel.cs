@@ -30,6 +30,10 @@ namespace Bitfrost.Gameplay
         public Action onGameOver;
         public GameOverDelegate onGameOverPanel;
 
+        // PopUp
+        public Action onDisplayStageCleared;
+        public Action onDisplayHostilesDetected;
+
         // Reset Game
         public Action onRestart;
         public Action onReset;
@@ -58,6 +62,10 @@ namespace Bitfrost.Gameplay
             // Game Over
             onGameOver = () => { };
             onGameOverPanel = (GameOverData data) => { };
+
+            // PopUp
+            onDisplayStageCleared = () => { };
+            onDisplayHostilesDetected = () => { };
 
             // Reset Game
             onReset = () => { };

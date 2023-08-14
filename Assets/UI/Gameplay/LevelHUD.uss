@@ -36,3 +36,160 @@
 .pauseButton:hover {
     -unity-background-image-tint-color: rgb(178, 252, 255);
 }
+
+#stage-cleared-title {
+    -unity-text-align: middle-center;
+    font-size: 60px;
+    color: rgb(255, 255, 255);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.stage-cleared-title-fade-in {
+    scale: 4 4;
+    opacity: 0;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+.stage-cleared-title-fade-in.animate {
+    scale: 1 1;
+    opacity: 1;
+}
+
+.stage-cleared-title-fade-out {
+    opacity: 1;
+    transition-property: all;
+    transition-duration: 1s;
+}
+
+.stage-cleared-title-fade-out.animate {
+    opacity: 0;
+}
+
+#stage-cleared-title.reset {
+    opacity: 0;
+}
+
+#stage-cleared-background {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: rgba(96, 96, 96, 0.23);
+    justify-content: space-between;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.stage-cleared-background-fade-in {
+    scale: 0 1;
+    transition-property: scale;
+    transition-duration: 1s;
+}
+
+.stage-cleared-background-fade-in.animate {
+    scale: 1 1;
+}
+
+.stage-cleared-background-fade-out {
+    scale: 1 1;
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 1s;
+}
+
+.stage-cleared-background-fade-out.animate {
+    opacity: 0;
+}
+
+#stage-cleared-background.reset {
+    opacity: 0;
+}
+
+.warning-bar {
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('project://database/Assets/Sprites/UI/Gameplay/LevelHeader/NewStageBanner.png?fileID=2800000&guid=c5255fc662af0ec4cbca2f48a7610074&type=3#NewStageBanner');
+    -unity-background-scale-mode: stretch-to-fill;
+    width: 100%;
+    -unity-background-image-tint-color: rgba(255, 217, 0, 0.7);
+    -unity-slice-left: 0;
+    -unity-slice-top: 0;
+    -unity-slice-right: 0;
+    -unity-slice-bottom: 0;
+}
+
+.hostiles-bar-container {
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.27);
+    opacity: 1;
+}
+
+.hostiles-bar-container-fade-in {
+    opacity: 0;
+    transition: opacity;
+    transition-duration: 0.5s;
+}
+
+.hostiles-bar-container-fade-in.animate {
+    opacity: 1;
+}
+
+.hostiles-bar-container-fade-out {
+    opacity: 1;
+    transition: all;
+    transition-duration: 0.5s;
+}
+
+.hostiles-bar-container-fade-out.animate {
+    opacity: 0;
+}
+
+#hostiles-bar-container.reset {
+    opacity: 0;
+}
+
+#hostiles-title {
+    -unity-text-align: middle-center;
+    font-size: 82px;
+    color: rgba(255, 217, 0, 0.7);
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    -unity-font-style: bold;
+}
+
+.hostiles-title-fade-in {
+    left: -80%;
+    transition: left;
+    transition-duration: 7s;
+    transition-delay: 0.5s;
+    transition-timing-function: linear;
+}
+
+.hostiles-title-fade-in.animate {
+    left: 80%;
+}
+
+.hostiles-title-fade-out {
+    left: 80%;
+    opacity: 1;
+    transition: opacity;
+    transition-duration: 1s;
+}
+
+.hostiles-title-fade-out.animate {
+    opacity: 0;
+}
+
+#hostiles-title.reset {
+    opacity: 0;
+    left: -80%;
+}

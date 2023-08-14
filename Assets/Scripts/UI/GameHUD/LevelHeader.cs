@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using System;
 using System.Collections;
 using PierreMizzi.Useful;
 using System.Collections.Generic;
+using PierreMizzi.Useful.UI;
 
 namespace Bitfrost.Gameplay.UI
 {
@@ -33,9 +33,21 @@ namespace Bitfrost.Gameplay.UI
         private VisualElement m_difficultyIconsContainer;
         List<VisualElement> m_stageDifficultyIcons = new List<VisualElement>();
 
+        #region Stage Cleared Message
+
+        [SerializeField]
+        private PopUp m_stageCleared = null;
+
+        [SerializeField]
+        private PopUp m_hostilesDetected = null;
+
+        #endregion
+
         #endregion
 
         #region Methods
+
+        #region MonoBehaviour
 
         private void Awake()
         {
@@ -62,6 +74,10 @@ namespace Bitfrost.Gameplay.UI
 
                 m_levelChannel.onReset += CallbackReset;
                 m_levelChannel.onChangeStageDifficulty += CallbackChangeStageDifficulty;
+
+                m_levelChannel.onDisplayStageCleared += CallbackDisplayStageCleared;
+                m_levelChannel.onDisplayHostilesDetected += CallbackDisplayHostilesDetected; ;
+
             }
         }
 
@@ -71,8 +87,13 @@ namespace Bitfrost.Gameplay.UI
             {
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onChangeStageDifficulty -= CallbackChangeStageDifficulty;
+
+                m_levelChannel.onDisplayStageCleared -= CallbackDisplayStageCleared;
+                m_levelChannel.onDisplayHostilesDetected -= CallbackDisplayHostilesDetected; ;
             }
         }
+
+        #endregion
 
         private void CallbackReset()
         {
@@ -104,6 +125,17 @@ namespace Bitfrost.Gameplay.UI
                 yield return new WaitForSeconds(0.5f);
             }
         }
+
+        private void CallbackDisplayStageCleared()
+        {
+            m_stageCleared.DisplayThenHide();
+        }
+
+        private void CallbackDisplayHostilesDetected()
+        {
+            m_hostilesDetected.DisplayThenHide();
+        }
+
 
         #endregion
 
