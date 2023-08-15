@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7742ae88c59f96468066634e27415d6, type: 3}
-  m_Name: HarvesterSettings
+  m_Script: {fileID: 11500000, guid: 7da755717c9e38840a35028a93133d50, type: 3}
+  m_Name: BaseAppChannel
   m_EditorClassIdentifier: 
-  maxHealth: 30
-  speed: 3
-  rangeAroundPlayer: 10
-  offsetFromShard: 1.5
-  attackDelay: 1
-  attackSpeed: 3

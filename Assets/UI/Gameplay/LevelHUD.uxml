@@ -26,7 +26,7 @@
                 <ui:Label text="STAGE CLEARED" display-tooltip-when-elided="true" name="stage-cleared-title" style="display: flex;" />
             </ui:VisualElement>
             <ui:VisualElement name="hostiles-incoming-popup" style="width: 100%; height: auto; display: flex; position: absolute; top: 25%;">
-                <ui:VisualElement name="hostiles-bar-container" class="hostiles-bar-container">
+                <ui:VisualElement name="hostiles-bar-container" class="hostiles-bar-container" style="display: flex;">
                     <ui:VisualElement name="bar-top" class="warning-bar" />
                     <ui:VisualElement name="bar-bottom" class="warning-bar" />
                 </ui:VisualElement>

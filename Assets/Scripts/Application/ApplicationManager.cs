@@ -10,6 +10,8 @@ namespace Bitfrost.Application
 		[SerializeField]
 		private SoundManagerToolSettings m_soundManagerSettings = null;
 
+		// [SerializeField] private SceneLoader m_sceneLoader = null;
+
 		#endregion
 
 		#region Methods 
@@ -17,6 +19,8 @@ namespace Bitfrost.Application
 		private void Start()
 		{
 			SoundManager.PlaySound(SoundDataID.GAME_LOOP, true);
+
+
 		}
 
 		#endregion
