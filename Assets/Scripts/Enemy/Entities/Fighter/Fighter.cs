@@ -42,6 +42,7 @@ namespace Bitfrost.Gameplay.Enemies
         {
             new EnemyInactiveState(this),
             new EnemyIdleState(this),
+            new EnemyDeadState(this),
             new FighterMoveState(this),
             new FighterAttackState(this)
         };

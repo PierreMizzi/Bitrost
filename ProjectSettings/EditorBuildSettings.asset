@@ -8,10 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 8d16269671693ba4cb77362deee3832c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Application.unity
     guid: fe6af287bc7f9314881e4877ce4b1d46
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Titlecard.unity
     guid: 2c8397fca1f6abb46b997548b4e4a362
+  - enabled: 1
+    path: Assets/Extensions/SceneManagement/Scene/Application.unity
+    guid: 022afaa4f8fd62744af66442e3c26505
+  - enabled: 1
+    path: Assets/Extensions/SceneManagement/Scene/Titlecard.unity
+    guid: ca44a105e3224d74c964927f1bb3997b
   m_configObjects: {}

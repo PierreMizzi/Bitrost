@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace PierreMizzi.Useful.SceneManagement
@@ -7,7 +8,12 @@ namespace PierreMizzi.Useful.SceneManagement
 	public class BaseAppChannel : ScriptableObject
 	{
 
+		public Action onTitlecardToGame;
 
+		private void OnEnable()
+		{
+			onTitlecardToGame = () => { };
+		}
 
 	}
 }
