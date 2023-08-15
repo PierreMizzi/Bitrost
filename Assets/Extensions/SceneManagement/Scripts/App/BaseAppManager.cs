@@ -2,32 +2,6 @@ namespace PierreMizzi.Useful.SceneManagement
 {
 	using System;
 	using System.Collections;
-
-	/*
-
-		- Titlecard.scene
-			- Start
-				- LoadScreen.cs
-					-> FadeIn
-					-> Load GameScene Additive, progress, sceneActive
-					-> Unload Titlecard
-					-> FadeOut
-			- Scoreboard
-				
-			- Exit	
-				-> Quit the god damn game
-
-
-		- ApplicationManager.cs
-		- ApplicationChannel.cs
-		- FadeScreen.cs
-			- ScreenLoader.cs : ScreenFader
-		- TitlecardManager.cs
-		- TitlecardChannel.cs
-	
-	*/
-
-
 	using UnityEngine;
 
 	public class BaseAppManager : MonoBehaviour
@@ -76,6 +50,9 @@ namespace PierreMizzi.Useful.SceneManagement
 		protected virtual IEnumerator ApplicationToTitlecardCoroutine()
 		{
 			// Display SceneLoaderScreen
+			bool hold = true;
+			Action stopHold = () => { hold = false; };
+
 			m_loaderScreen.Display();
 
 			yield return SceneLoader.LoadScene(k_titlecardSceneName, true, m_loaderScreen.SetProgress);
@@ -86,8 +63,7 @@ namespace PierreMizzi.Useful.SceneManagement
 			yield return new WaitForSeconds(1f);
 
 			m_loaderScreen.HideProgressBar();
-			bool hold = true;
-			m_loaderScreen.FadeOut(3f, () => { hold = false; });
+			m_loaderScreen.FadeOut(3f, stopHold);
 
 			while (hold)
 				yield return null;
