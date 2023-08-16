@@ -48,11 +48,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _FadeLength: -0.6
+    - _FadeStrength: 10.06
     - _OutlineSize: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Radius: 0.9
     m_Colors:
     - _Color: {r: 0.48742133, g: 0.93749046, b: 1, a: 0.3764706}
+    - _FadeColor: {r: 1, g: 1, b: 1, a: 0.69803923}
+    - _OrbitColor: {r: 1, g: 1, b: 1, a: 0.43137255}
     - _Tint: {r: 0.51572317, g: 0.9410747, b: 1, a: 0}
   m_BuildTextureStacks: []
