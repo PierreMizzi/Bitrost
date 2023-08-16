@@ -1,0 +1,15 @@
+.credits-task-title {
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&type=2#SourceSans3-Medium SDF');
+    font-size: 45px;
+}
+
+.credits-task-responsible {
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-ExtraLight%20SDF.asset?fileID=11400000&guid=26a695e3454d15443842dca4c589225f&type=2#SourceSans3-ExtraLight SDF');
+    font-size: 44px;
+    padding-right: 0;
+    padding-left: 60px;
+}
+
+.credits-task-container {
+    margin-bottom: 36px;
+}

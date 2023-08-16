@@ -1,10 +1,6 @@
 :root {
-    --start-color-one: rgb(255, 192, 47);
-    --start-color-two: rgb(255, 208, 98);
-    --score-color-one: rgb(255, 192, 47);
-    --score-color-two: rgb(255, 208, 98);
-    --credits-color-one: rgb(255, 192, 47);
-    --credits-color-two: rgb(255, 208, 98);
+    --color-one: rgb(255, 255, 255);
+    --color-two: rgba(255, 255, 255, 0.61);
 }
 
 .button {
@@ -30,7 +26,7 @@
     height: 100%;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    width: 7%;
+    width: 4%;
 }
 
 .button-edge-two {
@@ -47,71 +43,68 @@
     height: 100%;
     width: 50%;
     border-top-width: 3px;
-    border-top-color: rgb(255, 158, 50);
     border-bottom-width: 3px;
-    border-bottom-color: rgb(255, 158, 50);
     transition-property: all;
     transition-duration: 0.1s;
 }
 
 .button-body:hover {
     width: 60%;
+    color: rgb(255, 255, 255);
 }
 
 .button-label {
-    width: auto;
-    height: 100%;
-    font-size: 67px;
+    font-size: 55px;
     -unity-text-align: middle-center;
     padding-left: 0;
     padding-right: 0;
     padding-top: 0;
     padding-bottom: 0;
-    color: rgb(255, 245, 223);
+    color: rgba(255, 255, 255, 0.6);
     -unity-font-style: bold;
 }
 
 #start-button .button-edge-one {
-    background-color: var(--start-color-one);
+    background-color: var(--color-one);
 }
 
 #start-button .button-edge-two {
-    background-color: var(--start-color-two);
+    background-color: var(--color-two);
 }
 
 #start-button .button-body {
     border-top-width: 3px;
-    border-top-color: var(--start-color-one);
+    border-top-color: var(--color-one);
     border-bottom-width: 3px;
-    border-bottom-color: var(--start-color-one);
+    border-bottom-color: var(--color-one);
 }
 
 #score-button .button-edge-one {
-    background-color: var(--score-color-one);
+    background-color: var(--color-one);
 }
 
 #score-button .button-edge-two {
-    background-color: var(--score-color-two);
+    background-color: var(--color-two);
 }
 
 #score-button .button-body {
     border-top-width: 3px;
-    border-top-color: var(--score-color-one);
+    border-top-color: var(--color-one);
     border-bottom-width: 3px;
-    border-bottom-color: var(--score-color-one);
+    border-bottom-color: var(--color-one);
 }
 
 #credits-button .button-edge-one {
-    background-color: var(--credits-color-one);
+    background-color: var(--color-one);
 }
 
 #credits-button .button-edge-two {
-    background-color: var(--credits-color-two);
+    background-color: var(--color-two);
 }
 
 #credits-button .button-body {
     border-top-width: 3px;
-    border-top-color: var(--credits-color-one);
+    border-top-color: var(--color-one);
     border-bottom-width: 3px;
-    border-bottom-color: var(--credits-color-one);
+    border-bottom-color: var(--color-one);
 }

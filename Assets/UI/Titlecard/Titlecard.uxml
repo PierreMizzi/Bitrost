@@ -1,18 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="GameTitle" src="project://database/Assets/UI/Templates/GameTitle.uxml?fileID=9197481963319205126&amp;guid=64f09a4f0658d944b9438a3ffab72634&amp;type=3#GameTitle" />
+    <ui:Template name="Credits" src="project://database/Assets/UI/Titlecard/Credits.uxml?fileID=9197481963319205126&amp;guid=0c43fb11fc1ad314f8dd0ac5af3d5c24&amp;type=3#Credits" />
     <Style src="project://database/Assets/UI/Titlecard/Titlecard.uss?fileID=7433441132597879392&amp;guid=d41e902448fbe494e832808b86aad64b&amp;type=3#Titlecard" />
     <ui:VisualElement name="root" style="width: 100%; height: 100%; flex-direction: row;">
-        <ui:VisualElement name="left-panel-container" style="height: 100%; width: 33%; justify-content: space-between;">
-            <ui:VisualElement style="margin-left: 40px; margin-top: 40px;">
-                <ui:Label text="Overcore" display-tooltip-when-elided="true" style="font-size: 130px; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
-            </ui:VisualElement>
-            <ui:VisualElement name="button-container" style="height: 36%; justify-content: space-between; align-items: stretch; margin-bottom: 60px;">
+        <ui:VisualElement name="left-panel-container" style="height: 100%; width: 33%; justify-content: space-between; padding-bottom: 60px; padding-top: 60px;">
+            <ui:Instance template="GameTitle" name="GameTitle" style="align-items: flex-start;" />
+            <ui:VisualElement name="button-container" style="height: 55%; justify-content: space-between; align-items: stretch; margin-bottom: 0;">
                 <ui:VisualElement name="start-button-container" style="scale: 1.2 1.2;">
                     <ui:Button display-tooltip-when-elided="true" name="start-button" class="button" style="background-color: rgba(255, 255, 255, 0); flex-direction: row; justify-content: center; align-items: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: flex;">
                         <ui:VisualElement class="button-edge-two" style="height: 75%; border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 10px;" />
                         <ui:VisualElement class="button-edge-one" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
-                        <ui:VisualElement class="button-body">
-                            <ui:Label text="Play" display-tooltip-when-elided="true" class="button-label" style="width: auto; height: 100%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-                        </ui:VisualElement>
+                        <ui:Label text="Play" display-tooltip-when-elided="true" class="button-label button-body" style="-unity-font-definition: url(&apos;project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&amp;guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&amp;type=2#SourceSans3-Medium SDF&apos;);" />
                         <ui:VisualElement class="button-edge-one" />
                         <ui:VisualElement class="button-edge-two" />
                     </ui:Button>
@@ -21,9 +19,7 @@
                     <ui:Button display-tooltip-when-elided="true" name="score-button" class="button" style="background-color: rgba(255, 255, 255, 0); flex-direction: row; justify-content: center; align-items: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: flex;">
                         <ui:VisualElement class="button-edge-two" style="height: 75%; border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 10px;" />
                         <ui:VisualElement class="button-edge-one" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
-                        <ui:VisualElement class="button-body">
-                            <ui:Label text="Score" display-tooltip-when-elided="true" class="button-label" />
-                        </ui:VisualElement>
+                        <ui:Label text="Score" display-tooltip-when-elided="true" class="button-label button-body" style="-unity-font-definition: url(&apos;project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&amp;guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&amp;type=2#SourceSans3-Medium SDF&apos;);" />
                         <ui:VisualElement class="button-edge-one" />
                         <ui:VisualElement class="button-edge-two" />
                     </ui:Button>
@@ -32,17 +28,22 @@
                     <ui:Button display-tooltip-when-elided="true" name="credits-button" class="button" style="background-color: rgba(255, 255, 255, 0); flex-direction: row; justify-content: center; align-items: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: flex;">
                         <ui:VisualElement class="button-edge-two" style="height: 75%; border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 10px;" />
                         <ui:VisualElement class="button-edge-one" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
-                        <ui:VisualElement class="button-body" style="flex-grow: 0;">
-                            <ui:Label text="Credits" display-tooltip-when-elided="true" class="button-label" style="width: auto; height: 100%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-                        </ui:VisualElement>
+                        <ui:Label text="Credits" display-tooltip-when-elided="true" class="button-label button-body" style="-unity-font-definition: url(&apos;project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&amp;guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&amp;type=2#SourceSans3-Medium SDF&apos;);" />
+                        <ui:VisualElement class="button-edge-one" />
+                        <ui:VisualElement class="button-edge-two" />
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:VisualElement name="quit-button-container">
+                    <ui:Button display-tooltip-when-elided="true" name="credits-button" class="button" style="background-color: rgba(255, 255, 255, 0); flex-direction: row; justify-content: center; align-items: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: flex;">
+                        <ui:VisualElement class="button-edge-two" style="height: 75%; border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 10px;" />
+                        <ui:VisualElement class="button-edge-one" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
+                        <ui:Label text="Quit" display-tooltip-when-elided="true" class="button-label button-body" style="-unity-font-definition: url(&apos;project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&amp;guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&amp;type=2#SourceSans3-Medium SDF&apos;);" />
                         <ui:VisualElement class="button-edge-one" />
                         <ui:VisualElement class="button-edge-two" />
                     </ui:Button>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="exit-button-container" picking-mode="Ignore" style="width: 100%; height: 100%; position: absolute; align-items: auto;">
-            <ui:Button text="X" display-tooltip-when-elided="true" style="font-size: 60px; -unity-font-style: bold; padding-left: 20px; margin-left: 0; margin-right: 20px; margin-top: 20px; margin-bottom: 0; padding-right: 20px;" />
-        </ui:VisualElement>
     </ui:VisualElement>
+    <ui:Instance template="Credits" name="Credits" style="width: 100%; height: 100%; position: absolute;" />
 </ui:UXML>
