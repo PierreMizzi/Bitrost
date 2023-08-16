@@ -188,7 +188,7 @@ MonoBehaviour:
   m_propreties:
   - name: _Radius
     type: 1
-    floatValue: 0.20133333
+    floatValue: 0.6126666
     intValue: 0
     colorValue:
       serializedVersion: 2
@@ -265,7 +265,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0845b0ea216c05b42a48d4e43e7591ce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

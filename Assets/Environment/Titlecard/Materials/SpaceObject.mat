@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3029515502492847434
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Orbit
-  m_Shader: {fileID: -6465566751694194690, guid: 1bc4659a0e6f5e2478669adee5cd15f7,
+  m_Name: SpaceObject
+  m_Shader: {fileID: -6465566751694194690, guid: 670157433e153124b8bd8e9bb5fbb31d,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -34,6 +21,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -48,15 +43,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FadeLength: 0.4
-    - _FadeStrength: 10.06
-    - _OutlineSize: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Radius: 0.9
     m_Colors:
-    - _Color: {r: 0.48742133, g: 0.93749046, b: 1, a: 0.3764706}
-    - _FadeColor: {r: 1, g: 1, b: 1, a: 0.69803923}
-    - _OrbitColor: {r: 1, g: 1, b: 1, a: 0.43137255}
-    - _Tint: {r: 0.51572317, g: 0.9410747, b: 1, a: 0}
+    - _Color: {r: 0.09803922, g: 0.09803922, b: 0.09803922, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &4539691705883940794
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Button display-tooltip-when-elided="true" name="start-button" class="button" style="background-color: rgba(255, 255, 255, 0); flex-direction: row; justify-content: center; align-items: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); display: flex;">
+        <ui:VisualElement class="button-edge-two" style="height: 75%; border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 10px;" />
+        <ui:VisualElement class="button-edge-one" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0;" />
+        <ui:VisualElement style="background-color: rgb(207, 207, 207); flex-grow: 0; height: 100%; width: 50%;">
+            <ui:Label text="Play" display-tooltip-when-elided="true" style="width: auto; height: 100%; font-size: 67px; -unity-text-align: middle-center; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; color: rgb(70, 70, 70); -unity-font-style: bold;" />
+        </ui:VisualElement>
+        <ui:VisualElement class="button-edge-one" />
+        <ui:VisualElement class="button-edge-two" />
+    </ui:Button>
+</ui:UXML>
