@@ -125,14 +125,12 @@ namespace Bitfrost.Application
 
 		private void CallbackMenuToCreditsClicked()
 		{
-			Debug.Log("CallbackMenuToCreditsClicked");
 			if (isInteractable)
 				ChangeState(TitlecardStateType.Credits);
 		}
 
 		private void CallbackCreditsToMenuClicked()
 		{
-			Debug.Log("CallbackCreditsToMenuClicked");
 			if (isInteractable)
 				ChangeState(TitlecardStateType.Menu);
 		}

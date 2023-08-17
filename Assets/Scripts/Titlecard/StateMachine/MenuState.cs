@@ -21,7 +21,6 @@ namespace Bitfrost.Application
 
 		private void CreditsToMenuEnter()
 		{
-			Debug.Log("CreditsToMenuEnter");
 			m_this.isInteractable = false;
 
 			m_this.DisplayMenu();

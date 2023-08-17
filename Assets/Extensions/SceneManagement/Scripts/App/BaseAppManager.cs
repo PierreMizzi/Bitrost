@@ -3,7 +3,9 @@ namespace PierreMizzi.Useful.SceneManagement
 	using System;
 	using System.Collections;
 	using UnityEngine;
+	using UnityEngine.SceneManagement;
 
+	[ExecuteInEditMode]
 	public class BaseAppManager : MonoBehaviour
 	{
 
@@ -19,21 +21,32 @@ namespace PierreMizzi.Useful.SceneManagement
 		[SerializeField]
 		protected Camera m_initialCamera = null;
 
-		protected const string k_titlecardSceneName = "Titlecard";
-		protected const string k_gameSceneName = "Game";
+		public static string applicationSceneName = "Application";
+		public static string titlecardSceneName = "Titlecard";
+		public static string gameSceneName = "Game";
 
 		#endregion
 
 		#region Methods 
 
+		protected virtual void OnEnable()
+		{
+			if (SceneManager.sceneCount == 1)
+			{
+				ApplicationToTitlecard();
+			}
+			else
+			{
+				m_loaderScreen.Awake();
+				m_loaderScreen.Hide();
+				DestroyImmediate(m_initialCamera.gameObject);
+			}
+		}
+
 		protected virtual void Start()
 		{
-
 			if (m_appChannel != null)
 				m_appChannel.onTitlecardToGame += TitlecardToGame;
-
-
-			ApplicationToTitlecard();
 		}
 
 		protected virtual void OnDestroy()
@@ -55,7 +68,7 @@ namespace PierreMizzi.Useful.SceneManagement
 
 			m_loaderScreen.Display();
 
-			yield return SceneLoader.LoadScene(k_titlecardSceneName, true, m_loaderScreen.SetProgress);
+			yield return SceneLoader.LoadScene(titlecardSceneName, true, m_loaderScreen.SetProgress);
 
 			if (m_initialCamera != null)
 				Destroy(m_initialCamera.gameObject);
@@ -88,8 +101,8 @@ namespace PierreMizzi.Useful.SceneManagement
 				yield return null;
 
 			m_loaderScreen.DisplProgressBar();
-			yield return SceneLoader.UnloadScene(k_titlecardSceneName);
-			yield return SceneLoader.LoadScene(k_gameSceneName, true, m_loaderScreen.SetProgress);
+			yield return SceneLoader.UnloadScene(titlecardSceneName);
+			yield return SceneLoader.LoadScene(gameSceneName, true, m_loaderScreen.SetProgress);
 
 			m_loaderScreen.HideProgressBar();
 			m_loaderScreen.FadeOut(1f, stopHold);

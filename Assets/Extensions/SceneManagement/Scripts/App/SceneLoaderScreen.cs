@@ -16,11 +16,23 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		#endregion
 
-		protected override void Awake()
+		public override void Awake()
 		{
 			base.Awake();
 
 			m_progressBar = new ProgressBar(m_root, k_progressBar);
+		}
+
+		public override void Display()
+		{
+			base.Display();
+			DisplProgressBar();
+		}
+
+		public override void Hide()
+		{
+			base.Hide();
+			HideProgressBar();
 		}
 
 		public void DisplProgressBar()

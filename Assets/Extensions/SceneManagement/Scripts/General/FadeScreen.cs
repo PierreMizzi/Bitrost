@@ -22,7 +22,7 @@ namespace PierreMizzi.Useful.UI
 
 		#region Methods 
 
-		protected virtual void Awake()
+		public virtual void Awake()
 		{
 			m_root = m_document.rootVisualElement;
 			m_background = m_root.Q<VisualElement>(k_background);

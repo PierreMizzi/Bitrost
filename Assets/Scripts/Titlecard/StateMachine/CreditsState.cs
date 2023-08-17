@@ -15,7 +15,6 @@ namespace Bitfrost.Application
 
 		private void MenuToCreditsEnter()
 		{
-			Debug.Log("MenuToCreditsEnter");
 			m_this.isInteractable = false;
 
 			m_this.HideMenu();

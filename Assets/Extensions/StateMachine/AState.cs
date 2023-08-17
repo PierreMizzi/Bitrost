@@ -48,7 +48,6 @@ namespace PierreMizzi.Useful.StateMachines
         /// </summary>
         public virtual void Enter(int previousState)
         {
-            Debug.Log("Enter" + previousState);
             if (m_stateTransitions.ContainsKey(previousState))
                 m_stateTransitions[previousState]();
             else
