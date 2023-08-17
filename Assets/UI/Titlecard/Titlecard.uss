@@ -3,12 +3,25 @@
     --color-two: rgba(255, 255, 255, 0.61);
 }
 
+#menu-container-root {
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    transition-property: opacity;
+    transition-duration: 1;
+    transition-timing-function: linear;
+}
+
+#menu-container-root.hide {
+    opacity: 0;
+}
+
 .button {
     height: 106px;
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding-left: 0;
     padding-right: 0;
     padding-top: 0;
@@ -22,7 +35,6 @@
 }
 
 .button-edge-one {
-    background-color: rgb(142, 212, 101);
     height: 100%;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -30,7 +42,6 @@
 }
 
 .button-edge-two {
-    background-color: rgb(96, 171, 53);
     height: 75%;
     border-top-left-radius: 0;
     border-top-right-radius: 10px;
@@ -38,7 +49,7 @@
     width: 2%;
 }
 
-.button-body {
+.button .button-body {
     background-color: rgba(0, 0, 0, 0.32);
     height: 100%;
     width: 50%;
@@ -64,45 +75,15 @@
     -unity-font-style: bold;
 }
 
-#start-button .button-edge-one {
+.button .button-edge-one {
     background-color: var(--color-one);
 }
 
-#start-button .button-edge-two {
+.button .button-edge-two {
     background-color: var(--color-two);
 }
 
-#start-button .button-body {
-    border-top-width: 3px;
-    border-top-color: var(--color-one);
-    border-bottom-width: 3px;
-    border-bottom-color: var(--color-one);
-}
-
-#score-button .button-edge-one {
-    background-color: var(--color-one);
-}
-
-#score-button .button-edge-two {
-    background-color: var(--color-two);
-}
-
-#score-button .button-body {
-    border-top-width: 3px;
-    border-top-color: var(--color-one);
-    border-bottom-width: 3px;
-    border-bottom-color: var(--color-one);
-}
-
-#credits-button .button-edge-one {
-    background-color: var(--color-one);
-}
-
-#credits-button .button-edge-two {
-    background-color: var(--color-two);
-}
-
-#credits-button .button-body {
+.button .button-body {
     border-top-width: 3px;
     border-top-color: var(--color-one);
     border-bottom-width: 3px;

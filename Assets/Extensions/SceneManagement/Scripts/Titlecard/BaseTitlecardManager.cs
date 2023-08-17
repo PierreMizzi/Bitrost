@@ -11,25 +11,27 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		[Header("Channels")]
 		[SerializeField]
-		private BaseAppChannel m_appChannel;
+		protected BaseAppChannel m_appChannel;
 
 		[Header("UIDocument")]
 		[SerializeField]
-		private UIDocument m_document;
+		protected UIDocument m_document;
 
-		private VisualElement m_root;
+		protected VisualElement m_root;
 
-		private const string k_startButton = "start-button";
-		private const string k_exitButton = "exit-button";
+		protected const string k_startButton = "start-button";
+		protected const string k_exitButton = "exit-button";
 
-		private Button m_startButton;
-		private Button m_exitButton;
+		protected Button m_startButton;
+		protected Button m_exitButton;
+
+		public bool isInteractable { get; set; } = true;
 
 		#endregion
 
 		#region Methods 
 
-		protected void Awake()
+		protected virtual void Awake()
 		{
 			m_root = m_document.rootVisualElement;
 
@@ -40,20 +42,22 @@ namespace PierreMizzi.Useful.SceneManagement
 			m_exitButton.clicked += CallbackExitClicked;
 		}
 
-		protected void OnDestroy()
+		protected virtual void OnDestroy()
 		{
 			m_startButton.clicked -= CallbackStartClicked;
 			m_exitButton.clicked -= CallbackExitClicked;
 		}
 
-		private void CallbackStartClicked()
+		protected virtual void CallbackStartClicked()
 		{
-			m_appChannel.onTitlecardToGame.Invoke();
+			if (isInteractable)
+				m_appChannel.onTitlecardToGame.Invoke();
 		}
 
-		private void CallbackExitClicked()
+		protected virtual void CallbackExitClicked()
 		{
-			Application.Quit();
+			if (isInteractable)
+				Application.Quit();
 		}
 
 		#endregion

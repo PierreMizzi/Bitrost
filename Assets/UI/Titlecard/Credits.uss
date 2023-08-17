@@ -1,6 +1,7 @@
 .credits-task-title {
     -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&type=2#SourceSans3-Medium SDF');
     font-size: 45px;
+    color: rgb(255, 255, 255);
 }
 
 .credits-task-responsible {
@@ -8,8 +9,35 @@
     font-size: 44px;
     padding-right: 0;
     padding-left: 60px;
+    color: rgb(255, 255, 255);
 }
 
 .credits-task-container {
     margin-bottom: 36px;
+}
+
+#credits-content-root {
+    left: 0;
+    transition-property: left;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+
+#credits-content-root.hide {
+    left: 120%;
+}
+
+#credits-to-menu-button {
+}
+
+#credits-to-menu-button:hover {
+    scale: 1.2 1;
+}
+
+#arrow-head {
+    background-image: url('project://database/Assets/Sprites/General/Shapes/play-button-arrowhead.png?fileID=2800000&guid=8e53cd92927c32b4fa1fe1a408525dcf&type=3#play-button-arrowhead');
+    width: 40%;
+    height: 48%;
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.66);
 }
