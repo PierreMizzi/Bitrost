@@ -15,6 +15,8 @@ namespace Bitfrost.Gameplay.Turrets
 
         public List<AState> states { get; set; }
 
+        public Animator m_animator;
+
         #endregion
 
         #region Methods
@@ -82,33 +84,14 @@ namespace Bitfrost.Gameplay.Turrets
         private void OffensiveToProduction()
         {
             if (CanBeProduction())
-                SetProductionMode();
+                ChangeState(TurretStateType.Production, TurretStateType.Offensive);
             else
                 m_wrongActionSource.Play();
         }
 
         private void ProductionToOffensive()
         {
-            if (CanBeOffensive())
-                SetOffensiveMode();
-            else
-                m_wrongActionSource.Play();
-        }
-
-        public void SetOffensiveMode()
-        {
             ChangeState(TurretStateType.Offensive, TurretStateType.Production);
-
-        }
-
-        private void SetProductionMode()
-        {
-            ChangeState(TurretStateType.Production, TurretStateType.Offensive);
-        }
-
-        public bool CanBeOffensive()
-        {
-            return true;
         }
 
         public bool CanBeProduction()
@@ -125,6 +108,13 @@ namespace Bitfrost.Gameplay.Turrets
                 Debug.LogWarning("CRYSTAL IS DEPLEATED");
 
             return result;
+        }
+
+        private const string k_turretStateType = "TurretStateType";
+
+        public void ChangeAnimatorState(int state)
+        {
+            m_animator.SetInteger(k_turretStateType, state);
         }
 
         #endregion

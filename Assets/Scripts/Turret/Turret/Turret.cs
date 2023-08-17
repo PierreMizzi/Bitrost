@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using PierreMizzi.SoundManager;
 using Bitfrost.Gameplay.Bullets;
 using Bitfrost.Gameplay.Energy;
+using PierreMizzi.Rendering;
 
 namespace Bitfrost.Gameplay.Turrets
 {
@@ -33,10 +34,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         public TurretSettings settings { get { return m_settings; } }
         public TurretManager manager { get { return m_manager; } }
-
         public CrystalShard crystal { get; private set; }
-
-
 
         [SerializeField]
         private TurretTarget m_target;
@@ -46,8 +44,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         private bool m_isDroppable;
         private bool m_isTargeted = false;
-
-        public GameObject aimSprite { get { return m_aimSprite; } }
 
         public bool isDroppable
         {
@@ -79,13 +75,15 @@ namespace Bitfrost.Gameplay.Turrets
         private InputActionReference m_mousePositionInput = null;
 
         [SerializeField]
-        private Transform m_canonTransform;
-
-        [SerializeField]
         private Transform m_bulletOriginTransform;
 
         [SerializeField]
-        private GameObject m_aimSprite;
+        private Transform m_canonTransform;
+
+        public Transform canonTransform
+        {
+            get { return m_canonTransform; }
+        }
 
         private Vector3 m_mouseWorldSpace;
 
@@ -93,14 +91,19 @@ namespace Bitfrost.Gameplay.Turrets
 
         public Vector3 aimDirection { get; private set; }
 
-        public Transform canonTransform
-        {
-            get { return m_canonTransform; }
-        }
-
         #endregion
 
         #region Production
+
+        [Header("Production")]
+        [SerializeField]
+        private Transform m_factorySprite;
+
+        [SerializeField]
+        private MaterialPropertyBlockModifier m_radialProgress = null;
+
+        public Transform factorySprite { get { return m_factorySprite; } }
+        public MaterialPropertyBlockModifier radialProgress { get { return m_radialProgress; } }
 
         private float m_productionProgress;
         public float productionProgress
@@ -193,10 +196,10 @@ namespace Bitfrost.Gameplay.Turrets
 
         protected void Awake()
         {
+            m_animator = GetComponent<Animator>();
             camera = Camera.main;
 
             InitiliazeStates();
-
 
             onIsDroppable = () => { };
             onIsTargeted = () => { };

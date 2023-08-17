@@ -15,8 +15,7 @@ namespace Bitfrost.Gameplay.Turrets
         protected override void DefaultEnter()
         {
             base.DefaultEnter();
-            m_this.canonTransform.up = Vector2.down;
-            m_this.aimSprite.SetActive(false);
+            m_this.ChangeAnimatorState(type);
         }
     }
 }

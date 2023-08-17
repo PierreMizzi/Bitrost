@@ -1,6 +1,7 @@
 using DG.Tweening;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.StateMachines;
+using UnityEngine;
 
 namespace Bitfrost.Gameplay.Turrets
 {
@@ -15,11 +16,13 @@ namespace Bitfrost.Gameplay.Turrets
 
         private Tween m_productionCycleTween;
 
+        private const string k_progress = "_Progress";
+
         protected override void DefaultEnter()
         {
             base.DefaultEnter();
 
-            m_this.canonTransform.gameObject.SetActive(false);
+            m_this.ChangeAnimatorState(type);
             StartProduction();
 
             SoundManager.PlaySFX(SoundDataID.TURRET_PRODUCTION_MODE);
@@ -71,6 +74,9 @@ namespace Bitfrost.Gameplay.Turrets
         private void ProductionUpdate(float value)
         {
             m_this.productionProgress = value;
+
+            m_this.factorySprite.transform.rotation = Quaternion.Euler(0, 0, -value * 360f);
+            m_this.radialProgress.SetProperty(k_progress, value);
         }
 
         public void CompleteProductionCycle()

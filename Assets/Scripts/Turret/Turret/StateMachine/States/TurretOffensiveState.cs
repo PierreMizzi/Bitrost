@@ -18,8 +18,7 @@ namespace Bitfrost.Gameplay.Turrets
             base.DefaultEnter();
 
             m_this.SetActive();
-            m_this.canonTransform.gameObject.SetActive(true);
-            m_this.aimSprite.SetActive(true);
+            m_this.ChangeAnimatorState(type);
 
             SoundManager.PlaySFX(SoundDataID.TURRET_FIRE_MODE);
         }
