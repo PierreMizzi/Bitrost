@@ -89,20 +89,25 @@ namespace Bitfrost.Gameplay.Energy
             if (!UnityEngine.Application.isPlaying)
                 return;
 
-            Vector3 origin = LevelManager.RandomPositionInArena(config.radius);
+            Vector3 origin = LevelManager.RandomPositionInArena(m_settings.randomPositionExtents);
 
-            List<Vector3> randomPositions = LevelManager.RandomPositions(origin, config.count, config.radius);
+            Vector3 randomPosition;
             Quaternion randomRotation = UtilsClass.RandomRotation2D();
 
             for (int i = 0; i < config.count; i++)
             {
+                // Transforms
+                randomPosition = GetSafePosition(origin);
+
                 int energy = Random.Range(config.minEnergy, config.maxEnergy + 1);
-                SpawnCrystalShard(randomPositions[i], randomRotation, energy);
+                SpawnCrystalShard(randomPosition, randomRotation, energy);
             }
 
             // Spawn Crystal Edge
             Instantiate(m_crystalsSubjectPrefab, origin, Quaternion.identity, transform);
         }
+
+
 
         private void SpawnCrystalShard(Vector3 randomPosition, Quaternion randomRotation, int energyCount)
         {
@@ -118,29 +123,66 @@ namespace Bitfrost.Gameplay.Energy
             m_activeCrystals.Add(crystal);
         }
 
+        private Vector3 GetSafePosition(Vector3 origin)
+        {
+            Vector3 position = Vector3.one;
+            Vector3 randomPosition;
 
-        #endregion
+            int generationCount = 0;
+        GenerateRandom:
+            {
+                randomPosition = m_settings.GetRandomPosition();
+                position = origin + randomPosition;
+            }
+
+            if (!IsValidPosition(position))
+            {
+                // Securit to prevent stalling the game
+                generationCount++;
+                if (generationCount < 20)
+                    goto GenerateRandom;
+                else
+                {
+                    Debug.Log("RandomPosition went wrong");
+                    return position;
+                }
+            }
+
+            return position;
+        }
 
         /// <summary>
         /// Might be useful !
         /// </summary>
         private bool IsValidPosition(Vector3 position)
         {
+            if (!LevelManager.IsInsideArena(position))
+                return false;
+
             if (m_activeCrystals.Count == 0)
                 return true;
 
-            float distance = 0;
+            float distance;
+            float safeDistance;
 
             foreach (CrystalShard crystal in m_activeCrystals)
             {
-                distance = (position - crystal.transform.position).magnitude;
+                distance = (position - crystal.transform.position).sqrMagnitude;
+                safeDistance = m_settings.SafeDistanceFromScale(crystal.transform.localScale.x);
 
-                if (distance < m_settings.minDistanceBetweenCrystals)
+                if (distance < safeDistance)
+                {
+                    Debug.Log($"Too close : {distance} + {safeDistance}");
                     return false;
+                }
             }
 
             return true;
         }
+
+        #endregion
+
+
 
         public void AddOccupiedCrystal(CrystalShard crystal)
         {

@@ -11,7 +11,6 @@ using UnityEngine.Playables;
 namespace Bitfrost.Gameplay
 {
 
-
     [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour, IPausable
     {

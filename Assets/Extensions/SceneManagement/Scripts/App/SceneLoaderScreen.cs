@@ -26,7 +26,7 @@ namespace PierreMizzi.Useful.SceneManagement
 		public override void Display()
 		{
 			base.Display();
-			DisplProgressBar();
+			DisplayProgressBar();
 		}
 
 		public override void Hide()
@@ -35,7 +35,7 @@ namespace PierreMizzi.Useful.SceneManagement
 			HideProgressBar();
 		}
 
-		public void DisplProgressBar()
+		public void DisplayProgressBar()
 		{
 			m_progressBar.Display();
 		}

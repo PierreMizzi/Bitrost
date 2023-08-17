@@ -9,10 +9,12 @@ namespace PierreMizzi.Useful.SceneManagement
 	{
 
 		public Action onTitlecardToGame;
+		public Action onGameToTitlecard;
 
-		private void OnEnable()
+		protected virtual void OnEnable()
 		{
 			onTitlecardToGame = () => { };
+			onGameToTitlecard = () => { };
 		}
 
 	}

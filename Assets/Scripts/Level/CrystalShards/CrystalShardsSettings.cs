@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using PierreMizzi.Useful;
 using UnityEngine;
@@ -13,9 +12,6 @@ namespace Bitfrost.Gameplay.Energy
 )]
     public class CrystalShardsSettings : ScriptableObject
     {
-
-        [Header("Crystal Shards Manager")]
-        public float minDistanceBetweenCrystals;
 
         [Header("Crystal Shards")]
 
@@ -35,6 +31,18 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private float m_maxCrystalScale = 1.66f;
 
+        [SerializeField]
+        private float m_safeDistanceFromScaleRatio = 0.66f;
+
+        private float safeDistanceFromScaleRatio;
+
+        public float randomPositionExtents;
+
+        private void OnEnable()
+        {
+            safeDistanceFromScaleRatio = Mathf.Pow(m_safeDistanceFromScaleRatio, 2f);
+        }
+
         public Texture GetRandomSprite()
         {
             return UtilsClass.PickRandom(m_sprites);
@@ -43,6 +51,12 @@ namespace Bitfrost.Gameplay.Energy
         public Color GetRandomTint()
         {
             return UtilsClass.PickRandom(m_spriteTints);
+        }
+
+        public Vector2 GetRandomPosition()
+        {
+            return new Vector2(UnityEngine.Random.Range(-randomPositionExtents, randomPositionExtents),
+                                UnityEngine.Random.Range(-randomPositionExtents, randomPositionExtents));
         }
 
         public float GetRandomRotationSpeed()
@@ -54,6 +68,11 @@ namespace Bitfrost.Gameplay.Energy
         public float GetRandomScale()
         {
             return UnityEngine.Random.Range(m_minCrystalScale, m_maxCrystalScale);
+        }
+
+        public float SafeDistanceFromScale(float scale)
+        {
+            return safeDistanceFromScaleRatio * scale;
         }
 
     }

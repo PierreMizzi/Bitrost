@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5fbe2e5a9a0c6249abbff2f956c1ed3, type: 3}
   m_Name: CrystalShardsSettings
   m_EditorClassIdentifier: 
-  minDistanceBetweenCrystals: 0
   m_sprites:
   - {fileID: 2800000, guid: 111266b317b80bc4e83fca5fbf733403, type: 3}
   - {fileID: 2800000, guid: 50e718ed58476f84bba19fa643129dc1, type: 3}
@@ -25,5 +24,7 @@ MonoBehaviour:
   - {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
   m_minRotationSpeed: 2
   m_maxRotationSpeed: 17
-  m_minCrystalScale: 1
-  m_maxCrystalScale: 1.66
+  m_minCrystalScale: 1.5
+  m_maxCrystalScale: 2.2
+  m_safeDistanceFromScaleRatio: 3
+  randomPositionExtents: 10

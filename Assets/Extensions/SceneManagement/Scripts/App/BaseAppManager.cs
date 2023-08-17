@@ -33,29 +33,41 @@ namespace PierreMizzi.Useful.SceneManagement
 		{
 			if (SceneManager.sceneCount == 1)
 			{
+				m_initialCamera.gameObject.SetActive(true);
+
 				if (Application.isPlaying)
 					ApplicationToTitlecard();
 			}
 			else
 			{
-				m_loaderScreen.Awake();
-				m_loaderScreen.Hide();
+				if (!Application.isPlaying)
+				{
+					m_loaderScreen.Awake();
+					m_loaderScreen.Hide();
+				}
 
-				if (m_initialCamera != null)
-					DestroyImmediate(m_initialCamera.gameObject);
+				m_initialCamera.gameObject.SetActive(false);
 			}
 		}
 
 		protected virtual void Start()
 		{
 			if (m_appChannel != null)
+			{
 				m_appChannel.onTitlecardToGame += TitlecardToGame;
+				m_appChannel.onGameToTitlecard += GameToTitlecard;
+			}
+
 		}
 
 		protected virtual void OnDestroy()
 		{
 			if (m_appChannel != null)
+			{
 				m_appChannel.onTitlecardToGame -= TitlecardToGame;
+				m_appChannel.onGameToTitlecard -= GameToTitlecard;
+			}
+
 		}
 
 		protected virtual void ApplicationToTitlecard()
@@ -94,6 +106,8 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual IEnumerator TitlecardToGameCoroutine()
 		{
+			Debug.Log("TitlecardToGameCoroutine");
+
 			// Fade In of screen
 			bool hold = true;
 			Action stopHold = () => { hold = false; };
@@ -103,7 +117,7 @@ namespace PierreMizzi.Useful.SceneManagement
 			while (hold)
 				yield return null;
 
-			m_loaderScreen.DisplProgressBar();
+			m_loaderScreen.DisplayProgressBar();
 			yield return SceneLoader.UnloadScene(titlecardSceneName);
 			yield return SceneLoader.LoadScene(gameSceneName, true, m_loaderScreen.SetProgress);
 
@@ -114,6 +128,45 @@ namespace PierreMizzi.Useful.SceneManagement
 				yield return null;
 
 			Debug.Log("Game scene loaded");
+		}
+
+		private void GameToTitlecard()
+		{
+			StartCoroutine(GameToTitlecardCoroutine());
+		}
+
+		private IEnumerator GameToTitlecardCoroutine()
+		{
+			bool hold = true;
+			Action stopHold = () => { hold = false; };
+
+			// Fade In
+			m_loaderScreen.HideProgressBar();
+			m_loaderScreen.FadeIn(1, stopHold);
+
+			while (hold)
+				yield return null;
+
+			m_loaderScreen.DisplayProgressBar();
+
+			// Unload Game Scene
+			yield return SceneLoader.UnloadScene(gameSceneName);
+			GC.Collect();
+
+			// Loads Titlecard scene
+			yield return SceneLoader.LoadScene(titlecardSceneName, true, m_loaderScreen.SetProgress);
+
+			m_loaderScreen.HideProgressBar();
+
+			// Fade Out
+			hold = true;
+			m_loaderScreen.FadeOut(1, stopHold);
+
+			while (hold)
+				yield return null;
+
+			Debug.Log("Titlecard scene loaded");
+
 		}
 
 		#endregion

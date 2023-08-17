@@ -25,6 +25,7 @@ namespace PierreMizzi.Useful.UI
 		public virtual void Awake()
 		{
 			m_root = m_document.rootVisualElement;
+			Debug.Log(m_root == null);
 			m_background = m_root.Q<VisualElement>(k_background);
 		}
 

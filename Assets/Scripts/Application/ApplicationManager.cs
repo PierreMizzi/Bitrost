@@ -1,13 +1,16 @@
 using UnityEngine;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.SceneManagement;
+using System;
+using Bitfrost.Gameplay;
 
 namespace Bitfrost.Application
 {
-	[ExecuteInEditMode]
 	public class ApplicationManager : BaseAppManager
 	{
 		#region Fields 
+
+		public ApplicationChannel applicationChannel { get { return m_appChannel as ApplicationChannel; } }
 
 		[SerializeField]
 		private SoundManagerToolSettings m_soundManagerSettings = null;
@@ -18,7 +21,10 @@ namespace Bitfrost.Application
 
 		protected override void Start()
 		{
-			SoundManager.PlaySound(SoundDataID.GAME_LOOP, true);
+			base.Start();
+			applicationChannel.onSetCursor.Invoke(CursorType.Normal);
+			if (UnityEngine.Application.isPlaying)
+				SoundManager.PlaySound(SoundDataID.GAME_LOOP, true);
 		}
 
 		#endregion

@@ -1,3 +1,4 @@
+using Bitfrost.Application;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
 using PierreMizzi.Useful.UI;
@@ -11,6 +12,9 @@ namespace Bitfrost.Gameplay.UI
 	{
 
 		#region Fields
+
+		[SerializeField]
+		private ApplicationChannel m_applicationChannel = null;
 
 		[SerializeField]
 		private LevelChannel m_levelChannel;
@@ -67,7 +71,7 @@ namespace Bitfrost.Gameplay.UI
 
 		private void CallbackRestartButton()
 		{
-			m_levelChannel.onRestart.Invoke();
+			m_levelChannel.onRestart?.Invoke();
 			Hide();
 			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}
@@ -75,6 +79,7 @@ namespace Bitfrost.Gameplay.UI
 		private void CallbackMenuButton()
 		{
 			Debug.Log("Menu Button");
+			m_applicationChannel.onGameToTitlecard?.Invoke();
 			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}
 

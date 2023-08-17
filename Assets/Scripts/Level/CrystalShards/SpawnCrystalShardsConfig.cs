@@ -8,7 +8,5 @@ namespace Bitfrost.Gameplay.Energy
         public int count;
         public int minEnergy;
         public int maxEnergy;
-
-        public float radius;
     }
 }

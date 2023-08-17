@@ -240,12 +240,33 @@ namespace PierreMizzi.Useful
             get { return new Vector3(Screen.width / 2f, Screen.height / 2f, 0f); }
         }
 
+        public static Vector3 RandomDirection()
+        {
+            return new Vector3(Random.Range(-1f, 1),
+                               Random.Range(-1f, 1f),
+                               Random.Range(-1f, 1f)).normalized;
+        }
+
+        public static Vector2 RandomDirection2D()
+        {
+            return new Vector2(Random.Range(-1f, 1),
+                               Random.Range(-1f, 1f)).normalized;
+        }
+
         public static Vector3 RandomPosition(this Bounds bounds)
         {
             return new Vector3(
                 bounds.center.x + Random.Range(-bounds.extents.x, bounds.extents.x),
                 bounds.center.y + Random.Range(-bounds.extents.y, bounds.extents.y),
                 bounds.center.z + Random.Range(-bounds.extents.z, bounds.extents.z)
+            );
+        }
+
+        public static Vector2 RandomPosition2D(this Bounds bounds)
+        {
+            return new Vector2(
+                bounds.center.x + Random.Range(-bounds.extents.x, bounds.extents.x),
+                bounds.center.y + Random.Range(-bounds.extents.y, bounds.extents.y)
             );
         }
 

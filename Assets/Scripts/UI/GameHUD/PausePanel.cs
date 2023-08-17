@@ -1,4 +1,5 @@
 using System;
+using Bitfrost.Application;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.UI;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace Bitfrost.Gameplay.UI
     public class PausePanel : APanel
     {
         #region Fields 
+
+        [SerializeField]
+        private ApplicationChannel m_applicationChannel;
 
         [SerializeField]
         private LevelChannel m_levelChannel;
@@ -76,13 +80,12 @@ namespace Bitfrost.Gameplay.UI
 
         private void CallbackRestartButton()
         {
-            Debug.Log("CallbackRestartButton");
             SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
         }
 
         private void CallbackMenuButton()
         {
-            Debug.Log("CallbackMenuButton");
+            m_applicationChannel.onGameToTitlecard?.Invoke();
             SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
         }
 
