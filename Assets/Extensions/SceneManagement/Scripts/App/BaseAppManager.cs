@@ -33,13 +33,16 @@ namespace PierreMizzi.Useful.SceneManagement
 		{
 			if (SceneManager.sceneCount == 1)
 			{
-				ApplicationToTitlecard();
+				if (Application.isPlaying)
+					ApplicationToTitlecard();
 			}
 			else
 			{
 				m_loaderScreen.Awake();
 				m_loaderScreen.Hide();
-				DestroyImmediate(m_initialCamera.gameObject);
+
+				if (m_initialCamera != null)
+					DestroyImmediate(m_initialCamera.gameObject);
 			}
 		}
 

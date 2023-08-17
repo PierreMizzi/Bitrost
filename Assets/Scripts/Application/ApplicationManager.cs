@@ -4,6 +4,7 @@ using PierreMizzi.Useful.SceneManagement;
 
 namespace Bitfrost.Application
 {
+	[ExecuteInEditMode]
 	public class ApplicationManager : BaseAppManager
 	{
 		#region Fields 
