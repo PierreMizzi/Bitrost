@@ -31,6 +31,11 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual void OnEnable()
 		{
+			StartCoroutine(SceneSetup());
+		}
+
+		protected virtual IEnumerator SceneSetup()
+		{
 			if (SceneManager.sceneCount == 1)
 			{
 				m_initialCamera.gameObject.SetActive(true);
@@ -40,30 +45,32 @@ namespace PierreMizzi.Useful.SceneManagement
 			}
 			else
 			{
-				if (!Application.isPlaying)
-				{
-					m_loaderScreen.Awake();
-					m_loaderScreen.Hide();
-				}
+				yield return new WaitForEndOfFrame();
+				m_loaderScreen.Awake();
+				m_loaderScreen.Hide();
 
 				m_initialCamera.gameObject.SetActive(false);
 			}
+
+			yield return null;
 		}
 
 		protected virtual void Start()
 		{
 			if (m_appChannel != null)
 			{
+				Debug.Log("We subscribed bois !");
 				m_appChannel.onTitlecardToGame += TitlecardToGame;
 				m_appChannel.onGameToTitlecard += GameToTitlecard;
 			}
-
 		}
 
 		protected virtual void OnDestroy()
 		{
 			if (m_appChannel != null)
 			{
+				Debug.Log("UNSUBSCRIBED ??");
+
 				m_appChannel.onTitlecardToGame -= TitlecardToGame;
 				m_appChannel.onGameToTitlecard -= GameToTitlecard;
 			}
@@ -101,6 +108,7 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual void TitlecardToGame()
 		{
+			Debug.Log("Not event here ?");
 			StartCoroutine(TitlecardToGameCoroutine());
 		}
 

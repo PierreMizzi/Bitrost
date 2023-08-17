@@ -19,7 +19,6 @@ namespace PierreMizzi.Useful.SceneManagement
 		public override void Awake()
 		{
 			base.Awake();
-
 			m_progressBar = new ProgressBar(m_root, k_progressBar);
 		}
 
