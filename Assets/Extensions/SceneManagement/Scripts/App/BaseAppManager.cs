@@ -59,7 +59,6 @@ namespace PierreMizzi.Useful.SceneManagement
 		{
 			if (m_appChannel != null)
 			{
-				Debug.Log("We subscribed bois !");
 				m_appChannel.onTitlecardToGame += TitlecardToGame;
 				m_appChannel.onGameToTitlecard += GameToTitlecard;
 			}
@@ -69,8 +68,6 @@ namespace PierreMizzi.Useful.SceneManagement
 		{
 			if (m_appChannel != null)
 			{
-				Debug.Log("UNSUBSCRIBED ??");
-
 				m_appChannel.onTitlecardToGame -= TitlecardToGame;
 				m_appChannel.onGameToTitlecard -= GameToTitlecard;
 			}
@@ -108,14 +105,11 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual void TitlecardToGame()
 		{
-			Debug.Log("Not event here ?");
 			StartCoroutine(TitlecardToGameCoroutine());
 		}
 
 		protected virtual IEnumerator TitlecardToGameCoroutine()
 		{
-			Debug.Log("TitlecardToGameCoroutine");
-
 			// Fade In of screen
 			bool hold = true;
 			Action stopHold = () => { hold = false; };

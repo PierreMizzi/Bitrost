@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healedHealthPerStoredEnergy: 5
-  speed: 10
+  speed: 100
+  smoothTime: 0.5
+  immediatePositionScale: 0.1

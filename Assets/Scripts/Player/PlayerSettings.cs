@@ -13,7 +13,11 @@ namespace Bitfrost.Gameplay.Players
         public float healedHealthPerStoredEnergy = 5;
 
         [Header("Controller")]
-        public float speed;
+        public float speed = 80f;
+
+        public float smoothTime = 0.5f;
+
+        public float immediatePositionScale = 0.1f;
 
 
 
