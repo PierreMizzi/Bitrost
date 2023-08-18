@@ -105,39 +105,17 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual void TitlecardToGame()
 		{
-			StartCoroutine(TitlecardToGameCoroutine());
-		}
-
-		protected virtual IEnumerator TitlecardToGameCoroutine()
-		{
-			// Fade In of screen
-			bool hold = true;
-			Action stopHold = () => { hold = false; };
-
-			m_loaderScreen.FadeIn(1f, stopHold);
-
-			while (hold)
-				yield return null;
-
-			m_loaderScreen.DisplayProgressBar();
-			yield return SceneLoader.UnloadScene(titlecardSceneName);
-			yield return SceneLoader.LoadScene(gameSceneName, true, m_loaderScreen.SetProgress);
-
-			m_loaderScreen.HideProgressBar();
-			m_loaderScreen.FadeOut(1f, stopHold);
-
-			while (hold)
-				yield return null;
-
-			Debug.Log("Game scene loaded");
+			IEnumerator transition = SceneTransitionCoroutine(titlecardSceneName, gameSceneName);
+			StartCoroutine(transition);
 		}
 
 		private void GameToTitlecard()
 		{
-			StartCoroutine(GameToTitlecardCoroutine());
+			IEnumerator transition = SceneTransitionCoroutine(gameSceneName, titlecardSceneName);
+			StartCoroutine(transition);
 		}
 
-		private IEnumerator GameToTitlecardCoroutine()
+		protected virtual IEnumerator SceneTransitionCoroutine(string previousSceneName, string newSceneName)
 		{
 			bool hold = true;
 			Action stopHold = () => { hold = false; };
@@ -149,15 +127,15 @@ namespace PierreMizzi.Useful.SceneManagement
 			while (hold)
 				yield return null;
 
+			m_initialCamera.gameObject.SetActive(true);
 			m_loaderScreen.DisplayProgressBar();
-
 			// Unload Game Scene
-			yield return SceneLoader.UnloadScene(gameSceneName);
+			yield return SceneLoader.UnloadScene(previousSceneName);
 			GC.Collect();
 
 			// Loads Titlecard scene
-			yield return SceneLoader.LoadScene(titlecardSceneName, true, m_loaderScreen.SetProgress);
-
+			yield return SceneLoader.LoadScene(newSceneName, true, m_loaderScreen.SetProgress);
+			m_initialCamera.gameObject.SetActive(false);
 			m_loaderScreen.HideProgressBar();
 
 			// Fade Out
@@ -168,7 +146,6 @@ namespace PierreMizzi.Useful.SceneManagement
 				yield return null;
 
 			Debug.Log("Titlecard scene loaded");
-
 		}
 
 		#endregion

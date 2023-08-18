@@ -1,25 +1,38 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Gameplay/GameOverPanel.uss?fileID=7433441132597879392&amp;guid=db7829885e5133f4e916ed7b2bda074c&amp;type=3#GameOverPanel" />
+    <Style src="project://database/Assets/UI/Game/Blocks/GameOverPanel.uss?fileID=7433441132597879392&amp;guid=db7829885e5133f4e916ed7b2bda074c&amp;type=3#GameOverPanel" />
     <ui:VisualElement name="pause-panel-root" style="position: absolute; width: 100%; height: 100%; align-items: center; justify-content: center;">
-        <ui:VisualElement name="background" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.53);" />
-        <ui:VisualElement name="pause-panel-container" style="width: 37%; height: 60%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
-            <ui:VisualElement name="top-part" style="height: 15%; background-color: rgb(34, 127, 195); width: 40%; border-top-left-radius: 20px; border-top-right-radius: 20px; max-width: none;">
-                <ui:Label text="PAUSE" display-tooltip-when-elided="true" name="top-label" style="width: auto; height: 100%; -unity-text-align: middle-center; font-size: 43px; color: rgb(255, 255, 255);" />
-                <ui:VisualElement name="bolt-container" style="position: absolute; width: 100%; height: 100%; flex-direction: row; justify-content: space-between;">
-                    <ui:VisualElement name="bolt-top-left" class="bolt-top" style="background-color: rgb(25, 92, 141);" />
-                    <ui:VisualElement name="bolt-top-right" class="bolt-top" style="left: auto; right: 20px; background-color: rgb(25, 92, 141);" />
+        <ui:VisualElement name="background" style="position: absolute; left: -1px; top: 0; right: 1px; bottom: 0; background-color: rgba(0, 0, 0, 0.53);" />
+        <ui:VisualElement name="pause-panel-container" style="width: 20%; height: 40%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+            <ui:VisualElement name="top-part" style="height: 15%; background-color: rgb(34, 127, 195); width: 69%; border-top-left-radius: 20px; border-top-right-radius: 20px; max-width: none; border-left-color: rgb(24, 91, 139); border-top-color: rgb(24, 91, 139); border-right-color: rgb(17, 64, 97); border-left-width: 6px; border-right-width: 6px; border-top-width: 6px;">
+                <ui:Label text="PAUSE" display-tooltip-when-elided="true" name="top-label" style="width: auto; height: 100%; -unity-text-align: middle-center; font-size: 36px; color: rgb(255, 255, 255);" />
+                <ui:VisualElement name="bolt-container" class="bolt-container">
+                    <ui:VisualElement name="bolt-top-left" class="bolt-top bolt bolt-left" style="background-color: rgb(25, 92, 141);" />
+                    <ui:VisualElement name="bolt-top-right" class="bolt-top bolt bolt-right" style="background-color: rgb(25, 92, 141);" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="bottom-part" style="flex-grow: 0; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; height: 85%; border-top-left-radius: 0; border-top-right-radius: 20px; background-color: rgb(214, 222, 231); flex-direction: row; justify-content: center;">
-                <ui:VisualElement name="bolt-container" style="position: absolute; width: 100%; height: 100%; flex-direction: row; justify-content: space-between;">
-                    <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom" />
-                    <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom" style="left: 20px; right: auto; top: auto; bottom: 20px;" />
-                    <ui:VisualElement name="bolt-top-right" class="bolt-top" style="left: auto; right: 20px; background-color: rgb(152, 157, 164);" />
+            <ui:VisualElement name="bottom-part" style="flex-grow: 0; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; height: 85%; border-top-left-radius: 0; border-top-right-radius: 20px; background-color: rgb(214, 222, 231); flex-direction: row; justify-content: center; align-items: center; border-left-color: rgb(135, 135, 135); border-right-color: rgb(53, 53, 53); border-bottom-color: rgb(53, 53, 53); border-right-width: 6px; border-left-width: 6px; border-bottom-width: 6px;">
+                <ui:VisualElement name="bolt-container" class="bolt-container">
+                    <ui:VisualElement name="bolt-bottom-right" class="bolt bolt-bottom bolt-right" />
+                    <ui:VisualElement name="bolt-bottom-left" class="bolt bolt-bottom bolt-left" />
+                    <ui:VisualElement name="bolt-top-right" class="bolt bolt-top bolt-right" />
                 </ui:VisualElement>
-                <ui:VisualElement name="button-container" style="width: 64%; justify-content: space-between; align-items: center; height: 100%; margin-top: 0; padding-top: 20%; padding-bottom: 20%;">
-                    <ui:Button text="Resume" display-tooltip-when-elided="true" name="resume-button" class="custom-button" />
-                    <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="custom-button" />
-                    <ui:Button text="Menu" display-tooltip-when-elided="true" name="menu-button" class="custom-button" />
+                <ui:VisualElement name="button-container" style="width: 64%; justify-content: space-between; align-items: center; height: 54%;">
+                    <ui:Button text="Resume" display-tooltip-when-elided="true" name="resume-button" class="iron-button" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                        <ui:VisualElement name="bolt-container" class="bolt-container">
+                            <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom bolt-right bolt" />
+                            <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom bolt bolt-left" />
+                            <ui:VisualElement name="bolt-top-right" class="bolt-top bolt bolt-right" />
+                            <ui:VisualElement name="bolt-top-left" class="bolt-top bolt-left bolt" />
+                        </ui:VisualElement>
+                    </ui:Button>
+                    <ui:Button text="Menu" display-tooltip-when-elided="true" name="menu-button" class="iron-button" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                        <ui:VisualElement name="bolt-container" class="bolt-container">
+                            <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom bolt-right bolt" />
+                            <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom bolt bolt-left" />
+                            <ui:VisualElement name="bolt-top-right" class="bolt-top bolt bolt-right" />
+                            <ui:VisualElement name="bolt-top-left" class="bolt-top bolt-left bolt" />
+                        </ui:VisualElement>
+                    </ui:Button>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

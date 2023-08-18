@@ -78,7 +78,6 @@ namespace Bitfrost.Gameplay.UI
 
 		private void CallbackMenuButton()
 		{
-			Debug.Log("Menu Button");
 			m_applicationChannel.onGameToTitlecard?.Invoke();
 			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}

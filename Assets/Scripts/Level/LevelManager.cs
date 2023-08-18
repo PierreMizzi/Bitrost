@@ -58,6 +58,19 @@ namespace Bitfrost.Gameplay
         [Header("Tutorial")]
         [SerializeField] private bool m_displayTutorial = true;
 
+        #region Victory
+
+        /*
+
+            - "Threat repelled, return to base" panel
+            - Display evacuation portal at middle of screen
+            - Enter the portal
+            - Fade In VictoryScreen
+            - Display the screen 
+
+        */
+
+        #endregion
 
         #endregion
 
@@ -229,6 +242,10 @@ namespace Bitfrost.Gameplay
             // Stage
             ResetStage();
         }
+
+        #endregion
+
+        #region Victory
 
         #endregion
 

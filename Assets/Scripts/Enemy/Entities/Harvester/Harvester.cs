@@ -48,7 +48,6 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void InitiliazeStates()
         {
-            Debug.Log("InitiliazeStates");
             states = new List<AState>()
             {
                 new EnemyInactiveState(this),

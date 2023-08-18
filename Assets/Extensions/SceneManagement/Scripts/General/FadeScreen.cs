@@ -50,7 +50,6 @@ namespace PierreMizzi.Useful.UI
 					(float value) =>
 					{
 						m_background.style.opacity = value;
-						Debug.Log(value);
 					}
 				)
 				.SetEase(Ease.Linear)

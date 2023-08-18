@@ -88,7 +88,6 @@ namespace PierreMizzi.Useful.UI
 		{
 			// fade-in animate
 			AddClassToElements(UIToolkitUtils.animate);
-			Debug.Log(("animate fade-in"));
 			LogClasses();
 			yield return new WaitForSeconds(m_fadeInDuration);
 
@@ -96,7 +95,6 @@ namespace PierreMizzi.Useful.UI
 			RemoveClassToElements(UIToolkitUtils.animate);
 			RemoveSpecificClassToElements(UIToolkitUtils.fadeIn);
 			AddSpecificClassToElements(UIToolkitUtils.fadeOut);
-			Debug.Log(("Set state to fade-out"));
 			LogClasses();
 
 			// Display duraation
@@ -104,7 +102,6 @@ namespace PierreMizzi.Useful.UI
 
 			// Fade Out
 			AddClassToElements(UIToolkitUtils.animate);
-			Debug.Log(("animte fade-out"));
 			LogClasses();
 			yield return new WaitForSeconds(m_fadeOutDuration);
 
@@ -112,7 +109,6 @@ namespace PierreMizzi.Useful.UI
 			AddClassToElements(UIToolkitUtils.reset);
 			RemoveClassToElements(UIToolkitUtils.animate);
 			RemoveSpecificClassToElements(UIToolkitUtils.fadeOut);
-			Debug.Log(("Reset back to fade-in state"));
 			LogClasses();
 
 			// There is an unwanted transition back to fade-in state, but reset prevents unwanted visuals
@@ -121,7 +117,6 @@ namespace PierreMizzi.Useful.UI
 
 			// Remove reset class
 			RemoveClassToElements(UIToolkitUtils.reset);
-			Debug.Log(("Animation completed"));
 			LogClasses();
 		}
 
@@ -132,10 +127,6 @@ namespace PierreMizzi.Useful.UI
 		{
 			AddClassToElements(UIToolkitUtils.animate);
 			LogClasses();
-
-			// ToggleClassToElements(UIToolkitUtils.hiddenIn);
-			// Debug.Log(("Fast Display"));
-			// LogClasses();
 		}
 
 		public virtual void AddSpecificClassToElements(string className)

@@ -50,7 +50,6 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual void CallbackStartClicked()
 		{
-			Debug.Log("Start clicked !" + isInteractable);
 			if (isInteractable)
 				m_appChannel.onTitlecardToGame.Invoke();
 		}

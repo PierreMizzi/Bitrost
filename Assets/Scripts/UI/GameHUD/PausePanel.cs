@@ -19,13 +19,10 @@ namespace Bitfrost.Gameplay.UI
         private LevelChannel m_levelChannel;
 
         private const string k_resumeButton = "resume-button";
-        private const string k_restartButton = "restart-button";
         private const string k_menuButton = "menu-button";
 
         private Button m_resumeButton;
-        private Button m_restartButton;
         private Button m_menuButton;
-
 
         #endregion
 
@@ -37,15 +34,12 @@ namespace Bitfrost.Gameplay.UI
         {
             base.Awake();
             m_resumeButton = m_root.Q<Button>(k_resumeButton);
-            m_restartButton = m_root.Q<Button>(k_restartButton);
             m_menuButton = m_root.Q<Button>(k_menuButton);
 
             m_resumeButton.clicked += CallbackResumeButton;
-            m_restartButton.clicked += CallbackRestartButton;
             m_menuButton.clicked += CallbackMenuButton;
 
             m_resumeButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
-            m_restartButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
             m_menuButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
         }
 
@@ -75,11 +69,6 @@ namespace Bitfrost.Gameplay.UI
         {
             m_levelChannel.onResumeGame.Invoke();
             m_levelChannel.onHidePausePanel.Invoke();
-            SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
-        }
-
-        private void CallbackRestartButton()
-        {
             SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
         }
 

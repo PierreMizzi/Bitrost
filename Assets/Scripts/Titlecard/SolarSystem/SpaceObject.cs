@@ -57,7 +57,7 @@ namespace Bitfrost.Application.SolarSystem
 
 		#region Methods 
 
-		private void Awake()
+		private void Start()
 		{
 			InitializeRotation();
 			InitializeOrbit();
@@ -109,7 +109,6 @@ namespace Bitfrost.Application.SolarSystem
 				child.UpdateOrbit();
 		}
 
-
 		protected void InitializeOrbit()
 		{
 			m_orbitPropertyBlock = m_orbitSprite.GetComponent<MaterialPropertyBlockModifier>();
@@ -119,6 +118,12 @@ namespace Bitfrost.Application.SolarSystem
 
 		#endregion
 
+		/*
+		SpaceObject
+		63
 
+		116
+
+		*/
 	}
 }

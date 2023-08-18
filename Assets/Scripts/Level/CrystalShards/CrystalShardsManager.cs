@@ -142,10 +142,7 @@ namespace Bitfrost.Gameplay.Energy
                 if (generationCount < 20)
                     goto GenerateRandom;
                 else
-                {
-                    Debug.Log("RandomPosition went wrong");
                     return position;
-                }
             }
 
             return position;
@@ -171,10 +168,7 @@ namespace Bitfrost.Gameplay.Energy
                 safeDistance = m_settings.SafeDistanceFromScale(crystal.transform.localScale.x);
 
                 if (distance < safeDistance)
-                {
-                    Debug.Log($"Too close : {distance} + {safeDistance}");
                     return false;
-                }
             }
 
             return true;

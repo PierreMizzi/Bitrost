@@ -1,21 +1,11 @@
-.bolt-top {
-    width: 10px;
-    height: 10px;
-    background-color: rgb(188, 86, 19);
-    position: absolute;
-    left: 20px;
-    top: 20px;
-}
+:root {
+    --boltWidth: 10px;
+    --boltHeight: 10px;
+    --boltBackground: grey;
+    --boltPadding: 10px;
 
-.bolt-bottom {
-    left: auto;
-    right: 20px;
-    top: auto;
-    bottom: 20px;
-    background-color: rgb(152, 157, 164);
-    width: 10px;
-    height: 10px;
-    position: absolute;
+    --ironButtonBoltWidth: 6px;
+    --ironButtonBoltheight: 6px;
 }
 
 .metrics-container {
@@ -28,7 +18,7 @@
 }
 
 .metrics-icon {
-    background-image: url('project://database/Assets/Sprites/UI/Gameplay/GameOver/Stopwatch.png?fileID=2800000&guid=252c8f545d2b5e04d80ad1ac7f4bbc83&type=3#Stopwatch');
+    background-image: url('project://database/Assets/Sprites/Game/UI/Gameplay/GameOver/Stopwatch.png?fileID=2800000&guid=252c8f545d2b5e04d80ad1ac7f4bbc83&type=3#Stopwatch');
     width: 60px;
     height: 60px;
     -unity-background-image-tint-color: rgb(135, 135, 135);
@@ -58,4 +48,87 @@
 
 .custom-button:hover {
     scale: 1.1 1.1;
+}
+
+.iron-button {
+    font-size: 34px;
+    width: 234px;
+    border-left-color: rgb(135, 135, 135);
+    border-right-color: rgb(53, 53, 53);
+    border-top-color: rgb(135, 135, 135);
+    border-bottom-color: rgb(53, 53, 53);
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-width: 6px;
+    border-bottom-width: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background-color: rgb(88, 88, 88);
+    color: rgba(190, 190, 190, 255);
+    height: 77px;
+}
+
+.iron-button:hover {
+    font-size: 40px;
+    color: rgba(224, 224, 224, 255);
+}
+
+.iron-button:active {
+    border-right-color: rgb(135, 135, 135);
+    border-left-color: rgb(53, 53, 53);
+    border-bottom-color: rgb(135, 135, 135);
+    border-top-color: rgb(53, 53, 53);
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-width: 6px;
+    border-bottom-width: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background-color: rgb(88, 88, 88);
+}
+
+.bolt-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.bolt {
+    width: var(--boltWidth);
+    height: var(--boltHeight);
+    background-color: var(--boltBackground);
+    border-radius: 0px;
+    position: absolute;
+}
+
+.bolt-top {
+    top: var(--boltPadding);
+}
+
+.bolt-bottom {
+    bottom: var(--boltPadding);
+}
+
+.bolt-right {
+    right: var(--boltPadding);
+}
+
+.bolt-left {
+    left: var(--boltPadding);
+}
+
+
+.iron-button>.bolt-container>.bolt {
+    width: var(--ironButtonBoltWidth);
+    height: var(--ironButtonBoltheight);
+}
+
+.iron-button:hover>.bolt-container>.bolt {
+    border-radius: 10px;
 }
