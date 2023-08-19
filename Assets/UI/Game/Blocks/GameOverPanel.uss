@@ -1,14 +1,4 @@
-:root {
-    --boltWidth: 10px;
-    --boltHeight: 10px;
-    --boltBackground: grey;
-    --boltPadding: 10px;
-
-    --ironButtonBoltWidth: 6px;
-    --ironButtonBoltheight: 6px;
-}
-
-.metrics-container {
+.metrics {
     width: auto;
     height: 100%;
     align-items: center;
@@ -36,99 +26,84 @@
     font-size: 42px;
 }
 
-.custom-button {
-    font-size: 34px;
-    width: 66%;
-    padding-left: 6px;
-    padding-right: 6px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    scale: 1 1;
-}
-
-.custom-button:hover {
-    scale: 1.1 1.1;
-}
-
-.iron-button {
-    font-size: 34px;
-    width: 234px;
-    border-left-color: rgb(135, 135, 135);
-    border-right-color: rgb(53, 53, 53);
-    border-top-color: rgb(135, 135, 135);
-    border-bottom-color: rgb(53, 53, 53);
-    border-left-width: 6px;
-    border-right-width: 6px;
-    border-top-width: 6px;
-    border-bottom-width: 6px;
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    background-color: rgb(88, 88, 88);
-    color: rgba(190, 190, 190, 255);
-    height: 77px;
-}
-
-.iron-button:hover {
-    font-size: 40px;
-    color: rgba(224, 224, 224, 255);
-}
-
-.iron-button:active {
-    border-right-color: rgb(135, 135, 135);
-    border-left-color: rgb(53, 53, 53);
-    border-bottom-color: rgb(135, 135, 135);
-    border-top-color: rgb(53, 53, 53);
-    border-left-width: 6px;
-    border-right-width: 6px;
-    border-top-width: 6px;
-    border-bottom-width: 6px;
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-    background-color: rgb(88, 88, 88);
-}
-
-.bolt-container {
+#game-over-panel-root {
     position: absolute;
     width: 100%;
     height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#game-over-container {
+    width: 40%;
+    height: 52%;
+    background-color: rgba(180, 255, 227, 0.2);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#game-over-top-part {
+    background-color: rgb(231, 106, 24);
+    height: 25%;
+    border-left-color: rgb(168, 77, 18);
+    border-right-color: rgb(168, 77, 18);
+    border-top-color: rgb(168, 77, 18);
+    border-bottom-width: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#game-over-bottom-part {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top-width: 0;
+}
+
+#top-part-title {
+    font-size: 60px;
+}
+
+#bottom-part-container {
+    width: 66%;
+    justify-content: flex-start;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    align-items: center;
+}
+
+#bottom-part-score {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10%;
+}
+
+#bottom-part-score-title {
+    white-space: nowrap;
+    -unity-text-align: middle-center;
+    margin-bottom: 14px;
+    font-size: 53px;
+    color: rgb(88, 88, 88);
+}
+
+#bottom-part-button-container {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 60%;
+}
+
+#bottom-part-metrics-container {
     flex-direction: row;
     justify-content: space-between;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
-.bolt {
-    width: var(--boltWidth);
-    height: var(--boltHeight);
-    background-color: var(--boltBackground);
-    border-radius: 0px;
-    position: absolute;
-}
-
-.bolt-top {
-    top: var(--boltPadding);
-}
-
-.bolt-bottom {
-    bottom: var(--boltPadding);
-}
-
-.bolt-right {
-    right: var(--boltPadding);
-}
-
-.bolt-left {
-    left: var(--boltPadding);
-}
-
-
-.iron-button>.bolt-container>.bolt {
-    width: var(--ironButtonBoltWidth);
-    height: var(--ironButtonBoltheight);
-}
-
-.iron-button:hover>.bolt-container>.bolt {
-    border-radius: 10px;
+.game-over-top-part {
 }

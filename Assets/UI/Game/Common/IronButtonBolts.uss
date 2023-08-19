@@ -1,0 +1,88 @@
+:root {
+    --boltWidth: 10px;
+    --boltHeight: 10px;
+    --boltBackground: grey;
+    --boltPadding: 10px;
+    --ironButtonBoltWidth: 6px;
+    --ironButtonBoltheight: 6px;
+}
+
+.iron-button {
+    font-size: 34px;
+    width: 234px;
+    scale: 1 1;
+    margin: 0;
+    padding: 0;
+    border-left-color: rgb(135, 135, 135);
+    border-right-color: rgb(53, 53, 53);
+    border-top-color: rgb(135, 135, 135);
+    border-bottom-color: rgb(53, 53, 53);
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-width: 6px;
+    border-bottom-width: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background-color: rgb(88, 88, 88);
+    color: rgb(255, 255, 255);
+    height: 77px;
+}
+
+.iron-button:hover {
+    scale: 1.1 1.1;
+}
+
+.iron-button:active {
+    color: rgb(228, 228, 228);
+    background-color: rgb(71, 71, 71);
+    border-right-color: rgb(135, 135, 135);
+    border-left-color: rgb(53, 53, 53);
+    border-bottom-color: rgb(135, 135, 135);
+    border-top-color: rgb(53, 53, 53);
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-width: 6px;
+    border-bottom-width: 6px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.bolt-container {
+    position: absolute;
+    width: auto;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.bolt {
+    width: var(--boltWidth);
+    height: var(--boltHeight);
+    background-color: var(--boltBackground);
+    border-radius: 0;
+    position: absolute;
+}
+
+.bolt-top {
+    top: var(--boltPadding);
+}
+
+.bolt-bottom {
+    bottom: var(--boltPadding);
+}
+
+.bolt-right {
+    right: var(--boltPadding);
+}
+
+.bolt-left {
+    left: var(--boltPadding);
+}

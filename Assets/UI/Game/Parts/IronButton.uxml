@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Game/Common/IronButtonBolts.uss?fileID=7433441132597879392&amp;guid=31d7479cd2e633541b341db248b7ee59&amp;type=3#IronButtonBolts" />
+    <ui:Button text="NEED-ID" display-tooltip-when-elided="true" name="NEED-ID-BUTTON" class="iron-button">
+        <ui:VisualElement name="bolt-container" class="bolt-container">
+            <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom bolt-right bolt" />
+            <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom bolt bolt-left" />
+            <ui:VisualElement name="bolt-top-right" class="bolt-top bolt bolt-right" />
+            <ui:VisualElement name="bolt-top-left" class="bolt-top bolt-left bolt" />
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

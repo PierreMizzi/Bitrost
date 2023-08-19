@@ -1,23 +1,26 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Game/Blocks/GameOverPanel.uss?fileID=7433441132597879392&amp;guid=db7829885e5133f4e916ed7b2bda074c&amp;type=3#GameOverPanel" />
-    <ui:VisualElement name="pause-panel-root" style="position: absolute; width: 100%; height: 100%; align-items: center; justify-content: center;">
-        <ui:VisualElement name="background" style="position: absolute; left: -1px; top: 0; right: 1px; bottom: 0; background-color: rgba(0, 0, 0, 0.53);" />
-        <ui:VisualElement name="pause-panel-container" style="width: 20%; height: 40%; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
-            <ui:VisualElement name="top-part" style="height: 15%; background-color: rgb(34, 127, 195); width: 69%; border-top-left-radius: 20px; border-top-right-radius: 20px; max-width: none; border-left-color: rgb(24, 91, 139); border-top-color: rgb(24, 91, 139); border-right-color: rgb(17, 64, 97); border-left-width: 6px; border-right-width: 6px; border-top-width: 6px;">
-                <ui:Label text="PAUSE" display-tooltip-when-elided="true" name="top-label" style="width: auto; height: 100%; -unity-text-align: middle-center; font-size: 36px; color: rgb(255, 255, 255);" />
+    <Style src="project://database/Assets/UI/Game/Common/IronButtonBolts.uss?fileID=7433441132597879392&amp;guid=31d7479cd2e633541b341db248b7ee59&amp;type=3#IronButtonBolts" />
+    <Style src="project://database/Assets/UI/Game/Blocks/PausePanel.uss?fileID=7433441132597879392&amp;guid=6eb7666edeafc1b47a96d697fa30ca4f&amp;type=3#PausePanel" />
+    <Style src="project://database/Assets/UI/Game/Common/GameCommon.uss?fileID=7433441132597879392&amp;guid=8a6918fc710a32e4884c50f6d1569515&amp;type=3#GameCommon" />
+    <Style src="project://database/Assets/UI/Templates/Panel/PanelTemplate.uss?fileID=7433441132597879392&amp;guid=03295edf133cf844eabb79f89ba9a44f&amp;type=3#PanelTemplate" />
+    <ui:VisualElement name="pause-panel-root" class="pause-panel-root">
+        <ui:VisualElement name="pause-panel-background" class="pause-panel-background black-veil-background" />
+        <ui:VisualElement name="pause-panel-container" class="pause-panel-container">
+            <ui:VisualElement name="pause-panel-top-part" class="panel-top-part panel-part">
+                <ui:Label text="PAUSE" display-tooltip-when-elided="true" name="pause-panel-top-label" class="panel-top-label" />
                 <ui:VisualElement name="bolt-container" class="bolt-container">
                     <ui:VisualElement name="bolt-top-left" class="bolt-top bolt bolt-left" style="background-color: rgb(25, 92, 141);" />
                     <ui:VisualElement name="bolt-top-right" class="bolt-top bolt bolt-right" style="background-color: rgb(25, 92, 141);" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="bottom-part" style="flex-grow: 0; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; height: 85%; border-top-left-radius: 0; border-top-right-radius: 20px; background-color: rgb(214, 222, 231); flex-direction: row; justify-content: center; align-items: center; border-left-color: rgb(135, 135, 135); border-right-color: rgb(53, 53, 53); border-bottom-color: rgb(53, 53, 53); border-right-width: 6px; border-left-width: 6px; border-bottom-width: 6px;">
+            <ui:VisualElement name="pause-panel-bottom-part" class="panel-part panel-bottom-part">
                 <ui:VisualElement name="bolt-container" class="bolt-container">
                     <ui:VisualElement name="bolt-bottom-right" class="bolt bolt-bottom bolt-right" />
                     <ui:VisualElement name="bolt-bottom-left" class="bolt bolt-bottom bolt-left" />
                     <ui:VisualElement name="bolt-top-right" class="bolt bolt-top bolt-right" />
                 </ui:VisualElement>
-                <ui:VisualElement name="button-container" style="width: 64%; justify-content: space-between; align-items: center; height: 54%;">
-                    <ui:Button text="Resume" display-tooltip-when-elided="true" name="resume-button" class="iron-button" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                <ui:VisualElement name="pause-panel-button-container" class="pause-panel-button-container">
+                    <ui:Button text="Resume" display-tooltip-when-elided="true" name="resume-button" class="iron-button">
                         <ui:VisualElement name="bolt-container" class="bolt-container">
                             <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom bolt-right bolt" />
                             <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom bolt bolt-left" />
@@ -25,7 +28,7 @@
                             <ui:VisualElement name="bolt-top-left" class="bolt-top bolt-left bolt" />
                         </ui:VisualElement>
                     </ui:Button>
-                    <ui:Button text="Menu" display-tooltip-when-elided="true" name="menu-button" class="iron-button" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                    <ui:Button text="Menu" display-tooltip-when-elided="true" name="menu-button" class="iron-button">
                         <ui:VisualElement name="bolt-container" class="bolt-container">
                             <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom bolt-right bolt" />
                             <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom bolt bolt-left" />

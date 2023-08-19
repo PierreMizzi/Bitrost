@@ -1,0 +1,46 @@
+#pause-panel-button-container {
+    width: 64%;
+    justify-content: space-between;
+    align-items: center;
+    height: 54%;
+}
+
+#pause-panel-root {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#pause-panel-container {
+    width: 20%;
+    height: 40%;
+}
+
+#pause-panel-top-part {
+    height: 15%;
+    background-color: rgb(0, 118, 209);
+    width: 69%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    max-width: none;
+    border-left-color: rgb(25, 92, 141);
+    border-top-color: rgb(25, 92, 141);
+    border-right-color: rgb(25, 92, 141);
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-width: 6px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-width: 0;
+    border-bottom-color: rgb(25, 92, 141);
+}
+
+#pause-panel-bottom-part {
+    height: 85%;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 0;
+    border-top-width: 0;
+}
