@@ -26,33 +26,17 @@ namespace PierreMizzi.SoundManager
 
 		[SerializeField] private bool m_generateStatic = true;
 
-		public string Description { get { return (m_description); } }
-		public List<SoundData> SoundDatas { get { return m_soundDatas; } }
-		public SoundType Type { get { return m_type; } }
-		public bool GenerateStatic { get { return m_generateStatic; } }
+		public string Description => m_description;
+		public List<SoundData> SoundDatas => m_soundDatas;
+		public bool GenerateStatic => m_generateStatic;
 
 
 		[Header("Fast fill")]
 		[SerializeField] private List<AudioClip> m_audioClips = new List<AudioClip>();
 		[SerializeField] private AudioMixerGroup m_mixerGroup = null;
 
-		public List<AudioClip> audioClips { get { return m_audioClips; } }
-		public AudioMixerGroup mixerGroup { get { return m_mixerGroup; } }
-
-		#endregion
-
-		#region Methods
-
-		/// <summary>
-		/// Initialize the library
-		/// </summary>
-		public void Init()
-		{
-			// Set the type if all SoundType
-			for (int i = 0; i < m_soundDatas.Count; i++)
-				m_soundDatas[i].SetType(m_type);
-
-		}
+		public List<AudioClip> audioClips => m_audioClips;
+		public AudioMixerGroup mixerGroup => m_mixerGroup;
 
 		#endregion
 

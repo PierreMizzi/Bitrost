@@ -87,13 +87,8 @@ namespace PierreMizzi.SoundManager
 				return;
 			}
 
-			/// SoundDataLibraries
-			foreach (SoundDataLibrary library in SoundDataLibraries)
-				library.Init();
-
 			// SFXSoundSources
 			InitializeSFXSSPool();
-
 
 			m_isInitialized = true;
 			Debug.Log("SoundManagerTool is initialized !");
@@ -113,7 +108,7 @@ namespace PierreMizzi.SoundManager
 		[Obsolete]
 		public static SoundSource PlaySound(string soundDataID, bool isLooping = false, float fadeDuration = -1f)
 		{
-			
+
 			if (!m_isInitialized)
 				return null;
 

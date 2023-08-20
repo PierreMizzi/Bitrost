@@ -31,5 +31,27 @@ namespace Bitfrost.Application
 		}
 
 		#endregion
+
+		#region Save System
+
+		[ContextMenu("Load Save Data")]
+		public void LoadSaveData()
+		{
+			SaveManager.LoadSaveData();
+		}
+
+		[ContextMenu("Write Save Data")]
+		public void WriteSaveData()
+		{
+			SaveManager.WriteSaveData();
+		}
+
+		[ContextMenu("Log Save Data")]
+		public void LogSaveData()
+		{
+			SaveManager.LogSaveData();
+		}
+
+		#endregion
 	}
 }
