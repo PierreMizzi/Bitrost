@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Template name="GameTitle" src="project://database/Assets/UI/Templates/GameTitle.uxml?fileID=9197481963319205126&amp;guid=64f09a4f0658d944b9438a3ffab72634&amp;type=3#GameTitle" />
+    <ui:Template name="GameTitle" src="project://database/Assets/UI/Application/Parts/GameTitle.uxml?fileID=9197481963319205126&amp;guid=64f09a4f0658d944b9438a3ffab72634&amp;type=3#GameTitle" />
     <Style src="project://database/Assets/UI/Titlecard/Blocks/Menu.uss?fileID=7433441132597879392&amp;guid=d41e902448fbe494e832808b86aad64b&amp;type=3#Menu" />
     <Style src="project://database/Assets/UI/General/General.uss?fileID=7433441132597879392&amp;guid=c81772fb655769e4494d3618a08eb16a&amp;type=3#General" />
     <ui:VisualElement name="menu-container" class="full-container">
@@ -43,6 +43,25 @@
                     </ui:Button>
                 </ui:VisualElement>
             </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="bottom-panel-container" style="flex-direction: row;">
+        <ui:VisualElement name="best-score-container" style="align-items: center; justify-content: space-between;">
+            <ui:VisualElement name="best-score-top-bar" class="best-score-bar" style="border-top-left-radius: 5px; border-top-right-radius: 5px;" />
+            <ui:VisualElement name="best-score-content" style="justify-content: space-between;">
+                <ui:Label text="Best Mission" display-tooltip-when-elided="false" name="best-score-title" />
+                <ui:VisualElement name="bottom-part-metrics-container">
+                    <ui:VisualElement name="metrics-time" class="metrics">
+                        <ui:VisualElement name="time-icon" class="metrics-icon" />
+                        <ui:Label text="01:36" display-tooltip-when-elided="true" name="time-label" class="metrics-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="metrics-score" class="metrics">
+                        <ui:VisualElement name="score-icon" class="metrics-icon" style="background-image: url(&apos;project://database/Assets/Sprites/Game/UI/Gameplay/GameOver/Killcount.png?fileID=2800000&amp;guid=a7216486412974c48a839bfc5cc085b2&amp;type=3#Killcount&apos;);" />
+                        <ui:Label text="65999" display-tooltip-when-elided="true" name="score-label" class="metrics-label" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="best-score-bottom-bar" class="best-score-bar" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

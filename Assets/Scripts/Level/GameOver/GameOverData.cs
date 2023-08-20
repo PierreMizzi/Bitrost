@@ -1,12 +1,15 @@
+using System;
+
 namespace Bitfrost.Gameplay
 {
-	public struct GameOverData
+	[Serializable]
+	public struct GameOverData : ICloneable
 	{
 
-		public GameOverData(float totalTime, int totalScore = 0)
+		public GameOverData(float totalTime, int killCount = 0)
 		{
 			this.totalTime = totalTime;
-			this.killCount = totalScore;
+			this.killCount = killCount;
 		}
 
 		public float totalTime;
@@ -19,6 +22,11 @@ namespace Bitfrost.Gameplay
 			log += $"totalTime : {totalTime}\r\n";
 			log += $"killCount : {killCount}\r\n";
 			return log;
+		}
+
+		public object Clone()
+		{
+			return new GameOverData(this.totalTime, this.killCount);
 		}
 	}
 }

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -221,6 +220,7 @@ namespace Bitfrost.Gameplay
         private void CallbackGameOver()
         {
             GameOverData data = new GameOverData(time, m_enemyChannel.killCount);
+            SaveManager.ManageBestScore(data);
 
             m_appChannel.onSetCursor.Invoke(CursorType.Normal);
 

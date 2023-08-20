@@ -27,7 +27,7 @@ namespace PierreMizzi.Useful.SaveSystem
 
 		#region Fields 
 
-		private static string saveFolder = "Overcore/Saves/";
+		private static string saveFolder = "/Saves/";
 		private static string fileName = "ApplicationData";
 		private static string fileExtension = ".json";
 
@@ -47,49 +47,51 @@ namespace PierreMizzi.Useful.SaveSystem
 			}
 		}
 
-		private static string dataString;
-
-		public static BaseApplicationData data;
 
 		#endregion
 
 		#region Methods 
 
-		public static void LoadSaveData()
+		public static T LoadSaveData<T>() where T : BaseApplicationData, new()
 		{
 			if (File.Exists(path))
 			{
 				using StreamReader streamReader = new StreamReader(path);
-				dataString = streamReader.ReadToEnd();
+				string dataString = streamReader.ReadToEnd();
 
-				data = JsonUtility.FromJson<BaseApplicationData>(dataString);
+				return JsonUtility.FromJson<T>(dataString);
 			}
 			else
-				CreateSaveData();
+			{
+				Debug.Log("Path doesn't exist");
+				CreateSaveData<T>();
+				return LoadSaveData<T>();
+			}
 		}
 
-		public static void CreateSaveData()
+		public static void CreateSaveData<T>() where T : BaseApplicationData, new()
 		{
 			Directory.CreateDirectory(directoryPath);
 
-			data = new BaseApplicationData();
-			WriteSaveData();
+			T data = new T();
+			WriteSaveData(data);
 		}
 
-		public static void WriteSaveData()
+		public static void WriteSaveData(BaseApplicationData data)
 		{
-			dataString = JsonUtility.ToJson(data);
+			string dataString = JsonUtility.ToJson(data);
 
 			using StreamWriter streamWriter = new StreamWriter(path);
 			streamWriter.Write(dataString);
 		}
 
-		public static void LogSaveData()
+
+
+		public static void LogBaseSaveManager()
 		{
 			string log = "### BASE SAVE MANAGER ###\r\n";
 			log += $"path : {path}\r\n";
 			log += $"directoryPath : {directoryPath}\r\n";
-			log += data.ToString();
 			Debug.Log(log);
 		}
 

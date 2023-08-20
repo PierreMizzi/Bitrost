@@ -111,3 +111,82 @@
     margin-bottom: 0;
     flex-direction: column;
 }
+
+#bottom-panel-container {
+    position: absolute;
+    left: auto;
+    right: 0;
+    bottom: 0;
+    height: 20%;
+    width: 50%;
+    padding-bottom: 40px;
+}
+
+#best-score-container {
+    width: 50%;
+}
+
+.best-score-bar {
+    background-color: rgb(255, 255, 255);
+    height: 3%;
+    width: 87%;
+}
+
+#best-score-content {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 94%;
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#best-score-title {
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&type=2#SourceSans3-Medium SDF');
+    -unity-text-align: middle-center;
+    font-size: 40px;
+    color: rgba(255, 255, 255, 255);
+}
+
+#bottom-part-metrics-container {
+    flex-direction: row;
+    justify-content: space-around;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.metrics {
+    width: auto;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    max-width: 250px;
+}
+
+.metrics-icon {
+    background-image: url('project://database/Assets/Sprites/Game/UI/Gameplay/GameOver/Stopwatch.png?fileID=2800000&guid=252c8f545d2b5e04d80ad1ac7f4bbc83&type=3#Stopwatch');
+    width: 60px;
+    height: 60px;
+    -unity-background-image-tint-color: rgb(152, 152, 152);
+    -unity-background-scale-mode: scale-to-fit;
+    margin-left: 0;
+    margin-right: 11px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.metrics-label {
+    color: rgba(255, 255, 255, 255);
+    height: auto;
+    -unity-text-align: middle-left;
+    font-size: 42px;
+}

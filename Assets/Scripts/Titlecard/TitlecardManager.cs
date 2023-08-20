@@ -21,9 +21,8 @@ namespace Bitfrost.Application
 
 		#endregion
 
-		/*
-			Menu
-		*/
+		#region Menu
+
 		[Header("Menu")]
 		[SerializeField]
 		private float m_creditsToMenuDuration;
@@ -38,6 +37,22 @@ namespace Bitfrost.Application
 
 		private VisualElement m_menu;
 		private Button m_menuToCreditsButton;
+
+		#region Best Score
+
+		private const string k_bestScoreContainer = "best-score-container";
+		private const string k_timeLabel = "time-label";
+		private const string k_scoreLabel = "score-label";
+
+		private VisualElement m_bestScoreContainer;
+		private Label m_timeLabel;
+		private Label m_killCountLabel;
+
+		#endregion
+
+		#endregion
+
+		#region Credits
 
 		/*
 			Credits
@@ -57,6 +72,7 @@ namespace Bitfrost.Application
 		private VisualElement m_credits;
 		private Button m_creditsToMenuButton;
 
+		#endregion
 
 		#endregion
 
@@ -69,6 +85,8 @@ namespace Bitfrost.Application
 			// Menu
 			m_menu = m_root.Q<VisualElement>(k_menu);
 			m_menuToCreditsButton = m_root.Q<Button>(k_menuToCreditsButton);
+
+			InitializeBestScore();
 
 			// Credits
 			m_credits = m_root.Q<VisualElement>(k_credits);
@@ -118,6 +136,25 @@ namespace Bitfrost.Application
 		{
 			m_menu.AddToClassList(UIToolkitUtils.hide);
 		}
+
+		#region Best Score
+
+		public void InitializeBestScore()
+		{
+			m_bestScoreContainer = m_root.Q<VisualElement>(k_bestScoreContainer);
+			m_timeLabel = m_bestScoreContainer.Q<Label>(k_timeLabel);
+			m_killCountLabel = m_bestScoreContainer.Q<Label>(k_scoreLabel);
+
+			RefreshBestScore();
+		}
+
+		public void RefreshBestScore()
+		{
+			m_timeLabel.text = UtilsClass.SecondsToTextTime(SaveManager.data.bestScore.totalTime);
+			m_killCountLabel.text = SaveManager.data.bestScore.killCount.ToString();
+		}
+
+		#endregion
 
 		#endregion
 

@@ -20,13 +20,13 @@ namespace Bitfrost.Gameplay.UI
 		private LevelChannel m_levelChannel;
 
 		private Label m_timeLabel;
-		private Label m_scoreLabel;
+		private Label m_killCountLabel;
 
 		private Button m_restartButton;
 		private Button m_menuButton;
 
 		private const string k_timeLabel = "time-label";
-		private const string k_scoreLabel = "score-label";
+		private const string k_killCountLabel = "score-label";
 
 		private const string k_restartButton = "restart-button";
 		private const string k_menuBUtton = "menu-button";
@@ -40,7 +40,7 @@ namespace Bitfrost.Gameplay.UI
 			base.Awake();
 
 			m_timeLabel = m_root.Q<Label>(k_timeLabel);
-			m_scoreLabel = m_root.Q<Label>(k_scoreLabel);
+			m_killCountLabel = m_root.Q<Label>(k_killCountLabel);
 			m_restartButton = m_root.Q<Button>(k_restartButton);
 			m_menuButton = m_root.Q<Button>(k_menuBUtton);
 
@@ -85,7 +85,7 @@ namespace Bitfrost.Gameplay.UI
 		private void CallbackGameOverPanel(GameOverData data)
 		{
 			m_timeLabel.text = UtilsClass.SecondsToTextTime(data.totalTime);
-			m_scoreLabel.text = data.killCount.ToString();
+			m_killCountLabel.text = data.killCount.ToString();
 
 			Display();
 		}
