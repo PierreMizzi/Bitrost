@@ -1,42 +1,3 @@
-.skull-icon {
-    background-image: url('project://database/Assets/Sprites/UI/Gameplay/LevelHeader/skull.png?fileID=2800000&guid=07b41a6cdc3945a44bc896ba86e655af&type=3#skull');
-    width: 40px;
-    height: 40px;
-}
-
-.pauseButton {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    background-image: url('project://database/Assets/Sprites/UI/Gameplay/LevelHeader/pause.png?fileID=2800000&guid=480df46b14b3f834eae43fe5dcef1444&type=3#pause');
-    -unity-background-scale-mode: scale-to-fit;
-    width: 100px;
-    height: 100px;
-    border-left-color: rgba(0, 0, 0, 0);
-    border-right-color: rgba(0, 0, 0, 0);
-    border-top-color: rgba(0, 0, 0, 0);
-    border-bottom-color: rgba(0, 0, 0, 0);
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    background-color: rgba(255, 255, 255, 0);
-    -unity-background-image-tint-color: rgb(255, 255, 255);
-}
-
-.pauseButton:hover {
-    -unity-background-image-tint-color: rgb(178, 252, 255);
-}
-
 #stage-cleared-title {
     -unity-text-align: middle-center;
     font-size: 60px;
@@ -109,10 +70,31 @@
     opacity: 0;
 }
 
+#popup-stage-cleared {
+    width: 55%;
+    height: 15%;
+    display: flex;
+    position: absolute;
+    top: 10%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#stage-cleared-title {
+    display: flex;
+}
+
+.stage-cleared-bar {
+    height: 5%;
+    background-color: rgb(255, 255, 255);
+}
+
 .warning-bar {
     height: 40px;
     background-color: rgba(255, 255, 255, 0);
-    background-image: url('project://database/Assets/Sprites/UI/Gameplay/LevelHeader/NewStageBanner.png?fileID=2800000&guid=c5255fc662af0ec4cbca2f48a7610074&type=3#NewStageBanner');
+    background-image: url('project://database/Assets/Sprites/Game/UI/Gameplay/LevelHeader/NewStageBanner.png?fileID=2800000&guid=c5255fc662af0ec4cbca2f48a7610074&type=3#NewStageBanner');
     -unity-background-scale-mode: stretch-to-fill;
     width: 100%;
     -unity-background-image-tint-color: rgba(255, 217, 0, 0.7);
@@ -192,4 +174,18 @@
 #hostiles-title.reset {
     opacity: 0;
     left: -80%;
+}
+
+#popup-hostiles-incoming {
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: absolute;
+    top: 25%;
+}
+
+#hostiles-title-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    align-items: center;
 }

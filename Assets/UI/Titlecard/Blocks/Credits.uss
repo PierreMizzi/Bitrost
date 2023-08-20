@@ -27,17 +27,62 @@
     left: 120%;
 }
 
-#credits-to-menu-button {
-}
-
-#credits-to-menu-button:hover {
-    scale: 1.2 1;
-}
-
 #arrow-head {
     background-image: url('project://database/Assets/Sprites/General/Shapes/play-button-arrowhead.png?fileID=2800000&guid=8e53cd92927c32b4fa1fe1a408525dcf&type=3#play-button-arrowhead');
     width: 40%;
     height: 48%;
     -unity-background-scale-mode: stretch-to-fill;
     -unity-background-image-tint-color: rgba(255, 255, 255, 0.66);
+}
+
+#credits-content-root {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    translate: 0 0;
+}
+
+#credits-title {
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-ExtraLight%20SDF.asset?fileID=11400000&guid=26a695e3454d15443842dca4c589225f&type=2#SourceSans3-ExtraLight SDF');
+    font-size: 90px;
+    -unity-text-align: middle-center;
+    margin-bottom: 30px;
+    color: rgb(255, 255, 255);
+}
+
+#credits-to-menu-button {
+    position: absolute;
+    left: -15%;
+    margin: 0;
+    padding: 0;
+    height: 10%;
+    width: 15%;
+    top: 50%;
+    bottom: 50%;
+    right: auto;
+    border-width: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: space-around;
+    transform-origin: right;
+}
+
+#credits-to-menu-button:hover {
+    scale: 1.2 1;
+}
+
+#version-label {
+    -unity-text-align: middle-center;
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-ExtraLight%20SDF.asset?fileID=11400000&guid=26a695e3454d15443842dca4c589225f&type=2#SourceSans3-ExtraLight SDF');
+    font-size: 35px;
 }

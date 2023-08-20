@@ -1,0 +1,46 @@
+#progress-bar-out {
+    background-color: rgb(89, 89, 89);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    width: 100%;
+    height: 100%;
+    border-left-color: rgb(89, 89, 89);
+    border-right-color: rgb(89, 89, 89);
+    border-top-color: rgb(89, 89, 89);
+    border-bottom-color: rgb(89, 89, 89);
+}
+
+#progress-bar-fill {
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    background-color: rgb(144, 144, 144);
+    height: 100%;
+    width: auto;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    left: 0;
+    position: absolute;
+    right: 50%;
+}
+
+#progress-bar-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -unity-text-align: middle-center;
+    font-size: 65px;
+    -unity-font-style: bold;
+    color: rgb(144, 144, 144);
+    left: auto;
+    top: -110%;
+}

@@ -27,11 +27,16 @@
     padding-top: 0;
     padding-bottom: 0;
     font-size: 77px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     scale: 1 1;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
 }
 
 .button-edge-one {
@@ -73,6 +78,7 @@
     padding-bottom: 0;
     color: rgba(255, 255, 255, 0.6);
     -unity-font-style: bold;
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&type=2#SourceSans3-Medium SDF');
 }
 
 .button .button-edge-one {
@@ -88,4 +94,20 @@
     border-top-color: var(--color-one);
     border-bottom-width: 3px;
     border-bottom-color: var(--color-one);
+}
+
+#left-panel-container {
+    height: 100%;
+    width: 33%;
+    justify-content: space-between;
+    padding-bottom: 60px;
+    padding-top: 60px;
+}
+
+#button-container {
+    height: 55%;
+    justify-content: flex-end;
+    align-items: stretch;
+    margin-bottom: 0;
+    flex-direction: column;
 }

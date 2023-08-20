@@ -43,17 +43,9 @@ namespace PierreMizzi.Useful.UI
 
 		#region MonoBehaviour
 
-		protected void Awake()
+		protected virtual void Awake()
 		{
 			Initialize();
-		}
-
-		protected void Update()
-		{
-			if (Keyboard.current.hKey.wasPressedThisFrame)
-			{
-				DisplayThenHide();
-			}
 		}
 
 		#endregion

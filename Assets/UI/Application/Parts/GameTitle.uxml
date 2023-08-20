@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Templates/GameTitle.uss?fileID=7433441132597879392&amp;guid=b852c920a2ead12439a6dc12ad74ccdc&amp;type=3#GameTitle" />
+    <ui:VisualElement name="game-title-container">
+        <ui:VisualElement name="logo" />
+        <ui:VisualElement name="text-container" class="text-container">
+            <ui:Label text="OVERCORE" display-tooltip-when-elided="true" name="title" />
+            <ui:Label text="SPACE MINER" display-tooltip-when-elided="true" name="sub-title" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

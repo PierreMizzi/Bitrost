@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/General/General.uss?fileID=7433441132597879392&amp;guid=c81772fb655769e4494d3618a08eb16a&amp;type=3#General" />
+    <Style src="project://database/Assets/UI/Application/Blocks/SceneLoaderScreen.uss?fileID=7433441132597879392&amp;guid=edcb454ff6470294c8ab9e179cb6d4aa&amp;type=3#SceneLoaderScreen" />
+    <ui:VisualElement name="scene-loader-screen" picking-mode="Ignore" class="full-container" style="align-items: center; justify-content: flex-end; opacity: 1;">
+        <ui:VisualElement name="fade-screen-background" picking-mode="Ignore" class="full-container" style="opacity: 1; background-color: rgb(34, 34, 34);" />
+        <ui:VisualElement name="progress-bar-container" picking-mode="Ignore" style="width: 70%; height: 60px;">
+            <ui:VisualElement name="progress-bar-out" picking-mode="Ignore">
+                <ui:VisualElement name="progress-bar-fill" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:Label text="100%" display-tooltip-when-elided="true" name="progress-bar-text" picking-mode="Ignore" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

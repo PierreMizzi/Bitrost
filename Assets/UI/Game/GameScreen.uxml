@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="GameHUD" src="project://database/Assets/UI/Game/Blocks/GameHUD.uxml?fileID=9197481963319205126&amp;guid=2eda9e10ed5999e41ae4f5b49d547342&amp;type=3#GameHUD" />
+    <ui:Template name="LevelHUD" src="project://database/Assets/UI/Game/Blocks/GamePopUps.uxml?fileID=9197481963319205126&amp;guid=055ce8bc630c9484e9971942d551c1ed&amp;type=3#GamePopUps" />
+    <ui:Template name="GameOverPanel" src="project://database/Assets/UI/Game/Blocks/GameOverPanel.uxml?fileID=9197481963319205126&amp;guid=480da0a6ade9d644f903eba89c515805&amp;type=3#GameOverPanel" />
+    <ui:Template name="PausePanel" src="project://database/Assets/UI/Game/Blocks/PausePanel.uxml?fileID=9197481963319205126&amp;guid=1de9050eed0a0fd4c9160c4ef2b2f12b&amp;type=3#PausePanel" />
+    <ui:Template name="TutorialPanel" src="project://database/Assets/UI/Game/Blocks/TutorialPanel.uxml?fileID=9197481963319205126&amp;guid=39d711022922eeb48a42b5a21a9401c7&amp;type=3#TutorialPanel" />
+    <Style src="project://database/Assets/UI/General/General.uss?fileID=7433441132597879392&amp;guid=c81772fb655769e4494d3618a08eb16a&amp;type=3#General" />
+    <ui:VisualElement name="game-screen-root" class="full-container">
+        <ui:Instance template="GameHUD" name="game-hud-body" class="full-container" />
+        <ui:Instance template="LevelHUD" name="game-popups-body" class="full-container" />
+        <ui:Instance template="GameOverPanel" name="game-over-panel-body" class="full-container" style="display: none;" />
+        <ui:Instance template="PausePanel" name="pause-panel-body" class="full-container" style="display: none;" />
+        <ui:Instance template="TutorialPanel" name="tutorial-panel-body" class="full-container" style="display: none;" />
+    </ui:VisualElement>
+</ui:UXML>

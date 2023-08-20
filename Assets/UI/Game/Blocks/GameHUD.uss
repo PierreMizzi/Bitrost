@@ -1,0 +1,137 @@
+#health-icon-container {
+    width: auto;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 5px;
+    flex-grow: 1;
+}
+
+#health-icon {
+    background-image: url('project://database/Assets/Gameplay/Player/Sprites/PlayerShip.png?fileID=2800000&guid=e834492e7617f404f8cda27ea5d4eaf6&type=3#PlayerShip');
+    -unity-background-scale-mode: scale-to-fit;
+    rotate: 270deg;
+    width: 100px;
+    height: 100px;
+}
+
+#health-progress-bar {
+    width: auto;
+    height: 20%;
+    border-left-width: 0;
+    border-right-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 4px;
+    border-color: rgb(190, 190, 190);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(190, 190, 190);
+    flex-grow: 10;
+}
+
+#health-progress-bar__progress {
+    left: 4px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url('project://database/Assets/Sprites/Assets/squareWhite.png?fileID=2800000&guid=72a6507c59af3614995e83452dd52c60&type=3#squareWhite');
+    -unity-slice-left: 10;
+    -unity-slice-top: 10;
+    -unity-slice-right: 10;
+    -unity-slice-bottom: 10;
+    -unity-background-image-tint-color: rgb(188, 60, 57);
+}
+
+.skull-icon {
+    background-image: url('project://database/Assets/Sprites/Game/UI/Gameplay/LevelHeader/skull.png?fileID=2800000&guid=07b41a6cdc3945a44bc896ba86e655af&type=3#skull');
+    width: 40px;
+    height: 40px;
+}
+
+#pause-button {
+    margin-left: 1;
+    margin-right: 0;
+    margin-top: 1;
+    margin-bottom: 1;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-image: url('project://database/Assets/Sprites/Game/UI/Gameplay/LevelHeader/pause.png?fileID=2800000&guid=480df46b14b3f834eae43fe5dcef1444&type=3#pause');
+    -unity-background-scale-mode: scale-to-fit;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+#pause-button:hover {
+    -unity-background-image-tint-color: rgb(178, 252, 255);
+}
+
+#bottom-container {
+    flex-direction: column-reverse;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 0;
+    padding-bottom: 30px;
+}
+
+#top-container {
+    height: 25%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-top: 30px;
+    padding-right: 30px;
+    position: absolute;
+    width: 100%;
+}
+
+#health-container {
+    height: 100px;
+    width: 500px;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+#health-progress-bar {
+    height: 20%;
+    height: 50%;
+    flex-grow: 10;
+    width: auto;
+    background-color: rgb(180, 180, 180);
+    border-color: rgb(190, 190, 190);
+    border-width: 4px;
+    border-radius: 8px;
+}
+
+#time-label {
+    font-size: 65px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 15px;
+    -unity-text-align: middle-left;
+    color: rgb(255, 255, 255);
+}
+
+#difficulty-container {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    -unity-background-scale-mode: scale-to-fit;
+}

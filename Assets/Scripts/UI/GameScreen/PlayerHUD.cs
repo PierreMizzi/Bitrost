@@ -4,22 +4,21 @@ using UnityEngine.UIElements;
 
 namespace Bitfrost.Gameplay.UI
 {
-    public class PlayerHUDView : MonoBehaviour
+    public class PlayerHUD : MonoBehaviour
     {
         #region Fields
+
+        [SerializeField]
+        private LevelChannel m_levelChannel = null;
 
         [SerializeField]
         private UIDocument m_document = null;
 
         private const string k_progressBar = "health-progress-bar__progress";
-        private float m_containerPixelSize;
 
         private VisualElement m_progressBar = null;
 
         private Length m_progressBarLength;
-
-        [SerializeField]
-        private LevelChannel m_levelChannel = null;
 
         private HealthEntity playerHealth { get { return m_levelChannel.player.healthEntity; } }
 

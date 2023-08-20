@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Game/Blocks/GameHUD.uss?fileID=7433441132597879392&amp;guid=3605961c70fd4be48aaefe6d4b96197a&amp;type=3#GameHUD" />
+    <Style src="project://database/Assets/UI/Game/Common/GameCommon.uss?fileID=7433441132597879392&amp;guid=8a6918fc710a32e4884c50f6d1569515&amp;type=3#GameCommon" />
+    <ui:VisualElement name="game-hud-root" class="full-container">
+        <ui:VisualElement name="fake-background" focusable="false" picking-mode="Ignore" class="full-container" style="background-image: url(&apos;project://database/Assets/Sprites/Game/UI/Backgrounds/FakeGameBackground.cs.png?fileID=2800000&amp;guid=3364287d4952f2f47bc303aa8d058500&amp;type=3#FakeGameBackground.cs&apos;); display: none;" />
+        <ui:VisualElement name="bottom-container" picking-mode="Ignore">
+            <Style src="project://database/Assets/UI/Game/Blocks/GameHUD.uss?fileID=7433441132597879392&amp;guid=3605961c70fd4be48aaefe6d4b96197a&amp;type=3#GameHUD" />
+            <ui:VisualElement name="health-container">
+                <ui:VisualElement name="health-icon-container" class="player-profil__container">
+                    <ui:VisualElement name="health-icon" class="player-profil__picture" style="background-image: url(&apos;project://database/Assets/Sprites/Game/UI/Gameplay/PlayerHUD/wrench.png?fileID=2800000&amp;guid=1c3bb692a197b7e469b30bf63fe91f90&amp;type=3#wrench&apos;); rotate: 0;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="health-progress-bar">
+                    <ui:VisualElement name="health-progress-bar__progress" class="health-progress-bar__progress" style="left: 0; position: absolute; right: 0;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="top-container" picking-mode="Ignore">
+            <ui:VisualElement name="left-side" style="margin-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0;">
+                <ui:Label text="1:00" display-tooltip-when-elided="true" name="time-label" />
+                <ui:VisualElement name="difficulty-container">
+                    <ui:VisualElement name="difficulty-0" class="skull-icon" />
+                    <ui:VisualElement name="difficulty-1" class="skull-icon" />
+                    <ui:VisualElement name="difficulty-2" class="skull-icon" />
+                    <ui:VisualElement name="difficulty-3" class="skull-icon" />
+                    <ui:VisualElement name="difficulty-4" class="skull-icon" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="right-side">
+                <ui:Button display-tooltip-when-elided="true" name="pause-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="right-container" picking-mode="Ignore" style="position: absolute; width: 20%; right: 0; height: 100%; justify-content: center;">
+            <ui:VisualElement name="module-container" style="height: 66%; flex-direction: column-reverse; justify-content: flex-start;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -8,7 +8,7 @@ using PierreMizzi.Useful.UI;
 namespace Bitfrost.Gameplay.UI
 {
 
-    public class LevelHeader : MonoBehaviour
+    public class LevelHUD : MonoBehaviour
     {
         #region Fields
 
@@ -18,10 +18,10 @@ namespace Bitfrost.Gameplay.UI
         [SerializeField]
         private LevelManager m_levelManager;
 
-        private IEnumerator m_updateTimeCoroutine;
-
         [SerializeField]
         private UIDocument m_document = null;
+
+        private IEnumerator m_updateTimeCoroutine;
 
         private const string k_pauseButton = "pause-button";
         private const string k_timeLabel = "time-label";
@@ -32,16 +32,6 @@ namespace Bitfrost.Gameplay.UI
 
         private VisualElement m_difficultyIconsContainer;
         List<VisualElement> m_stageDifficultyIcons = new List<VisualElement>();
-
-        #region Stage Cleared Message
-
-        [SerializeField]
-        private PopUp m_stageCleared = null;
-
-        [SerializeField]
-        private PopUp m_hostilesDetected = null;
-
-        #endregion
 
         #endregion
 
@@ -71,13 +61,8 @@ namespace Bitfrost.Gameplay.UI
         {
             if (m_levelChannel.onChangeStageDifficulty != null)
             {
-
                 m_levelChannel.onReset += CallbackReset;
                 m_levelChannel.onChangeStageDifficulty += CallbackChangeStageDifficulty;
-
-                m_levelChannel.onDisplayStageCleared += CallbackDisplayStageCleared;
-                m_levelChannel.onDisplayHostilesDetected += CallbackDisplayHostilesDetected; ;
-
             }
         }
 
@@ -87,9 +72,6 @@ namespace Bitfrost.Gameplay.UI
             {
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onChangeStageDifficulty -= CallbackChangeStageDifficulty;
-
-                m_levelChannel.onDisplayStageCleared -= CallbackDisplayStageCleared;
-                m_levelChannel.onDisplayHostilesDetected -= CallbackDisplayHostilesDetected; ;
             }
         }
 
@@ -125,17 +107,6 @@ namespace Bitfrost.Gameplay.UI
                 yield return new WaitForSeconds(0.5f);
             }
         }
-
-        private void CallbackDisplayStageCleared()
-        {
-            m_stageCleared.DisplayThenHide();
-        }
-
-        private void CallbackDisplayHostilesDetected()
-        {
-            m_hostilesDetected.DisplayThenHide();
-        }
-
 
         #endregion
 
