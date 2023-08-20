@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.Collections;
-using UnityEngine.InputSystem;
 
 namespace PierreMizzi.Useful.UI
 {
@@ -65,7 +64,6 @@ namespace PierreMizzi.Useful.UI
 				}
 			}
 			AddSpecificClassToElements(UIToolkitUtils.fadeIn);
-			LogClasses();
 		}
 
 		#region Lifecycle
@@ -80,28 +78,24 @@ namespace PierreMizzi.Useful.UI
 		{
 			// fade-in animate
 			AddClassToElements(UIToolkitUtils.animate);
-			LogClasses();
 			yield return new WaitForSeconds(m_fadeInDuration);
 
 			// set into fade-out state
 			RemoveClassToElements(UIToolkitUtils.animate);
 			RemoveSpecificClassToElements(UIToolkitUtils.fadeIn);
 			AddSpecificClassToElements(UIToolkitUtils.fadeOut);
-			LogClasses();
 
 			// Display duraation
 			yield return new WaitForSeconds(m_duration);
 
 			// Fade Out
 			AddClassToElements(UIToolkitUtils.animate);
-			LogClasses();
 			yield return new WaitForSeconds(m_fadeOutDuration);
 
 			// Revert back classes, back to fade-in state
 			AddClassToElements(UIToolkitUtils.reset);
 			RemoveClassToElements(UIToolkitUtils.animate);
 			RemoveSpecificClassToElements(UIToolkitUtils.fadeOut);
-			LogClasses();
 
 			// There is an unwanted transition back to fade-in state, but reset prevents unwanted visuals
 			AddSpecificClassToElements(UIToolkitUtils.fadeIn);
@@ -109,17 +103,9 @@ namespace PierreMizzi.Useful.UI
 
 			// Remove reset class
 			RemoveClassToElements(UIToolkitUtils.reset);
-			LogClasses();
 		}
 
 		#endregion
-
-		[ContextMenu("TestFadeIn")]
-		public virtual void TestFadeIn()
-		{
-			AddClassToElements(UIToolkitUtils.animate);
-			LogClasses();
-		}
 
 		public virtual void AddSpecificClassToElements(string className)
 		{
@@ -165,6 +151,13 @@ namespace PierreMizzi.Useful.UI
 
 				Debug.Log(log);
 			}
+		}
+
+		[ContextMenu("TestFadeIn")]
+		public virtual void TestFadeIn()
+		{
+			AddClassToElements(UIToolkitUtils.animate);
+			LogClasses();
 		}
 
 		#endregion

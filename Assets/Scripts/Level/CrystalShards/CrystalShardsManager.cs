@@ -62,8 +62,6 @@ namespace Bitfrost.Gameplay.Energy
 
             if (m_levelChannel != null)
                 m_levelChannel.onReset += CallbackReset;
-
-            DebugSpawn();
         }
 
         private void OnDestroy()

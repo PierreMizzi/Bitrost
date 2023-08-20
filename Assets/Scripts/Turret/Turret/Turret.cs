@@ -173,9 +173,6 @@ namespace Bitfrost.Gameplay.Turrets
         [SerializeField]
         private SoundSource m_fireBulletSource = null;
 
-        [SerializeField]
-        private SoundSource m_wrongActionSource = null;
-
         #endregion
 
         #endregion
@@ -218,10 +215,6 @@ namespace Bitfrost.Gameplay.Turrets
             m_fireBulletSource.SetSoundData(SoundDataID.TURRET_BULLET);
             m_fireBulletSource.stopOnAudioClipEnded = false;
             m_fireBulletSource.destroyOnAudioClipEnded = false;
-
-            m_wrongActionSource.SetSoundData(SoundDataID.TURRET_WRONG_ACTION);
-            m_wrongActionSource.stopOnAudioClipEnded = false;
-            m_wrongActionSource.destroyOnAudioClipEnded = false;
         }
 
         public void Update()
@@ -303,30 +296,25 @@ namespace Bitfrost.Gameplay.Turrets
 
         public void Fire()
         {
-            if (CanFire())
-            {
-                if (hasStoredEnergy)
-                    storedEnergy--;
-                else
-                    crystal.DecrementEnergy();
 
-                onRefreshEnergy.Invoke(currentStateType);
-
-                m_bulletChannel.onFireBullet.Invoke(
-                    m_settings.bulletConfig,
-                    this,
-                    m_bulletOriginTransform.position,
-                    aimDirection
-                );
-
-                if (!hasEnergy)
-                    ChangeState(TurretStateType.Disabled);
-
-                m_fireBulletSource.Play();
-            }
+            if (hasStoredEnergy)
+                storedEnergy--;
             else
-                m_wrongActionSource.Play();
+                crystal.DecrementEnergy();
 
+            onRefreshEnergy.Invoke(currentStateType);
+
+            m_bulletChannel.onFireBullet.Invoke(
+                m_settings.bulletConfig,
+                this,
+                m_bulletOriginTransform.position,
+                aimDirection
+            );
+
+            if (!hasEnergy)
+                ChangeState(TurretStateType.Disabled);
+
+            m_fireBulletSource.Play();
         }
 
         public bool CanFire()

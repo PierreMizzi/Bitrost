@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71626e1bf6022824785d1dcdf242e28b, type: 3}
   m_Name: SoundManagerToolSettings
   m_EditorClassIdentifier: 
+  _path: SoundManager
   m_audioMixerControllers:
   - m_name: Music
     m_type: 2
@@ -22,12 +23,13 @@ MonoBehaviour:
   - m_name: Menu SFX
     m_type: 8
     m_mixer: {fileID: 24100000, guid: 1f6594b1418b81a4daa9233d61701e07, type: 2}
-  m_baseFadeInDuration: 1
-  m_baseFadeOutDuration: 1
   m_soundDataLibraries:
   - {fileID: 11400000, guid: d3dd63bbba86b9d46a76fe2732f8f1ff, type: 2}
   - {fileID: 11400000, guid: c84d505373f18424191d063f5d4c976a, type: 2}
   - {fileID: 11400000, guid: daf8c696100d2794ea74d603b7e61c40, type: 2}
   - {fileID: 11400000, guid: 1da067a66d39d3f428213887e246c20c, type: 2}
   - {fileID: 11400000, guid: 35283191c3e43a344835b6d9caf455b8, type: 2}
-  _path: SoundManager
+  m_baseFadeInDuration: 1
+  m_baseFadeOutDuration: 1
+  m_SFXSSPoolMaxSize: 10
+  m_SFXSSPoolDefaultSize: 50

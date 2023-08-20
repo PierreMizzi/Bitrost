@@ -1,6 +1,18 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
+
+
+
+/*
+
+Type de SoundSource
+
+
+
+*/
 namespace PierreMizzi.SoundManager
 {
 
@@ -18,19 +30,21 @@ namespace PierreMizzi.SoundManager
 
 		#endregion
 
-		#region SoundSources
+		#region SFXSoundSources
 
-		public static Transform soundSourceContainer = null;
+		private static string k_SFXSSContainerName = "SFXSSContainer";
+		private static Transform m_SFXSSContainer;
+		private static ObjectPool<SFXSoundSource> m_SFXSSPool;
+		private static List<SFXSoundSource> m_ativeSFXSSs;
 
+
+		///////////////////////////////////////////////
+
+		/// <summary>
+		/// 
+		/// </summary>
+		[Obsolete]
 		private static Dictionary<SoundType, List<SoundSource>> m_typeToSoundSources = new Dictionary<SoundType, List<SoundSource>>();
-
-		public static AudioMixerController masterAudioMixer
-		{
-			get
-			{
-				return settings.AudioMixerControllers.Find(mixer => mixer.Name == "Master");
-			}
-		}
 
 		#endregion
 
@@ -77,12 +91,16 @@ namespace PierreMizzi.SoundManager
 			foreach (SoundDataLibrary library in SoundDataLibraries)
 				library.Init();
 
-			m_isInitialized = true;
+			// SFXSoundSources
+			InitializeSFXSSPool();
 
+
+			m_isInitialized = true;
 			Debug.Log("SoundManagerTool is initialized !");
 		}
 
 		#endregion
+
 
 		#region Control
 
@@ -92,9 +110,10 @@ namespace PierreMizzi.SoundManager
 		/// <param name="soundDataID"> ID of the sound</param>
 		/// <param name="fadeDuration">FadeDuration. Not changing the value means it will use AAudioManager.m_fadeInBaseDuration</param>
 		/// <returns>SoundSource for specific behaviour</returns>
+		[Obsolete]
 		public static SoundSource PlaySound(string soundDataID, bool isLooping = false, float fadeDuration = -1f)
 		{
-
+			
 			if (!m_isInitialized)
 				return null;
 
@@ -109,7 +128,7 @@ namespace PierreMizzi.SoundManager
 			}
 
 			// Find a non playing SoundSource to play the sound
-			SoundSource source = GetNonPlayingSoundSource(soundData.Type);
+			SoundSource source = null;//GetNonPlayingSoundSource(soundData.Type);
 			source.SetSoundData(soundData);
 			source.SetLooping(isLooping);
 
@@ -121,38 +140,6 @@ namespace PierreMizzi.SoundManager
 			return source;
 		}
 
-		public static SoundSource PlaySFX(string soundDataID)
-		{
-			if (!m_isInitialized)
-				return null;
-
-			// Debug.Log("Play : " + soundDataID);
-
-			// Check if all libraries has this ID stored
-			SoundData soundData = GetSoundData(soundDataID);
-			if (soundData == null)
-			{
-				Debug.LogError(string.Format("SoundData with ID {0} doesn't exists", soundDataID));
-				return null;
-			}
-
-			// Find a non playing SoundSource to play the sound
-			SoundSource source = GetNonPlayingSoundSource(soundData.Type);
-			source.SetSoundData(soundData);
-			source.destroyOnAudioClipEnded = true;
-			source.Play();
-
-			return source;
-		}
-
-		public static SoundSource PlayRandomSFX(List<string> soundDataIDs)
-		{
-			int randomIndex = Random.Range(0, soundDataIDs.Count);
-
-			string randomID = soundDataIDs[randomIndex];
-
-			return PlaySFX(randomID);
-		}
 
 		public static void StopSound(string soundDataID, float fadeDuration = -1f)
 		{
@@ -166,6 +153,102 @@ namespace PierreMizzi.SoundManager
 
 			foreach (SoundSource source in playingSources)
 				source.FadeOut(fadeDuration);
+		}
+
+		#endregion
+
+		#region SFX
+
+		#region Pooling
+
+		public static void InitializeSFXSSPool()
+		{
+			// Transform container
+			m_SFXSSContainer = GameObject.Find(k_SFXSSContainerName).transform;
+			if (m_SFXSSContainer == null)
+			{
+				GameObject gameObject = new GameObject(k_SFXSSContainerName);
+				m_SFXSSContainer = gameObject.transform;
+			}
+
+			// Pool
+			m_SFXSSPool = new ObjectPool<SFXSoundSource>(
+				CreateSFXSS,
+				GetSFXSS,
+				ReleaseSFXSS,
+				DestroySFXSS,
+				true,
+				settings.SFXSSPoolDefaultSize,
+				settings.SFXSSPoolMaxSize
+			);
+
+
+			m_ativeSFXSSs = new List<SFXSoundSource>();
+		}
+
+		private static SFXSoundSource CreateSFXSS()
+		{
+			GameObject gameObject = new GameObject("SFXSS_" + m_SFXSSPool.CountAll + 1);
+			SFXSoundSource soundSource = gameObject.AddComponent<SFXSoundSource>();
+			soundSource.transform.parent = m_SFXSSContainer.transform;
+
+			return soundSource;
+		}
+
+		private static void GetSFXSS(SFXSoundSource soundSource)
+		{
+			soundSource.gameObject.SetActive(true);
+			if (!m_ativeSFXSSs.Contains(soundSource))
+				m_ativeSFXSSs.Add(soundSource);
+		}
+
+		private static void ReleaseSFXSS(SFXSoundSource soundSource)
+		{
+			soundSource.gameObject.SetActive(false);
+			if (m_ativeSFXSSs.Contains(soundSource))
+				m_ativeSFXSSs.Remove(soundSource);
+		}
+
+		private static void DestroySFXSS(SFXSoundSource soundSource)
+		{
+			UnityEngine.Object.Destroy(soundSource.gameObject);
+			if (m_ativeSFXSSs.Contains(soundSource))
+				m_ativeSFXSSs.Remove(soundSource);
+		}
+
+		#endregion
+
+		public static SFXSoundSource PlaySFX(string soundDataID)
+		{
+			if (!m_isInitialized)
+				return null;
+
+			// Check if all libraries has this ID stored
+			SoundData soundData = GetSoundData(soundDataID);
+			if (soundData == null)
+			{
+				Debug.LogError(string.Format("SoundData with ID {0} doesn't exists", soundDataID));
+				return null;
+			}
+
+			// Find a non playing SoundSource to play the sound
+			SFXSoundSource source = m_SFXSSPool.Get();
+			source.Play(soundData);
+			return source;
+		}
+
+		public static SFXSoundSource PlayRandomSFX(List<string> soundDataIDs)
+		{
+			int randomIndex = UnityEngine.Random.Range(0, soundDataIDs.Count);
+
+			string randomID = soundDataIDs[randomIndex];
+
+			return PlaySFX(randomID);
+		}
+
+		public static void ReleaseSFXSSToPool(SFXSoundSource soundSource)
+		{
+			m_SFXSSPool.Release(soundSource);
 		}
 
 		#endregion
@@ -206,6 +289,8 @@ namespace PierreMizzi.SoundManager
 		/// <param name="soundSources"></param>
 		/// <param name="type"></param>
 		/// <returns></returns>
+
+		[Obsolete]
 		public static SoundSource GetNonPlayingSoundSource(SoundType type)
 		{
 			// First, we find the list of SoundSources of given type
@@ -253,11 +338,12 @@ namespace PierreMizzi.SoundManager
 		/// </summary>
 		/// <param name="type">SoundType of SoundSource</param>
 		/// <returns></returns>
+		[Obsolete]
 		public static SoundSource CreateSoundSource(SoundType type)
 		{
 
 			GameObject newObject = new GameObject();
-			newObject.transform.parent = soundSourceContainer;
+			newObject.transform.parent = m_SFXSSContainer;
 			newObject.AddComponent<AudioSource>();
 
 			SoundSource newSource = newObject.AddComponent<SoundSource>();
@@ -272,6 +358,7 @@ namespace PierreMizzi.SoundManager
 		/// Remove a stored SoundSource
 		/// </summary>
 		/// <param name="soundSource">Instance to remove</param>
+		[Obsolete]
 		public static void RemoveSoundSource(SoundSource soundSource)
 		{
 			foreach (KeyValuePair<SoundType, List<SoundSource>> pair in m_typeToSoundSources)
@@ -283,6 +370,7 @@ namespace PierreMizzi.SoundManager
 		/// Store a SoundSource according to its type, to mute it maybe
 		/// </summary>
 		/// <param name="soundSource"></param>
+		[Obsolete]
 		public static void AddSoundSource(SoundSource soundSource)
 		{
 			if (m_typeToSoundSources.ContainsKey(soundSource.SoundType))
@@ -296,6 +384,7 @@ namespace PierreMizzi.SoundManager
 		/// </summary>
 		/// <param name="soundID">ID of the sound</param>
 		/// <returns></returns>
+		[Obsolete]
 		public static List<SoundSource> SoundSourcesPlayingSoundID(string soundID)
 		{
 			List<SoundSource> sources = new List<SoundSource>();

@@ -1,7 +1,5 @@
 namespace Bitfrost.Gameplay
 {
-
-
 	public struct GameOverData
 	{
 

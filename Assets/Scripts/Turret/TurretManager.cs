@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bitfrost.Application;
 using Bitfrost.Gameplay.Energy;
+using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -96,6 +97,15 @@ namespace Bitfrost.Gameplay.Turrets
 
         #endregion
 
+        #region Audio
+        [Header("Audio")]
+        [SerializeField]
+        private SoundSource m_wrongActionSource = null;
+
+
+
+        #endregion
+
         #endregion
 
         #region Methods
@@ -116,6 +126,8 @@ namespace Bitfrost.Gameplay.Turrets
 
             CreateTurret();
 
+            InitializeAudio();
+
             if (m_levelChannel != null)
             {
                 m_levelChannel.onReset += CallbackReset;
@@ -126,7 +138,6 @@ namespace Bitfrost.Gameplay.Turrets
             yield return new WaitForEndOfFrame();
 
             ManageCursor();
-
         }
 
 
@@ -197,8 +208,18 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void CallbackFire(InputAction.CallbackContext context)
         {
+            bool noBulletFired = true;
             foreach (Turret turret in m_turrets)
-                turret.Fire();
+            {
+                if (turret.CanFire())
+                {
+                    noBulletFired = false;
+                    turret.Fire();
+                }
+            }
+
+            if (noBulletFired)
+                PlayWrongAction();
         }
 
         private void CallbackSwitchMode(InputAction.CallbackContext context)
@@ -456,6 +477,22 @@ namespace Bitfrost.Gameplay.Turrets
         }
 
 
+
+        #endregion
+
+        #region Audio
+
+        private void InitializeAudio()
+        {
+            m_wrongActionSource.SetSoundData(SoundDataID.TURRET_WRONG_ACTION);
+            m_wrongActionSource.stopOnAudioClipEnded = false;
+            m_wrongActionSource.destroyOnAudioClipEnded = false;
+        }
+
+        public void PlayWrongAction()
+        {
+            m_wrongActionSource.Play();
+        }
 
         #endregion
 

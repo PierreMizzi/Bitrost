@@ -26,7 +26,7 @@ namespace Bitfrost.Gameplay.Turrets
             StartProduction();
 
             SoundManager.PlaySFX(SoundDataID.TURRET_PRODUCTION_MODE);
-            SoundManager.PlaySound(SoundDataID.TURRET_PRODUCTION_LOOP, true);
+            //SoundManager.PlaySound(SoundDataID.TURRET_PRODUCTION_LOOP, true);
         }
 
         public override void Update()

@@ -89,8 +89,7 @@ namespace PierreMizzi.Useful.SceneManagement
 
 			yield return SceneLoader.LoadScene(titlecardSceneName, true, m_loaderScreen.SetProgress);
 
-			if (m_initialCamera != null)
-				Destroy(m_initialCamera.gameObject);
+			m_initialCamera.gameObject.SetActive(false);
 
 			yield return new WaitForSeconds(1f);
 

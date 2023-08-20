@@ -15,6 +15,9 @@ namespace Bitfrost.Application
 		[SerializeField]
 		private SoundManagerToolSettings m_soundManagerSettings = null;
 
+		[SerializeField]
+		private Transform m_soundSourceContainer = null;
+
 		#endregion
 
 		#region Methods 
@@ -23,8 +26,8 @@ namespace Bitfrost.Application
 		{
 			base.Start();
 			applicationChannel.onSetCursor.Invoke(CursorType.Normal);
-			if (UnityEngine.Application.isPlaying)
-				SoundManager.PlaySound(SoundDataID.GAME_LOOP, true);
+			// if (UnityEngine.Application.isPlaying)
+			// 	SoundManager.PlaySound(SoundDataID.GAME_LOOP, true);
 		}
 
 		#endregion

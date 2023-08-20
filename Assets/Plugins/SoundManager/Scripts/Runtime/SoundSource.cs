@@ -103,6 +103,7 @@ namespace PierreMizzi.SoundManager
 		{
 			SoundManager.AddSoundSource(this);
 			CheckAudioSource();
+			m_audioSource.loop = false;
 		}
 
 		public void Initialize(SoundType type)
@@ -167,8 +168,6 @@ namespace PierreMizzi.SoundManager
 			m_audioSource.clip = null;
 			m_audioSource.outputAudioMixerGroup = null;
 			m_status = ActivityStatus.Stop;
-
-
 		}
 
 		public void FadeInFromZero(float duration, float toVolume = 1)

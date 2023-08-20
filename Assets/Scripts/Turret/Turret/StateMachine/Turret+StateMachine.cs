@@ -86,7 +86,7 @@ namespace Bitfrost.Gameplay.Turrets
             if (CanBeProduction())
                 ChangeState(TurretStateType.Production, TurretStateType.Offensive);
             else
-                m_wrongActionSource.Play();
+                m_manager.PlayWrongAction();
         }
 
         private void ProductionToOffensive()
