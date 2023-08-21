@@ -156,5 +156,4 @@ namespace Bitfrost.Gameplay.Energy
         #endregion
     }
 
-
 }
