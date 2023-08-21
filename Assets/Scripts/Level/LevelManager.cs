@@ -54,6 +54,8 @@ namespace Bitfrost.Gameplay
 
         #endregion
 
+        private int m_currentStageDifficulty;
+
         [Header("Tutorial")]
         [SerializeField] private bool m_displayTutorial = true;
 
@@ -81,6 +83,7 @@ namespace Bitfrost.Gameplay
         {
             arenaRadius = m_arenaDiameter / 2f;
             arenaRadiusSqr = math.pow(arenaRadius, 2f);
+            m_currentStageDifficulty = 0;
         }
 
         private void Awake()
@@ -92,8 +95,9 @@ namespace Bitfrost.Gameplay
         {
             if (m_levelChannel != null)
             {
+                m_levelChannel.onChangeStageDifficulty += CallbackChangeStageDifficulty;
                 m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
-                m_levelChannel.onGameOver += CallbackGameOver;
+                m_levelChannel.onPlayerDead += CallbackDefeat;
                 m_levelChannel.onRestart += CallbackRestart;
                 m_levelChannel.onReset += CallbackReset;
 
@@ -122,15 +126,19 @@ namespace Bitfrost.Gameplay
         {
             if (m_levelChannel != null)
             {
+                m_levelChannel.onChangeStageDifficulty -= CallbackChangeStageDifficulty;
                 m_levelChannel.onAllEnemiesKilled -= CallbackAllEnemiesKilled;
-                m_levelChannel.onGameOver -= CallbackGameOver;
+                m_levelChannel.onPlayerDead -= CallbackDefeat;
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onRestart -= CallbackRestart;
+
 
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
             }
         }
+
+
 
         #endregion
 
@@ -211,21 +219,40 @@ namespace Bitfrost.Gameplay
         {
             m_director.Stop();
             m_director.Play();
+
+            m_currentStageDifficulty = 0;
+        }
+
+        private void CallbackChangeStageDifficulty(int value)
+        {
+            m_currentStageDifficulty = value;
         }
 
         #endregion
 
         #region Game Over
 
-        private void CallbackGameOver()
+        private void CallbackDefeat()
         {
-            GameOverData data = new GameOverData(time, m_enemyChannel.killCount);
+            GameOverData data = new GameOverData(m_currentStageDifficulty, time, m_enemyChannel.killCount);
             SaveManager.ManageBestScore(data);
 
             m_appChannel.onSetCursor.Invoke(CursorType.Normal);
 
             m_levelChannel.onPauseGame.Invoke();
-            m_levelChannel.onGameOverPanel.Invoke(data);
+            m_levelChannel.onDefeatPanel.Invoke(data);
+        }
+
+        // Signal Emitter in Timeline
+        public void CallbackVictory()
+        {
+            GameOverData data = new GameOverData(m_currentStageDifficulty, time, m_enemyChannel.killCount);
+            SaveManager.ManageBestScore(data);
+
+            m_appChannel.onSetCursor.Invoke(CursorType.Normal);
+
+            m_levelChannel.onPauseGame.Invoke();
+            m_levelChannel.onVictoryPanel.Invoke(data);
         }
 
         private void CallbackRestart()
@@ -261,6 +288,22 @@ namespace Bitfrost.Gameplay
         {
             isPaused = false;
             m_director.Play();
+        }
+
+        #endregion
+
+        #region Debug
+
+        [ContextMenu("Defeat")]
+        public void Defeat()
+        {
+            CallbackDefeat();
+        }
+
+        [ContextMenu("Victory")]
+        public void Victory()
+        {
+            CallbackVictory();
         }
 
         #endregion

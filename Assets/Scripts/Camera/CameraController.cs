@@ -152,7 +152,6 @@ public class CameraController : MonoBehaviour, IPausable
 
 	#region Pause
 
-
 	public void Pause()
 	{
 		isPaused = true;

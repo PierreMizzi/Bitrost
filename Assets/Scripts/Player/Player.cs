@@ -103,7 +103,7 @@ namespace Bitfrost.Gameplay.Players
         [ContextMenu("CallbackNoHealth")]
         private void CallbackNoHealth()
         {
-            m_levelChannel.onGameOver.Invoke();
+            m_levelChannel.onPlayerDead.Invoke();
             m_controller.enabled = false;
 
             SoundManager.PlaySFX(SoundDataID.PLAYER_DEATH);

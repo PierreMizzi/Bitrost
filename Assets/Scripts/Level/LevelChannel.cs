@@ -27,8 +27,9 @@ namespace Bitfrost.Gameplay
         public Action onAllEnemiesKilled;
 
         // Game Over
-        public Action onGameOver;
-        public GameOverDelegate onGameOverPanel;
+        public Action onPlayerDead;
+        public GameOverDelegate onDefeatPanel;
+        public GameOverDelegate onVictoryPanel;
 
         // PopUp
         public Action onDisplayStageCleared;
@@ -60,8 +61,9 @@ namespace Bitfrost.Gameplay
             onAllEnemiesKilled = () => { };
 
             // Game Over
-            onGameOver = () => { };
-            onGameOverPanel = (GameOverData data) => { };
+            onPlayerDead = () => { };
+            onDefeatPanel = (GameOverData data) => { };
+            onVictoryPanel = (GameOverData data) => { };
 
             // PopUp
             onDisplayStageCleared = () => { };
@@ -78,5 +80,8 @@ namespace Bitfrost.Gameplay
             onDisplayPausePanel = () => { };
             onHidePausePanel = () => { };
         }
+
+
+
     }
 }

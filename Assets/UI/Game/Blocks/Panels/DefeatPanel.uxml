@@ -1,30 +1,37 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Game/Blocks/GameOverPanel.uss?fileID=7433441132597879392&amp;guid=db7829885e5133f4e916ed7b2bda074c&amp;type=3#GameOverPanel" />
     <Style src="project://database/Assets/UI/Game/Common/IronButtonBolts.uss?fileID=7433441132597879392&amp;guid=31d7479cd2e633541b341db248b7ee59&amp;type=3#IronButtonBolts" />
     <Style src="project://database/Assets/UI/Game/Common/GameCommon.uss?fileID=7433441132597879392&amp;guid=8a6918fc710a32e4884c50f6d1569515&amp;type=3#GameCommon" />
-    <Style src="project://database/Assets/UI/Templates/Panel/PanelTemplate.uss?fileID=7433441132597879392&amp;guid=03295edf133cf844eabb79f89ba9a44f&amp;type=3#PanelTemplate" />
-    <ui:VisualElement name="game-over-panel-root">
-        <ui:VisualElement name="game-over-background" class="black-veil-background" />
-        <ui:VisualElement name="game-over-container">
-            <ui:VisualElement name="game-over-top-part" class="panel-top-part">
+    <Style src="project://database/Assets/UI/Templates/PanelTemplate.uss?fileID=7433441132597879392&amp;guid=03295edf133cf844eabb79f89ba9a44f&amp;type=3#PanelTemplate" />
+    <Style src="project://database/Assets/DefeatPanel.uss?fileID=7433441132597879392&amp;guid=0eace6bffecc3eb4fb4434b804c604e0&amp;type=3#DefeatPanel" />
+    <ui:VisualElement name="defeat-panel-root">
+        <ui:VisualElement name="game-over-background" class="black-veil-background" style="top: 1px; left: 1px;" />
+        <ui:VisualElement name="defeat-container">
+            <ui:VisualElement name="top-part" class="panel-top-part" style="display: flex;">
                 <ui:Label text="GAME OVER" display-tooltip-when-elided="true" name="top-part-title" class="panel-top-label" />
             </ui:VisualElement>
-            <ui:VisualElement name="game-over-bottom-part" class="panel-bottom-part">
-                <ui:VisualElement name="bottom-part-container">
-                    <ui:VisualElement name="bottom-part-score">
-                        <ui:Label text="Score" display-tooltip-when-elided="true" name="bottom-part-score-title" />
-                        <ui:VisualElement name="bottom-part-metrics-container">
+            <ui:VisualElement name="bottom-part" class="panel-bottom-part">
+                <ui:VisualElement name="bottom-part-justifier" style="height: 100%;">
+                    <ui:VisualElement name="score-container" style="justify-content: space-around;">
+                        <ui:Label text="Score" display-tooltip-when-elided="true" name="score-title" style="width: 100%; color: rgb(53, 53, 53);" />
+                        <ui:VisualElement name="metrics-container">
+                            <ui:VisualElement name="metrics-stage" class="metrics">
+                                <ui:VisualElement name="stage-icon" class="metrics-icon" style="background-image: url(&apos;project://database/Assets/Sprites/Game/UI/Gameplay/LevelHeader/skull.png?fileID=2800000&amp;guid=07b41a6cdc3945a44bc896ba86e655af&amp;type=3#skull&apos;);" />
+                                <ui:Label text="Threat" display-tooltip-when-elided="true" name="stage-label" class="metrics-label" />
+                                <ui:Label text="1" display-tooltip-when-elided="true" name="stage-value" class="metrics-value" />
+                            </ui:VisualElement>
                             <ui:VisualElement name="metrics-time" class="metrics">
                                 <ui:VisualElement name="time-icon" class="metrics-icon" />
-                                <ui:Label text="01:36" display-tooltip-when-elided="true" name="time-label" class="metrics-label" />
+                                <ui:Label text="Time" display-tooltip-when-elided="true" name="time-label" class="metrics-label" />
+                                <ui:Label text="1:36" display-tooltip-when-elided="true" name="time-value" class="metrics-value" />
                             </ui:VisualElement>
                             <ui:VisualElement name="metrics-score" class="metrics">
                                 <ui:VisualElement name="score-icon" class="metrics-icon" style="background-image: url(&apos;project://database/Assets/Sprites/Game/UI/Gameplay/GameOver/Killcount.png?fileID=2800000&amp;guid=a7216486412974c48a839bfc5cc085b2&amp;type=3#Killcount&apos;);" />
-                                <ui:Label text="65999" display-tooltip-when-elided="true" name="score-label" class="metrics-label" />
+                                <ui:Label text="Kills" display-tooltip-when-elided="true" name="score-label" class="metrics-label" />
+                                <ui:Label text="63" display-tooltip-when-elided="true" name="score-value" class="metrics-value" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
-                    <ui:VisualElement name="bottom-part-button-container">
+                    <ui:VisualElement name="button-container">
                         <ui:Button text="Restart" display-tooltip-when-elided="true" name="restart-button" class="iron-button">
                             <ui:VisualElement name="bolt-container" class="bolt-container">
                                 <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom bolt-right bolt" />
@@ -45,8 +52,8 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="bolt-container" picking-mode="Ignore" class="bolt-container">
-                <ui:VisualElement name="bolt-top-left" class="bolt-top bolt bolt-left" style="background-color: rgb(168, 77, 18);" />
-                <ui:VisualElement name="bolt-top-right" class="bolt-top bolt bolt-right" style="background-color: rgb(168, 77, 18);" />
+                <ui:VisualElement name="bolt-top-left" class="bolt-top bolt bolt-left" style="background-color: rgba(168, 77, 18, 255);" />
+                <ui:VisualElement name="bolt-top-right" class="bolt-top bolt bolt-right" style="background-color: rgba(168, 77, 18, 255);" />
                 <ui:VisualElement name="bolt-bottom-right" class="bolt-bottom bolt bolt-right" />
                 <ui:VisualElement name="bolt-bottom-left" class="bolt-bottom bolt bolt-left" />
             </ui:VisualElement>

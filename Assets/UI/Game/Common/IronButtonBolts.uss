@@ -1,10 +1,11 @@
 :root {
-    --boltWidth: 10px;
-    --boltHeight: 10px;
     --boltBackground: grey;
-    --boltPadding: 10px;
+    --boltWidth: 15px;
+    --boltHeight: 15px;
+    --boltPadding: 20px;
     --ironButtonBoltWidth: 6px;
     --ironButtonBoltheight: 6px;
+    --ironButtonBoltPadding: 10px;
 }
 
 .iron-button {
@@ -28,6 +29,7 @@
     background-color: rgb(88, 88, 88);
     color: rgb(255, 255, 255);
     height: 77px;
+    margin-bottom: 10px;
 }
 
 .iron-button:hover {
@@ -49,6 +51,27 @@
     border-bottom-left-radius: 6px;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+}
+
+.iron-button .bolt {
+    width: var(--ironButtonBoltWidth);
+    height: var(--ironButtonBoltheight);
+}
+
+.iron-button .bolt-top {
+    top: var(--ironButtonBoltPadding);
+}
+
+.iron-button .bolt-bottom {
+    bottom: var(--ironButtonBoltPadding);
+}
+
+.iron-button .bolt-right {
+    right: var(--ironButtonBoltPadding);
+}
+
+.iron-button .bolt-left {
+    left: var(--ironButtonBoltPadding);
 }
 
 .bolt-container {

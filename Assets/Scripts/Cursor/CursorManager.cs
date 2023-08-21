@@ -35,11 +35,10 @@ namespace Bitfrost.Gameplay
 
             if (m_levelChannel != null)
             {
-                m_levelChannel.onGameOverPanel += CallbackGameOverPanel;
-                // m_levelChannel.onReset += CallbackReset;
+                m_levelChannel.onDefeatPanel += CallbackNormalCursor;
+                m_levelChannel.onVictoryPanel += CallbackNormalCursor;
 
                 m_levelChannel.onPauseGame += Pause;
-                // m_levelChannel.onResumeGame += Resume;
             }
         }
 
@@ -50,11 +49,10 @@ namespace Bitfrost.Gameplay
 
             if (m_levelChannel != null)
             {
-                m_levelChannel.onGameOverPanel -= CallbackGameOverPanel;
-                // m_levelChannel.onReset -= CallbackReset;
+                m_levelChannel.onDefeatPanel -= CallbackNormalCursor;
+                m_levelChannel.onVictoryPanel -= CallbackNormalCursor;
 
                 m_levelChannel.onPauseGame -= Pause;
-                // m_levelChannel.onResumeGame -= Resume;
             }
         }
 
@@ -67,25 +65,15 @@ namespace Bitfrost.Gameplay
             }
         }
 
-        private void CallbackGameOverPanel(GameOverData data)
+        private void CallbackNormalCursor(GameOverData data)
         {
             SetCursor(CursorType.Normal);
         }
-
-        // private void CallbackReset()
-        // {
-        //     SetCursor(CursorType.FirePossible);
-        // }
 
         private void Pause()
         {
             SetCursor(CursorType.Normal);
         }
-
-        // private void Resume()
-        // {
-        //     SetCursor(CursorType.FirePossible);
-        // }
 
     }
 }
