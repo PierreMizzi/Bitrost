@@ -4,7 +4,6 @@ using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.StateMachines;
 using UnityEngine;
 
-
 namespace Bitfrost.Gameplay.Enemies
 {
     public class Scout : Enemy, IBulletLauncher

@@ -28,6 +28,8 @@ namespace Bitfrost.Gameplay.Enemies
             }
         }
 
+        public CircularSpacerSpot targetSpot { get; private set; }
+
         #endregion
 
         #region Methods 
@@ -61,6 +63,8 @@ namespace Bitfrost.Gameplay.Enemies
         protected override void CallbackNoHealth()
         {
             targetCrystal = null;
+            targetSpot.isAvailable = true;
+            targetSpot = null;
             base.CallbackNoHealth();
         }
 
@@ -68,22 +72,22 @@ namespace Bitfrost.Gameplay.Enemies
 
         #region Crystal Shards
 
-        public void SearchCrystalShard()
+        public void SearchTargetCrystal()
         {
-            // First, targe tall currently used crystals
-            CrystalShard crystal = PickRandomValidCrystal(
+            // First, target all currently used crystals
+            CrystalShard crystal = PickRandomTargetableCrystal(
                 m_levelChannel.crystalManager.unavailableCrystals
             );
             if (crystal != null)
                 goto Found;
 
             // If none, picks from crystals at player's range
-            crystal = PickRandomValidCrystal(CrystalsAroundPlayer());
+            crystal = PickRandomTargetableCrystal(CrystalsAroundPlayer());
             if (crystal != null)
                 goto Found;
 
             // If none, picks from all crystals
-            crystal = PickRandomValidCrystal(m_levelChannel.crystalManager.activeCrystals);
+            crystal = PickRandomTargetableCrystal(m_levelChannel.crystalManager.activeCrystals);
             if (crystal != null)
                 goto Found;
 
@@ -93,18 +97,26 @@ namespace Bitfrost.Gameplay.Enemies
             }
         }
 
-        private CrystalShard PickRandomValidCrystal(List<CrystalShard> crystals)
+        public void SearchTargetSpot()
         {
-            List<CrystalShard> validCrystals = crystals.FindAll(
-                (CrystalShard crystal) => crystal.hasEnergy
+            if (targetCrystal == null)
+                return;
+
+            targetSpot = targetCrystal.harvesterCircularSpacer.GetSpotReworked(transform.position);
+        }
+
+        private CrystalShard PickRandomTargetableCrystal(List<CrystalShard> crystals)
+        {
+            List<CrystalShard> targetableCrystals = crystals.FindAll(
+                (CrystalShard crystal) => crystal.isTargetableByHarvesters
             );
 
-            if (validCrystals.Count == 0)
+            if (targetableCrystals.Count == 0)
                 return null;
             else
             {
-                int index = Random.Range(0, validCrystals.Count - 1);
-                return validCrystals[index];
+                int index = Random.Range(0, targetableCrystals.Count - 1);
+                return targetableCrystals[index];
             }
         }
 

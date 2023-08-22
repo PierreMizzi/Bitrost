@@ -46,6 +46,10 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private ScreenEdgeSubject m_crystalsSubjectPrefab = null;
 
+        [Header("Debug")]
+        [SerializeField]
+        private SpawnCrystalShardsConfig d_config;
+
         #endregion
 
         #region Methods
@@ -62,6 +66,9 @@ namespace Bitfrost.Gameplay.Energy
 
             if (m_levelChannel != null)
                 m_levelChannel.onReset += CallbackReset;
+
+            if (m_levelChannel.isDebugging)
+                DebugSpawn();
         }
 
         private void OnDestroy()
@@ -219,11 +226,6 @@ namespace Bitfrost.Gameplay.Energy
 
         #endregion
 
-        #region Debug
-
-
-        [SerializeField]
-        private SpawnCrystalShardsConfig d_config;
 
         [ContextMenu("DebugSpawn")]
         public void DebugSpawn()
@@ -231,7 +233,6 @@ namespace Bitfrost.Gameplay.Energy
             SpawnCrystalShards(d_config);
         }
 
-        #endregion
 
         #endregion
     }

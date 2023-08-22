@@ -4,7 +4,7 @@
     <Style src="project://database/Assets/UI/General/General.uss?fileID=7433441132597879392&amp;guid=c81772fb655769e4494d3618a08eb16a&amp;type=3#General" />
     <ui:VisualElement name="menu-container" class="full-container">
         <ui:VisualElement name="left-panel-container">
-            <ui:Instance template="GameTitle" name="GameTitle" style="align-items: flex-start;" />
+            <ui:Instance template="GameTitle" name="GameTitle" style="align-items: flex-start; translate: -10px 0;" />
             <ui:VisualElement name="button-container">
                 <ui:VisualElement name="start-button-container" style="scale: 1.2 1.2;">
                     <ui:Button display-tooltip-when-elided="true" name="start-button" class="button" style="margin-bottom: 20px;">
@@ -53,11 +53,11 @@
                 <ui:VisualElement name="bottom-part-metrics-container">
                     <ui:VisualElement name="metrics-time" class="metrics">
                         <ui:VisualElement name="time-icon" class="metrics-icon" />
-                        <ui:Label text="01:36" display-tooltip-when-elided="true" name="time-label" class="metrics-label" />
+                        <ui:Label text="00:00" display-tooltip-when-elided="true" name="time-label" class="metrics-label" />
                     </ui:VisualElement>
                     <ui:VisualElement name="metrics-score" class="metrics">
                         <ui:VisualElement name="score-icon" class="metrics-icon" style="background-image: url(&apos;project://database/Assets/Sprites/Game/UI/Gameplay/GameOver/Killcount.png?fileID=2800000&amp;guid=a7216486412974c48a839bfc5cc085b2&amp;type=3#Killcount&apos;);" />
-                        <ui:Label text="65999" display-tooltip-when-elided="true" name="score-label" class="metrics-label" />
+                        <ui:Label text="0" display-tooltip-when-elided="true" name="score-label" class="metrics-label" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>

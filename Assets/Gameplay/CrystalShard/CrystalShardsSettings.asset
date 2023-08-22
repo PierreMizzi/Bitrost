@@ -28,3 +28,11 @@ MonoBehaviour:
   m_maxCrystalScale: 2.2
   m_safeDistanceFromScaleRatio: 3
   randomPositionExtents: 10
+  defaultHarvesterSpacerConfig:
+    scale: 1.5
+    radius: 2.8
+    count: 9
+  harvesterSpacerConfigs:
+  - scale: 2
+    radius: 3.5
+    count: 12

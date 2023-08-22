@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using PierreMizzi.Rendering;
 using PierreMizzi.Useful;
+using Bitfrost.Gameplay.Enemies;
 
 namespace Bitfrost.Gameplay.Energy
 {
@@ -61,6 +62,16 @@ namespace Bitfrost.Gameplay.Energy
 
         #endregion
 
+        [SerializeField]
+        private CircularSpacer m_harvesterCircularSpacer;
+
+        public CircularSpacer harvesterCircularSpacer { get { return m_harvesterCircularSpacer; } }
+
+        public bool isTargetableByHarvesters
+        {
+            get { return hasEnergy && m_harvesterCircularSpacer.hasAvailableSpot; }
+        }
+
         #endregion
 
         #region Methods 
@@ -90,19 +101,35 @@ namespace Bitfrost.Gameplay.Energy
             remainingEnergyCount = energyCount;
             SetVisualEnergy();
 
+            // Visuals
             m_propertyBlock.SetProperty(UtilsClass.MainTexProperty, m_settings.GetRandomSprite());
             m_spriteRenderer.color = m_settings.GetRandomTint();
             float noiseOffset = UnityEngine.Random.Range(0f, 100f);
             m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
 
+            // Transform
             m_rotationSpeed = m_settings.GetRandomRotationSpeed();
+
+            // Circular Spacer
+            m_harvesterCircularSpacer.radius = m_settings.defaultHarvesterSpacerConfig.radius;
+            m_harvesterCircularSpacer.count = m_settings.defaultHarvesterSpacerConfig.count;
+
+            foreach (HarvesterCircularSpacerConfig config in m_settings.harvesterSpacerConfigs)
+            {
+                if (config.scale < transform.localScale.x)
+                {
+                    m_harvesterCircularSpacer.radius = config.radius;
+                    m_harvesterCircularSpacer.count = config.count;
+                }
+            }
+
+            m_harvesterCircularSpacer.Initialize();
         }
 
         public void Initialize(CrystalShardsManager manager)
         {
             m_manager = manager;
             m_isInitialized = true;
-
         }
 
         public void ReleaseToPool()

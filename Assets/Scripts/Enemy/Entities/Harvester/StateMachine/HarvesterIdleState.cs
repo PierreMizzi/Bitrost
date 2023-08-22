@@ -1,5 +1,4 @@
 using System.Collections;
-using DG.Tweening;
 using PierreMizzi.Useful.StateMachines;
 using UnityEngine;
 
@@ -20,16 +19,7 @@ namespace Bitfrost.Gameplay.Enemies
 
 		protected override void DefaultEnter()
 		{
-			SearchTargetCrystal();
-		}
-
-		protected void SearchTargetCrystal()
-		{
-			m_harvester.SearchCrystalShard();
-
-			if (m_harvester.targetCrystal != null)
-				ChangeState((int)EnemyStateType.Move);
-
+			StartSearchingTarget();
 		}
 
 		public override void Exit()
@@ -44,7 +34,6 @@ namespace Bitfrost.Gameplay.Enemies
 				m_searchTargetCoroutine = SearchTargetCrystalCoroutine();
 				m_harvester.StartCoroutine(m_searchTargetCoroutine);
 			}
-
 		}
 
 		private void StopSeachingTarget()
@@ -60,11 +49,14 @@ namespace Bitfrost.Gameplay.Enemies
 		{
 			while (true)
 			{
+				m_harvester.SearchTargetCrystal();
+
+				if (m_harvester.targetCrystal != null)
+					ChangeState((int)EnemyStateType.Move);
+
 				yield return new WaitForSeconds(1f);
-				SearchTargetCrystal();
 			}
 		}
-
 
 	}
 

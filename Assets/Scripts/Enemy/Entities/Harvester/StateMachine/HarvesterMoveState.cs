@@ -15,26 +15,37 @@ namespace Bitfrost.Gameplay.Enemies
 
         private Harvester m_harvester;
 
-        private Tween m_approachCrystal;
+        private Sequence m_approachSpot;
 
         protected override void DefaultEnter()
         {
             base.DefaultEnter();
+            m_harvester.SearchTargetSpot();
+            m_harvester.targetSpot.isAvailable = false;
 
-            Vector3 direction =
-                m_harvester.targetCrystal.transform.position - m_harvester.transform.position;
+            Vector3 direction = m_harvester.targetSpot.position - m_harvester.transform.position;
             float distance = direction.magnitude;
-            float duration = distance / m_harvester.settings.speed;
+            float durationMove = distance / m_harvester.settings.speed;
 
-            Vector3 endPosition =
-                m_harvester.targetCrystal.transform.position +
-                (
-                    m_harvester.settings.offsetFromShard *
-                    m_harvester.targetCrystal.transform.localScale.x *
-                    -direction.normalized
-                );
             m_harvester.transform.up = direction.normalized;
-            m_approachCrystal = m_harvester.transform.DOMove(endPosition, duration).OnComplete(OnCompleteMovement);
+
+            m_approachSpot = DOTween.Sequence();
+            m_approachSpot.Append(m_harvester.transform.DOMove(m_harvester.targetSpot.position, durationMove));
+            m_approachSpot.Append(RotateTween());
+            m_approachSpot.AppendCallback(OnCompleteMovement);
+
+        }
+
+        private Tween RotateTween()
+        {
+            Vector3 fromDirection = m_harvester.transform.up;
+            Vector3 toDirection = (m_harvester.targetCrystal.transform.position - m_harvester.transform.position).normalized;
+            float duration = 1f;
+
+            return DOVirtual.Float(0, 1, duration, (float value) =>
+            {
+                m_harvester.transform.up = Vector3.Lerp(fromDirection, toDirection, value);
+            });
         }
 
         public override void Update()
@@ -45,20 +56,20 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Exit()
         {
-            if (m_approachCrystal != null && m_approachCrystal.IsPlaying())
-                m_approachCrystal.Kill();
+            if (m_approachSpot != null && m_approachSpot.IsPlaying())
+                m_approachSpot.Kill();
         }
 
         public override void Pause()
         {
-            if (m_approachCrystal != null && m_approachCrystal.IsPlaying())
-                m_approachCrystal.Pause();
+            if (m_approachSpot != null && m_approachSpot.IsPlaying())
+                m_approachSpot.Pause();
         }
 
         public override void Resume()
         {
-            if (m_approachCrystal != null && !m_approachCrystal.IsPlaying())
-                m_approachCrystal.Play();
+            if (m_approachSpot != null && !m_approachSpot.IsPlaying())
+                m_approachSpot.Play();
         }
 
         public void OnCompleteMovement()

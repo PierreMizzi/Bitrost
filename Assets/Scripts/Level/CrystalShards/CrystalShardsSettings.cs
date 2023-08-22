@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Bitfrost.Gameplay.Enemies;
 using PierreMizzi.Useful;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Bitfrost.Gameplay.Energy
     fileName = "CrystalShardsSettings",
     menuName = "Bitrost/CrystalShardsSettings",
     order = 0
-)]
+    )]
     public class CrystalShardsSettings : ScriptableObject
     {
 
@@ -37,6 +38,12 @@ namespace Bitfrost.Gameplay.Energy
         private float safeDistanceFromScaleRatio;
 
         public float randomPositionExtents;
+
+
+        [Header("Circular Spacer")]
+        public HarvesterCircularSpacerConfig defaultHarvesterSpacerConfig;
+        public List<HarvesterCircularSpacerConfig> harvesterSpacerConfigs = new List<HarvesterCircularSpacerConfig>();
+
 
         private void OnEnable()
         {

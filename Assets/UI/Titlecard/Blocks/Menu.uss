@@ -98,10 +98,11 @@
 
 #left-panel-container {
     height: 100%;
-    width: 33%;
+    width: 30%;
     justify-content: space-between;
     padding-bottom: 60px;
     padding-top: 60px;
+    margin-left: 40px;
 }
 
 #button-container {
@@ -150,7 +151,7 @@
     -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&type=2#SourceSans3-Medium SDF');
     -unity-text-align: middle-center;
     font-size: 40px;
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 #bottom-part-metrics-container {
@@ -185,7 +186,7 @@
 }
 
 .metrics-label {
-    color: rgba(255, 255, 255, 255);
+    color: rgb(255, 255, 255);
     height: auto;
     -unity-text-align: middle-left;
     font-size: 42px;

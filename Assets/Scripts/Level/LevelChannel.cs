@@ -11,6 +11,11 @@ namespace Bitfrost.Gameplay
     [CreateAssetMenu(fileName = "LevelChannel", menuName = "Bitrost/LevelChannel", order = 0)]
     public class LevelChannel : ScriptableObject
     {
+
+        [SerializeField]
+        private bool m_isDebugging = false;
+        public bool isDebugging { get { return m_isDebugging; } }
+
         public CrystalShardsManager crystalManager;
 
         // Tutorial
@@ -48,6 +53,13 @@ namespace Bitfrost.Gameplay
 
         private void OnEnable()
         {
+
+#if !UNITY_EDITOR
+
+            m_isDebugging = false;
+
+#endif
+
             // Tutorial
             onDisplayTutorial = () => { };
 
