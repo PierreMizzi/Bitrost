@@ -65,7 +65,17 @@ PrefabInstance:
     - target: {fileID: 6381606994887788582, guid: b132c2bac0434474883ef53a4001ec26,
         type: 3}
       propertyPath: m_Name
-      value: BulletImpact
+      value: EnemyBulletImpact
+      objectReference: {fileID: 0}
+    - target: {fileID: 6381606995821369081, guid: b132c2bac0434474883ef53a4001ec26,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.7411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 6381606995821369081, guid: b132c2bac0434474883ef53a4001ec26,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.95686275
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b132c2bac0434474883ef53a4001ec26, type: 3}

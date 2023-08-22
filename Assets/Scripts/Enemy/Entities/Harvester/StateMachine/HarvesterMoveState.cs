@@ -33,13 +33,12 @@ namespace Bitfrost.Gameplay.Enemies
             m_approachSpot.Append(m_harvester.transform.DOMove(m_harvester.targetSpot.position, durationMove));
             m_approachSpot.Append(RotateTween());
             m_approachSpot.AppendCallback(OnCompleteMovement);
-
         }
 
         private Tween RotateTween()
         {
             Vector3 fromDirection = m_harvester.transform.up;
-            Vector3 toDirection = (m_harvester.targetCrystal.transform.position - m_harvester.transform.position).normalized;
+            Vector3 toDirection = -m_harvester.targetSpot.direction;
             float duration = 1f;
 
             return DOVirtual.Float(0, 1, duration, (float value) =>
