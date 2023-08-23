@@ -104,17 +104,17 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual void TitlecardToGame()
 		{
-			IEnumerator transition = SceneTransitionCoroutine(titlecardSceneName, gameSceneName);
+			IEnumerator transition = SceneTransitionCoroutine(titlecardSceneName, gameSceneName, m_appChannel.onUnloadTitlecardScene.Invoke());
 			StartCoroutine(transition);
 		}
 
 		private void GameToTitlecard()
 		{
-			IEnumerator transition = SceneTransitionCoroutine(gameSceneName, titlecardSceneName);
+			IEnumerator transition = SceneTransitionCoroutine(gameSceneName, titlecardSceneName, m_appChannel.onUnloadGameScene.Invoke());
 			StartCoroutine(transition);
 		}
 
-		protected virtual IEnumerator SceneTransitionCoroutine(string previousSceneName, string newSceneName)
+		protected virtual IEnumerator SceneTransitionCoroutine(string previousSceneName, string newSceneName, IEnumerator previousSceneUnloading = null)
 		{
 			bool hold = true;
 			Action stopHold = () => { hold = false; };
@@ -125,6 +125,9 @@ namespace PierreMizzi.Useful.SceneManagement
 
 			while (hold)
 				yield return null;
+
+			if (previousSceneUnloading != null)
+				yield return previousSceneUnloading;
 
 			m_initialCamera.gameObject.SetActive(true);
 			m_loaderScreen.DisplayProgressBar();

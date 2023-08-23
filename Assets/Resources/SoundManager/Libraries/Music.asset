@@ -15,9 +15,18 @@ MonoBehaviour:
   m_description: 
   m_type: 0
   m_soundDatas:
-  - m_ID: GameLoop
-    m_clip: {fileID: 8300000, guid: 7c4a0dc43dac9364bae18c25f68ea310, type: 3}
-    m_mixer: {fileID: 24300002, guid: 44b7dcad74cf93a42a32264f40570e63, type: 2}
+  - m_ID: MusicInGame
+    m_clip: {fileID: 8300000, guid: 558ed241ae7fdfe4f9a14c553bd3057b, type: 3}
+    m_mixer: {fileID: 2453949757314129620, guid: 44b7dcad74cf93a42a32264f40570e63,
+      type: 2}
+  - m_ID: MusicTitlecard
+    m_clip: {fileID: 8300000, guid: 151ec5b36528d08449c31601a0599c88, type: 3}
+    m_mixer: {fileID: 2439436688848024247, guid: 44b7dcad74cf93a42a32264f40570e63,
+      type: 2}
+  - m_ID: MusicTutorial
+    m_clip: {fileID: 8300000, guid: df4907fed18b4df4eb6367b184eafcd4, type: 3}
+    m_mixer: {fileID: 5267869598731890298, guid: 44b7dcad74cf93a42a32264f40570e63,
+      type: 2}
   m_generateStatic: 1
   m_audioClips: []
-  m_mixerGroup: {fileID: 24300002, guid: 44b7dcad74cf93a42a32264f40570e63, type: 2}
+  m_mixerGroup: {fileID: 0}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
 using PierreMizzi.Useful.SceneManagement;
 using PierreMizzi.Useful.StateMachines;
@@ -50,6 +51,9 @@ namespace Bitfrost.Application
 
 		#endregion
 
+		[SerializeField]
+		private SoundSource m_menuMusic = null;
+
 		#endregion
 
 		#region Credits
@@ -95,7 +99,12 @@ namespace Bitfrost.Application
 			m_menuToCreditsButton.clicked += CallbackMenuToCreditsClicked;
 			m_creditsToMenuButton.clicked += CallbackCreditsToMenuClicked;
 
+			// State Machine
 			InitiliazeStates();
+
+			// Music
+
+
 		}
 
 		#region State Machine

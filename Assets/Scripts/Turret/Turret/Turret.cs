@@ -167,14 +167,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         #endregion
 
-        #region Audio
-
-        [Header("Audio")]
-        [SerializeField]
-        private SoundSource m_fireBulletSource = null;
-
-        #endregion
-
         #endregion
 
         #region Methods
@@ -208,13 +200,6 @@ namespace Bitfrost.Gameplay.Turrets
             onRefreshEnergy = (TurretStateType state) => { };
 
             onProductionProgress = (float normalized) => { };
-        }
-
-        protected void Start()
-        {
-            m_fireBulletSource.SetSoundData(SoundDataID.TURRET_BULLET);
-            m_fireBulletSource.stopOnAudioClipEnded = false;
-            m_fireBulletSource.destroyOnAudioClipEnded = false;
         }
 
         public void Update()
@@ -296,7 +281,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         public void Fire()
         {
-
             if (hasStoredEnergy)
                 storedEnergy--;
             else
@@ -314,7 +298,7 @@ namespace Bitfrost.Gameplay.Turrets
             if (!hasEnergy)
                 ChangeState(TurretStateType.Disabled);
 
-            m_fireBulletSource.Play();
+            SoundManager.PlaySFX(SoundDataID.TURRET_BULLET);
         }
 
         public bool CanFire()

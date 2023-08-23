@@ -30,7 +30,6 @@ namespace PierreMizzi.SoundManager
 		public List<SoundData> SoundDatas => m_soundDatas;
 		public bool GenerateStatic => m_generateStatic;
 
-
 		[Header("Fast fill")]
 		[SerializeField] private List<AudioClip> m_audioClips = new List<AudioClip>();
 		[SerializeField] private AudioMixerGroup m_mixerGroup = null;

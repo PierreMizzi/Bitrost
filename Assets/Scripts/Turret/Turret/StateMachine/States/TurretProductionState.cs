@@ -46,7 +46,7 @@ namespace Bitfrost.Gameplay.Turrets
             if (m_productionCycleTween != null && m_productionCycleTween.IsPlaying())
                 m_productionCycleTween.Kill();
 
-            SoundManager.StopSound(SoundDataID.TURRET_PRODUCTION_LOOP);
+            // SoundManager.StopSound(SoundDataID.TURRET_PRODUCTION_LOOP);
         }
 
         public override void Pause()

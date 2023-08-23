@@ -97,15 +97,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         #endregion
 
-        #region Audio
-        [Header("Audio")]
-        [SerializeField]
-        private SoundSource m_wrongActionSource = null;
-
-
-
-        #endregion
-
         #endregion
 
         #region Methods
@@ -125,8 +116,6 @@ namespace Bitfrost.Gameplay.Turrets
             m_turretVisualsContainer = m_document.rootVisualElement.Q(k_turretViewVisualContainer);
 
             CreateTurret();
-
-            InitializeAudio();
 
             if (m_levelChannel != null)
             {
@@ -219,7 +208,7 @@ namespace Bitfrost.Gameplay.Turrets
             }
 
             if (noBulletFired)
-                PlayWrongAction();
+                SoundManager.PlaySFX(SoundDataID.TURRET_WRONG_ACTION);
         }
 
         private void CallbackSwitchMode(InputAction.CallbackContext context)
@@ -477,22 +466,6 @@ namespace Bitfrost.Gameplay.Turrets
         }
 
 
-
-        #endregion
-
-        #region Audio
-
-        private void InitializeAudio()
-        {
-            m_wrongActionSource.SetSoundData(SoundDataID.TURRET_WRONG_ACTION);
-            m_wrongActionSource.stopOnAudioClipEnded = false;
-            m_wrongActionSource.destroyOnAudioClipEnded = false;
-        }
-
-        public void PlayWrongAction()
-        {
-            m_wrongActionSource.Play();
-        }
 
         #endregion
 

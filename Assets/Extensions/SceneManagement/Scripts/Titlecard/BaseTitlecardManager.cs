@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -42,10 +43,17 @@ namespace PierreMizzi.Useful.SceneManagement
 			m_exitButton.clicked += CallbackExitClicked;
 		}
 
+		protected virtual void Start()
+		{
+			m_appChannel.onUnloadTitlecardScene += UnloadTitlecardSceneCoroutine;
+		}
+
 		protected virtual void OnDestroy()
 		{
 			m_startButton.clicked -= CallbackStartClicked;
 			m_exitButton.clicked -= CallbackExitClicked;
+
+			m_appChannel.onUnloadTitlecardScene -= UnloadTitlecardSceneCoroutine;
 		}
 
 		protected virtual void CallbackStartClicked()
@@ -58,6 +66,12 @@ namespace PierreMizzi.Useful.SceneManagement
 		{
 			if (isInteractable)
 				Application.Quit();
+		}
+
+		protected virtual IEnumerator UnloadTitlecardSceneCoroutine()
+		{
+			Debug.Log("Unload Titlecard Scene Coroutine");
+			yield return null;
 		}
 
 		#endregion

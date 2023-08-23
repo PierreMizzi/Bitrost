@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.StateMachines;
 using UnityEngine;
 
@@ -86,7 +87,7 @@ namespace Bitfrost.Gameplay.Turrets
             if (CanBeProduction())
                 ChangeState(TurretStateType.Production, TurretStateType.Offensive);
             else
-                m_manager.PlayWrongAction();
+                SoundManager.PlaySFX(SoundDataID.TURRET_WRONG_ACTION);
         }
 
         private void ProductionToOffensive()
