@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
@@ -51,9 +52,6 @@ namespace Bitfrost.Application
 
 		#endregion
 
-		[SerializeField]
-		private SoundSource m_menuMusic = null;
-
 		#endregion
 
 		#region Credits
@@ -78,6 +76,11 @@ namespace Bitfrost.Application
 
 		#endregion
 
+
+		[Header("Music")]
+		[SerializeField]
+		private SoundSource m_musicSoundSource;
+
 		#endregion
 
 		#region Methods 
@@ -89,23 +92,32 @@ namespace Bitfrost.Application
 			// Menu
 			m_menu = m_root.Q<VisualElement>(k_menu);
 			m_menuToCreditsButton = m_root.Q<Button>(k_menuToCreditsButton);
+			m_menuToCreditsButton.clicked += CallbackMenuToCreditsClicked;
+			m_menuToCreditsButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+
+			m_startButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
+			m_exitButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
 
 			InitializeBestScore();
 
 			// Credits
 			m_credits = m_root.Q<VisualElement>(k_credits);
 			m_creditsToMenuButton = m_root.Q<Button>(k_creditsToMenuButton);
-
-			m_menuToCreditsButton.clicked += CallbackMenuToCreditsClicked;
 			m_creditsToMenuButton.clicked += CallbackCreditsToMenuClicked;
+			m_creditsToMenuButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
 
 			// State Machine
 			InitiliazeStates();
-
-			// Music
-
-
 		}
+
+		protected override IEnumerator UnloadTitlecardSceneCoroutine()
+		{
+			yield return base.UnloadTitlecardSceneCoroutine();
+			m_musicSoundSource.FadeOut();
+			yield return null;
+		}
+
+
 
 		#region State Machine
 
@@ -146,6 +158,23 @@ namespace Bitfrost.Application
 			m_menu.AddToClassList(UIToolkitUtils.hide);
 		}
 
+		protected override void CallbackStartClicked()
+		{
+			base.CallbackStartClicked();
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
+		}
+
+		protected override void CallbackExitClicked()
+		{
+			base.CallbackExitClicked();
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
+		}
+
+		private void CallbackOnMouseOver(MouseOverEvent evt)
+		{
+			SoundManager.PlaySFX(SoundDataID.U_I_HOVER);
+		}
+
 		#region Best Score
 
 		public void InitializeBestScore()
@@ -173,12 +202,16 @@ namespace Bitfrost.Application
 		{
 			if (isInteractable)
 				ChangeState(TitlecardStateType.Credits);
+
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}
 
 		private void CallbackCreditsToMenuClicked()
 		{
 			if (isInteractable)
 				ChangeState(TitlecardStateType.Menu);
+
+			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
 		}
 
 		public void DisplayCredits()
@@ -190,9 +223,6 @@ namespace Bitfrost.Application
 		{
 			m_credits.AddToClassList(UIToolkitUtils.hide);
 		}
-
-
-
 
 		#endregion
 

@@ -129,8 +129,11 @@ namespace PierreMizzi.SoundManager
 		/// <param name="duration">Duration in seconds</param>
 		/// <param name="fromZero">Volume starts from 0 ?</param>
 		/// <param name="callback">Callback when done fading</param>
-		public void FadeIn(float duration, float toVolume = 1, Action onComplete = null)
+		public void FadeIn(float duration = 0, float toVolume = 1, Action onComplete = null)
 		{
+			if (duration == 0)
+				duration = SoundManager.settings.BaseFadeOutDuration;
+
 			state = SoundSourceState.FadeIn;
 
 			if (!m_audioSource.isPlaying)
@@ -151,8 +154,11 @@ namespace PierreMizzi.SoundManager
 		/// </summary>
 		/// <param name="duration">Duration in seconds</param>
 		/// <param name="callback">Callback when done fading, default value fades to 0</param>
-		public void FadeOut(float duration, float toVolume = 0, Action onComplete = null)
+		public void FadeOut(float duration = 0, float toVolume = 0, Action onComplete = null)
 		{
+			if (duration == 0)
+				duration = SoundManager.settings.BaseFadeOutDuration;
+
 			state = SoundSourceState.FadeOut;
 
 			m_audioSource
@@ -163,6 +169,18 @@ namespace PierreMizzi.SoundManager
 					onComplete?.Invoke();
 					state = SoundSourceState.None;
 				});
+		}
+
+		public void FadeTransition(string soundDataID, float duration = 0, Action onComplete = null)
+		{
+			if (duration == 0)
+				duration = SoundManager.settings.BaseFadeOutDuration;
+
+			FadeOut(duration, 0, () =>
+			{
+				SetSoundData(soundDataID);
+				FadeIn(0, 1, onComplete);
+			});
 		}
 
 		public void Restart()

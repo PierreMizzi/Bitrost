@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bitfrost.Application;
 using Bitfrost.Gameplay.Enemies;
+using PierreMizzi.SoundManager;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -64,6 +65,9 @@ namespace Bitfrost.Gameplay
         [SerializeField]
         private int m_startingTime = 0;
 
+        [SerializeField]
+        private SoundSource m_musicSoundSource = null;
+
         #endregion
 
         #region Methods
@@ -84,8 +88,10 @@ namespace Bitfrost.Gameplay
 
         private IEnumerator Start()
         {
+            // Events
             if (m_levelChannel != null)
             {
+                m_levelChannel.onHideTutorialPanel += CallbackHideTutorialPanel;
                 m_levelChannel.onChangeStageDifficulty += CallbackChangeStageDifficulty;
                 m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
                 m_levelChannel.onPlayerDead += CallbackDefeat;
@@ -98,6 +104,7 @@ namespace Bitfrost.Gameplay
 
             yield return new WaitForSeconds(0.1f);
 
+            // Timeline stage and debugging settings
             if (m_levelChannel.isDebugging)
                 ManageDebugMode();
             else
@@ -106,9 +113,20 @@ namespace Bitfrost.Gameplay
                 PlayStage();
             }
 
+            // Tutorial Panel & adequate music
             if (m_displayTutorial)
-                m_levelChannel.onDisplayTutorial.Invoke();
+            {
+                m_musicSoundSource.SetSoundData(SoundDataID.MUSIC_TUTORIAL);
+                m_levelChannel.onPauseGame.Invoke();
+                m_levelChannel.onDisplayTutorialPanel.Invoke();
+            }
+            else
+                m_musicSoundSource.SetSoundData(SoundDataID.MUSIC_IN_GAME);
+
+            m_musicSoundSource.Play();
         }
+
+
 
         private void Update()
         {
@@ -120,6 +138,7 @@ namespace Bitfrost.Gameplay
         {
             if (m_levelChannel != null)
             {
+                m_levelChannel.onHideTutorialPanel += CallbackHideTutorialPanel;
                 m_levelChannel.onChangeStageDifficulty -= CallbackChangeStageDifficulty;
                 m_levelChannel.onAllEnemiesKilled -= CallbackAllEnemiesKilled;
                 m_levelChannel.onPlayerDead -= CallbackDefeat;
@@ -129,6 +148,16 @@ namespace Bitfrost.Gameplay
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
             }
+        }
+
+        #endregion
+
+        #region Tutorial
+
+        private void CallbackHideTutorialPanel()
+        {
+            m_levelChannel.onResumeGame.Invoke();
+            m_musicSoundSource.FadeTransition(SoundDataID.MUSIC_IN_GAME);
         }
 
         #endregion
@@ -272,10 +301,6 @@ namespace Bitfrost.Gameplay
             // Stage
             ResetStage();
         }
-
-        #endregion
-
-        #region Victory
 
         #endregion
 

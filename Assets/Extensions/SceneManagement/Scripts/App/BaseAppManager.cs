@@ -104,7 +104,7 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual void TitlecardToGame()
 		{
-			IEnumerator transition = SceneTransitionCoroutine(titlecardSceneName, gameSceneName, m_appChannel.onUnloadTitlecardScene.Invoke());
+			IEnumerator transition = SceneTransitionCoroutine(titlecardSceneName, gameSceneName, m_appChannel.onUnloadTitlecardScene());
 			StartCoroutine(transition);
 		}
 
@@ -126,6 +126,7 @@ namespace PierreMizzi.Useful.SceneManagement
 			while (hold)
 				yield return null;
 
+			Debug.Log("Happens at the right time");
 			if (previousSceneUnloading != null)
 				yield return previousSceneUnloading;
 

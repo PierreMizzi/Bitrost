@@ -35,37 +35,32 @@ namespace Bitfrost.Gameplay.UI
 		protected void Start()
 		{
 			if (m_levelChannel != null)
-				m_levelChannel.onDisplayTutorial += Display;
+				m_levelChannel.onDisplayTutorialPanel += Display;
 		}
 
 		protected override void OnDestroy()
 		{
 			base.OnDestroy();
 			if (m_levelChannel != null)
-				m_levelChannel.onDisplayTutorial -= Display;
+				m_levelChannel.onDisplayTutorialPanel -= Display;
 		}
 
 		protected override void Display()
 		{
 			base.Display();
 			m_applicationChannel.onSetCursor.Invoke(CursorType.Normal);
-
-			m_levelChannel.onPauseGame.Invoke();
 		}
 
 		protected override void CallbackPreviousClicked()
 		{
 			base.CallbackPreviousClicked();
 			SoundManager.PlaySFX(SoundDataID.U_I_CLICK);
-
 		}
 
 		protected override void CallbackStartClicked()
 		{
 			base.CallbackStartClicked();
-
-			m_levelChannel.onResumeGame.Invoke();
-
+			m_levelChannel.onHideTutorialPanel.Invoke();
 			SoundManager.PlaySFX(SoundDataID.U_I_START_CLICK);
 		}
 

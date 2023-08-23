@@ -19,7 +19,8 @@ namespace Bitfrost.Gameplay
         public CrystalShardsManager crystalManager;
 
         // Tutorial
-        public Action onDisplayTutorial;
+        public Action onDisplayTutorialPanel;
+        public Action onHideTutorialPanel;
 
         // Timeline stage
         public IntDelegate onChangeStageDifficulty;
@@ -61,7 +62,8 @@ namespace Bitfrost.Gameplay
 #endif
 
             // Tutorial
-            onDisplayTutorial = () => { };
+            onDisplayTutorialPanel = () => { };
+            onHideTutorialPanel = () => { };
 
             // Timeline stage
             onChangeStageDifficulty = (int difficultyLevel) => { };
