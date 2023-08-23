@@ -42,7 +42,7 @@ Material:
     - _Radius: 0.45
     - _Rotation: 180
     m_Colors:
-    - _Color: {r: 1, g: 0.5694988, b: 0, a: 1}
+    - _Color: {r: 0.9811321, g: 0.17924519, b: 0.16352192, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &9018905378112657567
 MonoBehaviour:
