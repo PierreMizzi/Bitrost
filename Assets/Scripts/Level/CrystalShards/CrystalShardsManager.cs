@@ -10,7 +10,7 @@ namespace Bitfrost.Gameplay.Energy
     public delegate void SetCrystalShardDelegate(CrystalShard crystal);
     public delegate CrystalShard GetCrystalShardDelegate();
 
-    public class CrystalShardsManager : MonoBehaviour
+    public class CrystalShardsManager : MonoBehaviour, IPausable
     {
         #region Fields
 
@@ -42,6 +42,7 @@ namespace Bitfrost.Gameplay.Energy
             get { return m_occupiedCrystals; }
         }
 
+
         [Header("Screen Edge Info")]
         [SerializeField]
         private ScreenEdgeSubject m_crystalsSubjectPrefab = null;
@@ -49,6 +50,8 @@ namespace Bitfrost.Gameplay.Energy
         [Header("Debug")]
         [SerializeField]
         private SpawnCrystalShardsConfig d_config;
+
+        public bool isPaused { get; set; }
 
         #endregion
 
@@ -65,7 +68,11 @@ namespace Bitfrost.Gameplay.Energy
             m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
 
             if (m_levelChannel != null)
+            {
                 m_levelChannel.onReset += CallbackReset;
+                m_levelChannel.onPauseGame += Pause;
+                m_levelChannel.onResumeGame += Resume;
+            }
 
             if (m_levelChannel.isDebugging)
                 DebugSpawn();
@@ -74,7 +81,11 @@ namespace Bitfrost.Gameplay.Energy
         private void OnDestroy()
         {
             if (m_levelChannel != null)
+            {
                 m_levelChannel.onReset -= CallbackReset;
+                m_levelChannel.onPauseGame -= Pause;
+                m_levelChannel.onResumeGame -= Resume;
+            }
         }
 
         #endregion
@@ -231,6 +242,20 @@ namespace Bitfrost.Gameplay.Energy
         public void DebugSpawn()
         {
             SpawnCrystalShards(d_config);
+        }
+
+        public void Pause()
+        {
+            isPaused = true;
+            foreach (CrystalShard crystal in m_activeCrystals)
+                crystal.Pause();
+        }
+
+        public void Resume()
+        {
+            isPaused = false;
+            foreach (CrystalShard crystal in m_activeCrystals)
+                crystal.Resume();
         }
 
 

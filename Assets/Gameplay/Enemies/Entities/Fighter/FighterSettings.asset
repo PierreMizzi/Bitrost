@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FighterSettings
   m_EditorClassIdentifier: 
   maxHealth: 60
-  speed: 8
+  speed: 5
   radiusAroundPlayer: 8
   angleAroundPlayer: 66
   bulletConfig:

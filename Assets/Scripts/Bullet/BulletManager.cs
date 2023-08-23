@@ -6,8 +6,6 @@ using PierreMizzi.Useful.PoolingObjects;
 namespace Bitfrost.Gameplay.Bullets
 {
 
-
-
 	public class BulletManager : MonoBehaviour, IPausable
 	{
 		[Header("Channels")]
@@ -157,6 +155,11 @@ namespace Bitfrost.Gameplay.Bullets
 				m_poolingChannel.onReleaseToPool.Invoke(bullet.gameObject);
 
 			m_activeBullets.Clear();
+
+			foreach (BulletImpact impact in m_activeImpacts)
+				m_poolingChannel.onReleaseToPool.Invoke(impact.gameObject);
+
+			m_activeImpacts.Clear();
 		}
 
 		#endregion

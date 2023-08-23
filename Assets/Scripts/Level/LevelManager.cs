@@ -34,17 +34,15 @@ namespace Bitfrost.Gameplay
 
         public bool isPaused { get; set; }
 
-        public bool m_isGameOver = false;
-
         #region Time
 
         public float time { get; private set; }
 
-        public bool canUpdateTime { get { return !isPaused && !m_isGameOver; } }
+        public bool canUpdateTime { get { return !isPaused; } }
 
         #endregion
 
-        #region Timeline
+        #region Timeline Stage
 
         private PlayableDirector m_director;
 
@@ -58,6 +56,13 @@ namespace Bitfrost.Gameplay
 
         [Header("Tutorial")]
         [SerializeField] private bool m_displayTutorial = true;
+
+        [Header("Debug")]
+        [SerializeField]
+        private bool m_useStartingTime = false;
+
+        [SerializeField]
+        private int m_startingTime = 0;
 
         #endregion
 
@@ -91,25 +96,18 @@ namespace Bitfrost.Gameplay
                 m_levelChannel.onResumeGame += Resume;
             }
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
 
-            // Debugging
             if (m_levelChannel.isDebugging)
-            {
-                m_director.enabled = false;
-                m_displayTutorial = false;
-            }
+                ManageDebugMode();
             else
             {
-                m_director.enabled = true;
-                m_displayTutorial = true;
+                EnableTimelineStage();
+                PlayStage();
             }
 
             if (m_displayTutorial)
                 m_levelChannel.onDisplayTutorial.Invoke();
-
-            yield return null;
-
         }
 
         private void Update()
@@ -128,13 +126,10 @@ namespace Bitfrost.Gameplay
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onRestart -= CallbackRestart;
 
-
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
             }
         }
-
-
 
         #endregion
 
@@ -171,7 +166,7 @@ namespace Bitfrost.Gameplay
 
         #endregion
 
-        #region Stage Management
+        #region Timeline Stage
 
         private void PlayStage()
         {
@@ -222,6 +217,18 @@ namespace Bitfrost.Gameplay
         private void CallbackChangeStageDifficulty(int value)
         {
             m_currentStageDifficulty = value;
+        }
+
+        private void EnableTimelineStage()
+        {
+            m_director.enabled = true;
+            m_displayTutorial = true;
+        }
+
+        private void DisableTimelineStage()
+        {
+            m_director.enabled = false;
+            m_displayTutorial = false;
         }
 
         #endregion
@@ -290,16 +297,16 @@ namespace Bitfrost.Gameplay
 
         #region Debug
 
-        [ContextMenu("Defeat")]
-        public void Defeat()
+        private void ManageDebugMode()
         {
-            CallbackDefeat();
-        }
-
-        [ContextMenu("Victory")]
-        public void Victory()
-        {
-            CallbackVictory();
+            if (m_useStartingTime)
+            {
+                EnableTimelineStage();
+                m_director.time = m_startingTime;
+                PlayStage();
+            }
+            else
+                DisableTimelineStage();
         }
 
         #endregion

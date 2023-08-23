@@ -151,7 +151,7 @@
 .hostiles-title-fade-in {
     left: -80%;
     transition: left;
-    transition-duration: 7s;
+    transition-duration: 3s;
     transition-delay: 0.5s;
     transition-timing-function: linear;
 }
@@ -164,7 +164,7 @@
     left: 80%;
     opacity: 1;
     transition: opacity;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
 }
 
 .hostiles-title-fade-out.animate {

@@ -6,7 +6,7 @@ using Bitfrost.Gameplay.Enemies;
 
 namespace Bitfrost.Gameplay.Energy
 {
-    public class CrystalShard : MonoBehaviour
+    public class CrystalShard : MonoBehaviour, IPausable
     {
 
         #region Fields 
@@ -72,6 +72,8 @@ namespace Bitfrost.Gameplay.Energy
             get { return hasEnergy && m_harvesterCircularSpacer.hasAvailableSpot; }
         }
 
+        public bool isPaused { get; set; }
+
         #endregion
 
         #region Methods 
@@ -81,12 +83,11 @@ namespace Bitfrost.Gameplay.Energy
         protected void Awake()
         {
             onRefreshEnergy = () => { };
-
         }
 
         protected void Update()
         {
-            if (!isOccupied)
+            if (!isOccupied && !isPaused)
                 m_spriteRenderer.transform.rotation *= Quaternion.Euler(0, 0, m_rotationSpeed * Time.deltaTime);
         }
 
@@ -178,6 +179,16 @@ namespace Bitfrost.Gameplay.Energy
             m_spriteRendererTint = m_spriteRenderer.color;
             m_spriteRendererTint.a = 0;
             m_spriteRenderer.color = m_spriteRendererTint;
+        }
+
+        public void Pause()
+        {
+            isPaused = true;
+        }
+
+        public void Resume()
+        {
+            isPaused = false;
         }
 
         #endregion

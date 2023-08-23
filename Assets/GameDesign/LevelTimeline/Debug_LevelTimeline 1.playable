@@ -167,8 +167,8 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 7
-    batchCount: 2
+    count: 3
+    batchCount: 1
     duration: Infinity
 --- !u!114 &-7226490896550767165
 MonoBehaviour:
@@ -397,7 +397,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
       type: 3}
-    count: 6
+    count: 2
     batchCount: 2
     duration: Infinity
 --- !u!114 &-4429162902498513212
@@ -530,7 +530,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 4318404297879891376, guid: 6c79b948a6cd95e42bdb45a5f0022a27,
       type: 3}
-    count: 21
+    count: 10
     batchCount: 3
     duration: Infinity
 --- !u!114 &-3636917354212659919
@@ -637,7 +637,7 @@ MonoBehaviour:
     prefab: {fileID: 4318404297879891376, guid: 6c79b948a6cd95e42bdb45a5f0022a27,
       type: 3}
     count: 8
-    batchCount: 2
+    batchCount: 1
     duration: Infinity
 --- !u!114 &-1744498977614997656
 MonoBehaviour:
@@ -1690,7 +1690,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
       type: 3}
-    count: 6
+    count: 2
     batchCount: 2
     duration: Infinity
 --- !u!114 &330278211577881615
@@ -1759,8 +1759,8 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 7
-    batchCount: 2
+    count: 3
+    batchCount: 1
     duration: Infinity
 --- !u!114 &552819449026049213
 MonoBehaviour:
@@ -2466,7 +2466,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 12
+    count: 10
     batchCount: 1
     duration: Infinity
 --- !u!114 &5836059510960019217
