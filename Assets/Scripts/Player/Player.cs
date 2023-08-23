@@ -13,18 +13,22 @@ namespace Bitfrost.Gameplay.Players
         #region Fields
 
         [SerializeField]
-        private LevelChannel m_levelChannel = null;
+        private LevelChannel m_levelChannel;
 
-        private HealthEntity m_healthEntity = null;
+        private Animator m_animator;
+
+        private const string k_isDead = "IsDead";
+
+        private HealthEntity m_healthEntity;
 
         public HealthEntity healthEntity { get { return m_healthEntity; } }
 
         public bool isPaused { get; set; }
 
         [SerializeField]
-        private PlayerSettings m_settings = null;
+        private PlayerSettings m_settings;
 
-        private PlayerController m_controller = null;
+        private PlayerController m_controller;
 
         private List<string> m_hitSounds = new List<string>();
 
@@ -40,9 +44,11 @@ namespace Bitfrost.Gameplay.Players
             m_healthEntity = GetComponent<HealthEntity>();
 
             m_hitSounds = new List<string>(){
-            SoundDataID.PLAYER_HIT_01,
-            SoundDataID.PLAYER_HIT_02,
-        };
+                SoundDataID.PLAYER_HIT_01,
+                SoundDataID.PLAYER_HIT_02,
+            };
+
+            m_animator = GetComponent<Animator>();
         }
 
         private void Start()
@@ -103,10 +109,30 @@ namespace Bitfrost.Gameplay.Players
         [ContextMenu("CallbackNoHealth")]
         private void CallbackNoHealth()
         {
-            m_levelChannel.onPlayerDead.Invoke();
+            SetDead();
             m_controller.enabled = false;
 
             SoundManager.PlaySFX(SoundDataID.PLAYER_DEATH);
+        }
+
+        #endregion
+
+        #region Death
+
+        public void SetDead()
+        {
+            m_animator.SetBool(k_isDead, true);
+        }
+
+        public void SetAlive()
+        {
+            m_animator.SetBool(k_isDead, false);
+        }
+
+        // Function called at the end of Dead.anim
+        public void CallbackDeadAnimation()
+        {
+            m_levelChannel.onPlayerDead.Invoke();
         }
 
         #endregion
@@ -115,6 +141,7 @@ namespace Bitfrost.Gameplay.Players
 
         public void CallbackReset()
         {
+            SetAlive();
             m_healthEntity.Reset();
             transform.position = Vector3.zero;
             m_controller.enabled = true;
@@ -123,11 +150,13 @@ namespace Bitfrost.Gameplay.Players
         public void Pause()
         {
             m_controller.Pause();
+            m_animator.speed = 0;
         }
 
         public void Resume()
         {
             m_controller.Resume();
+            m_animator.speed = 1;
         }
 
         #endregion
