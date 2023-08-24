@@ -20,6 +20,8 @@ namespace Bitfrost.Application
 			m_this.HideMenu();
 			m_this.DisplayCredits();
 
+			m_this.cameraController.SetState((TitlecardStateType)type);
+
 			DOVirtual.DelayedCall(m_this.menuToCreditsDuration, () =>
 			{
 				m_this.isInteractable = true;

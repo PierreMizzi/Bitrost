@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour, IPausable
 
 	private Vector3 m_targetPosition;
 
+	[SerializeField]
 	private Camera m_camera = null;
 
 	#region Mouse Position 
@@ -62,6 +63,13 @@ public class CameraController : MonoBehaviour, IPausable
 
 	#endregion
 
+	#region Shake Screen
+
+	[Header("Shake Screen")]
+	[SerializeField]
+	private ShakeTweenSettings m_shakeTweenSettings;
+
+	#endregion
 	public bool isPaused { get; set; }
 
 	#endregion
@@ -79,9 +87,9 @@ public class CameraController : MonoBehaviour, IPausable
 	{
 		if (m_levelChannel != null)
 		{
+			m_levelChannel.onPlayerHit += CallbackShakeScren;
 			m_levelChannel.onPauseGame += Pause;
 			m_levelChannel.onResumeGame += Resume;
-
 		}
 	}
 
@@ -107,6 +115,7 @@ public class CameraController : MonoBehaviour, IPausable
 	{
 		if (m_levelChannel != null)
 		{
+			m_levelChannel.onPlayerHit += CallbackShakeScren;
 			m_levelChannel.onPauseGame -= Pause;
 			m_levelChannel.onResumeGame -= Resume;
 		}
@@ -161,6 +170,16 @@ public class CameraController : MonoBehaviour, IPausable
 	{
 		isPaused = false;
 	}
+
+	#endregion
+
+	#region Shake Screen
+
+	private void CallbackShakeScren()
+	{
+		m_shakeTweenSettings.PlayPositionShake(m_camera.transform);
+	}
+
 
 	#endregion
 

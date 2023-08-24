@@ -1,0 +1,3 @@
+:root {
+	--state-transition-duration: 2s;
+}

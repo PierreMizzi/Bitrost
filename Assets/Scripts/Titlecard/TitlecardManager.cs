@@ -76,6 +76,10 @@ namespace Bitfrost.Application
 
 		#endregion
 
+		[Header("Camera")]
+		[SerializeField]
+		private TitlecardCameraController m_cameraController;
+		public TitlecardCameraController cameraController => m_cameraController;
 
 		[Header("Music")]
 		[SerializeField]
@@ -116,8 +120,6 @@ namespace Bitfrost.Application
 			m_musicSoundSource.FadeOut();
 			yield return null;
 		}
-
-
 
 		#region State Machine
 

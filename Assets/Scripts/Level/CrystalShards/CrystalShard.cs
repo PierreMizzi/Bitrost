@@ -19,6 +19,8 @@ namespace Bitfrost.Gameplay.Energy
         private bool m_isInitialized;
         public bool isOccupied { get; private set; }
 
+        private Animator m_animator;
+
         #region Energy
 
         public int totalEnergyCount { get; private set; }
@@ -131,6 +133,7 @@ namespace Bitfrost.Gameplay.Energy
         {
             m_manager = manager;
             m_isInitialized = true;
+            m_animator = GetComponent<Animator>();
         }
 
         public void ReleaseToPool()
@@ -184,11 +187,13 @@ namespace Bitfrost.Gameplay.Energy
         public void Pause()
         {
             isPaused = true;
+            m_animator.speed = 0;
         }
 
         public void Resume()
         {
             isPaused = false;
+            m_animator.speed = 1;
         }
 
         #endregion

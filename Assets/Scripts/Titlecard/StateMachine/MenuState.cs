@@ -1,9 +1,7 @@
 namespace Bitfrost.Application
 {
-	using System;
 	using DG.Tweening;
 	using PierreMizzi.Useful.StateMachines;
-	using UnityEngine;
 
 	public class MenuState : TitlecardState
 	{
@@ -25,6 +23,8 @@ namespace Bitfrost.Application
 
 			m_this.DisplayMenu();
 			m_this.HideCredits();
+
+			m_this.cameraController.SetState((TitlecardStateType)type);
 
 			DOVirtual.DelayedCall(m_this.creditsToMenuDuration, () =>
 			{

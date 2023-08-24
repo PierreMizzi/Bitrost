@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="Menu" src="project://database/Assets/UI/Titlecard/Menu.uxml?fileID=9197481963319205126&amp;guid=3a6137e1cc566aa4fa9bac61288f0115&amp;type=3#Menu" />
-    <ui:Template name="Credits" src="project://database/Assets/UI/Titlecard/Credits.uxml?fileID=9197481963319205126&amp;guid=0c43fb11fc1ad314f8dd0ac5af3d5c24&amp;type=3#Credits" />
-    <Style src="project://database/Assets/UI/Titlecard/Titlecard.uss?fileID=7433441132597879392&amp;guid=d41e902448fbe494e832808b86aad64b&amp;type=3#Titlecard" />
+    <ui:Template name="Menu" src="project://database/Assets/UI/Titlecard/Blocks/Menu.uxml?fileID=9197481963319205126&amp;guid=3a6137e1cc566aa4fa9bac61288f0115&amp;type=3#Menu" />
+    <ui:Template name="Credits" src="project://database/Assets/UI/Titlecard/Blocks/Credits.uxml?fileID=9197481963319205126&amp;guid=0c43fb11fc1ad314f8dd0ac5af3d5c24&amp;type=3#Credits" />
     <Style src="project://database/Assets/UI/General/General.uss?fileID=7433441132597879392&amp;guid=c81772fb655769e4494d3618a08eb16a&amp;type=3#General" />
-    <ui:Instance template="Menu" name="menu-container-root" />
+    <Style src="project://database/Assets/UI/Titlecard/Titlecard.uss?fileID=7433441132597879392&amp;guid=e069cbd60053bfe4f8aaa66b9c2c550a&amp;type=3#Titlecard" />
+    <ui:Instance template="Menu" name="menu-container-root" style="display: flex;" />
     <ui:Instance template="Credits" name="credits-container-root" picking-mode="Ignore" style="width: 100%; height: 100%; position: absolute;" />
 </ui:UXML>

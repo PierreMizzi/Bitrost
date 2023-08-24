@@ -103,6 +103,7 @@ namespace Bitfrost.Gameplay.Players
 
         private void CallbackLostHealth()
         {
+            m_levelChannel.onPlayerHit.Invoke();
             SoundManager.PlayRandomSFX(m_hitSounds);
         }
 

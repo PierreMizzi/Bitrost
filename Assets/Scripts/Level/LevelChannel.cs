@@ -27,13 +27,14 @@ namespace Bitfrost.Gameplay
 
         // Player & Turret
         public Player player;
+        public Action onPlayerHit;
+        public Action onPlayerDead;
         public IntDelegate onTurretRetrieved;
 
         // Enemies
         public Action onAllEnemiesKilled;
 
         // Game Over
-        public Action onPlayerDead;
         public GameOverDelegate onDefeatPanel;
         public GameOverDelegate onVictoryPanel;
 
