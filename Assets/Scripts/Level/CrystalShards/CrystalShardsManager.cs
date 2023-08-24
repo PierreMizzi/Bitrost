@@ -4,6 +4,7 @@ using System.Collections;
 using PierreMizzi.Useful;
 using PierreMizzi.Useful.PoolingObjects;
 using Bitfrost.Gameplay.ScreenEdgeInfo;
+using System;
 
 namespace Bitfrost.Gameplay.Energy
 {
@@ -37,7 +38,7 @@ namespace Bitfrost.Gameplay.Energy
 
         private List<CrystalShard> m_occupiedCrystals = new List<CrystalShard>();
 
-        public List<CrystalShard> unavailableCrystals
+        public List<CrystalShard> occupiedCrystals
         {
             get { return m_occupiedCrystals; }
         }
@@ -57,14 +58,14 @@ namespace Bitfrost.Gameplay.Energy
 
         #region Methods
 
-        #region Restart
+        #region MonoBehaviour
 
         private IEnumerator Start()
         {
             m_levelChannel.crystalManager = this;
 
             yield return new WaitForEndOfFrame();
-            m_crystalPoolConfig.onGetFromPool = CrystalGetFromPool;
+            m_crystalPoolConfig.onGetFromPool = GetCrystalFromPool;
             m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
 
             if (m_levelChannel != null)
@@ -90,15 +91,30 @@ namespace Bitfrost.Gameplay.Energy
 
         #endregion
 
-        #region Spawning
+        #region Pooling
 
-        public void CrystalGetFromPool(GameObject gameObject)
+        public void GetCrystalFromPool(GameObject gameObject)
         {
             CrystalShard crystal = gameObject.GetComponent<CrystalShard>();
             crystal.Hide();
 
             crystal.gameObject.SetActive(true);
         }
+
+        public void ReleaseCrystalToPool(CrystalShard crystal)
+        {
+            if (m_activeCrystals.Contains(crystal))
+                m_activeCrystals.Remove(crystal);
+
+            RemoveOccupiedCrystal(crystal);
+
+            m_poolingChannel.onReleaseToPool(crystal.gameObject);
+        }
+
+
+        #endregion
+
+        #region Spawning
 
         public void SpawnCrystalShards(SpawnCrystalShardsConfig config)
         {
@@ -115,15 +131,13 @@ namespace Bitfrost.Gameplay.Energy
                 // Transforms
                 randomPosition = GetSafePosition(origin);
 
-                int energy = Random.Range(config.minEnergy, config.maxEnergy + 1);
+                int energy = UnityEngine.Random.Range(config.minEnergy, config.maxEnergy + 1);
                 SpawnCrystalShard(randomPosition, randomRotation, energy);
             }
 
             // Spawn Crystal Edge
             Instantiate(m_crystalsSubjectPrefab, origin, Quaternion.identity, transform);
         }
-
-
 
         private void SpawnCrystalShard(Vector3 randomPosition, Quaternion randomRotation, int energyCount)
         {
@@ -192,7 +206,7 @@ namespace Bitfrost.Gameplay.Energy
 
         #endregion
 
-
+        #region Occupied Crystals
 
         public void AddOccupiedCrystal(CrystalShard crystal)
         {
@@ -206,21 +220,59 @@ namespace Bitfrost.Gameplay.Energy
                 m_occupiedCrystals.Remove(crystal);
         }
 
-        public void ReleaseCrystal(CrystalShard crystal)
+        #endregion
+
+        #region Picking Crystals
+
+        public CrystalShard PickRandomOccupiedCrystal(Predicate<CrystalShard> predicateTargetable)
         {
-            if (m_activeCrystals.Contains(crystal))
-                m_activeCrystals.Remove(crystal);
+            List<CrystalShard> targetableCrystals = m_occupiedCrystals.FindAll(predicateTargetable);
 
-            RemoveOccupiedCrystal(crystal);
-
-            m_poolingChannel.onReleaseToPool(crystal.gameObject);
+            if (targetableCrystals.Count == 0)
+                return null;
+            else
+                return targetableCrystals.PickRandom();
         }
 
-        public void ClearCrystalShards()
+        public CrystalShard PickRandomCrystalNearPlayer(float distance, Predicate<CrystalShard> predicateTargetable)
         {
-            UtilsClass.EmptyTransform(m_container, true);
-            m_activeCrystals.Clear();
+            List<CrystalShard> targetableCrystals = GetCrystalsNearPlayer(distance);
+            targetableCrystals = targetableCrystals.FindAll(predicateTargetable);
+            if (targetableCrystals.Count == 0)
+                return null;
+            else
+                return targetableCrystals.PickRandom();
         }
+
+        public CrystalShard PickRandomActiveCrystal(Predicate<CrystalShard> predicateTargetable)
+        {
+            List<CrystalShard> targetableCrystals = m_activeCrystals.FindAll(predicateTargetable);
+
+            if (targetableCrystals.Count == 0)
+                return null;
+            else
+                return targetableCrystals.PickRandom();
+        }
+
+        public List<CrystalShard> GetCrystalsNearPlayer(float distance)
+        {
+            List<CrystalShard> crystals = new List<CrystalShard>();
+
+            Vector3 playerPosition = m_levelChannel.player.transform.position;
+            float sqrDistance;
+
+            foreach (CrystalShard crystal in activeCrystals)
+            {
+                sqrDistance = (playerPosition - crystal.transform.position).sqrMagnitude;
+
+                if (sqrDistance < distance)
+                    crystals.Add(crystal);
+            }
+
+            return crystals;
+        }
+
+        #endregion
 
         #region Reset
 
@@ -237,12 +289,7 @@ namespace Bitfrost.Gameplay.Energy
 
         #endregion
 
-
-        [ContextMenu("DebugSpawn")]
-        public void DebugSpawn()
-        {
-            SpawnCrystalShards(d_config);
-        }
+        #region Pause
 
         public void Pause()
         {
@@ -256,6 +303,16 @@ namespace Bitfrost.Gameplay.Energy
             isPaused = false;
             foreach (CrystalShard crystal in m_activeCrystals)
                 crystal.Resume();
+        }
+
+
+
+        #endregion
+
+        [ContextMenu("DebugSpawn")]
+        public void DebugSpawn()
+        {
+            SpawnCrystalShards(d_config);
         }
 
 

@@ -27,7 +27,6 @@ namespace Bitfrost.Gameplay.Enemies
 		public override void Exit()
 		{
 			m_enemy.animator.SetBool(k_isDead, false);
-			m_enemy.collider.gameObject.SetActive(true);
 			m_enemy.SetHittable();
 		}
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Bitfrost.Gameplay.Energy;
 using PierreMizzi.SoundManager;
@@ -17,6 +18,8 @@ namespace Bitfrost.Gameplay.Enemies
         {
             get { return base.settings as HarvesterSettings; }
         }
+
+        public Predicate<CrystalShard> m_targetableCrystalPredicate;
 
         public CrystalShard targetCrystal { get; private set; }
 
@@ -41,6 +44,8 @@ namespace Bitfrost.Gameplay.Enemies
         protected override void Awake()
         {
             base.Awake();
+
+            m_targetableCrystalPredicate = (CrystalShard crystal) => crystal.isTargetableByHarvesters;
 
             m_hitSounds = new List<string>(){
                 SoundDataID.HARVESTER_HIT_01,
@@ -74,9 +79,10 @@ namespace Bitfrost.Gameplay.Enemies
 
         public void SearchTargetCrystal()
         {
-            // First, target all currently used crystals
+            // TODO : Same as Blockers
+            // First, target all currently used crystals 
             CrystalShard crystal = PickRandomTargetableCrystal(
-                m_levelChannel.crystalManager.unavailableCrystals
+                m_levelChannel.crystalManager.occupiedCrystals
             );
             if (crystal != null)
                 goto Found;
@@ -105,6 +111,7 @@ namespace Bitfrost.Gameplay.Enemies
             targetSpot = targetCrystal.harvesterCircularSpacer.GetSpotReworked(transform.position);
         }
 
+        [Obsolete]
         private CrystalShard PickRandomTargetableCrystal(List<CrystalShard> crystals)
         {
             List<CrystalShard> targetableCrystals = crystals.FindAll(
@@ -115,11 +122,12 @@ namespace Bitfrost.Gameplay.Enemies
                 return null;
             else
             {
-                int index = Random.Range(0, targetableCrystals.Count - 1);
+                int index = UnityEngine.Random.Range(0, targetableCrystals.Count - 1);
                 return targetableCrystals[index];
             }
         }
 
+        [Obsolete]
         private List<CrystalShard> CrystalsAroundPlayer()
         {
             List<CrystalShard> crystals = new List<CrystalShard>();

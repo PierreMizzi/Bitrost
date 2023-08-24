@@ -98,7 +98,8 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_type: 2
   m_animator: {fileID: 4531527313208452680}
-  m_collider: {fileID: 4318404297879891382}
+  m_colliders:
+  - {fileID: 4318404297879891382}
   bulletOrigin: {fileID: 8116805840696305865}
   bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
 --- !u!50 &4318404297879891377

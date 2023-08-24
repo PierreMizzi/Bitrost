@@ -226,11 +226,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793bacc345ec3574383ce6560ac8ff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ID: SoundSource
-  m_soundType: 0
-  m_status: 0
-  stopOnAudioClipEnded: 0
-  destroyOnAudioClipEnded: 0
+  m_soundDataID: 
+  m_playOnAwake: 0
+  m_fadeInOnAwake: 0
 --- !u!1 &5009668753968831688
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +296,8 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_type: 3
   m_animator: {fileID: 630302018}
-  m_collider: {fileID: 8889704073991165709}
+  m_colliders:
+  - {fileID: 8889704073991165709}
   m_bulletChannel: {fileID: 11400000, guid: 83e9e56fda8626c47b952589af4e7ced, type: 2}
   m_randomDirectionAroundPlayer: {x: 0, y: 0, z: 0}
   speedTrackPlayer: 0

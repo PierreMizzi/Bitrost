@@ -139,7 +139,7 @@ namespace Bitfrost.Gameplay.Energy
         public void ReleaseToPool()
         {
             Reset();
-            m_manager.ReleaseCrystal(this);
+            m_manager.ReleaseCrystalToPool(this);
         }
 
         public void SetOccupied()

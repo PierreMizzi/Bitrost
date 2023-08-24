@@ -7,7 +7,6 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Enemies
 {
 
-	[RequireComponent(typeof(HealthEntity))]
 	public class Enemy : MonoBehaviour, IStateMachine, IPausable
 	{
 		#region Fields
@@ -27,16 +26,13 @@ namespace Bitfrost.Gameplay.Enemies
 		private Animator m_animator;
 
 		[SerializeField]
-		private Collider2D m_collider;
+		private List<Collider2D> m_colliders;
 
 		public LevelChannel levelChannel { get { return m_levelChannel; } }
 
 		public EnemyType type { get { return m_type; } }
 
 		public Animator animator { get { return m_animator; } }
-
-		public new Collider2D collider { get { return m_collider; } }
-
 
 		public Vector3 directionTowardPlayer
 		{
@@ -137,6 +133,7 @@ namespace Bitfrost.Gameplay.Enemies
 		{
 			m_manager = manager;
 			m_healthEntity = GetComponent<HealthEntity>();
+			m_healthEntity.maxHealth = settings.maxHealth;
 			SubscribeHealth();
 
 			InitiliazeStates();
@@ -149,7 +146,6 @@ namespace Bitfrost.Gameplay.Enemies
 			if (!m_isInitialized)
 				Initialize(manager);
 
-			m_healthEntity.maxHealth = settings.maxHealth;
 			m_healthEntity.Reset();
 			SetHittable();
 			ChangeState(EnemyStateType.Idle);
@@ -167,24 +163,32 @@ namespace Bitfrost.Gameplay.Enemies
 
 		public void SetHittable()
 		{
-			collider.enabled = true;
+			foreach (Collider2D collider in m_colliders)
+				collider.enabled = true;
 		}
 
 		public void SetNonHittable()
 		{
-			collider.enabled = false;
+			foreach (Collider2D collider in m_colliders)
+				collider.enabled = false;
 		}
 
 		protected virtual void SubscribeHealth()
 		{
-			m_healthEntity.onLostHealth += CallbackLostHealth;
-			m_healthEntity.onNoHealth += CallbackNoHealth;
+			if (m_healthEntity != null)
+			{
+				m_healthEntity.onLostHealth += CallbackLostHealth;
+				m_healthEntity.onNoHealth += CallbackNoHealth;
+			}
 		}
 
 		protected virtual void UnsubscribeHealth()
 		{
-			m_healthEntity.onLostHealth -= CallbackLostHealth;
-			m_healthEntity.onNoHealth -= CallbackNoHealth;
+			if (m_healthEntity != null)
+			{
+				m_healthEntity.onLostHealth -= CallbackLostHealth;
+				m_healthEntity.onNoHealth -= CallbackNoHealth;
+			}
 		}
 
 		protected virtual void CallbackLostHealth()
@@ -245,6 +249,7 @@ namespace Bitfrost.Gameplay.Enemies
 			isPaused = true;
 
 			currentState.Pause();
+			animator.speed = 0;
 		}
 
 		public virtual void Resume()
@@ -252,6 +257,7 @@ namespace Bitfrost.Gameplay.Enemies
 			isPaused = false;
 
 			currentState.Resume();
+			animator.speed = 1;
 		}
 
 		#endregion

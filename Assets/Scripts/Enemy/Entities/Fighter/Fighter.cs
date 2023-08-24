@@ -39,13 +39,13 @@ namespace Bitfrost.Gameplay.Enemies
         public override void InitiliazeStates()
         {
             states = new List<AState>()
-        {
-            new EnemyInactiveState(this),
-            new EnemyIdleState(this),
-            new EnemyDeadState(this),
-            new FighterMoveState(this),
-            new FighterAttackState(this)
-        };
+            {
+                new EnemyInactiveState(this),
+                new EnemyIdleState(this),
+                new EnemyDeadState(this),
+                new FighterMoveState(this),
+                new FighterAttackState(this)
+            };
         }
 
         #endregion

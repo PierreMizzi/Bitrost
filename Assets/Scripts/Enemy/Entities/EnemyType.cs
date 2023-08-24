@@ -7,5 +7,6 @@ namespace Bitfrost.Gameplay.Enemies
         Harvester,
         Fighter,
         Scout,
+        Blocker
     }
 }

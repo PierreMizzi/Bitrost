@@ -152,7 +152,8 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_type: 1
   m_animator: {fileID: 2078630642531790011}
-  m_collider: {fileID: 2018638641934519392}
+  m_colliders:
+  - {fileID: 2018638641934519392}
 --- !u!95 &2078630642531790011
 Animator:
   serializedVersion: 5
