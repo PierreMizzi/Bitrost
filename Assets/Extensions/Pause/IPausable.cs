@@ -1,4 +1,4 @@
-namespace Bitfrost.Gameplay
+namespace PierreMizzi.Pause
 {
 	public interface IPausable
 	{
@@ -6,7 +6,6 @@ namespace Bitfrost.Gameplay
 
 		public void Pause();
 		public void Resume();
-
 	}
 }
 

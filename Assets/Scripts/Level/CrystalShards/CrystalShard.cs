@@ -3,6 +3,8 @@ using UnityEngine;
 using PierreMizzi.Rendering;
 using PierreMizzi.Useful;
 using Bitfrost.Gameplay.Enemies;
+using PierreMizzi.Pause;
+using Bitfrost.Gameplay.Turrets;
 
 namespace Bitfrost.Gameplay.Energy
 {
@@ -17,7 +19,10 @@ namespace Bitfrost.Gameplay.Energy
         private CrystalShardsSettings m_settings = null;
 
         private bool m_isInitialized;
-        public bool isOccupied { get; private set; }
+
+        public Turret turret { get; private set; }
+
+        public bool hasTurret => turret != null;
 
         private Animator m_animator;
 
@@ -89,7 +94,7 @@ namespace Bitfrost.Gameplay.Energy
 
         protected void Update()
         {
-            if (!isOccupied && !isPaused)
+            if (!hasTurret && !isPaused)
                 m_spriteRenderer.transform.rotation *= Quaternion.Euler(0, 0, m_rotationSpeed * Time.deltaTime);
         }
 
@@ -142,15 +147,15 @@ namespace Bitfrost.Gameplay.Energy
             m_manager.ReleaseCrystalToPool(this);
         }
 
-        public void SetOccupied()
+        public void SetTurret(Turret turret)
         {
-            isOccupied = true;
+            this.turret = turret;
             m_manager.AddOccupiedCrystal(this);
         }
 
-        public void SetUnoccupied()
+        public void UnsetTurret()
         {
-            isOccupied = false;
+            turret = null;
             m_manager.RemoveOccupiedCrystal(this);
         }
 
@@ -171,7 +176,7 @@ namespace Bitfrost.Gameplay.Energy
         {
             remainingEnergyCount = 0;
             totalEnergyCount = 0;
-            isOccupied = false;
+            turret = null;
 
             transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             transform.localScale = Vector3.one;

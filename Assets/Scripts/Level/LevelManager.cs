@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bitfrost.Application;
 using Bitfrost.Gameplay.Enemies;
+using PierreMizzi.Pause;
 using PierreMizzi.SoundManager;
 using Unity.Mathematics;
 using UnityEngine;

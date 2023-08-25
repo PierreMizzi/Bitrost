@@ -44,7 +44,7 @@ TagManager:
   - name: Terrain
     uniqueID: 2267078837
     locked: 0
-  - name: Module
+  - name: Turret
     uniqueID: 1372554045
     locked: 0
   - name: Enemies

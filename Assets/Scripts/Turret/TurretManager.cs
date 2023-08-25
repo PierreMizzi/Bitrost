@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Bitfrost.Application;
 using Bitfrost.Gameplay.Energy;
+using PierreMizzi.Pause;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful;
 using UnityEngine;
@@ -258,7 +259,7 @@ namespace Bitfrost.Gameplay.Turrets
         {
             CrystalShard crystal = ((CrystalShardTarget)m_currentTarget).crystal;
 
-            if (!crystal.isOccupied)
+            if (!crystal.hasTurret)
             {
                 if (hasAvailableTurret)
                 {

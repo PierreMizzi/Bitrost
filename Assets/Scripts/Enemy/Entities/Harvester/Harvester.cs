@@ -23,7 +23,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         public CrystalShard targetCrystal { get; private set; }
 
-        public bool isCrystalValid
+        public bool isTargetValid
         {
             get
             {

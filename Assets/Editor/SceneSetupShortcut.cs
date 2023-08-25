@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 public static class SceneSetupShortcuts
 {
 
-	private const string scenesPath = "Assets/Scenes/";
+	private const string scenesPath = "Assets/Scenes/Application/";
 	private const string scenePrefix = ".unity";
 
 	[MenuItem("Overcore/Scene Setup/Titlecard")]

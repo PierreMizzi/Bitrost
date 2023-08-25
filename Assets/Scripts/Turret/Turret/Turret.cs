@@ -1,10 +1,11 @@
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
-using PierreMizzi.SoundManager;
 using Bitfrost.Gameplay.Bullets;
 using Bitfrost.Gameplay.Energy;
+using PierreMizzi.SoundManager;
 using PierreMizzi.Rendering;
+using PierreMizzi.Pause;
 
 namespace Bitfrost.Gameplay.Turrets
 {
@@ -247,7 +248,7 @@ namespace Bitfrost.Gameplay.Turrets
         public void AssignCrystal(CrystalShard crystal)
         {
             this.crystal = crystal;
-            this.crystal.SetOccupied();
+            this.crystal.SetTurret(this);
 
             transform.position = this.crystal.transform.position;
 
@@ -257,7 +258,7 @@ namespace Bitfrost.Gameplay.Turrets
 
         public void RemoveCrystal()
         {
-            crystal.SetUnoccupied();
+            crystal.UnsetTurret();
 
             if (!crystal.hasEnergy)
                 crystal.ReleaseToPool();

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using PierreMizzi.Useful.PoolingObjects;
+using PierreMizzi.Pause;
 
 namespace Bitfrost.Gameplay.Enemies
 {
@@ -27,11 +28,6 @@ namespace Bitfrost.Gameplay.Enemies
 
         [SerializeField]
         private List<EnemyPoolConfig> m_enemyPoolConfigs = new List<EnemyPoolConfig>();
-
-        [Header("Debug")]
-        [SerializeField]
-        private List<EnemySpawnShortcutConfig> m_enemySpawnShortcutConfigs =
-            new List<EnemySpawnShortcutConfig>();
 
         private Dictionary<EnemyType, EnemySpawner> m_enemyTypeToSpawner =
             new Dictionary<EnemyType, EnemySpawner>();
@@ -105,7 +101,10 @@ namespace Bitfrost.Gameplay.Enemies
 
         private void Update()
         {
+
+#if UNITY_EDITOR
             ManageQuickSpawn();
+#endif
         }
 
         private void LateUpdate()
@@ -190,7 +189,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         private void ManageQuickSpawn()
         {
-            foreach (EnemySpawnShortcutConfig config in m_enemySpawnShortcutConfigs)
+            foreach (EnemyPoolConfig config in m_enemyPoolConfigs)
             {
                 if (Input.GetKeyDown(config.quickSpawnKey))
                     SpawnEnemy(config.prefab.gameObject);

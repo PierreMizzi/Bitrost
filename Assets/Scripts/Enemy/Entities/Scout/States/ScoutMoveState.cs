@@ -48,12 +48,16 @@ namespace Bitfrost.Gameplay.Enemies
 
 		public override void Pause()
 		{
+			base.Pause();
+
 			if (m_approachPlayerTween != null && m_approachPlayerTween.IsPlaying())
 				m_approachPlayerTween.Pause();
 		}
 
 		public override void Resume()
 		{
+			base.Resume();
+
 			if (m_approachPlayerTween != null && !m_approachPlayerTween.IsPlaying())
 				m_approachPlayerTween.Play();
 		}

@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   speed: 14
+  moveRotationDuration: 0
   trackingRotationSpeed: 0
+  radiusAroundTarget: 0
+  idleOrbitRadius: 1.55
+  idleOrbitSpeed: 500
   weakSpotMaxHealth: 10

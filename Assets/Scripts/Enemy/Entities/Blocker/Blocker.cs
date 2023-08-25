@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Bitfrost.Gameplay.Energy;
+using Bitfrost.Gameplay.Turrets;
 using PierreMizzi.Useful.StateMachines;
 using UnityEngine;
 
@@ -40,13 +41,25 @@ namespace Bitfrost.Gameplay.Enemies
 
 		private Predicate<CrystalShard> m_targetableCrystalPredicate;
 
-		public CrystalShard targetCrystal { get; private set; }
+		public Turret targetTurret { get; private set; }
 
-		public bool isCrystalValid
+		public bool isTargetValid
 		{
 			get
 			{
-				return targetCrystal != null && targetCrystal.hasEnergy;
+				return targetTurret != null &&
+					   targetTurret.currentState.type != (int)TurretStateType.Inactive;
+			}
+		}
+
+		public Vector3 directionToTarget
+		{
+			get
+			{
+				if (targetTurret != null)
+					return targetTurret.transform.position - transform.position;
+				else
+					return Vector3.zero;
 			}
 		}
 
@@ -88,10 +101,10 @@ namespace Bitfrost.Gameplay.Enemies
 			states = new List<AState>()
 			{
 				new EnemyInactiveState(this),
-				new EnemyIdleState(this),
 				new EnemyDeadState(this),
-				new BlockerAttackState(this),
+				new BlockerIdleState(this),
 				new BlockerMoveState(this),
+				new BlockerAttackState(this),
 			};
 		}
 
@@ -132,9 +145,22 @@ namespace Bitfrost.Gameplay.Enemies
 
 		#region Attack
 
-		private void SearchTargetCrystal()
+		public void CheckIsTargetValid()
 		{
-			targetCrystal = m_levelChannel.crystalManager.PickRandomOccupiedCrystal(m_targetableCrystalPredicate);
+			if (!isTargetValid)
+			{
+				targetTurret = null;
+				ChangeState(EnemyStateType.Idle);
+			}
+		}
+
+
+		public void SearchTargetCrystal()
+		{
+			CrystalShard crystal = m_levelChannel.crystalManager.PickRandomOccupiedCrystal(m_targetableCrystalPredicate);
+
+			if (crystal != null)
+				targetTurret = crystal.turret;
 		}
 
 		#endregion

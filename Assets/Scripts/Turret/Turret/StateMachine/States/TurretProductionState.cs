@@ -51,12 +51,16 @@ namespace Bitfrost.Gameplay.Turrets
 
         public override void Pause()
         {
+            base.Pause();
+
             if (m_productionCycleTween != null && m_productionCycleTween.IsPlaying())
                 m_productionCycleTween.Pause();
         }
 
         public override void Resume()
         {
+            base.Resume();
+
             if (m_productionCycleTween != null && !m_productionCycleTween.IsPlaying())
                 m_productionCycleTween.Play();
         }

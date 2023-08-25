@@ -19,7 +19,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         public float spawnFrequency
         {
-            get { return (duration / (float)count) * (float)batchCount; }
+            get { return duration / count * batchCount; }
         }
 
     }

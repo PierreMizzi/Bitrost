@@ -26,7 +26,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Update()
         {
-            if (!m_harvester.isCrystalValid)
+            if (!m_harvester.isTargetValid)
                 ChangeState((int)EnemyStateType.Idle);
         }
 
@@ -39,12 +39,16 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Pause()
         {
+            base.Pause();
+
             if (m_attackSequence != null && m_attackSequence.IsPlaying())
                 m_attackSequence.Pause();
         }
 
         public override void Resume()
         {
+            base.Resume();
+
             if (m_attackSequence != null && !m_attackSequence.IsPlaying())
                 m_attackSequence.Play();
         }

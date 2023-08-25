@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10dd4b507c6f6d84c84580f730c782c3, type: 3}
   m_Name: LevelChannel
   m_EditorClassIdentifier: 
-  m_isDebugging: 0
+  m_isDebugging: 1
   crystalManager: {fileID: 0}
   player: {fileID: 0}

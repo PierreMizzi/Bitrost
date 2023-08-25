@@ -1,4 +1,5 @@
 using Bitfrost.Gameplay;
+using PierreMizzi.Pause;
 using PierreMizzi.Useful;
 using UnityEngine;
 using UnityEngine.InputSystem;

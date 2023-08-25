@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PierreMizzi.Pause;
 using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.StateMachines;
 using UnityEngine;

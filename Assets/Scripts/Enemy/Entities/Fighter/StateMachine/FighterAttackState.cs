@@ -38,12 +38,16 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Pause()
         {
+            base.Pause();
+
             if (m_attackCoroutine != null)
                 m_fighter.StopCoroutine(m_attackCoroutine);
         }
 
         public override void Resume()
         {
+            base.Resume();
+
             if (m_attackCoroutine != null)
                 m_fighter.StartCoroutine(m_attackCoroutine);
         }

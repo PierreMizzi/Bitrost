@@ -39,9 +39,7 @@ namespace Bitfrost.Gameplay.Enemies
         {
             Vector3 fromDirection = m_harvester.transform.up;
             Vector3 toDirection = -m_harvester.targetSpot.direction;
-            float duration = 1f;
-
-            return DOVirtual.Float(0, 1, duration, (float value) =>
+            return DOVirtual.Float(0, 1, 1f, (float value) =>
             {
                 m_harvester.transform.up = Vector3.Lerp(fromDirection, toDirection, value);
             });
@@ -49,7 +47,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Update()
         {
-            if (!m_harvester.isCrystalValid)
+            if (!m_harvester.isTargetValid)
                 ChangeState((int)EnemyStateType.Idle);
         }
 
@@ -61,12 +59,16 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Pause()
         {
+            base.Pause();
+
             if (m_approachSpot != null && m_approachSpot.IsPlaying())
                 m_approachSpot.Pause();
         }
 
         public override void Resume()
         {
+            base.Resume();
+
             if (m_approachSpot != null && !m_approachSpot.IsPlaying())
                 m_approachSpot.Play();
         }

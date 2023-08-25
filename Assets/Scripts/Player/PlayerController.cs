@@ -1,3 +1,4 @@
+using PierreMizzi.Pause;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

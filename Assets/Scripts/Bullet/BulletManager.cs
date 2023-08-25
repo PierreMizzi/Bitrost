@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using PierreMizzi.Useful.PoolingObjects;
+using PierreMizzi.Pause;
 
 namespace Bitfrost.Gameplay.Bullets
 {

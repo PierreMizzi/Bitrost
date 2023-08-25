@@ -1,5 +1,6 @@
 using System;
 using PierreMizzi.Useful.PoolingObjects;
+using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
@@ -11,5 +12,9 @@ namespace Bitfrost.Gameplay.Enemies
 		{
 			get { return prefab.GetComponent<Enemy>().type; }
 		}
+
+		[Header("Debug")]
+		public KeyCode quickSpawnKey;
+
 	}
 }

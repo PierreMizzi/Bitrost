@@ -6,6 +6,10 @@ namespace Bitfrost.Gameplay
 	[RequireComponent(typeof(HealthEntity))]
 	public class WeakSpot : MonoBehaviour
 	{
+		#region Fields 
+
+
+
 
 		private HealthEntity m_healthEntity;
 
@@ -13,14 +17,30 @@ namespace Bitfrost.Gameplay
 
 		public bool isDestroyed { get; private set; }
 
+		[SerializeField]
+		private SpriteRenderer m_spriteRenderer;
+
+		[SerializeField]
+		private Color m_aliveColor = Color.yellow;
+		[SerializeField]
+		private Color m_deadColor = Color.gray;
+
+		#endregion
+
+		#region Methods 
+
+		#region MonoBehaviour
+
 		protected virtual void Awake()
 		{
 			m_healthEntity = GetComponent<HealthEntity>();
+
 		}
 
 		protected virtual void Start()
 		{
 			m_healthEntity.onNoHealth += CallbackDestroyed;
+			SetAlive();
 		}
 
 		protected virtual void OnDestroy()
@@ -28,11 +48,13 @@ namespace Bitfrost.Gameplay
 			m_healthEntity.onNoHealth -= CallbackDestroyed;
 		}
 
+		#endregion
+
 		private void CallbackDestroyed()
 		{
 			isDestroyed = true;
-			// TODO : Change visual state
 			onDestroyed.Invoke();
+			SetDead();
 		}
 
 		public void Initialize(float maxHealth)
@@ -43,6 +65,20 @@ namespace Bitfrost.Gameplay
 		public void Reset()
 		{
 			m_healthEntity.Reset();
+			SetAlive();
 		}
+
+		private void SetAlive()
+		{
+			m_spriteRenderer.color = m_aliveColor;
+		}
+
+		private void SetDead()
+		{
+			m_spriteRenderer.color = m_deadColor;
+		}
+
+		#endregion
+
 	}
 }

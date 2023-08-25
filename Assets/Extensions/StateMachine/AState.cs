@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PierreMizzi.Pause;
 using UnityEngine;
 
 namespace PierreMizzi.Useful.StateMachines
@@ -9,13 +10,13 @@ namespace PierreMizzi.Useful.StateMachines
     /// <summary>
     /// Base abstract class for Player's state
     /// </summary>
-    public abstract class AState
+    public abstract class AState : IPausable
     {
         protected IStateMachine m_stateMachine = null;
 
         public int type { get; protected set; }
 
-        public bool canUpdate = true;
+        public bool isPaused { get; set; }
 
         public void Initialize(IStateMachine stateMachine)
         {
@@ -58,8 +59,14 @@ namespace PierreMizzi.Useful.StateMachines
 
         public virtual void Exit() { }
 
-        public virtual void Pause() { }
+        public virtual void Pause()
+        {
+            isPaused = true;
+        }
 
-        public virtual void Resume() { }
+        public virtual void Resume()
+        {
+            isPaused = false;
+        }
     }
 }

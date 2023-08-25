@@ -5,6 +5,7 @@ using PierreMizzi.Useful;
 using PierreMizzi.Useful.PoolingObjects;
 using Bitfrost.Gameplay.ScreenEdgeInfo;
 using System;
+using PierreMizzi.Pause;
 
 namespace Bitfrost.Gameplay.Energy
 {
