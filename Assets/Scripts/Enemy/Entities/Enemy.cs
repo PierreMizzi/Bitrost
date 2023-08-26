@@ -162,13 +162,13 @@ namespace Bitfrost.Gameplay.Enemies
 
 		#region Health
 
-		public void SetHittable()
+		public virtual void SetHittable()
 		{
 			foreach (Collider2D collider in m_colliders)
 				collider.enabled = true;
 		}
 
-		public void SetNonHittable()
+		public virtual void SetNonHittable()
 		{
 			foreach (Collider2D collider in m_colliders)
 				collider.enabled = false;

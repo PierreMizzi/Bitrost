@@ -32,7 +32,11 @@ namespace Bitfrost.Gameplay.Enemies
 			if (isPaused)
 				return;
 
-			m_this.CheckIsTargetValid();
+			if (!m_this.isTargetValid)
+			{
+				m_this.targetTurret = null;
+				ChangeState((int)EnemyStateType.Idle);
+			}
 		}
 
 		public override void Exit()

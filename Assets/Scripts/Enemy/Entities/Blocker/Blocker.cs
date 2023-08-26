@@ -41,7 +41,7 @@ namespace Bitfrost.Gameplay.Enemies
 
 		private Predicate<CrystalShard> m_targetableCrystalPredicate;
 
-		public Turret targetTurret { get; private set; }
+		public Turret targetTurret { get; set; }
 
 		public bool isTargetValid
 		{
@@ -119,6 +119,22 @@ namespace Bitfrost.Gameplay.Enemies
 			ChangeState(EnemyStateType.Idle);
 		}
 
+		public override void SetHittable()
+		{
+			base.SetHittable();
+
+			foreach (WeakSpot weakSpot in m_weakSpots)
+				weakSpot.SetHittable();
+		}
+
+		public override void SetNonHittable()
+		{
+			base.SetNonHittable();
+
+			foreach (WeakSpot weakSpot in m_weakSpots)
+				weakSpot.SetNonHittable();
+		}
+
 		#endregion
 
 		#region WeakSpots
@@ -145,16 +161,6 @@ namespace Bitfrost.Gameplay.Enemies
 
 		#region Attack
 
-		public void CheckIsTargetValid()
-		{
-			if (!isTargetValid)
-			{
-				targetTurret = null;
-				ChangeState(EnemyStateType.Idle);
-			}
-		}
-
-
 		public void SearchTargetCrystal()
 		{
 			CrystalShard crystal = m_levelChannel.crystalManager.PickRandomOccupiedCrystal(m_targetableCrystalPredicate);
@@ -162,6 +168,8 @@ namespace Bitfrost.Gameplay.Enemies
 			if (crystal != null)
 				targetTurret = crystal.turret;
 		}
+
+
 
 		#endregion
 

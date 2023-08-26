@@ -27,10 +27,8 @@ namespace Bitfrost.Gameplay.Enemies
 		protected override void DefaultEnter()
 		{
 			base.DefaultEnter();
-			Debug.Log("Blocker Idle");
-			// m_rotationDirection = UtilsClass.FlipCoin() ? 1 : -1;
+			m_orbitDirection = UtilsClass.FlipCoin() ? 1 : -1;
 			m_orbitAxis = m_this.transform.position + m_this.transform.up * m_this.settings.idleOrbitRadius;
-
 			StartSearchingTarget();
 		}
 

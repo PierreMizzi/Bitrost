@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5765169631818790}
   - component: {fileID: 8701912098100539224}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: WeakSpotCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
     type: 3}
-  m_Color: {r: 0.99607843, g: 0.89687306, b: 0.41835296, a: 1}
+  m_Color: {r: 0.9960784, g: 0.8968731, b: 0.418353, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,8 +98,8 @@ GameObject:
   - component: {fileID: 540886989659717065}
   - component: {fileID: 4790534519711102399}
   - component: {fileID: 2835321949078190061}
-  m_Layer: 0
-  m_Name: WeakSpot_01
+  m_Layer: 9
+  m_Name: WeakSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,10 +112,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6057857577180366421}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5765169631818790}
   m_Father: {fileID: 0}
@@ -163,7 +163,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
 --- !u!50 &2835321949078190061
 Rigidbody2D:
   serializedVersion: 4

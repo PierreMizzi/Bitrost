@@ -8,10 +8,9 @@ namespace Bitfrost.Gameplay
 	{
 		#region Fields 
 
-
-
-
 		private HealthEntity m_healthEntity;
+
+		private Collider2D m_collider;
 
 		public Action onDestroyed;
 
@@ -34,7 +33,7 @@ namespace Bitfrost.Gameplay
 		protected virtual void Awake()
 		{
 			m_healthEntity = GetComponent<HealthEntity>();
-
+			m_collider = GetComponent<Collider2D>();
 		}
 
 		protected virtual void Start()
@@ -55,6 +54,7 @@ namespace Bitfrost.Gameplay
 			isDestroyed = true;
 			onDestroyed.Invoke();
 			SetDead();
+			SetNonHittable();
 		}
 
 		public void Initialize(float maxHealth)
@@ -64,8 +64,19 @@ namespace Bitfrost.Gameplay
 
 		public void Reset()
 		{
+			isDestroyed = false;
 			m_healthEntity.Reset();
 			SetAlive();
+		}
+
+		public void SetHittable()
+		{
+			m_collider.enabled = true;
+		}
+
+		public void SetNonHittable()
+		{
+			m_collider.enabled = false;
 		}
 
 		private void SetAlive()

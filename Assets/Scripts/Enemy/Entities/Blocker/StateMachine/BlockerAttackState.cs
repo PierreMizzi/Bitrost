@@ -17,22 +17,18 @@ namespace Bitfrost.Gameplay.Enemies
 		private float currentVelocity;
 		private Vector3 m_currentAngleDirection;
 
-		protected override void DefaultEnter()
-		{
-			base.DefaultEnter();
-
-			// Look for asteroid with
-			Debug.Log("Attack State for blocker ???");
-		}
-
 		public override void Update()
 		{
 			if (isPaused)
 				return;
 
-			m_this.CheckIsTargetValid();
-
-			TrackTurretAim();
+			if (m_this.isTargetValid)
+				TrackTurretAim();
+			else
+			{
+				m_this.targetTurret = null;
+				ChangeState((int)EnemyStateType.Idle);
+			}
 		}
 
 		private void TrackTurretAim()
