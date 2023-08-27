@@ -23,27 +23,17 @@ namespace Bitfrost.Gameplay.Energy
         private LevelChannel m_levelChannel = null;
 
         [SerializeField]
-        private PoolConfig m_crystalPoolConfig = null;
+        private List<PoolConfig> m_crystalPoolConfigs = new List<PoolConfig>();
 
         [SerializeField]
         private CrystalShardsSettings m_settings = null;
 
         private List<CrystalShard> m_activeCrystals = new List<CrystalShard>();
-        public List<CrystalShard> activeCrystals
-        {
-            get { return m_activeCrystals; }
-        }
 
         [SerializeField]
         private Transform m_container;
 
         private List<CrystalShard> m_occupiedCrystals = new List<CrystalShard>();
-
-        public List<CrystalShard> occupiedCrystals
-        {
-            get { return m_occupiedCrystals; }
-        }
-
 
         [Header("Screen Edge Info")]
         [SerializeField]
@@ -66,8 +56,13 @@ namespace Bitfrost.Gameplay.Energy
             m_levelChannel.crystalManager = this;
 
             yield return new WaitForEndOfFrame();
-            m_crystalPoolConfig.onGetFromPool = GetCrystalFromPool;
-            m_poolingChannel.onCreatePool.Invoke(m_crystalPoolConfig);
+
+            // New
+            foreach (PoolConfig poolConfig in m_crystalPoolConfigs)
+            {
+                poolConfig.onGetFromPool = GetCrystalFromPool;
+                m_poolingChannel.onCreatePool.Invoke(poolConfig);
+            }
 
             if (m_levelChannel != null)
             {
@@ -142,9 +137,11 @@ namespace Bitfrost.Gameplay.Energy
 
         private void SpawnCrystalShard(Vector3 randomPosition, Quaternion randomRotation, int energyCount)
         {
+            GameObject crystalPrefab = m_crystalPoolConfigs.PickRandom().prefab;
+
             // Get From Pool
             CrystalShard crystal = m_poolingChannel.onGetFromPool
-                .Invoke(m_crystalPoolConfig.prefab)
+                .Invoke(crystalPrefab)
                 .GetComponent<CrystalShard>();
 
             crystal.transform.SetPositionAndRotation(randomPosition, randomRotation);
@@ -156,7 +153,7 @@ namespace Bitfrost.Gameplay.Energy
 
         private Vector3 GetSafePosition(Vector3 origin)
         {
-            Vector3 position = Vector3.one;
+            Vector3 position;
             Vector3 randomPosition;
 
             int generationCount = 0;
@@ -239,6 +236,7 @@ namespace Bitfrost.Gameplay.Energy
         {
             List<CrystalShard> targetableCrystals = GetCrystalsNearPlayer(distance);
             targetableCrystals = targetableCrystals.FindAll(predicateTargetable);
+
             if (targetableCrystals.Count == 0)
                 return null;
             else
@@ -255,18 +253,18 @@ namespace Bitfrost.Gameplay.Energy
                 return targetableCrystals.PickRandom();
         }
 
-        public List<CrystalShard> GetCrystalsNearPlayer(float distance)
+        public List<CrystalShard> GetCrystalsNearPlayer(float sqrRange)
         {
             List<CrystalShard> crystals = new List<CrystalShard>();
 
             Vector3 playerPosition = m_levelChannel.player.transform.position;
             float sqrDistance;
 
-            foreach (CrystalShard crystal in activeCrystals)
+            foreach (CrystalShard crystal in m_activeCrystals)
             {
                 sqrDistance = (playerPosition - crystal.transform.position).sqrMagnitude;
 
-                if (sqrDistance < distance)
+                if (sqrDistance < sqrRange)
                     crystals.Add(crystal);
             }
 

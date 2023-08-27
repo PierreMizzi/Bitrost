@@ -63,6 +63,8 @@ namespace Bitfrost.Gameplay.Enemies
 			}
 		}
 
+		public float trackingRadius { get; private set; }
+
 		#endregion
 
 		#endregion
@@ -166,7 +168,10 @@ namespace Bitfrost.Gameplay.Enemies
 			CrystalShard crystal = m_levelChannel.crystalManager.PickRandomOccupiedCrystal(m_targetableCrystalPredicate);
 
 			if (crystal != null)
+			{
+				trackingRadius = settings.trackingRadius * crystal.transform.localScale.x;
 				targetTurret = crystal.turret;
+			}
 		}
 
 

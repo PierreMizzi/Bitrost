@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Bitfrost.Gameplay.Energy;
-using PierreMizzi.SoundManager;
 using PierreMizzi.Useful.StateMachines;
 using UnityEngine;
 
@@ -31,7 +30,7 @@ namespace Bitfrost.Gameplay.Enemies
             }
         }
 
-        public CircularSpacerSpot targetSpot { get; private set; }
+        public Spot targetSpot { get; private set; }
 
         #endregion
 
@@ -79,21 +78,18 @@ namespace Bitfrost.Gameplay.Enemies
 
         public void SearchTargetCrystal()
         {
-            // TODO : Same as Blockers
             // First, target all currently used crystals 
-            CrystalShard crystal = PickRandomTargetableCrystal(
-                m_levelChannel.crystalManager.occupiedCrystals
-            );
+            CrystalShard crystal = m_levelChannel.crystalManager.PickRandomOccupiedCrystal(m_targetableCrystalPredicate);
             if (crystal != null)
                 goto Found;
 
             // If none, picks from crystals at player's range
-            crystal = PickRandomTargetableCrystal(CrystalsAroundPlayer());
+            crystal = m_levelChannel.crystalManager.PickRandomCrystalNearPlayer(settings.searchCrystalRangeSqr, m_targetableCrystalPredicate);
             if (crystal != null)
                 goto Found;
 
             // If none, picks from all crystals
-            crystal = PickRandomTargetableCrystal(m_levelChannel.crystalManager.activeCrystals);
+            crystal = m_levelChannel.crystalManager.PickRandomActiveCrystal(m_targetableCrystalPredicate);
             if (crystal != null)
                 goto Found;
 
@@ -108,42 +104,7 @@ namespace Bitfrost.Gameplay.Enemies
             if (targetCrystal == null)
                 return;
 
-            targetSpot = targetCrystal.harvesterCircularSpacer.GetSpotReworked(transform.position);
-        }
-
-        [Obsolete]
-        private CrystalShard PickRandomTargetableCrystal(List<CrystalShard> crystals)
-        {
-            List<CrystalShard> targetableCrystals = crystals.FindAll(
-                (CrystalShard crystal) => crystal.isTargetableByHarvesters
-            );
-
-            if (targetableCrystals.Count == 0)
-                return null;
-            else
-            {
-                int index = UnityEngine.Random.Range(0, targetableCrystals.Count - 1);
-                return targetableCrystals[index];
-            }
-        }
-
-        [Obsolete]
-        private List<CrystalShard> CrystalsAroundPlayer()
-        {
-            List<CrystalShard> crystals = new List<CrystalShard>();
-
-            Vector3 playerPosition = levelChannel.player.transform.position;
-            float sqrDistance;
-
-            foreach (CrystalShard crystal in levelChannel.crystalManager.activeCrystals)
-            {
-                sqrDistance = (playerPosition - crystal.transform.position).sqrMagnitude;
-
-                if (sqrDistance < settings.rangeAroundPlayerSqr)
-                    crystals.Add(crystal);
-            }
-
-            return crystals;
+            targetSpot = targetCrystal.harvesterSpotManager.GetSpot(transform.position);
         }
 
         #endregion

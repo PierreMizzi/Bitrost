@@ -26,6 +26,9 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void Update()
         {
+            m_harvester.transform.position = m_harvester.targetSpot.transform.position;
+            m_harvester.transform.up = m_harvester.targetSpot.transform.up;
+
             if (!m_harvester.isTargetValid)
                 ChangeState((int)EnemyStateType.Idle);
         }

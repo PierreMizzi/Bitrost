@@ -34,9 +34,11 @@ namespace Bitfrost.Application
 			get { return m_creditsToMenuDuration; }
 		}
 
+		private const string k_versionLabel = "version-label";
 		private const string k_menu = "menu-container-root";
 		private const string k_menuToCreditsButton = "menu-to-credits-button";
 
+		private Label m_versionLabel;
 		private VisualElement m_menu;
 		private Button m_menuToCreditsButton;
 
@@ -95,7 +97,7 @@ namespace Bitfrost.Application
 
 			// Menu
 			m_menu = m_root.Q<VisualElement>(k_menu);
-			m_menuToCreditsButton = m_root.Q<Button>(k_menuToCreditsButton);
+			m_menuToCreditsButton = m_menu.Q<Button>(k_menuToCreditsButton);
 			m_menuToCreditsButton.clicked += CallbackMenuToCreditsClicked;
 			m_menuToCreditsButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
 
@@ -106,7 +108,11 @@ namespace Bitfrost.Application
 
 			// Credits
 			m_credits = m_root.Q<VisualElement>(k_credits);
-			m_creditsToMenuButton = m_root.Q<Button>(k_creditsToMenuButton);
+
+			m_versionLabel = m_credits.Q<Label>(k_versionLabel);
+			m_versionLabel.text = "v" + UnityEngine.Application.version;
+
+			m_creditsToMenuButton = m_credits.Q<Button>(k_creditsToMenuButton);
 			m_creditsToMenuButton.clicked += CallbackCreditsToMenuClicked;
 			m_creditsToMenuButton.RegisterCallback<MouseOverEvent>(CallbackOnMouseOver);
 

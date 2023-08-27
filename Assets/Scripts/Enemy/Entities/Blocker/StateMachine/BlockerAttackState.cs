@@ -41,7 +41,7 @@ namespace Bitfrost.Gameplay.Enemies
 			m_currentAngle = Mathf.SmoothDampAngle(m_currentAngle, m_turretAimAngle, ref currentVelocity, m_this.settings.trackingSmoothTime);
 			m_currentAngleDirection = new Vector3(Mathf.Cos(m_currentAngle * Mathf.Deg2Rad), Mathf.Sin(m_currentAngle * Mathf.Deg2Rad), 0f);
 
-			m_this.transform.position = m_this.targetTurret.transform.position + m_currentAngleDirection * m_this.settings.trackingRadius;
+			m_this.transform.position = m_this.targetTurret.transform.position + m_currentAngleDirection * m_this.trackingRadius;
 
 			// Rotation
 			m_this.transform.up = m_this.directionToTarget;

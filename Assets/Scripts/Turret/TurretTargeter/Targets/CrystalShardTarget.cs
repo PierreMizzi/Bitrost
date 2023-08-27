@@ -1,5 +1,4 @@
 using Bitfrost.Gameplay.Energy;
-using UnityEngine;
 
 namespace Bitfrost.Gameplay.Turrets
 {
@@ -8,8 +7,6 @@ namespace Bitfrost.Gameplay.Turrets
         #region Fields
 
         public CrystalShard crystal { get; private set; }
-
-        private Quaternion m_offsetRotation = Quaternion.Euler(0, 0, -35f);
 
         #endregion
 
@@ -20,11 +17,6 @@ namespace Bitfrost.Gameplay.Turrets
             base.Awake();
             crystal = m_origin.GetComponent<CrystalShard>();
             m_targeterScaleFactor *= m_origin.localScale.x;
-        }
-
-        public override Quaternion GetTargeterRotation()
-        {
-            return crystal.spriteRenderer.transform.rotation * m_offsetRotation;
         }
 
         public override string GetInfos()

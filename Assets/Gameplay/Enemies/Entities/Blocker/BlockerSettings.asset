@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b11ad07400b6874aa624cd94e61d37c, type: 3}
   m_Name: BlockerSettings
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 9999
   speed: 14
-  moveRotationDuration: 2
+  rotateToTargetDuration: 2
   trackingRadius: 3.74
   trackingSmoothTime: 0.5
-  trackingMaxSpeed: 10
   idleOrbitRadius: 2
   idleOrbitSpeed: 10
   weakSpotMaxHealth: 10

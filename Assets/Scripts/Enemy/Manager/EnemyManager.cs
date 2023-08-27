@@ -7,7 +7,6 @@ namespace Bitfrost.Gameplay.Enemies
 {
     // TODO : Spawn enemy not on a border but on an area -> TO TEST
 
-    [ExecuteInEditMode]
     public class EnemyManager : MonoBehaviour, IPausable
     {
 
@@ -75,12 +74,6 @@ namespace Bitfrost.Gameplay.Enemies
         #region MonoBehaviour
 
         private void Awake()
-        {
-            m_camera = Camera.main;
-            CreateEnemySpawnBounds();
-        }
-
-        private void OnEnable()
         {
             m_camera = Camera.main;
             CreateEnemySpawnBounds();
@@ -165,11 +158,11 @@ namespace Bitfrost.Gameplay.Enemies
             foreach (EnemyPoolConfig config in m_enemyPoolConfigs)
             {
                 m_poolingChannel.onCreatePool.Invoke(config);
-                CreateSpawner(config);
+                CreateEnemySpawner(config);
             }
         }
 
-        private void CreateSpawner(EnemyPoolConfig config)
+        private void CreateEnemySpawner(EnemyPoolConfig config)
         {
             GameObject newGameObject = new GameObject(config.prefab.name + "Spawner");
             newGameObject.transform.parent = transform;
@@ -179,9 +172,6 @@ namespace Bitfrost.Gameplay.Enemies
             if (!m_enemyTypeToSpawner.ContainsKey(config.type))
                 m_enemyTypeToSpawner.Add(config.type, spawner);
         }
-
-
-
 
         #endregion
 

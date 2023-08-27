@@ -22,7 +22,7 @@
                 <ui:Button display-tooltip-when-elided="true" name="credits-to-menu-button" class="credits-to-menu-button">
                     <ui:VisualElement name="arrow-head" class="arrow-head" />
                 </ui:Button>
-                <ui:Label text="v0.1.0" display-tooltip-when-elided="true" name="version-label" />
+                <ui:Label text="v0.1.0" display-tooltip-when-elided="true" name="version-label" style="color: rgba(255, 255, 255, 255);" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

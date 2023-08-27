@@ -10,11 +10,11 @@ namespace Bitfrost.Gameplay.Enemies
 
         [Header("Search Crystal")]
         [SerializeField]
-        private float rangeAroundPlayer = 10f;
+        private float searchCrystalRange = 10f;
 
-        public float rangeAroundPlayerSqr { get; private set; }
+        public float searchCrystalRangeSqr { get; private set; }
 
-        public float offsetFromShard = 0.5f;
+        // public float offsetFromShard = 0.5f;
 
         [Header("Attack")]
         public float attackDelay = 1f;
@@ -22,7 +22,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         private void OnEnable()
         {
-            rangeAroundPlayerSqr = Mathf.Pow(rangeAroundPlayer, 2f);
+            searchCrystalRangeSqr = Mathf.Pow(searchCrystalRange, 2f);
         }
     }
 }

@@ -6,8 +6,6 @@ namespace Bitfrost.Gameplay.Enemies
 	public class HarvesterCircularSpacerConfig
 	{
 		public float scale;
-
-		public float radius;
 		public int count;
 	}
 }

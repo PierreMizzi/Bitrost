@@ -12,13 +12,12 @@ namespace Bitfrost.Gameplay.Enemies
 	{
 
 		[Header("Movement")]
-		public float moveRotationDuration;
+		public float rotateToTargetDuration = 2f;
 
 		[Header("Attack")]
 
 		public float trackingRadius = 1.5f;
 		public float trackingSmoothTime = 3;
-		public float trackingMaxSpeed = 10;
 
 		[Header("Idle")]
 		public float idleOrbitRadius = 3.1f;

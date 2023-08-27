@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using PierreMizzi.Rendering;
-using PierreMizzi.Useful;
-using Bitfrost.Gameplay.Enemies;
 using PierreMizzi.Pause;
 using Bitfrost.Gameplay.Turrets;
 
@@ -67,19 +65,24 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private float m_rotationSpeed;
 
+        public bool isPaused { get; set; }
+
         #endregion
 
-        [SerializeField]
-        private CircularSpacer m_harvesterCircularSpacer;
+        #region Spots
 
-        public CircularSpacer harvesterCircularSpacer { get { return m_harvesterCircularSpacer; } }
+        [Header("Spots")]
+        [SerializeField]
+        private SpotManager m_harvesterSpotManager;
+
+        public SpotManager harvesterSpotManager => m_harvesterSpotManager;
 
         public bool isTargetableByHarvesters
         {
-            get { return hasEnergy && m_harvesterCircularSpacer.hasAvailableSpot; }
+            get { return hasEnergy && m_harvesterSpotManager.hasAvailableSpot; }
         }
 
-        public bool isPaused { get; set; }
+        #endregion
 
         #endregion
 
@@ -95,7 +98,7 @@ namespace Bitfrost.Gameplay.Energy
         protected void Update()
         {
             if (!hasTurret && !isPaused)
-                m_spriteRenderer.transform.rotation *= Quaternion.Euler(0, 0, m_rotationSpeed * Time.deltaTime);
+                transform.rotation *= Quaternion.Euler(0, 0, m_rotationSpeed * Time.deltaTime);
         }
 
         #endregion
@@ -110,28 +113,12 @@ namespace Bitfrost.Gameplay.Energy
             SetVisualEnergy();
 
             // Visuals
-            m_propertyBlock.SetProperty(UtilsClass.MainTexProperty, m_settings.GetRandomSprite());
             m_spriteRenderer.color = m_settings.GetRandomTint();
             float noiseOffset = UnityEngine.Random.Range(0f, 100f);
             m_propertyBlock.SetProperty(k_noiseOffsetProperty, noiseOffset);
 
             // Transform
             m_rotationSpeed = m_settings.GetRandomRotationSpeed();
-
-            // Circular Spacer
-            m_harvesterCircularSpacer.radius = m_settings.defaultHarvesterSpacerConfig.radius;
-            m_harvesterCircularSpacer.count = m_settings.defaultHarvesterSpacerConfig.count;
-
-            foreach (HarvesterCircularSpacerConfig config in m_settings.harvesterSpacerConfigs)
-            {
-                if (config.scale < transform.localScale.x)
-                {
-                    m_harvesterCircularSpacer.radius = config.radius;
-                    m_harvesterCircularSpacer.count = config.count;
-                }
-            }
-
-            m_harvesterCircularSpacer.Initialize();
         }
 
         public void Initialize(CrystalShardsManager manager)

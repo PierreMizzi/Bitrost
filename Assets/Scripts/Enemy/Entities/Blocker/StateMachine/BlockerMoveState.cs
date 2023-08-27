@@ -55,7 +55,7 @@ namespace Bitfrost.Gameplay.Enemies
 
 			Vector3 fromDirection = m_this.transform.up;
 			Vector3 toDirection = m_this.directionToTarget.normalized;
-			return DOVirtual.Float(0, 1, m_this.settings.moveRotationDuration, (float value) =>
+			return DOVirtual.Float(0, 1, m_this.settings.rotateToTargetDuration, (float value) =>
 			{
 				m_this.transform.up = Vector3.Lerp(fromDirection, toDirection, value);
 			});
@@ -65,7 +65,7 @@ namespace Bitfrost.Gameplay.Enemies
 		{
 			// v= d/t | t = d/v
 			float duration = m_this.directionToTarget.magnitude / m_this.settings.speed;
-			Vector3 endPosition = m_this.targetTurret.transform.position + -m_this.directionToTarget.normalized * m_this.settings.trackingRadius;
+			Vector3 endPosition = m_this.targetTurret.transform.position + -m_this.directionToTarget.normalized * m_this.trackingRadius;
 
 			return m_this.transform.DOMove(endPosition, duration).OnComplete(() =>
 			{

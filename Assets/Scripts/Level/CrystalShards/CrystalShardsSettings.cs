@@ -15,9 +15,6 @@ namespace Bitfrost.Gameplay.Energy
     {
 
         [Header("Crystal Shards")]
-
-        [SerializeField] private List<Texture> m_sprites = new List<Texture>();
-
         [SerializeField] private List<Color> m_spriteTints = new List<Color>();
 
         [SerializeField]
@@ -41,18 +38,13 @@ namespace Bitfrost.Gameplay.Energy
 
 
         [Header("Circular Spacer")]
-        public HarvesterCircularSpacerConfig defaultHarvesterSpacerConfig;
         public List<HarvesterCircularSpacerConfig> harvesterSpacerConfigs = new List<HarvesterCircularSpacerConfig>();
 
+        public float baseRadiusSpacer = 2.6f;
 
         private void OnEnable()
         {
             safeDistanceFromScaleRatio = Mathf.Pow(m_safeDistanceFromScaleRatio, 2f);
-        }
-
-        public Texture GetRandomSprite()
-        {
-            return UtilsClass.PickRandom(m_sprites);
         }
 
         public Color GetRandomTint()
