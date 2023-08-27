@@ -10,5 +10,12 @@ namespace Bitfrost.Gameplay.Enemies
 		[HideInInspector]
 		public int killCount;
 
+		public ReturnFloatDelegate onGetActiveEnemiesTotalHealth;
+
+		public void OnEnable()
+		{
+			onGetActiveEnemiesTotalHealth = () => { return 0f; };
+		}
+
 	}
 }

@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Bitfrost.Application;
 using Bitfrost.Gameplay.Enemies;
+using Bitfrost.Gameplay.Energy;
 using PierreMizzi.Pause;
 using PierreMizzi.SoundManager;
 using Unity.Mathematics;
@@ -24,7 +24,11 @@ namespace Bitfrost.Gameplay
         [SerializeField]
         private LevelChannel m_levelChannel = null;
 
-        [SerializeField] private EnemyChannel m_enemyChannel;
+        [SerializeField]
+        private EnemyChannel m_enemyChannel;
+
+        [SerializeField]
+        private CrystalShardsChannel m_crytalShardsChannel;
 
         [Header("Arena")]
         [SerializeField]
@@ -302,6 +306,61 @@ namespace Bitfrost.Gameplay
             // Stage
             ResetStage();
         }
+
+        #region Loosing Condition
+
+        /*
+            Checks if the amount of 
+        */
+
+        private IEnumerator m_loosingConditionsCoroutine;
+
+        private void StartCheckLoosingConditions()
+        {
+            if (m_loosingConditionsCoroutine == null)
+            {
+                m_loosingConditionsCoroutine = CheckLoosingConditionsCoroutine();
+                StartCoroutine(m_loosingConditionsCoroutine);
+            }
+        }
+
+        private void StopCheckLoosingConditions()
+        {
+            if (m_loosingConditionsCoroutine == null)
+            {
+                m_loosingConditionsCoroutine = CheckLoosingConditionsCoroutine();
+                StartCoroutine(m_loosingConditionsCoroutine);
+            }
+        }
+
+        private IEnumerator CheckLoosingConditionsCoroutine()
+        {
+
+            float enemiesTotalHealth = 0;
+            float crystalsMaxTotalExtracted = 0;
+            float totalPossibleDamage = 0;
+
+            while (true)
+            {
+                yield return new WaitForSeconds(1);
+
+                // Combined total health of all enemies currently alive
+                enemiesTotalHealth = m_enemyChannel.onGetActiveEnemiesTotalHealth.Invoke();
+
+                // Total energy possibly extracted from all crystals shards 
+                crystalsMaxTotalExtracted = m_crytalShardsChannel.onGetActiveCrystalsTotalEnergy.Invoke();
+                crystalsMaxTotalExtracted *= m_levelChannel.player.turretSettings.productionRatio;
+
+                // Total damage possibly dealt from all energy potentily extracted
+                totalPossibleDamage = crystalsMaxTotalExtracted * m_levelChannel.player.turretSettings.bulletConfig.damage;
+
+                if (totalPossibleDamage < enemiesTotalHealth)
+                    m_levelChannel.onInsufficientEnergy.Invoke();
+
+            }
+        }
+
+        #endregion
 
         #endregion
 

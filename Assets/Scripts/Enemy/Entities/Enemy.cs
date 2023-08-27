@@ -15,6 +15,8 @@ namespace Bitfrost.Gameplay.Enemies
 		public EnemySettings settings;
 		protected EnemyManager m_manager = null;
 		protected HealthEntity m_healthEntity;
+		public HealthEntity healthEntity => m_healthEntity;
+
 		protected bool m_isInitialized;
 
 		[SerializeField]

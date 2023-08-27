@@ -11,7 +11,6 @@ namespace Bitfrost.Gameplay.Enemies
 
         public int count;
 
-        [Range(1, 10)]
         public int batchCount;
 
         [HideInInspector]

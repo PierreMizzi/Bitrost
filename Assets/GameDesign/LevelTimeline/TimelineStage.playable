@@ -167,8 +167,8 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 2018638641934519394, guid: 0327d195a2dad7a408feb8264d47c90b,
       type: 3}
-    count: 8
-    batchCount: 2
+    count: 12
+    batchCount: 4
     duration: Infinity
 --- !u!114 &-7709565875977956077
 MonoBehaviour:
@@ -269,9 +269,9 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_stageDifficulty: 3
   m_spawnCrystalConfig:
-    count: 3
-    minEnergy: 13
-    maxEnergy: 16
+    count: 2
+    minEnergy: 26
+    maxEnergy: 32
 --- !u!114 &-5960879549928856895
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -374,9 +374,9 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_stageDifficulty: 4
   m_spawnCrystalConfig:
-    count: 3
-    minEnergy: 15
-    maxEnergy: 20
+    count: 2
+    minEnergy: 30
+    maxEnergy: 40
 --- !u!114 &-5016785070907274275
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -524,9 +524,9 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_stageDifficulty: 5
   m_spawnCrystalConfig:
-    count: 3
-    minEnergy: 15
-    maxEnergy: 20
+    count: 2
+    minEnergy: 30
+    maxEnergy: 40
 --- !u!114 &-3925272743393417658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -627,9 +627,9 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_stageDifficulty: 3
   m_spawnCrystalConfig:
-    count: 3
-    minEnergy: 13
-    maxEnergy: 16
+    count: 2
+    minEnergy: 26
+    maxEnergy: 32
 --- !u!114 &-3317136336547356815
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2293,7 +2293,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 8
+    count: 6
     batchCount: 2
     duration: Infinity
 --- !u!114 &689123541725790499
@@ -2361,8 +2361,8 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 6
-    batchCount: 2
+    count: 5
+    batchCount: 1
     duration: Infinity
 --- !u!114 &1763159061307583409
 MonoBehaviour:
@@ -2379,7 +2379,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 4
+    count: 6
     batchCount: 2
     duration: Infinity
 --- !u!114 &1827005084748242680
@@ -2489,9 +2489,9 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_stageDifficulty: 5
   m_spawnCrystalConfig:
-    count: 3
-    minEnergy: 15
-    maxEnergy: 20
+    count: 2
+    minEnergy: 30
+    maxEnergy: 40
 --- !u!114 &2930725217391762995
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2507,9 +2507,9 @@ MonoBehaviour:
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_stageDifficulty: 4
   m_spawnCrystalConfig:
-    count: 3
-    minEnergy: 13
-    maxEnergy: 16
+    count: 2
+    minEnergy: 26
+    maxEnergy: 32
 --- !u!114 &3060668285923237334
 MonoBehaviour:
   m_ObjectHideFlags: 1

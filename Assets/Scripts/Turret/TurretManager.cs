@@ -409,6 +409,9 @@ namespace Bitfrost.Gameplay.Turrets
             UtilsClass.EmptyTransform(m_turretContainer);
             m_turrets.Clear();
 
+            // Targeter
+            m_turretTargeter.UnsetTarget();
+
             // Turrets View
             m_turretViews.Clear();
             m_turretVisualsContainer.Clear();

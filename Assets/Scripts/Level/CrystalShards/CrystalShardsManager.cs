@@ -30,6 +30,17 @@ namespace Bitfrost.Gameplay.Energy
 
         private List<CrystalShard> m_activeCrystals = new List<CrystalShard>();
 
+        public int activeCrystalTotalEnergy
+        {
+            get
+            {
+                int totalEnergy = 0;
+                foreach (CrystalShard crystal in m_activeCrystals)
+                    totalEnergy += crystal.remainingEnergyCount;
+                return totalEnergy;
+            }
+        }
+
         [SerializeField]
         private Transform m_container;
 

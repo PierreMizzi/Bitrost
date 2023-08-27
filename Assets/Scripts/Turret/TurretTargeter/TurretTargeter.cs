@@ -1,4 +1,3 @@
-using System;
 using PierreMizzi.Useful;
 using TMPro;
 using UnityEngine;
@@ -13,13 +12,21 @@ namespace Bitfrost.Gameplay.Turrets
 
         private ATarget currentTarget;
 
-        private Animator m_animator;
-
         [SerializeField]
         private SpriteRenderer m_sprite;
 
         [SerializeField]
         private TextMeshProUGUI m_infoText;
+
+        [Header("Info Position")]
+        [SerializeField]
+        private Transform m_infoContainer;
+
+        [SerializeField]
+        private Vector3 m_infoContainerOffset;
+        private Vector3 m_infoContainerPosition;
+
+        private float rotationAngle;
 
         #endregion
 
@@ -27,7 +34,6 @@ namespace Bitfrost.Gameplay.Turrets
 
         private void Awake()
         {
-            m_animator = GetComponent<Animator>();
             UnsetTarget();
         }
 
@@ -71,31 +77,10 @@ namespace Bitfrost.Gameplay.Turrets
 
         #region Info Position
 
-        [Header("Info Position")]
-        [SerializeField]
-        private Transform m_infoContainer;
 
-        [SerializeField]
-        private Vector3 m_infoContainerOffset;
-        private Vector3 m_infoContainerPosition;
-
-        private float rotationAngle;
-
-        // [SerializeField]
-        // private float m_spriteRotation;
-
-        // public void OnValidate()
-        // {
-        //     if (!enabled)
-        //         return;
-        //     m_sprite.transform.rotation = Quaternion.Euler(0f, 0f, m_spriteRotation);
-        //     UpdatInfosPosition();
-        // }
 
         private void UpdatInfos()
         {
-            // m_sprite.transform.rotation = Quaternion.Euler(0f, 0f, m_spriteRotation);
-
             // Transform
             rotationAngle = (UtilsClass.ToFullAngle(m_sprite.transform.rotation.eulerAngles.z) % 90) - 45;
             m_infoContainerPosition = Quaternion.AngleAxis(rotationAngle, Vector3.forward) * m_infoContainerOffset;

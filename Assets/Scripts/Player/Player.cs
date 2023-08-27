@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Bitfrost.Gameplay.Turrets;
 using PierreMizzi.Pause;
 using PierreMizzi.SoundManager;
 using UnityEngine;
@@ -28,6 +29,12 @@ namespace Bitfrost.Gameplay.Players
 
         [SerializeField]
         private PlayerSettings m_settings;
+
+        public PlayerSettings settings => m_settings;
+
+        [SerializeField]
+        private TurretSettings m_turretSettings;
+        public TurretSettings turretSettings => m_turretSettings;
 
         private PlayerController m_controller;
 

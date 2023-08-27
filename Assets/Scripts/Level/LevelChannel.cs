@@ -1,6 +1,8 @@
 using System;
+using Bitfrost.Gameplay.Enemies;
 using Bitfrost.Gameplay.Energy;
 using Bitfrost.Gameplay.Players;
+using Bitfrost.Gameplay.Turrets;
 using UnityEngine;
 
 namespace Bitfrost.Gameplay
@@ -16,6 +18,7 @@ namespace Bitfrost.Gameplay
         private bool m_isDebugging = false;
         public bool isDebugging { get { return m_isDebugging; } }
 
+        // TODO Use CrystalShardsManager instead
         public CrystalShardsManager crystalManager;
 
         // Tutorial
@@ -29,6 +32,7 @@ namespace Bitfrost.Gameplay
         public Player player;
         public Action onPlayerHit;
         public Action onPlayerDead;
+        public Action onInsufficientEnergy;
         public IntDelegate onTurretRetrieved;
 
         // Enemies
@@ -77,6 +81,7 @@ namespace Bitfrost.Gameplay
 
             // Game Over
             onPlayerDead = () => { };
+            onInsufficientEnergy = () => { };
             onDefeatPanel = (GameOverData data) => { };
             onVictoryPanel = (GameOverData data) => { };
 

@@ -90,6 +90,9 @@ namespace Bitfrost.Gameplay.Enemies
                 m_levelChannel.onPauseGame += Pause;
                 m_levelChannel.onResumeGame += Resume;
             }
+
+            if (m_enemyChannel != null)
+                m_enemyChannel.onGetActiveEnemiesTotalHealth += GetActiveEnemiesTotalHealth;
         }
 
         private void Update()
@@ -113,6 +116,9 @@ namespace Bitfrost.Gameplay.Enemies
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
             }
+
+            if (m_enemyChannel != null)
+                m_enemyChannel.onGetActiveEnemiesTotalHealth -= GetActiveEnemiesTotalHealth;
         }
 
         private void OnDrawGizmos()
@@ -173,10 +179,6 @@ namespace Bitfrost.Gameplay.Enemies
                 m_enemyTypeToSpawner.Add(config.type, spawner);
         }
 
-        #endregion
-
-        #region Quick Spawning
-
         private void ManageQuickSpawn()
         {
             foreach (EnemyPoolConfig config in m_enemyPoolConfigs)
@@ -185,8 +187,6 @@ namespace Bitfrost.Gameplay.Enemies
                     SpawnEnemy(config.prefab.gameObject);
             }
         }
-
-        #endregion
 
         #region Spawn Bounds
 
@@ -247,6 +247,8 @@ namespace Bitfrost.Gameplay.Enemies
 
             return randomPosition;
         }
+
+        #endregion
 
         #endregion
 
@@ -342,6 +344,19 @@ namespace Bitfrost.Gameplay.Enemies
         {
             foreach (Enemy enemy in m_activeEnemies)
                 enemy.Resume();
+        }
+
+        #endregion
+
+        #region Behaviour
+
+        private float GetActiveEnemiesTotalHealth()
+        {
+            float totalHealth = 0;
+            foreach (Enemy enemy in m_activeEnemies)
+                totalHealth += enemy.healthEntity.currentHealth;
+
+            return totalHealth;
         }
 
         #endregion
