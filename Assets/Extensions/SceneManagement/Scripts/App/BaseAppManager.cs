@@ -98,8 +98,6 @@ namespace PierreMizzi.Useful.SceneManagement
 
 			while (hold)
 				yield return null;
-
-			Debug.Log("Titlecard scene loaded");
 		}
 
 		protected virtual void TitlecardToGame()
@@ -126,7 +124,6 @@ namespace PierreMizzi.Useful.SceneManagement
 			while (hold)
 				yield return null;
 
-			Debug.Log("Happens at the right time");
 			if (previousSceneUnloading != null)
 				yield return previousSceneUnloading;
 
@@ -147,8 +144,6 @@ namespace PierreMizzi.Useful.SceneManagement
 
 			while (hold)
 				yield return null;
-
-			Debug.Log("Titlecard scene loaded");
 		}
 
 		#endregion

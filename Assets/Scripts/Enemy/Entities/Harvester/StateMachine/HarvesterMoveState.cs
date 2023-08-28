@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using PierreMizzi.Useful.StateMachines;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
@@ -29,8 +31,6 @@ namespace Bitfrost.Gameplay.Enemies
             StartApproachPlayer();
 
         }
-
-
 
         #region Coroutine
 
@@ -67,16 +67,15 @@ namespace Bitfrost.Gameplay.Enemies
 
         private IEnumerator ApproachAsteroid()
         {
-            yield return ReachTargetSpot();
-            yield return AlignToTargetSpot();
-
+            yield return ReachTargetSpotReworked();
             ChangeState((int)EnemyStateType.Attack);
         }
 
-        private IEnumerator ReachTargetSpot()
+        private IEnumerator ReachTargetSpotReworked()
         {
             Transform targetTransform = m_harvester.targetSpot.transform;
 
+            Vector3 fromDirection;
             Vector3 fromPosition = m_harvester.transform.position;
             Vector3 harvesterToSpot = fromPosition - targetTransform.position;
             float distance = harvesterToSpot.magnitude;
@@ -84,48 +83,40 @@ namespace Bitfrost.Gameplay.Enemies
             float totalTime = distance / m_harvester.settings.speed;
             float currentTime = 0;
             float progress = 0;
+            float directionProgress = 0;
 
             while (progress < 1f)
             {
                 currentTime += Time.deltaTime;
                 progress = currentTime / totalTime;
 
+                // Position
                 m_harvester.transform.position = Vector3.Lerp(fromPosition, targetTransform.position, progress);
-                m_harvester.transform.up = (m_harvester.transform.position - targetTransform.position).normalized;
+
+                // Direction
+                directionProgress = ProgressToDirectionProgress(progress);
+                fromDirection = (targetTransform.position - m_harvester.transform.position).normalized;
+                m_harvester.transform.up = Vector3.Lerp(fromDirection, targetTransform.up, directionProgress);
 
                 yield return null;
             }
 
             m_harvester.transform.position = targetTransform.position;
+            m_harvester.transform.up = targetTransform.up;
 
             yield return null;
         }
 
-        private IEnumerator AlignToTargetSpot()
+        private float ProgressToDirectionProgress(float progress)
         {
-            Vector3 fromPosition = m_harvester.transform.position;
+            progress = math.remap(m_harvester.settings.rotationProgressBeginning,
+                                  1f,
+                                  0f,
+                                  1f,
+                                  progress);
 
-            Vector3 fromDirection = m_harvester.transform.up;
-
-            float totalTime = 1f;
-            float currentTime = 0;
-            float progress = 0;
-
-            while (progress < 1f)
-            {
-                currentTime += Time.deltaTime;
-                progress = currentTime / totalTime;
-
-                m_harvester.transform.position = Vector3.Lerp(fromPosition, m_harvester.targetSpot.transform.position, progress);
-                m_harvester.transform.up = Vector3.Lerp(fromDirection, m_harvester.targetSpot.transform.up, progress);
-
-                yield return null;
-            }
-
-            m_harvester.transform.position = m_harvester.targetSpot.transform.position;
-            m_harvester.transform.up = m_harvester.targetSpot.transform.up;
-
-            yield return null;
+            progress = Mathf.Clamp01(progress);
+            return progress;
         }
 
         #endregion

@@ -18,6 +18,8 @@ namespace PierreMizzi.Useful.UI
 		[SerializeField]
 		protected string m_rootName = null;
 
+		protected bool m_canDisplay = true;
+
 		#endregion
 
 		#region Methods 
@@ -34,7 +36,8 @@ namespace PierreMizzi.Useful.UI
 
 		protected virtual void Display()
 		{
-			m_root.style.display = DisplayStyle.Flex;
+			if (m_canDisplay)
+				m_root.style.display = DisplayStyle.Flex;
 		}
 
 		protected virtual void Hide()

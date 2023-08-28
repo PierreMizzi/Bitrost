@@ -333,7 +333,6 @@ namespace Bitfrost.Gameplay
 
         #region Loosing Condition
 
-
         private void StartCheckLoosingConditions()
         {
             if (m_loosingConditionCoroutine == null)
@@ -398,11 +397,11 @@ namespace Bitfrost.Gameplay
             // Total damage possibly dealt from all energy potentily extracted
             float totalPossibleDamage = crystalsMaxTotalExtracted * m_levelChannel.player.turretSettings.bulletConfig.damage;
 
-            string log = "#### Insufficient Energy \r\n";
-            log += $"enemiesTotalHealth : {enemiesTotalHealth}\r\n";
-            log += $"crystalsMaxTotalExtracted : {crystalsMaxTotalExtracted}\r\n";
-            log += $"totalPossibleDamage : {totalPossibleDamage}\r\n";
-            Debug.Log(log);
+            // string log = "#### Insufficient Energy \r\n";
+            // log += $"enemiesTotalHealth : {enemiesTotalHealth}\r\n";
+            // log += $"crystalsMaxTotalExtracted : {crystalsMaxTotalExtracted}\r\n";
+            // log += $"totalPossibleDamage : {totalPossibleDamage}\r\n";
+            // Debug.Log(log);
 
             return totalPossibleDamage < enemiesTotalHealth;
         }
@@ -415,7 +414,6 @@ namespace Bitfrost.Gameplay
         }
 
         #endregion
-
 
         #endregion
 

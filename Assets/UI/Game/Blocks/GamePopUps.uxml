@@ -20,7 +20,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="popup-insufficient-energy" picking-mode="Ignore" class="full-container" style="align-items: center; justify-content: center; display: flex;">
             <ui:VisualElement name="insufficient-energy-container" picking-mode="Ignore">
-                <ui:VisualElement name="insufficient-energy-black-veil" picking-mode="Ignore" class="black-veil-background" style="background-color: rgba(0, 0, 0, 0.75);" />
+                <ui:VisualElement name="insufficient-energy-black-veil" picking-mode="Ignore" class="black-veil-background" style="background-color: rgba(0, 0, 0, 0.95);" />
                 <ui:VisualElement name="insufficient-energy-warning-bar" picking-mode="Ignore" class="warning-bar-container">
                     <ui:VisualElement name="bar-top" class="warning-bar" />
                     <ui:VisualElement name="bar-bottom" class="warning-bar" />

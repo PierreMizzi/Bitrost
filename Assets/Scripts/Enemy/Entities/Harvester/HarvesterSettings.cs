@@ -14,6 +14,8 @@ namespace Bitfrost.Gameplay.Enemies
 
         public float searchCrystalRangeSqr { get; private set; }
 
+        public float rotationProgressBeginning = 0.8f;
+
         // public float offsetFromShard = 0.5f;
 
         [Header("Attack")]

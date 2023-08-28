@@ -22,7 +22,6 @@ namespace Bitfrost.Application
 
 		public static void LogSaveData()
 		{
-			Debug.Log(data.ToString());
 			BaseSaveManager.LogBaseSaveManager();
 		}
 

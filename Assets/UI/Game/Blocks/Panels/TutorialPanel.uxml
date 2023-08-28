@@ -35,7 +35,7 @@
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="slide-container-2" class="slide-container" style="display: none; top: 0; right: 2px; left: -1px; bottom: 0;">
-                        <ui:Label text="Offensive Mode" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
+                        <ui:Label text="Turret Offensive Mode" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
                         <ui:Label text="&lt;b&gt;Left click&lt;/b&gt; to fire from the turret. Stored energy is used before asteroid energy" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                         <ui:VisualElement style="width: 60%; flex-direction: row; align-items: center; justify-content: space-between;">
                             <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: center;">
@@ -58,7 +58,7 @@
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="slide-container-3" class="slide-container" style="display: flex;">
-                        <ui:Label text="Production Mode" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
+                        <ui:Label text="Turret Production Mode" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
                         <ui:Label text="&lt;b&gt;Press E&lt;/b&gt; on turrets to switch between modes. Production mode &lt;b&gt;extracts energy&lt;/b&gt; from asteroids and stores it" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                         <ui:VisualElement style="width: 70%; flex-direction: row; align-items: center; justify-content: space-between;">
                             <ui:VisualElement style="flex-direction: row; justify-content: center; align-items: center;">
@@ -75,12 +75,12 @@
                         </ui:VisualElement>
                         <ui:Label text="Firing is impossible" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                     </ui:VisualElement>
-                    <ui:VisualElement name="slide-container-4" class="slide-container" style="display: flex;">
+                    <ui:VisualElement name="slide-container-4" class="slide-container" style="display: none;">
                         <ui:Label text="Reparing" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
                         <ui:Label text="&lt;b&gt;Retrieving a turret with stored energy&lt;/b&gt; repairs player&apos;s ship, scaled on the amount of stored energy" display-tooltip-when-elided="true" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                         <ui:VisualElement />
                     </ui:VisualElement>
-                    <ui:VisualElement name="slide-container-5" class="slide-container" style="display: flex; align-items: flex-start; top: 0; right: -1px; left: 2px; bottom: 0;">
+                    <ui:VisualElement name="slide-container-5" class="slide-container" style="display: none; align-items: flex-start; top: 0; right: -1px; left: 2px; bottom: 0;">
                         <ui:Label text="Mission" display-tooltip-when-elided="true" name="mission-title" style="color: rgb(0, 0, 0); font-size: 60px; margin-bottom: 3%; -unity-text-align: upper-left; width: 100%;" />
                         <ui:Label text="- &lt;b&gt;System&lt;/b&gt; : Xaniux C-95" display-tooltip-when-elided="true" name="mission-system-name" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />
                         <ui:Label text="- &lt;b&gt;Coordinates&lt;/b&gt; :&#10; c : 89.89°&#10; p : 98.97°&#10; d : 34.76ly" display-tooltip-when-elided="true" name="mission-system-coords" class="content-container-text" style="margin-bottom: 3%; width: 100%;" />

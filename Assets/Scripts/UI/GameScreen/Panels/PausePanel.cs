@@ -17,7 +17,6 @@ namespace Bitfrost.Gameplay.UI
 
         [SerializeField]
         private LevelChannel m_levelChannel;
-
         private const string k_resumeButton = "resume-button";
         private const string k_menuButton = "menu-button";
 
@@ -49,6 +48,9 @@ namespace Bitfrost.Gameplay.UI
             {
                 m_levelChannel.onDisplayPausePanel += Display;
                 m_levelChannel.onHidePausePanel += Hide;
+
+                m_levelChannel.onDisablePlayerControls += CallbackCannotDisplay;
+                m_levelChannel.onReset += CallbackCanDisplay;
             }
         }
 
@@ -58,10 +60,23 @@ namespace Bitfrost.Gameplay.UI
             {
                 m_levelChannel.onDisplayPausePanel -= Display;
                 m_levelChannel.onHidePausePanel -= Hide;
+
+                m_levelChannel.onDisablePlayerControls -= CallbackCannotDisplay;
+                m_levelChannel.onReset -= CallbackCanDisplay;
             }
         }
 
         #endregion
+
+        private void CallbackCanDisplay()
+        {
+            m_canDisplay = true;
+        }
+
+        private void CallbackCannotDisplay()
+        {
+            m_canDisplay = false;
+        }
 
         #region Buttons Callbacks
 
