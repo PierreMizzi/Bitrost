@@ -120,6 +120,9 @@ namespace Bitfrost.Gameplay.Turrets
 
             if (m_levelChannel != null)
             {
+                m_levelChannel.onEnablePlayerControls += CallbackEnableControls;
+                m_levelChannel.onDisablePlayerControls += CallbackDisableControls;
+
                 m_levelChannel.onReset += CallbackReset;
                 m_levelChannel.onPauseGame += Pause;
                 m_levelChannel.onResumeGame += Resume;
@@ -129,8 +132,6 @@ namespace Bitfrost.Gameplay.Turrets
 
             ManageCursor();
         }
-
-
 
         public void Update()
         {
@@ -144,6 +145,10 @@ namespace Bitfrost.Gameplay.Turrets
 
             if (m_levelChannel != null)
             {
+                m_levelChannel.onEnablePlayerControls -= CallbackEnableControls;
+                m_levelChannel.onDisablePlayerControls -= CallbackDisableControls;
+
+
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
@@ -402,12 +407,27 @@ namespace Bitfrost.Gameplay.Turrets
 
         #endregion
 
+        #region Game Over
+
+        private void CallbackEnableControls()
+        {
+            SubscribeInputs();
+        }
+
+        private void CallbackDisableControls()
+        {
+            UnsubscribeInputs();
+        }
+
+        #endregion
+
         #region Reset
 
         public void CallbackReset()
         {
             UtilsClass.EmptyTransform(m_turretContainer);
             m_turrets.Clear();
+            // SubscribeInputs();
 
             // Targeter
             m_turretTargeter.UnsetTarget();

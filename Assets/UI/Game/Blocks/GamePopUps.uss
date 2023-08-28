@@ -104,13 +104,14 @@
     -unity-slice-bottom: 0;
 }
 
-.hostiles-bar-container {
+.warning-bar-container {
     justify-content: space-between;
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.27);
     opacity: 1;
+    display: flex;
 }
 
 .hostiles-bar-container-fade-in {
@@ -188,4 +189,67 @@
     margin-top: 5%;
     margin-bottom: 5%;
     align-items: center;
+}
+
+#insufficient-energy-container {
+    width: 100%;
+    height: 51%;
+    display: flex;
+    position: absolute;
+    top: auto;
+}
+
+#insufficient-energy-title-container {
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#insufficient-energy-warning-bar .warning-bar {
+    height: 60px;
+    -unity-background-image-tint-color: rgb(123, 0, 0);
+}
+
+#insufficient-energy-title {
+    color: rgb(214, 0, 0);
+    font-size: 70px;
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-ExtraBold%20SDF.asset?fileID=11400000&guid=08649512fb8c93a43b26c1c30dec84f3&type=2#SourceSans3-ExtraBold SDF');
+}
+
+#insufficient-energy-subtitle {
+    color: rgb(214, 0, 0);
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    font-size: 40px;
+    -unity-font-definition: url('project://database/Assets/Fonts/SourceSans3-Medium%20SDF.asset?fileID=11400000&guid=e6e3b7e6a509ecd4a8b3b57b4c894d27&type=2#SourceSans3-Medium SDF');
+    -unity-text-align: middle-center;
+}
+
+.insufficient-energy-container-fade-in {
+    opacity: 0;
+    transition: opacity transform;
+    transition-duration: 2s;
+    scale: 1.3 1.3;
+    transition-timing-function: ease-out-circ;
+}
+
+.insufficient-energy-container-fade-in.animate {
+    opacity: 1;
+    scale: 1 1;
+}
+
+.insufficient-energy-container-fade-out {
+    opacity: 1;
+    transition: opacity;
+    transition-duration: 1s;
+}
+
+.insufficient-energy-container-fade-out.animate {
+    opacity: 0;
+}
+
+#popup-insufficient-energy-container.reset {
+    opacity: 0;
+    transform: 1.3 1.3;
 }

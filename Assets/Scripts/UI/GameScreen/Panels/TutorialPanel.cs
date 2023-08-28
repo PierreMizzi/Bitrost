@@ -60,7 +60,7 @@ namespace Bitfrost.Gameplay.UI
 		protected override void CallbackStartClicked()
 		{
 			base.CallbackStartClicked();
-			m_levelChannel.onHideTutorialPanel.Invoke();
+			m_levelChannel.onTutorialStartClicked.Invoke();
 			SoundManager.PlaySFX(SoundDataID.U_I_START_CLICK);
 		}
 

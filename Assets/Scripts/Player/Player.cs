@@ -66,6 +66,9 @@ namespace Bitfrost.Gameplay.Players
 
             if (m_levelChannel != null)
             {
+                m_levelChannel.onDisablePlayerControls += CallbackDisableControls;
+                m_levelChannel.onEnablePlayerControls += CallbackEnableControls;
+
                 m_levelChannel.onReset += CallbackReset;
                 m_levelChannel.onPauseGame += Pause;
                 m_levelChannel.onResumeGame += Resume;
@@ -74,12 +77,16 @@ namespace Bitfrost.Gameplay.Players
             }
         }
 
+
         private void OnDestroy()
         {
             UnsubscribeHealthEntity();
 
             if (m_levelChannel != null)
             {
+                m_levelChannel.onDisablePlayerControls -= CallbackDisableControls;
+                m_levelChannel.onEnablePlayerControls -= CallbackEnableControls;
+
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
@@ -94,14 +101,12 @@ namespace Bitfrost.Gameplay.Players
         {
             m_healthEntity.onLostHealth += CallbackLostHealth;
             m_healthEntity.onHealedHealth += CallbackHealedHealth;
-            m_healthEntity.onNoHealth += CallbackNoHealth;
         }
 
         private void UnsubscribeHealthEntity()
         {
             m_healthEntity.onLostHealth -= CallbackLostHealth;
             m_healthEntity.onHealedHealth -= CallbackHealedHealth;
-            m_healthEntity.onNoHealth -= CallbackNoHealth;
         }
 
         private void CallbackHealedHealth()
@@ -113,15 +118,6 @@ namespace Bitfrost.Gameplay.Players
         {
             m_levelChannel.onPlayerHit.Invoke();
             SoundManager.PlayRandomSFX(m_hitSounds);
-        }
-
-        [ContextMenu("CallbackNoHealth")]
-        private void CallbackNoHealth()
-        {
-            SetDead();
-            m_controller.enabled = false;
-
-            SoundManager.PlaySFX(SoundDataID.PLAYER_DEATH);
         }
 
         #endregion
@@ -142,6 +138,7 @@ namespace Bitfrost.Gameplay.Players
         public void CallbackDeadAnimation()
         {
             m_levelChannel.onPlayerDead.Invoke();
+            m_levelChannel.onGameOver.Invoke();
         }
 
         #endregion
@@ -153,7 +150,7 @@ namespace Bitfrost.Gameplay.Players
             SetAlive();
             m_healthEntity.Reset();
             transform.position = Vector3.zero;
-            m_controller.enabled = true;
+            CallbackEnableControls();
         }
 
         public void Pause()
@@ -169,6 +166,17 @@ namespace Bitfrost.Gameplay.Players
         }
 
         #endregion
+
+        private void CallbackDisableControls()
+        {
+            m_controller.enabled = false;
+        }
+
+        private void CallbackEnableControls()
+        {
+            m_controller.enabled = true;
+        }
+
 
         private void CallbackTurretRetrieved(int storedEnergy)
         {

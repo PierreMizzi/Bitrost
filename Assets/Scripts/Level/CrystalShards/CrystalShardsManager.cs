@@ -16,11 +16,15 @@ namespace Bitfrost.Gameplay.Energy
     {
         #region Fields
 
+        [Header("Channels")]
         [SerializeField]
         private PoolingChannel m_poolingChannel = null;
 
         [SerializeField]
         private LevelChannel m_levelChannel = null;
+
+        [SerializeField]
+        private CrystalShardsChannel m_crystalChannel = null;
 
         [SerializeField]
         private List<PoolConfig> m_crystalPoolConfigs = new List<PoolConfig>();
@@ -29,17 +33,6 @@ namespace Bitfrost.Gameplay.Energy
         private CrystalShardsSettings m_settings = null;
 
         private List<CrystalShard> m_activeCrystals = new List<CrystalShard>();
-
-        public int activeCrystalTotalEnergy
-        {
-            get
-            {
-                int totalEnergy = 0;
-                foreach (CrystalShard crystal in m_activeCrystals)
-                    totalEnergy += crystal.remainingEnergyCount;
-                return totalEnergy;
-            }
-        }
 
         [SerializeField]
         private Transform m_container;
@@ -82,6 +75,9 @@ namespace Bitfrost.Gameplay.Energy
                 m_levelChannel.onResumeGame += Resume;
             }
 
+            if (m_crystalChannel != null)
+                m_crystalChannel.onGetActiveCrystalsTotalEnergy += GetActiveCrystalsTotalEnergy;
+
             if (m_levelChannel.isDebugging)
                 DebugSpawn();
         }
@@ -94,6 +90,23 @@ namespace Bitfrost.Gameplay.Energy
                 m_levelChannel.onPauseGame -= Pause;
                 m_levelChannel.onResumeGame -= Resume;
             }
+
+            if (m_crystalChannel != null)
+                m_crystalChannel.onGetActiveCrystalsTotalEnergy -= GetActiveCrystalsTotalEnergy;
+        }
+
+        #endregion
+
+        #region Behaviour
+
+        private int GetActiveCrystalsTotalEnergy()
+        {
+            int totalEnergy = 0;
+
+            foreach (CrystalShard crystal in m_activeCrystals)
+                totalEnergy += crystal.remainingEnergyCount;
+
+            return totalEnergy;
         }
 
         #endregion

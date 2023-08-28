@@ -23,7 +23,7 @@ namespace Bitfrost.Gameplay
 
         // Tutorial
         public Action onDisplayTutorialPanel;
-        public Action onHideTutorialPanel;
+        public Action onTutorialStartClicked;
 
         // Timeline stage
         public IntDelegate onChangeStageDifficulty;
@@ -31,9 +31,43 @@ namespace Bitfrost.Gameplay
         // Player & Turret
         public Player player;
         public Action onPlayerHit;
-        public Action onPlayerDead;
-        public Action onInsufficientEnergy;
         public IntDelegate onTurretRetrieved;
+
+        // Loosing Conditions
+        [Obsolete]
+        public Action onPlayerDead;
+        // Player has no health
+        //      Can't act (move + turret)
+        // Player's explosion animation has ended
+        //      GameOver
+        //      DefeatPanel
+
+        /*
+            No Health
+
+            -onDisablePlayer
+            Player's animation explosion
+            - onGameOver (onPlayerDead)
+            - onDefeatPanel
+
+            Insufficent
+
+            - onInsufficientEnergy
+            - onDisablePlayer
+            InsufficentEnergy animation
+            - GameOver
+            - onDefeatPanel
+
+        */
+        public Action onDisablePlayerControls;
+
+        /// <summary> 
+        /// Can be done through reset
+        /// </summary>
+        [Obsolete]
+        public Action onEnablePlayerControls;
+        public Action onGameOver;
+
 
         // Enemies
         public Action onAllEnemiesKilled;
@@ -45,6 +79,8 @@ namespace Bitfrost.Gameplay
         // PopUp
         public Action onDisplayStageCleared;
         public Action onDisplayHostilesDetected;
+        public Action onInsufficientEnergy;
+
 
         // Reset Game
         public Action onRestart;
@@ -68,7 +104,7 @@ namespace Bitfrost.Gameplay
 
             // Tutorial
             onDisplayTutorialPanel = () => { };
-            onHideTutorialPanel = () => { };
+            onTutorialStartClicked = () => { };
 
             // Timeline stage
             onChangeStageDifficulty = (int difficultyLevel) => { };
@@ -84,6 +120,10 @@ namespace Bitfrost.Gameplay
             onInsufficientEnergy = () => { };
             onDefeatPanel = (GameOverData data) => { };
             onVictoryPanel = (GameOverData data) => { };
+
+            onGameOver = () => { };
+            onDisablePlayerControls = () => { };
+            onEnablePlayerControls = () => { };
 
             // PopUp
             onDisplayStageCleared = () => { };

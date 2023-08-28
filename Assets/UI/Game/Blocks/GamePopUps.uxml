@@ -2,20 +2,34 @@
     <Style src="project://database/Assets/UI/Game/Blocks/GamePopUps.uss?fileID=7433441132597879392&amp;guid=91a23fbbbb1365242b0e84330250fefb&amp;type=3#GamePopUps" />
     <Style src="project://database/Assets/UI/General/General.uss?fileID=7433441132597879392&amp;guid=c81772fb655769e4494d3618a08eb16a&amp;type=3#General" />
     <ui:VisualElement name="popups-container" picking-mode="Ignore" class="full-container" style="align-items: center; justify-content: center;">
-        <ui:VisualElement name="popup-stage-cleared" picking-mode="Ignore">
+        <ui:VisualElement name="popup-stage-cleared" picking-mode="Ignore" style="display: flex;">
             <ui:VisualElement name="stage-cleared-background">
                 <ui:VisualElement name="stage-cleared-bar-top" class="stage-cleared-bar" style="border-top-left-radius: 10px; border-top-right-radius: 10px;" />
                 <ui:VisualElement name="stage-cleared-bar-bottom" class="stage-cleared-bar" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;" />
             </ui:VisualElement>
             <ui:Label text="STAGE CLEARED" display-tooltip-when-elided="true" name="stage-cleared-title" />
         </ui:VisualElement>
-        <ui:VisualElement name="popup-hostiles-incoming" picking-mode="Ignore">
-            <ui:VisualElement name="hostiles-bar-container" class="hostiles-bar-container">
+        <ui:VisualElement name="popup-hostiles-incoming" picking-mode="Ignore" style="display: flex;">
+            <ui:VisualElement name="hostiles-bar-container" class="warning-bar-container">
                 <ui:VisualElement name="bar-top" class="warning-bar" />
                 <ui:VisualElement name="bar-bottom" class="warning-bar" />
             </ui:VisualElement>
             <ui:VisualElement name="hostiles-title-container">
                 <ui:Label text="HOSTILES INCOMING" display-tooltip-when-elided="true" name="hostiles-title" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="popup-insufficient-energy" picking-mode="Ignore" class="full-container" style="align-items: center; justify-content: center; display: flex;">
+            <ui:VisualElement name="insufficient-energy-container" picking-mode="Ignore">
+                <ui:VisualElement name="insufficient-energy-black-veil" picking-mode="Ignore" class="black-veil-background" style="background-color: rgba(0, 0, 0, 0.75);" />
+                <ui:VisualElement name="insufficient-energy-warning-bar" picking-mode="Ignore" class="warning-bar-container">
+                    <ui:VisualElement name="bar-top" class="warning-bar" />
+                    <ui:VisualElement name="bar-bottom" class="warning-bar" />
+                </ui:VisualElement>
+                <ui:VisualElement name="insufficient-energy-title-container" picking-mode="Ignore">
+                    <ui:Label text="INSUFFICIENT ENERGY DEPOSITS" display-tooltip-when-elided="true" name="insufficient-energy-title" />
+                    <ui:Label text="Hostiles outnumbered you" display-tooltip-when-elided="true" name="insufficient-energy-subtitle" style="margin-bottom: 70px;" />
+                    <ui:Label text="&gt; Retreat immediately &lt;" display-tooltip-when-elided="true" name="insufficient-energy-subtitle" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

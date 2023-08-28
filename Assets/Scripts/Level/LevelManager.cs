@@ -58,6 +58,13 @@ namespace Bitfrost.Gameplay
 
         #endregion
 
+        #region Game Over
+
+        private IEnumerator m_loosingConditionCoroutine;
+
+
+        #endregion
+
         private int m_currentStageDifficulty;
 
         [Header("Tutorial")]
@@ -96,10 +103,12 @@ namespace Bitfrost.Gameplay
             // Events
             if (m_levelChannel != null)
             {
-                m_levelChannel.onHideTutorialPanel += CallbackHideTutorialPanel;
+                m_levelChannel.onTutorialStartClicked += StartGameWithTutorial;
                 m_levelChannel.onChangeStageDifficulty += CallbackChangeStageDifficulty;
                 m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
-                m_levelChannel.onPlayerDead += CallbackDefeat;
+                // m_levelChannel.onPlayerDead += CallbackGameOver;
+                m_levelChannel.onGameOver += CallbackGameOver;
+
                 m_levelChannel.onRestart += CallbackRestart;
                 m_levelChannel.onReset += CallbackReset;
 
@@ -120,13 +129,9 @@ namespace Bitfrost.Gameplay
 
             // Tutorial Panel & adequate music
             if (m_displayTutorial)
-            {
-                m_musicSoundSource.SetSoundData(SoundDataID.MUSIC_TUTORIAL);
-                m_levelChannel.onPauseGame.Invoke();
-                m_levelChannel.onDisplayTutorialPanel.Invoke();
-            }
+                DisplayTutorial();
             else
-                m_musicSoundSource.SetSoundData(SoundDataID.MUSIC_IN_GAME);
+                StartGameWithoutTutorial();
 
             m_musicSoundSource.Play();
         }
@@ -143,10 +148,11 @@ namespace Bitfrost.Gameplay
         {
             if (m_levelChannel != null)
             {
-                m_levelChannel.onHideTutorialPanel += CallbackHideTutorialPanel;
+                m_levelChannel.onTutorialStartClicked += StartGameWithTutorial;
                 m_levelChannel.onChangeStageDifficulty -= CallbackChangeStageDifficulty;
                 m_levelChannel.onAllEnemiesKilled -= CallbackAllEnemiesKilled;
-                m_levelChannel.onPlayerDead -= CallbackDefeat;
+                // m_levelChannel.onPlayerDead -= CallbackGameOver;
+                m_levelChannel.onGameOver -= CallbackGameOver;
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onRestart -= CallbackRestart;
 
@@ -159,10 +165,24 @@ namespace Bitfrost.Gameplay
 
         #region Tutorial
 
-        private void CallbackHideTutorialPanel()
+        private void StartGameWithoutTutorial()
+        {
+            m_musicSoundSource.SetSoundData(SoundDataID.MUSIC_IN_GAME);
+            StartCheckLoosingConditions();
+        }
+
+        private void DisplayTutorial()
+        {
+            m_musicSoundSource.SetSoundData(SoundDataID.MUSIC_TUTORIAL);
+            m_levelChannel.onPauseGame.Invoke();
+            m_levelChannel.onDisplayTutorialPanel.Invoke();
+        }
+
+        private void StartGameWithTutorial()
         {
             m_levelChannel.onResumeGame.Invoke();
             m_musicSoundSource.FadeTransition(SoundDataID.MUSIC_IN_GAME);
+            StartCheckLoosingConditions();
         }
 
         #endregion
@@ -269,7 +289,7 @@ namespace Bitfrost.Gameplay
 
         #region Game Over
 
-        private void CallbackDefeat()
+        private void CallbackGameOver()
         {
             GameOverData data = new GameOverData(m_currentStageDifficulty, time, m_enemyChannel.killCount);
             SaveManager.ManageBestScore(data);
@@ -283,6 +303,8 @@ namespace Bitfrost.Gameplay
         // Signal Emitter in Timeline
         public void CallbackVictory()
         {
+            StopCheckLoosingConditions();
+
             GameOverData data = new GameOverData(m_currentStageDifficulty, time, m_enemyChannel.killCount);
             SaveManager.ManageBestScore(data);
 
@@ -300,6 +322,8 @@ namespace Bitfrost.Gameplay
 
         private void CallbackReset()
         {
+            StartCheckLoosingConditions();
+
             // Time
             time = 0;
 
@@ -309,56 +333,89 @@ namespace Bitfrost.Gameplay
 
         #region Loosing Condition
 
-        /*
-            Checks if the amount of 
-        */
-
-        private IEnumerator m_loosingConditionsCoroutine;
 
         private void StartCheckLoosingConditions()
         {
-            if (m_loosingConditionsCoroutine == null)
+            if (m_loosingConditionCoroutine == null)
             {
-                m_loosingConditionsCoroutine = CheckLoosingConditionsCoroutine();
-                StartCoroutine(m_loosingConditionsCoroutine);
+                m_loosingConditionCoroutine = CheckLoosingConditionsCoroutine();
+                StartCoroutine(m_loosingConditionCoroutine);
             }
         }
 
         private void StopCheckLoosingConditions()
         {
-            if (m_loosingConditionsCoroutine == null)
+            if (m_loosingConditionCoroutine != null)
             {
-                m_loosingConditionsCoroutine = CheckLoosingConditionsCoroutine();
-                StartCoroutine(m_loosingConditionsCoroutine);
+                StopCoroutine(m_loosingConditionCoroutine);
+                m_loosingConditionCoroutine = null;
             }
         }
 
         private IEnumerator CheckLoosingConditionsCoroutine()
         {
-
-            float enemiesTotalHealth = 0;
-            float crystalsMaxTotalExtracted = 0;
-            float totalPossibleDamage = 0;
-
             while (true)
             {
                 yield return new WaitForSeconds(1);
 
-                // Combined total health of all enemies currently alive
-                enemiesTotalHealth = m_enemyChannel.onGetActiveEnemiesTotalHealth.Invoke();
+                if (IsPlayerDead())
+                    GameOverPlayerDead();
 
-                // Total energy possibly extracted from all crystals shards 
-                crystalsMaxTotalExtracted = m_crytalShardsChannel.onGetActiveCrystalsTotalEnergy.Invoke();
-                crystalsMaxTotalExtracted *= m_levelChannel.player.turretSettings.productionRatio;
-
-                // Total damage possibly dealt from all energy potentily extracted
-                totalPossibleDamage = crystalsMaxTotalExtracted * m_levelChannel.player.turretSettings.bulletConfig.damage;
-
-                if (totalPossibleDamage < enemiesTotalHealth)
-                    m_levelChannel.onInsufficientEnergy.Invoke();
+                if (HasInsufficientEnergy())
+                    GameOverInsufficientEnergy();
 
             }
         }
+
+        #region Player Health
+
+        private bool IsPlayerDead()
+        {
+            return m_levelChannel.player.healthEntity.currentHealth <= 0;
+        }
+
+        private void GameOverPlayerDead()
+        {
+            m_levelChannel.onDisablePlayerControls.Invoke();
+            StopCheckLoosingConditions();
+            m_levelChannel.player.SetDead();
+            SoundManager.PlaySFX(SoundDataID.PLAYER_DEATH);
+        }
+
+        #endregion
+
+        #region Insufficient Energy
+
+        private bool HasInsufficientEnergy()
+        {
+            // Combined total health of all enemies currently alive
+            float enemiesTotalHealth = m_enemyChannel.onGetActiveEnemiesTotalHealth.Invoke();
+
+            // Total energy possibly extracted from all crystals shards 
+            float crystalsMaxTotalExtracted = m_crytalShardsChannel.onGetActiveCrystalsTotalEnergy.Invoke();
+            crystalsMaxTotalExtracted *= m_levelChannel.player.turretSettings.productionRatio;
+
+            // Total damage possibly dealt from all energy potentily extracted
+            float totalPossibleDamage = crystalsMaxTotalExtracted * m_levelChannel.player.turretSettings.bulletConfig.damage;
+
+            string log = "#### Insufficient Energy \r\n";
+            log += $"enemiesTotalHealth : {enemiesTotalHealth}\r\n";
+            log += $"crystalsMaxTotalExtracted : {crystalsMaxTotalExtracted}\r\n";
+            log += $"totalPossibleDamage : {totalPossibleDamage}\r\n";
+            Debug.Log(log);
+
+            return totalPossibleDamage < enemiesTotalHealth;
+        }
+
+        private void GameOverInsufficientEnergy()
+        {
+            m_levelChannel.onDisablePlayerControls.Invoke();
+            m_levelChannel.onInsufficientEnergy.Invoke();
+            StopCheckLoosingConditions();
+        }
+
+        #endregion
+
 
         #endregion
 

@@ -6,4 +6,4 @@ public delegate void BoolDelegate(bool value);
 public delegate void IntDelegate(int value);
 
 public delegate float ReturnFloatDelegate();
-public delegate float ReturnIntDelegate();
+public delegate int ReturnIntDelegate();

@@ -368,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_poolingChannel: {fileID: 11400000, guid: a300e10b08d5742479ad11a9df1206d0, type: 2}
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
+  m_crystalChannel: {fileID: 11400000, guid: 2697e5538c5c9974aad1a5c71d370c01, type: 2}
   m_crystalPoolConfigs:
   - name: CrystalShard_01
     prefab: {fileID: 4659529639341822391, guid: 668404455a2aa9344b0f4f21347033e4,
@@ -2336,6 +2337,7 @@ Transform:
   m_Children:
   - {fileID: 375987146}
   - {fileID: 989870696}
+  - {fileID: 1049331041}
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4063,6 +4065,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1049331040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1049331041}
+  - component: {fileID: 1049331042}
+  m_Layer: 0
+  m_Name: InsufficientEnergyPopUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1049331041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049331040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 538750400}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1049331042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049331040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a145c9d0ee31b40aaa5660e517c144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_document: {fileID: 2059864115}
+  m_containerName: popup-insufficient-energy
+  m_visualElementNames:
+  - insufficient-energy-container
+  m_fadeInDuration: 1
+  m_duration: 4
+  m_fadeOutDuration: 0.75
+  m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
 --- !u!1 &1052258068
 GameObject:
   m_ObjectHideFlags: 0
@@ -4651,6 +4705,8 @@ MonoBehaviour:
   m_appChannel: {fileID: 11400000, guid: 996232d3b4b289042a51dc8a3b2754e1, type: 2}
   m_levelChannel: {fileID: 11400000, guid: fdc7bfab1bf76a940b613fd762fc0295, type: 2}
   m_enemyChannel: {fileID: 11400000, guid: 35aecf6b491988e4daf6c00e4b76b13e, type: 2}
+  m_crytalShardsChannel: {fileID: 11400000, guid: 2697e5538c5c9974aad1a5c71d370c01,
+    type: 2}
   m_arenaDiameter: 50
   m_displayTutorial: 0
   m_useStartingTime: 0
@@ -6937,7 +6993,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867264002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9801354, y: -2.238826, z: -1}
+  m_LocalPosition: {x: -4.3578777, y: -2.451306, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

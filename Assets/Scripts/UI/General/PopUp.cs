@@ -92,6 +92,8 @@ namespace PierreMizzi.Useful.UI
 			AddClassToElements(UIToolkitUtils.animate);
 			yield return new WaitForSeconds(m_fadeOutDuration);
 
+			DisplayThenHideEnded();
+
 			// Revert back classes, back to fade-in state
 			AddClassToElements(UIToolkitUtils.reset);
 			RemoveClassToElements(UIToolkitUtils.animate);
@@ -152,6 +154,8 @@ namespace PierreMizzi.Useful.UI
 				Debug.Log(log);
 			}
 		}
+
+		protected virtual void DisplayThenHideEnded() { }
 
 		[ContextMenu("TestFadeIn")]
 		public virtual void TestFadeIn()
