@@ -1,8 +1,6 @@
 using System;
-using Bitfrost.Gameplay.Enemies;
 using Bitfrost.Gameplay.Energy;
 using Bitfrost.Gameplay.Players;
-using Bitfrost.Gameplay.Turrets;
 using UnityEngine;
 
 namespace Bitfrost.Gameplay
@@ -10,7 +8,7 @@ namespace Bitfrost.Gameplay
 
     public delegate void GameOverDelegate(GameOverData data);
 
-    [CreateAssetMenu(fileName = "LevelChannel", menuName = "Bitrost/LevelChannel", order = 0)]
+    [CreateAssetMenu(fileName = "Level Channel", menuName = "Overcore/Channels/Level Channel", order = 0)]
     public class LevelChannel : ScriptableObject
     {
 
@@ -18,7 +16,7 @@ namespace Bitfrost.Gameplay
         private bool m_isDebugging = false;
         public bool isDebugging { get { return m_isDebugging; } }
 
-        // TODO Use CrystalShardsManager instead
+        // TODO Use CrystalShardsChannel instead
         public CrystalShardsManager crystalManager;
 
         // Tutorial
@@ -33,39 +31,7 @@ namespace Bitfrost.Gameplay
         public Action onPlayerHit;
         public IntDelegate onTurretRetrieved;
 
-        // Loosing Conditions
-        [Obsolete]
-        public Action onPlayerDead;
-        // Player has no health
-        //      Can't act (move + turret)
-        // Player's explosion animation has ended
-        //      GameOver
-        //      DefeatPanel
-
-        /*
-            No Health
-
-            -onDisablePlayer
-            Player's animation explosion
-            - onGameOver (onPlayerDead)
-            - onDefeatPanel
-
-            Insufficent
-
-            - onInsufficientEnergy
-            - onDisablePlayer
-            InsufficentEnergy animation
-            - GameOver
-            - onDefeatPanel
-
-        */
         public Action onDisablePlayerControls;
-
-        /// <summary> 
-        /// Can be done through reset
-        /// </summary>
-        [Obsolete]
-        public Action onEnablePlayerControls;
         public Action onGameOver;
 
 
@@ -116,14 +82,12 @@ namespace Bitfrost.Gameplay
             onAllEnemiesKilled = () => { };
 
             // Game Over
-            onPlayerDead = () => { };
             onInsufficientEnergy = () => { };
             onDefeatPanel = (GameOverData data) => { };
             onVictoryPanel = (GameOverData data) => { };
 
             onGameOver = () => { };
             onDisablePlayerControls = () => { };
-            onEnablePlayerControls = () => { };
 
             // PopUp
             onDisplayStageCleared = () => { };

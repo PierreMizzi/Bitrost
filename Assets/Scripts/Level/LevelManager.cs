@@ -8,11 +8,11 @@ using PierreMizzi.SoundManager;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 namespace Bitfrost.Gameplay
 {
 
-    [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour, IPausable
     {
         #region Fields
@@ -86,13 +86,6 @@ namespace Bitfrost.Gameplay
 
         #region MonoBehaviour
 
-        private void OnEnable()
-        {
-            arenaRadius = m_arenaDiameter / 2f;
-            arenaRadiusSqr = math.pow(arenaRadius, 2f);
-            m_currentStageDifficulty = 0;
-        }
-
         private void Awake()
         {
             m_director = GetComponent<PlayableDirector>();
@@ -100,13 +93,14 @@ namespace Bitfrost.Gameplay
 
         private IEnumerator Start()
         {
+            InitializeArena();
+
             // Events
             if (m_levelChannel != null)
             {
                 m_levelChannel.onTutorialStartClicked += StartGameWithTutorial;
                 m_levelChannel.onChangeStageDifficulty += CallbackChangeStageDifficulty;
                 m_levelChannel.onAllEnemiesKilled += CallbackAllEnemiesKilled;
-                // m_levelChannel.onPlayerDead += CallbackGameOver;
                 m_levelChannel.onGameOver += CallbackGameOver;
 
                 m_levelChannel.onRestart += CallbackRestart;
@@ -135,8 +129,6 @@ namespace Bitfrost.Gameplay
 
             m_musicSoundSource.Play();
         }
-
-
 
         private void Update()
         {
@@ -188,6 +180,12 @@ namespace Bitfrost.Gameplay
         #endregion
 
         #region Arena
+
+        private void InitializeArena()
+        {
+            arenaRadius = m_arenaDiameter / 2f;
+            arenaRadiusSqr = math.pow(arenaRadius, 2f);
+        }
 
         public static bool IsInsideArena(Vector3 position)
         {

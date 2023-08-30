@@ -66,8 +66,7 @@ namespace Bitfrost.Gameplay.Players
 
             if (m_levelChannel != null)
             {
-                m_levelChannel.onDisablePlayerControls += CallbackDisableControls;
-                m_levelChannel.onEnablePlayerControls += CallbackEnableControls;
+                m_levelChannel.onDisablePlayerControls += DisableControls;
 
                 m_levelChannel.onReset += CallbackReset;
                 m_levelChannel.onPauseGame += Pause;
@@ -84,8 +83,7 @@ namespace Bitfrost.Gameplay.Players
 
             if (m_levelChannel != null)
             {
-                m_levelChannel.onDisablePlayerControls -= CallbackDisableControls;
-                m_levelChannel.onEnablePlayerControls -= CallbackEnableControls;
+                m_levelChannel.onDisablePlayerControls -= DisableControls;
 
                 m_levelChannel.onReset -= CallbackReset;
                 m_levelChannel.onPauseGame -= Pause;
@@ -137,7 +135,6 @@ namespace Bitfrost.Gameplay.Players
         // Function called at the end of Dead.anim
         public void CallbackDeadAnimation()
         {
-            m_levelChannel.onPlayerDead.Invoke();
             m_levelChannel.onGameOver.Invoke();
         }
 
@@ -150,7 +147,7 @@ namespace Bitfrost.Gameplay.Players
             SetAlive();
             m_healthEntity.Reset();
             transform.position = Vector3.zero;
-            CallbackEnableControls();
+            EnableControls();
         }
 
         public void Pause()
@@ -167,16 +164,15 @@ namespace Bitfrost.Gameplay.Players
 
         #endregion
 
-        private void CallbackDisableControls()
+        private void DisableControls()
         {
             m_controller.enabled = false;
         }
 
-        private void CallbackEnableControls()
+        private void EnableControls()
         {
             m_controller.enabled = true;
         }
-
 
         private void CallbackTurretRetrieved(int storedEnergy)
         {
