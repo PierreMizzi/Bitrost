@@ -8,6 +8,9 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Enemies
 {
 
+	/// <summary>
+	/// Base behaviour for all enemies
+	/// </summary>
 	public class Enemy : MonoBehaviour, IStateMachine, IPausable
 	{
 		#region Fields
@@ -89,7 +92,11 @@ namespace Bitfrost.Gameplay.Enemies
 
 		protected virtual void OnDestroy()
 		{
-			UnsubscribeHealth();
+			if (m_healthEntity != null)
+			{
+				m_healthEntity.onLostHealth -= CallbackLostHealth;
+				m_healthEntity.onNoHealth -= CallbackNoHealth;
+			}
 		}
 
 		#region StateMachine
@@ -132,18 +139,33 @@ namespace Bitfrost.Gameplay.Enemies
 
 		#region Behaviour
 
+		/// <summary>
+		/// The first time an enemy leaves the pool, it means it just got instantiated and needs to be initialized
+		/// </summary>
+		/// <param name="manager"></param>
 		protected virtual void Initialize(EnemyManager manager)
 		{
 			m_manager = manager;
+
+			// health
 			m_healthEntity = GetComponent<HealthEntity>();
 			m_healthEntity.maxHealth = settings.maxHealth;
-			SubscribeHealth();
+			if (m_healthEntity != null)
+			{
+				m_healthEntity.onLostHealth += CallbackLostHealth;
+				m_healthEntity.onNoHealth += CallbackNoHealth;
+			}
 
+			/// State Machine
 			InitiliazeStates();
 
 			m_isInitialized = true;
 		}
 
+		/// <summary>
+		/// Enemy spawned and left the pool, needs to be reset before being active
+		/// </summary>
+		/// <param name="manager"></param>
 		public virtual void OutOfPool(EnemyManager manager)
 		{
 			if (!m_isInitialized)
@@ -164,34 +186,22 @@ namespace Bitfrost.Gameplay.Enemies
 
 		#region Health
 
+		/// <summary>
+		/// Needs to be hittable when active
+		/// </summary>
 		public virtual void SetHittable()
 		{
 			foreach (Collider2D collider in m_colliders)
 				collider.enabled = true;
 		}
 
+		/// <summary>
+		/// Needs to be non-hittable when dying or inactive
+		/// </summary>
 		public virtual void SetNonHittable()
 		{
 			foreach (Collider2D collider in m_colliders)
 				collider.enabled = false;
-		}
-
-		protected virtual void SubscribeHealth()
-		{
-			if (m_healthEntity != null)
-			{
-				m_healthEntity.onLostHealth += CallbackLostHealth;
-				m_healthEntity.onNoHealth += CallbackNoHealth;
-			}
-		}
-
-		protected virtual void UnsubscribeHealth()
-		{
-			if (m_healthEntity != null)
-			{
-				m_healthEntity.onLostHealth -= CallbackLostHealth;
-				m_healthEntity.onNoHealth -= CallbackNoHealth;
-			}
 		}
 
 		protected virtual void CallbackLostHealth()
@@ -209,23 +219,27 @@ namespace Bitfrost.Gameplay.Enemies
 
 		#region Utils
 
-		public Vector3 CloseRandomPositionAroundPlayer(float radius, float angle)
+		/// <summary>
+		/// Get a random position around the player, rotated by current directionTowardPlayer by angle degrees.
+		/// </summary>
+		/// <param name="radius">radius raound enemy</param>
+		/// <param name="angle">random angle</param>
+		/// <returns></returns>
+		public Vector3 RandomPositionAroundPlayer(float radius, float angle)
 		{
 
 			Vector3 playerPosition = m_levelChannel.player.transform.position;
-			Vector3 playerToEnemy = CloseRandomDirectionFromPlayer(angle);
+			Vector3 playerToEnemy = RandomDirectionAroundPlayer(angle);
 
 			return playerPosition + (playerToEnemy.normalized * radius);
 		}
 
-		public Vector3 PositionAroundPlayer(Vector3 direction, float radius)
-		{
-			Vector3 playerPosition = m_levelChannel.player.transform.position;
-
-			return playerPosition + (direction * radius);
-		}
-
-		public Vector3 CloseRandomDirectionFromPlayer(float angle)
+		/// <summary>
+		/// Get a random direction from Player to this enemy, rotated by current directionTowardPlayer by angle degrees.
+		/// </summary>
+		/// <param name="angle"></param>
+		/// <returns></returns>
+		public Vector3 RandomDirectionAroundPlayer(float angle)
 		{
 			float randomAngle = UnityEngine.Random.Range(
 				 -angle,

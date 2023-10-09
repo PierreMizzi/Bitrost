@@ -5,6 +5,10 @@ using UnityEngine.UIElements;
 
 namespace PierreMizzi.Useful.UI
 {
+
+	/// <summary>
+	/// Fade in and Fade out to hide loading and unloading of scenes
+	/// </summary>
 	public class FadeScreen : MonoBehaviour
 	{
 		#region Fields 

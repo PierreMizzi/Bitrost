@@ -5,7 +5,13 @@ using UnityEngine;
 
 namespace Bitfrost.Gameplay.Bullets
 {
-
+	/// <summary>
+	/// Delegate called when firing a bullet
+	/// </summary>
+	/// <param name="config">Bullet's properties (speed, damage etc)</param>
+	/// <param name="launcher">Entity who fired the bullet</param>
+	/// <param name="position">Starting position in world space</param>
+	/// <param name="orientation">Starting orientation (up vector)</param>
 	public delegate void FireBulletDelegate(
 		BulletConfig config,
 		IBulletLauncher launcher,
@@ -19,8 +25,10 @@ namespace Bitfrost.Gameplay.Bullets
 
 	public delegate void ReleaseImpactDelegate(BulletImpact impact);
 
-
-	[CreateAssetMenu(fileName = "BulletChannel", menuName = "Bitrost/Bullet/BulletChannel", order = 0)]
+	/// <summary>
+	/// Handles bullets and bullet impacts related events 
+	/// </summary>
+	[CreateAssetMenu(fileName = "BulletChannel", menuName = "Overcore/Channels/Gameplay/Bullet Channel", order = 0)]
 	public class BulletChannel : ScriptableObject
 	{
 		[Header("Bullets")]

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.UIElements;
 
 namespace PierreMizzi.Useful.UIToolkit
@@ -44,7 +45,7 @@ namespace PierreMizzi.Useful.UIToolkit
 			m_progressFill.style.right = m_progressBarLength;
 
 			// Text
-			m_progressText.text = this.progress * 100f + "%";
+			m_progressText.text = MathF.Floor(this.progress * 100f) + "%";
 		}
 
 

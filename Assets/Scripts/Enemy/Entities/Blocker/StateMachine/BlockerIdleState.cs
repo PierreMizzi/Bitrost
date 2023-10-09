@@ -6,6 +6,9 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Enemies
 {
 
+	/// <summary>
+	/// When no target crystal has been found, the blocker rotates around itself, looking for an occupied crystal shard
+	/// </summary>
 	public class BlockerIdleState : BlockerState
 	{
 		public BlockerIdleState(IStateMachine stateMachine)

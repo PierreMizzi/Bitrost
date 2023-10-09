@@ -89,12 +89,14 @@ namespace PierreMizzi.SoundManager
 		public static void InitializeSFXSSPool()
 		{
 			// Transform container
-			m_SFXSSContainer = GameObject.Find(k_SFXSSContainerName).transform;
-			if (m_SFXSSContainer == null)
+			GameObject container = GameObject.Find(k_SFXSSContainerName);
+			if (container == null)
 			{
-				GameObject gameObject = new GameObject(k_SFXSSContainerName);
-				m_SFXSSContainer = gameObject.transform;
+				GameObject newContainer = new GameObject(k_SFXSSContainerName);
+				m_SFXSSContainer = newContainer.transform;
 			}
+			else
+				m_SFXSSContainer = container.transform;
 
 			// Pool
 			m_SFXSSPool = new ObjectPool<SFXSoundSource>(

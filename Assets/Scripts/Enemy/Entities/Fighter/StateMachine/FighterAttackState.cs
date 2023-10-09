@@ -1,11 +1,12 @@
 using System.Collections;
-using DG.Tweening;
 using PierreMizzi.Useful.StateMachines;
 using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
-
+    /// <summary>
+    /// After reaching it's position around the player, the FIghter fires a series of bullet before finding another position
+    /// </summary>
     public class FighterAttackState : EnemyAttackState
     {
         public FighterAttackState(IStateMachine stateMachine)
@@ -18,10 +19,11 @@ namespace Bitfrost.Gameplay.Enemies
 
         private IEnumerator m_attackCoroutine = null;
 
+        #region AState
+
         protected override void DefaultEnter()
         {
             base.DefaultEnter();
-
             StartAttack();
         }
 
@@ -40,17 +42,18 @@ namespace Bitfrost.Gameplay.Enemies
         {
             base.Pause();
 
-            if (m_attackCoroutine != null)
-                m_fighter.StopCoroutine(m_attackCoroutine);
+            PauseAttack();
         }
 
         public override void Resume()
         {
             base.Resume();
 
-            if (m_attackCoroutine != null)
-                m_fighter.StartCoroutine(m_attackCoroutine);
+            ResumeMethod();
         }
+
+        #endregion
+
 
         private void StartAttack()
         {
@@ -64,8 +67,21 @@ namespace Bitfrost.Gameplay.Enemies
             m_attackCoroutine = null;
         }
 
+        private void PauseAttack()
+        {
+            if (m_attackCoroutine != null)
+                m_fighter.StopCoroutine(m_attackCoroutine);
+        }
+
+        private void ResumeMethod()
+        {
+            if (m_attackCoroutine != null)
+                m_fighter.StartCoroutine(m_attackCoroutine);
+        }
+
         private IEnumerator AttackCoroutine()
         {
+            // Salvo of bullet fired at the player
             for (int i = 0; i < m_fighter.settings.bulletSalvoCount; i++)
             {
                 m_fighter.Fire();

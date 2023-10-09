@@ -4,6 +4,9 @@ using UnityEngine;
 namespace PierreMizzi.Useful.StateMachines
 {
 
+    /// <summary>
+    /// Interface for every entity that behaves like a state machine
+    /// </summary>
     public interface IStateMachine
     {
         public GameObject gameObject { get; }

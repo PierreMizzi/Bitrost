@@ -7,6 +7,9 @@ using PierreMizzi.Pause;
 namespace Bitfrost.Gameplay.Bullets
 {
 
+	/// <summary>
+	/// Handles the events to display bullets and bullet imapcts coming from their pools
+	/// </summary>
 	public class BulletManager : MonoBehaviour, IPausable
 	{
 		[Header("Channels")]
@@ -114,11 +117,14 @@ namespace Bitfrost.Gameplay.Bullets
 
 		#region Bullet Impacts
 
+		/// <summary>
+		/// Bullet imapct's behaviour when going out of its pool
+		/// </summary>
+		/// <param name="gameObject"></param>
 		public void ImpactGetFromPool(GameObject gameObject)
 		{
 			BulletImpact impact = gameObject.GetComponent<BulletImpact>();
 			impact.Hide();
-
 			impact.gameObject.SetActive(true);
 		}
 
@@ -150,6 +156,9 @@ namespace Bitfrost.Gameplay.Bullets
 
 		#region Reset
 
+		/// <summary>
+		/// Releases both bullets and bullet impacts back to their pools
+		/// </summary>
 		public void CallbackReset()
 		{
 			foreach (Bullet bullet in m_activeBullets)

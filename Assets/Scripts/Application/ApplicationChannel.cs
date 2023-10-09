@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using Bitfrost.Gameplay;
 using PierreMizzi.Useful.SceneManagement;
 using UnityEngine;
@@ -7,8 +5,7 @@ using UnityEngine;
 namespace Bitfrost.Application
 {
 
-
-	[CreateAssetMenu(fileName = "ApplicationChannel", menuName = "Bitrost/Architecture/ApplicationChannel", order = 0)]
+	[CreateAssetMenu(fileName = "ApplicationChannel", menuName = "Overcore/Channels/Architecture/Application Channel", order = 0)]
 	public class ApplicationChannel : BaseAppChannel
 	{
 

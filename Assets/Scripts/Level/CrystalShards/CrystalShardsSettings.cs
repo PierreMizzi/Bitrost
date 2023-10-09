@@ -32,24 +32,22 @@ namespace Bitfrost.Gameplay.Energy
         [SerializeField]
         private float m_safeDistanceFromScaleRatio = 0.66f;
 
-        private float safeDistanceFromScaleRatio;
+        private float sqrSafeDistanceFromScaleRatio;
 
+        /// <summary>
+        /// Distance in a square around one batch's origin position.
+        /// Determines how far the crystal shards can spawn from each other
+        /// </summary>
         public float randomPositionExtents;
-
-
-        [Header("Circular Spacer")]
-        public List<HarvesterCircularSpacerConfig> harvesterSpacerConfigs = new List<HarvesterCircularSpacerConfig>();
-
-        public float baseRadiusSpacer = 2.6f;
 
         private void OnEnable()
         {
-            safeDistanceFromScaleRatio = Mathf.Pow(m_safeDistanceFromScaleRatio, 2f);
+            sqrSafeDistanceFromScaleRatio = Mathf.Pow(m_safeDistanceFromScaleRatio, 2f);
         }
 
         public Color GetRandomTint()
         {
-            return UtilsClass.PickRandom(m_spriteTints);
+            return m_spriteTints.PickRandom();
         }
 
         public Vector2 GetRandomPosition()
@@ -71,7 +69,7 @@ namespace Bitfrost.Gameplay.Energy
 
         public float SafeDistanceFromScale(float scale)
         {
-            return safeDistanceFromScaleRatio * scale;
+            return sqrSafeDistanceFromScaleRatio * scale;
         }
 
     }

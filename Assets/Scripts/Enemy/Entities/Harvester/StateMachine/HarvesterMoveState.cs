@@ -20,6 +20,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         private IEnumerator m_approachCoroutine;
 
+        #region AState
 
         protected override void DefaultEnter()
         {
@@ -27,24 +28,50 @@ namespace Bitfrost.Gameplay.Enemies
             m_harvester.SearchTargetSpot();
             m_harvester.targetSpot.isAvailable = false;
 
-            // Using Coroutines
-            StartApproachPlayer();
+            StartApproach();
+        }
+
+        public override void Update()
+        {
+            if (!m_harvester.isTargetValid)
+                ChangeState((int)EnemyStateType.Idle);
+        }
+
+        public override void Exit()
+        {
+            StopApproach();
+        }
+
+        public override void Pause()
+        {
+            base.Pause();
+
+            PauseApproachCoroutine();
 
         }
 
-        #region Coroutine
+        public override void Resume()
+        {
+            base.Resume();
+
+            ResumeApproachCoroutine();
+        }
+
+        #endregion
+
+        #region Approach Crystal Shard
 
 
-        private void StartApproachPlayer()
+        private void StartApproach()
         {
             if (m_approachCoroutine == null)
             {
-                m_approachCoroutine = ApproachAsteroid();
+                m_approachCoroutine = Approach();
                 m_harvester.StartCoroutine(m_approachCoroutine);
             }
         }
 
-        private void StopApproachPlayer()
+        private void StopApproach()
         {
             if (m_approachCoroutine != null)
             {
@@ -65,13 +92,17 @@ namespace Bitfrost.Gameplay.Enemies
                 m_harvester.StartCoroutine(m_approachCoroutine);
         }
 
-        private IEnumerator ApproachAsteroid()
+        private IEnumerator Approach()
         {
-            yield return ReachTargetSpotReworked();
+            yield return ApproachTargetSpot();
             ChangeState((int)EnemyStateType.Attack);
         }
 
-        private IEnumerator ReachTargetSpotReworked()
+        /// <summary>
+        /// Lerps the harvester position and rotation to park it on its designated Target Spot
+        /// around it's TargetCrystal
+        /// </summary>
+        private IEnumerator ApproachTargetSpot()
         {
             Transform targetTransform = m_harvester.targetSpot.transform;
 
@@ -90,10 +121,10 @@ namespace Bitfrost.Gameplay.Enemies
                 currentTime += Time.deltaTime;
                 progress = currentTime / totalTime;
 
-                // Position
+                // Lerps position
                 m_harvester.transform.position = Vector3.Lerp(fromPosition, targetTransform.position, progress);
 
-                // Direction
+                // Lerps orientation
                 directionProgress = ProgressToDirectionProgress(progress);
                 fromDirection = (targetTransform.position - m_harvester.transform.position).normalized;
                 m_harvester.transform.up = Vector3.Lerp(fromDirection, targetTransform.up, directionProgress);
@@ -107,6 +138,12 @@ namespace Bitfrost.Gameplay.Enemies
             yield return null;
         }
 
+        /// <summary>
+        /// Since the rotation starts at a certain percentage of the full movement, we compute rotation progress here.
+        /// cf. : HarvesterSettings.rotationProgressBeginning
+        /// </summary>
+        /// <param name="progress">Normalized approach's progress</param>
+        /// <returns>normalized rotation progress</returns>
         private float ProgressToDirectionProgress(float progress)
         {
             progress = math.remap(m_harvester.settings.rotationProgressBeginning,
@@ -121,40 +158,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         #endregion
 
-        public override void Update()
-        {
-            if (!m_harvester.isTargetValid)
-                ChangeState((int)EnemyStateType.Idle);
-        }
 
-        public override void Exit()
-        {
-            StopApproachPlayer();
-
-
-        }
-
-        public override void Pause()
-        {
-            base.Pause();
-
-            PauseApproachCoroutine();
-
-        }
-
-        public override void Resume()
-        {
-            base.Resume();
-
-            ResumeApproachCoroutine();
-
-
-        }
-
-        public void OnCompleteMovement()
-        {
-            ChangeState((int)EnemyStateType.Attack);
-        }
 
     }
 }

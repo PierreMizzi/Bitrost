@@ -1,6 +1,5 @@
 using PierreMizzi.Useful.UI;
 using UnityEngine;
-using UnityEngine.UIElements;
 using ProgressBar = PierreMizzi.Useful.UIToolkit.ProgressBar;
 
 namespace PierreMizzi.Useful.SceneManagement

@@ -177,7 +177,7 @@ namespace Bitfrost.Gameplay.Players
         private void CallbackTurretRetrieved(int storedEnergy)
         {
             if (!m_healthEntity.isMaxHealth && storedEnergy > 0)
-                m_healthEntity.HealHealth(storedEnergy * m_settings.healedHealthPerStoredEnergy);
+                m_healthEntity.GainHealth(storedEnergy * m_settings.healedHealthPerStoredEnergy);
         }
 
         #endregion

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
+    /// <summary>
+    /// Finds a position around the player and starts attacking after reaching it
+    /// </summary>
     public class FighterMoveState : EnemyMoveState
     {
         public FighterMoveState(IStateMachine stateMachine)
@@ -14,9 +17,9 @@ namespace Bitfrost.Gameplay.Enemies
 
         private Fighter m_fighter;
 
-        private Vector3 m_endPosition;
-
         private Tween m_approachPlayerTween;
+
+        #region AState
 
         protected override void DefaultEnter()
         {
@@ -50,16 +53,20 @@ namespace Bitfrost.Gameplay.Enemies
                 m_approachPlayerTween.Play();
         }
 
+        #endregion
+
         private void ApproachPlayer()
         {
             Vector3 playerPosition = m_fighter.levelChannel.player.transform.position;
-            m_endPosition = m_fighter.CloseRandomPositionAroundPlayer(m_fighter.settings.radiusAroundPlayer, m_fighter.settings.angleAroundPlayer);
+
+            // position around the player
+            Vector3 endPosition = m_fighter.RandomPositionAroundPlayer(m_fighter.settings.radiusAroundPlayer, m_fighter.settings.angleAroundPlayer);
 
             // Duration of movement
-            float duration = (playerPosition - m_endPosition).magnitude / m_fighter.settings.speed;
+            float duration = (playerPosition - endPosition).magnitude / m_fighter.settings.speed;
 
             m_approachPlayerTween = m_fighter.transform
-                .DOMove(m_endPosition, duration)
+                .DOMove(endPosition, duration)
                 .OnComplete(ApproachPlayerComplete);
         }
 

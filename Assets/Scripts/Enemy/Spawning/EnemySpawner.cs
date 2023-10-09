@@ -67,7 +67,7 @@ namespace Bitfrost.Gameplay.Enemies
         {
             while (true)
             {
-                m_manager.SpawnEnemy(m_config.prefab.gameObject, m_config.batchCount);
+                m_manager.SpawnEnemyBatch(m_config.prefab.gameObject, m_config.batchCount);
                 currentCount -= m_config.batchCount;
 
                 if (currentCount <= 0)

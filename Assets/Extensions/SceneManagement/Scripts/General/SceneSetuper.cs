@@ -1,10 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace PierreMizzi.Useful.SceneManagement
 {
-	[ExecuteInEditMode]
+	[ExecuteInEditMode, Obsolete]
 	public class SceneSetuper : MonoBehaviour
 	{
 

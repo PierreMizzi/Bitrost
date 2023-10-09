@@ -1,10 +1,14 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
 namespace PierreMizzi.Useful.SceneManagement
 {
-	using System;
-	using System.Collections;
-	using UnityEngine;
-	using UnityEngine.SceneManagement;
 
+	/// <summary> 
+	///	Scene to go from one scene to another
+	/// </summary>
 	[ExecuteInEditMode]
 	public class BaseAppManager : MonoBehaviour
 	{
@@ -18,6 +22,9 @@ namespace PierreMizzi.Useful.SceneManagement
 		[SerializeField]
 		protected SceneLoaderScreen m_loaderScreen;
 
+		/// <summary>
+		/// Camera displaying loading screen between scene loading
+		/// </summary>
 		[SerializeField]
 		protected Camera m_initialCamera = null;
 
@@ -36,6 +43,7 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		protected virtual IEnumerator SceneSetup()
 		{
+			// When booting the game, loads the Titlecard scene
 			if (SceneManager.sceneCount == 1)
 			{
 				m_initialCamera.gameObject.SetActive(true);
@@ -82,9 +90,6 @@ namespace PierreMizzi.Useful.SceneManagement
 		protected virtual IEnumerator ApplicationToTitlecardCoroutine()
 		{
 			// Display SceneLoaderScreen
-			bool hold = true;
-			Action stopHold = () => { hold = false; };
-
 			m_loaderScreen.Display();
 
 			yield return SceneLoader.LoadScene(titlecardSceneName, true, m_loaderScreen.SetProgress);
@@ -94,15 +99,12 @@ namespace PierreMizzi.Useful.SceneManagement
 			yield return new WaitForSeconds(1f);
 
 			m_loaderScreen.HideProgressBar();
-			m_loaderScreen.FadeOut(3f, stopHold);
-
-			while (hold)
-				yield return null;
+			m_loaderScreen.FadeOut(3f);
 		}
 
 		protected virtual void TitlecardToGame()
 		{
-			IEnumerator transition = SceneTransitionCoroutine(titlecardSceneName, gameSceneName, m_appChannel.onUnloadTitlecardScene());
+			IEnumerator transition = SceneTransitionCoroutine(titlecardSceneName, gameSceneName, m_appChannel.onUnloadTitlecardScene.Invoke());
 			StartCoroutine(transition);
 		}
 
@@ -112,12 +114,19 @@ namespace PierreMizzi.Useful.SceneManagement
 			StartCoroutine(transition);
 		}
 
+		/// <summary>
+		/// Transition from one scene to another
+		/// </summary>
+		/// <param name="previousSceneName"></param>
+		/// <param name="newSceneName"></param>
+		/// <param name="previousSceneUnloading">previous scene unloading behaviour</param>
+		/// <returns></returns>
 		protected virtual IEnumerator SceneTransitionCoroutine(string previousSceneName, string newSceneName, IEnumerator previousSceneUnloading = null)
 		{
 			bool hold = true;
 			Action stopHold = () => { hold = false; };
 
-			// Fade In
+			// Fade in to hide the current scene
 			m_loaderScreen.HideProgressBar();
 			m_loaderScreen.FadeIn(1, stopHold);
 
@@ -127,23 +136,22 @@ namespace PierreMizzi.Useful.SceneManagement
 			if (previousSceneUnloading != null)
 				yield return previousSceneUnloading;
 
+			// Loading screen displays loading progress
 			m_initialCamera.gameObject.SetActive(true);
 			m_loaderScreen.DisplayProgressBar();
-			// Unload Game Scene
+
+			// Unload previous scene
 			yield return SceneLoader.UnloadScene(previousSceneName);
 			GC.Collect();
 
-			// Loads Titlecard scene
+			// Loads next scene
 			yield return SceneLoader.LoadScene(newSceneName, true, m_loaderScreen.SetProgress);
 			m_initialCamera.gameObject.SetActive(false);
 			m_loaderScreen.HideProgressBar();
 
-			// Fade Out
+			// Fade Out, display newly loaded scene
 			hold = true;
-			m_loaderScreen.FadeOut(1, stopHold);
-
-			while (hold)
-				yield return null;
+			m_loaderScreen.FadeOut(1);
 		}
 
 		#endregion

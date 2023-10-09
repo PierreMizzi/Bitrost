@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Bitfrost.Application;
 using UnityEngine;
@@ -6,9 +5,11 @@ using UnityEngine;
 namespace Bitfrost.Gameplay
 {
 
-
     public delegate void CursorDelegate(CursorType type);
 
+    /// <summary>
+    /// Handles cursor's properties in-game when fighting or in menu
+    /// </summary>
     public class CursorManager : MonoBehaviour
     {
 
@@ -16,10 +17,11 @@ namespace Bitfrost.Gameplay
         private ApplicationChannel m_appChannel;
 
         [SerializeField]
-        private LevelChannel m_levelChannel;
+        private List<CursorConfig> m_configs = new List<CursorConfig>();
 
-        [SerializeField] private List<CursorConfig> m_configs = new List<CursorConfig>();
-
+        /// <summary>
+        /// Associate cursor's configurations to one type of cursor
+        /// </summary>
         private Dictionary<CursorType, CursorConfig> m_typeToConfig = new Dictionary<CursorType, CursorConfig>();
 
         private void Start()
@@ -33,13 +35,6 @@ namespace Bitfrost.Gameplay
             if (m_appChannel != null)
                 m_appChannel.onSetCursor += SetCursor;
 
-            if (m_levelChannel != null)
-            {
-                m_levelChannel.onDefeatPanel += CallbackNormalCursor;
-                m_levelChannel.onVictoryPanel += CallbackNormalCursor;
-
-                m_levelChannel.onPauseGame += Pause;
-            }
         }
 
         private void OnDestroy()
@@ -47,15 +42,12 @@ namespace Bitfrost.Gameplay
             if (m_appChannel != null)
                 m_appChannel.onSetCursor -= SetCursor;
 
-            if (m_levelChannel != null)
-            {
-                m_levelChannel.onDefeatPanel -= CallbackNormalCursor;
-                m_levelChannel.onVictoryPanel -= CallbackNormalCursor;
-
-                m_levelChannel.onPauseGame -= Pause;
-            }
         }
 
+        /// <summary>
+        /// Changes cursor propreties, like texture or hotspot
+        /// </summary>
+        /// <param name="type"></param>
         private void SetCursor(CursorType type)
         {
             if (m_typeToConfig.ContainsKey(type))
@@ -63,16 +55,6 @@ namespace Bitfrost.Gameplay
                 CursorConfig config = m_typeToConfig[type];
                 Cursor.SetCursor(config.texture, config.hotspot, config.mode);
             }
-        }
-
-        private void CallbackNormalCursor(GameOverData data)
-        {
-            SetCursor(CursorType.Normal);
-        }
-
-        private void Pause()
-        {
-            SetCursor(CursorType.Normal);
         }
 
     }

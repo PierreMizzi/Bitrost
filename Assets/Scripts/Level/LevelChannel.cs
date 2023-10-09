@@ -17,6 +17,7 @@ namespace Bitfrost.Gameplay
         public bool isDebugging { get { return m_isDebugging; } }
 
         // TODO Use CrystalShardsChannel instead
+        [HideInInspector]
         public CrystalShardsManager crystalManager;
 
         // Tutorial
@@ -27,6 +28,7 @@ namespace Bitfrost.Gameplay
         public IntDelegate onChangeStageDifficulty;
 
         // Player & Turret
+        [HideInInspector]
         public Player player;
         public Action onPlayerHit;
         public IntDelegate onTurretRetrieved;

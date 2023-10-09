@@ -3,6 +3,9 @@ using System;
 namespace Bitfrost.Gameplay.Bullets
 {
 
+	/// <summary>
+	/// Bullet's properties
+	/// </summary>
 	[Serializable]
 	public struct BulletConfig
 	{

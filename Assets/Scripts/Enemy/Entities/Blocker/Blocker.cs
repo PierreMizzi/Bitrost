@@ -8,6 +8,10 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Enemies
 {
 
+	/// <summary>
+	/// Blocker are non-offensive enemies that can block turret bullets.
+	/// Blockers are destroyed when both weakspot has been taken down
+	/// </summary>
 	public class Blocker : Enemy
 	{
 		#region Fields 
@@ -39,6 +43,9 @@ namespace Bitfrost.Gameplay.Enemies
 
 		#region Attack
 
+		/// <summary>
+		/// Blockers are looking for any type of crystal, has long it's occupied by a turret
+		/// </summary>
 		private Predicate<CrystalShard> m_targetableCrystalPredicate;
 
 		public Turret targetTurret { get; set; }
@@ -92,6 +99,11 @@ namespace Bitfrost.Gameplay.Enemies
 		protected override void Initialize(EnemyManager manager)
 		{
 			m_manager = manager;
+
+			m_healthEntity = GetComponent<HealthEntity>();
+			m_healthEntity.maxHealth = 0;
+			m_healthEntity.maxHealth = m_weakSpots.Count * settings.weakSpotMaxHealth;
+
 			InitiliazeStates();
 			InitializeWeakSpots();
 
@@ -165,6 +177,7 @@ namespace Bitfrost.Gameplay.Enemies
 
 		public void SearchTargetCrystal()
 		{
+			// The turrets we're looking for are already stored in a specialized. That's why the predicate is not very specific
 			CrystalShard crystal = m_levelChannel.crystalManager.PickRandomOccupiedCrystal(m_targetableCrystalPredicate);
 
 			if (crystal != null)

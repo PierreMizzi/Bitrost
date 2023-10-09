@@ -6,6 +6,11 @@ using Bitfrost.Gameplay.Turrets;
 
 namespace Bitfrost.Gameplay.Energy
 {
+
+    /// <summary>
+    /// Crystal Shard are asteroids where the player can lands its turret.
+    /// They contain a finite amount of energy needed to fire bullet from turrets.
+    /// </summary>
     public class CrystalShard : MonoBehaviour, IPausable
     {
 
@@ -18,6 +23,9 @@ namespace Bitfrost.Gameplay.Energy
 
         private bool m_isInitialized;
 
+        /// <summary>
+        /// Current turret occupying the crystal shard
+        /// </summary>
         public Turret turret { get; private set; }
 
         public bool hasTurret => turret != null;
@@ -42,8 +50,6 @@ namespace Bitfrost.Gameplay.Energy
 
         public Action onRefreshEnergy = null;
 
-        public Action onNoEnergy = null;
-
         #endregion
 
         #region Rendering
@@ -53,8 +59,6 @@ namespace Bitfrost.Gameplay.Energy
         private SpriteRenderer m_spriteRenderer = null;
 
         private Color m_spriteRendererTint;
-
-        public SpriteRenderer spriteRenderer { get { return m_spriteRenderer; } }
 
         [SerializeField]
         private MaterialPropertyBlockModifier m_propertyBlock = null;
@@ -72,6 +76,10 @@ namespace Bitfrost.Gameplay.Energy
         #region Spots
 
         [Header("Spots")]
+
+        /// <summary> 
+        /// Manages available spots for Harvester enemies to come attack it
+        /// </summary>
         [SerializeField]
         private SpotManager m_harvesterSpotManager;
 

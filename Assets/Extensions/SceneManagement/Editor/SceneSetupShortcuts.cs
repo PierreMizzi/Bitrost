@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -50,4 +52,7 @@ namespace PierreMizzi.Useful.SceneManagementEditor
 		}
 
 	}
+
 }
+
+#endif

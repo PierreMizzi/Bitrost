@@ -1,9 +1,12 @@
 using DG.Tweening;
 using PierreMizzi.Useful.StateMachines;
-using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
+
+    /// <summary>
+    /// Harvesters attacks crystals shard 
+    /// </summary>
     public class HarvesterAttackState : EnemyAttackState
     {
         public HarvesterAttackState(IStateMachine stateMachine)
@@ -17,6 +20,8 @@ namespace Bitfrost.Gameplay.Enemies
         private Sequence m_attackSequence = null;
 
         private const string IS_ATTACKING_BOOL = "IsAttacking";
+
+        #region AState
 
         protected override void DefaultEnter()
         {
@@ -55,6 +60,8 @@ namespace Bitfrost.Gameplay.Enemies
             if (m_attackSequence != null && !m_attackSequence.IsPlaying())
                 m_attackSequence.Play();
         }
+
+        #endregion
 
         public void Attack()
         {

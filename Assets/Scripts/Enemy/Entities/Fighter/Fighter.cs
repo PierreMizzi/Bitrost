@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
+
+    /// <summary>
+    /// Figther are tougher enemies that fires a series of bullet at the player
+    /// </summary>
     public class Fighter : Enemy, IBulletLauncher
     {
         #region Fields
@@ -53,6 +57,10 @@ namespace Bitfrost.Gameplay.Enemies
 
         #region IBulletLauncher
 
+        /// <summary>
+        /// No seconds thought from a killing machine
+        /// </summary>
+        /// <returns>true</returns>
         public bool CanFire()
         {
             return true;

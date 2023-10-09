@@ -7,6 +7,9 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Enemies
 {
 
+    /// <summary>
+    /// Harvester geos from one crystals shard to another to depleates its energy
+    /// </summary>
     [RequireComponent(typeof(Animator))]
     public class Harvester : Enemy
     {
@@ -18,10 +21,16 @@ namespace Bitfrost.Gameplay.Enemies
             get { return base.settings as HarvesterSettings; }
         }
 
+        /// <summary>
+        /// Predicate to find suitable crystal shards
+        /// </summary>
         public Predicate<CrystalShard> m_targetableCrystalPredicate;
 
         public CrystalShard targetCrystal { get; private set; }
 
+        /// <summary>
+        /// Is the current crystal shard is a valid target ?
+        /// </summary>
         public bool isTargetValid
         {
             get
@@ -30,6 +39,9 @@ namespace Bitfrost.Gameplay.Enemies
             }
         }
 
+        /// <summary>
+        /// Spot around a crystal shard. It's like a parking space for gathering
+        /// </summary>
         public Spot targetSpot { get; private set; }
 
         #endregion
@@ -78,17 +90,17 @@ namespace Bitfrost.Gameplay.Enemies
 
         public void SearchTargetCrystal()
         {
-            // First, target all currently used crystals 
+            // First, target crystals shards occupied by player's turrets
             CrystalShard crystal = m_levelChannel.crystalManager.PickRandomOccupiedCrystal(m_targetableCrystalPredicate);
             if (crystal != null)
                 goto Found;
 
-            // If none, picks from crystals at player's range
+            // If none, picks from crystals around player's position
             crystal = m_levelChannel.crystalManager.PickRandomCrystalNearPlayer(settings.searchCrystalRangeSqr, m_targetableCrystalPredicate);
             if (crystal != null)
                 goto Found;
 
-            // If none, picks from all crystals
+            // If none, picks any crystal
             crystal = m_levelChannel.crystalManager.PickRandomActiveCrystal(m_targetableCrystalPredicate);
             if (crystal != null)
                 goto Found;
@@ -98,6 +110,7 @@ namespace Bitfrost.Gameplay.Enemies
                 targetCrystal = crystal;
             }
         }
+
 
         public void SearchTargetSpot()
         {

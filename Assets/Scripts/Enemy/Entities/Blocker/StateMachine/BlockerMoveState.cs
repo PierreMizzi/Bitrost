@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
-
+	/// <summary>
+	/// 
+	/// </summary>
 	public class BlockerMoveState : BlockerState
 	{
 		public BlockerMoveState(IStateMachine stateMachine)

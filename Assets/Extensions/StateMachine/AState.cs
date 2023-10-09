@@ -8,10 +8,13 @@ namespace PierreMizzi.Useful.StateMachines
 
 
     /// <summary>
-    /// Base abstract class for Player's state
+    /// State Machine base state's behaviour
     /// </summary>
     public abstract class AState : IPausable
     {
+        /// <summary>
+        /// Entity using this state 
+        /// </summary>
         protected IStateMachine m_stateMachine = null;
 
         public int type { get; protected set; }
@@ -38,7 +41,9 @@ namespace PierreMizzi.Useful.StateMachines
             m_stateMachine.ChangeState(type, nextState);
         }
 
-        // State Machine lifecycle
+        /// <summary>
+        /// Default method called when entering this behaviour
+        /// </summary>
         protected virtual void DefaultEnter()
         {
             // Debug.Log($"ENTER : {type}");
@@ -55,8 +60,14 @@ namespace PierreMizzi.Useful.StateMachines
                 DefaultEnter();
         }
 
+        /// <summary>
+        /// State's behaviour called every frame
+        /// </summary>
         public virtual void Update() { }
 
+        /// <summary>
+        /// Called when leaving this behaviour
+        /// </summary>
         public virtual void Exit() { }
 
         public virtual void Pause()

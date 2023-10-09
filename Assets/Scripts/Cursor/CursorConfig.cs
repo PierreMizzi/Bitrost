@@ -4,6 +4,9 @@ using System;
 namespace Bitfrost.Gameplay
 {
 
+	/// <summary>
+	/// Cursor properties
+	/// </summary>
 	[Serializable]
 	public struct CursorConfig
 	{

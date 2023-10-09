@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Bitfrost.Gameplay.Enemies
 {
+
+    /// <summary>
+    /// Scout are weak enemies that follows the player and fires a single bullet at him 
+    /// </summary>
     public class Scout : Enemy, IBulletLauncher
     {
 
@@ -51,7 +55,7 @@ namespace Bitfrost.Gameplay.Enemies
 
         public override void OutOfPool(EnemyManager manager)
         {
-            m_randomDirectionAroundPlayer = CloseRandomDirectionFromPlayer(settings.angleAroundPlayer);
+            m_randomDirectionAroundPlayer = RandomDirectionAroundPlayer(settings.angleAroundPlayer);
             speedTrackPlayer = Random.Range(settings.minSpeedTrackPlayer, settings.maxSpeedTrackPlayer);
             base.OutOfPool(manager);
         }

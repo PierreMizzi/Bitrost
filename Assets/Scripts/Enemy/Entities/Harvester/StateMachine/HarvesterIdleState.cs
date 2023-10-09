@@ -17,6 +17,8 @@ namespace Bitfrost.Gameplay.Enemies
 
 		private IEnumerator m_searchTargetCoroutine;
 
+		#region AState
+
 		protected override void DefaultEnter()
 		{
 			StartSearchingTarget();
@@ -26,6 +28,8 @@ namespace Bitfrost.Gameplay.Enemies
 		{
 			StopSeachingTarget();
 		}
+
+		#endregion
 
 		private void StartSearchingTarget()
 		{

@@ -17,6 +17,10 @@ namespace Bitfrost.Gameplay.Enemies
 		[Header("Attack")]
 
 		public float trackingRadius = 1.5f;
+
+		/// <summary>
+		/// Speed at which the blockers tracks the turret's orientation
+		/// </summary>
 		public float trackingSmoothTime = 3;
 
 		[Header("Idle")]

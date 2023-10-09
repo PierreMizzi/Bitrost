@@ -6,6 +6,9 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Enemies
 {
 
+	/// <summary>
+	/// When the scout is near the player, it fires a bullet at him every few seconds
+	/// </summary>
 	public class ScoutAttackState : AScoutState
 	{
 		public ScoutAttackState(IStateMachine stateMachine) : base(stateMachine)
@@ -16,6 +19,8 @@ namespace Bitfrost.Gameplay.Enemies
 		private Vector3 m_velocity;
 
 		private Tween m_attackTween;
+
+		#region AState
 
 		protected override void DefaultEnter()
 		{
@@ -34,12 +39,6 @@ namespace Bitfrost.Gameplay.Enemies
 			m_this.transform.up = m_this.directionTowardPlayer;
 		}
 
-		private void StartAttacking()
-		{
-			m_attackTween = DOVirtual.DelayedCall(m_this.settings.delayBetweenBullet, m_this.Fire)
-									 .SetLoops(-1);
-		}
-
 		public override void Pause()
 		{
 			base.Pause();
@@ -54,6 +53,14 @@ namespace Bitfrost.Gameplay.Enemies
 
 			if (m_attackTween != null && !m_attackTween.IsPlaying())
 				m_attackTween.Play();
+		}
+
+		#endregion
+
+		private void StartAttacking()
+		{
+			m_attackTween = DOVirtual.DelayedCall(m_this.settings.delayBetweenBullet, m_this.Fire)
+									 .SetLoops(-1);
 		}
 
 	}

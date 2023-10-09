@@ -5,6 +5,9 @@ using UnityEngine;
 namespace Bitfrost.Gameplay.Bullets
 {
 
+    /// <summary>
+    /// Base class for every bullet
+    /// </summary>
     public class Bullet : MonoBehaviour, IPausable
     {
         #region Fields
@@ -12,15 +15,19 @@ namespace Bitfrost.Gameplay.Bullets
         [Header("Bullet")]
         protected BulletManager m_manager = null;
 
-        [SerializeField] protected BulletChannel m_bulletChannel = null;
+        [SerializeField]
+        protected BulletChannel m_bulletChannel = null;
 
-        [SerializeField] protected float m_speed;
-        [SerializeField] protected float m_damage;
+        protected float m_speed;
+        protected float m_damage;
 
         protected IBulletLauncher m_launcher;
 
         [Header("Impact")]
 
+        /// <summary> 
+        /// Associated bullet's impact
+        /// </summary>
         [SerializeField]
         private BulletImpact m_impactPrefab;
 
@@ -66,6 +73,13 @@ namespace Bitfrost.Gameplay.Bullets
 
         #endregion
 
+        /// <summary>
+        /// Bullet got out of pool and needs set-up
+        /// </summary>
+        /// <param name="config">Bullet's properties (speed, damage etc)</param>
+        /// <param name="launcher">Entity who fired the bullet</param>
+        /// <param name="position">Starting position in world space</param>
+        /// <param name="orientation">Starting orientation (up vector)</param>
         public void OufOfPool(
             BulletConfig config,
             IBulletLauncher launcher,
@@ -92,6 +106,9 @@ namespace Bitfrost.Gameplay.Bullets
                 Release();
         }
 
+        /// <summary>
+        /// Release to bullet back to the pool when no longer needed
+        /// </summary>
         protected virtual void Release()
         {
             m_bulletChannel.onReleaseBullet.Invoke(this);
@@ -109,6 +126,10 @@ namespace Bitfrost.Gameplay.Bullets
             }
         }
 
+        /// <summary>
+        /// Released back to the pool when colliding with something
+        /// </summary>
+        /// <param name="other"></param>
         protected virtual void ReleaseOnCollision(Collider2D other)
         {
             Release();

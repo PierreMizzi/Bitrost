@@ -14,9 +14,11 @@ namespace Bitfrost.Gameplay.Enemies
 
         public float searchCrystalRangeSqr { get; private set; }
 
+        /// <summary>
+        /// When approaching the crystal, at which percentage the harvester starts
+        /// aligning itself to it's targetSpot
+        /// </summary>
         public float rotationProgressBeginning = 0.8f;
-
-        // public float offsetFromShard = 0.5f;
 
         [Header("Attack")]
         public float attackDelay = 1f;

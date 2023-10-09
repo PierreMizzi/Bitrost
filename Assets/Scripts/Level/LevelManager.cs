@@ -8,11 +8,14 @@ using PierreMizzi.SoundManager;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.SceneManagement;
 
 namespace Bitfrost.Gameplay
 {
 
+    /// <summary>
+    /// Most important class when it come to in-game logic. Manages time, timeline to go through stages,
+    /// win conditions, loose conditions ... A little bit too much maybe ? 
+    /// </summary>
     public class LevelManager : MonoBehaviour, IPausable
     {
         #region Fields
@@ -42,17 +45,21 @@ namespace Bitfrost.Gameplay
 
         #region Time
 
+        /// <summary>
+        /// Time elapsed since the beginning of one game
+        /// </summary>
         public float time { get; private set; }
-
-        public bool canUpdateTime { get { return !isPaused; } }
 
         #endregion
 
         #region Timeline Stage
 
+        /// <summary>
+        /// Playable Director playing the stage timeline
+        /// </summary>
         private PlayableDirector m_director;
 
-        private bool isStageCompleted;
+        private bool m_isStageCompleted;
 
         private bool m_isStageDurationOver;
 
@@ -60,11 +67,17 @@ namespace Bitfrost.Gameplay
 
         #region Game Over
 
+        /// <summary>
+        /// Checks if the player has lost the game
+        /// </summary>
         private IEnumerator m_loosingConditionCoroutine;
-
 
         #endregion
 
+        /// <summary>
+        /// The longer the player stays alive, the higher the difficulty.
+        /// This number is purely visual, actual difficulty is managed by the timeline stage
+        /// </summary>
         private int m_currentStageDifficulty;
 
         [Header("Tutorial")]
@@ -95,7 +108,7 @@ namespace Bitfrost.Gameplay
         {
             InitializeArena();
 
-            // Events
+            // Subscribes to events
             if (m_levelChannel != null)
             {
                 m_levelChannel.onTutorialStartClicked += StartGameWithTutorial;
@@ -112,9 +125,10 @@ namespace Bitfrost.Gameplay
 
             yield return new WaitForSeconds(0.1f);
 
-            // Timeline stage and debugging settings
+            // If debugging, we starts the game in debug mode
             if (m_levelChannel.isDebugging)
                 ManageDebugMode();
+            // Otherwise, we start the game normaly using timeline stage
             else
             {
                 EnableTimelineStage();
@@ -132,7 +146,7 @@ namespace Bitfrost.Gameplay
 
         private void Update()
         {
-            if (canUpdateTime)
+            if (!isPaused)
                 time += Time.unscaledDeltaTime;
         }
 
@@ -224,7 +238,7 @@ namespace Bitfrost.Gameplay
         {
             m_director.Play();
             m_isStageDurationOver = false;
-            isStageCompleted = false;
+            m_isStageCompleted = false;
         }
 
         // Linked to Signal Emitter
@@ -232,7 +246,7 @@ namespace Bitfrost.Gameplay
         {
             m_isStageDurationOver = true;
 
-            if (!isStageCompleted)
+            if (!m_isStageCompleted)
                 m_director.Pause();
             else
                 PlayStage();
@@ -252,7 +266,7 @@ namespace Bitfrost.Gameplay
 
         public void CallbackAllEnemiesKilled()
         {
-            isStageCompleted = true;
+            m_isStageCompleted = true;
 
             if (m_isStageDurationOver)
                 PlayStage();
@@ -423,6 +437,7 @@ namespace Bitfrost.Gameplay
         {
             isPaused = true;
             m_director.Pause();
+            m_appChannel.onSetCursor.Invoke(CursorType.Normal);
         }
 
         public void Resume()

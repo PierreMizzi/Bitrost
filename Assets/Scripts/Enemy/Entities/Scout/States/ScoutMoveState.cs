@@ -1,10 +1,12 @@
-using System;
-using UnityEngine;
 using DG.Tweening;
 using PierreMizzi.Useful.StateMachines;
 
 namespace Bitfrost.Gameplay.Enemies
 {
+
+	/// <summary>
+	/// After spawning, the scout approaches the player before following and firing at him
+	/// </summary>
 	public class ScoutMoveState : AScoutState
 	{
 		public ScoutMoveState(IStateMachine stateMachine) : base(stateMachine)
@@ -13,6 +15,10 @@ namespace Bitfrost.Gameplay.Enemies
 		}
 
 		private Tween m_approachPlayerTween;
+
+
+		#region AState
+
 
 		protected override void DefaultEnter()
 		{
@@ -30,6 +36,25 @@ namespace Bitfrost.Gameplay.Enemies
 				m_approachPlayerTween.Kill();
 		}
 
+		public override void Pause()
+		{
+			base.Pause();
+
+			if (m_approachPlayerTween != null && m_approachPlayerTween.IsPlaying())
+				m_approachPlayerTween.Pause();
+		}
+
+		public override void Resume()
+		{
+			base.Resume();
+
+			if (m_approachPlayerTween != null && !m_approachPlayerTween.IsPlaying())
+				m_approachPlayerTween.Play();
+		}
+
+		#endregion
+
+
 		private void ApproachPlayer()
 		{
 			float distance = (m_this.positionAroundPlayer - m_this.transform.position).magnitude;
@@ -46,21 +71,7 @@ namespace Bitfrost.Gameplay.Enemies
 			ChangeState((int)EnemyStateType.Attack);
 		}
 
-		public override void Pause()
-		{
-			base.Pause();
 
-			if (m_approachPlayerTween != null && m_approachPlayerTween.IsPlaying())
-				m_approachPlayerTween.Pause();
-		}
-
-		public override void Resume()
-		{
-			base.Resume();
-
-			if (m_approachPlayerTween != null && !m_approachPlayerTween.IsPlaying())
-				m_approachPlayerTween.Play();
-		}
 
 	}
 }

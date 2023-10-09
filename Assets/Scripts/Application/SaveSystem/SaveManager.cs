@@ -1,10 +1,12 @@
-using System;
 using Bitfrost.Gameplay;
 using PierreMizzi.Useful.SaveSystem;
-using UnityEngine;
 
 namespace Bitfrost.Application
 {
+
+	/// <summary>
+	/// Tightly related to BaseSaveManager, this class is meant to handle Overcore's own seriliazed data
+	/// </summary>
 	public static class SaveManager
 	{
 

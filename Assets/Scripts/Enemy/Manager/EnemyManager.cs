@@ -5,7 +5,6 @@ using PierreMizzi.Pause;
 
 namespace Bitfrost.Gameplay.Enemies
 {
-    // TODO : Spawn enemy not on a border but on an area -> TO TEST
 
     public class EnemyManager : MonoBehaviour, IPausable
     {
@@ -28,9 +27,15 @@ namespace Bitfrost.Gameplay.Enemies
         [SerializeField]
         private List<EnemyPoolConfig> m_enemyPoolConfigs = new List<EnemyPoolConfig>();
 
+        /// <summary>
+        /// Associate one type of enemy to it respective spawner
+        /// </summary>
         private Dictionary<EnemyType, EnemySpawner> m_enemyTypeToSpawner =
             new Dictionary<EnemyType, EnemySpawner>();
 
+        /// <summary>
+        /// All enemies out of the pool and currently active
+        /// </summary>
         private List<Enemy> m_activeEnemies = new List<Enemy>();
 
         #region Spawn Bounds
@@ -47,8 +52,14 @@ namespace Bitfrost.Gameplay.Enemies
 
         #region Stage Enemy Kill Count
 
+        /// <summary>
+        /// Number of enemies to kill to go to next stage
+        /// </summary>
         private int m_stageEnemyCount;
 
+        /// <summary>
+        /// Current number of enemies killed 
+        /// </summary>
         private int m_stageKilledEnemyCount;
 
         public bool areAllEnemiesKilled
@@ -143,7 +154,12 @@ namespace Bitfrost.Gameplay.Enemies
             }
         }
 
-        public void SpawnEnemy(GameObject prefab, int count)
+        /// <summary>
+        /// Spawn multiple enemies at once
+        /// </summary>
+        /// <param name="prefab">prefab of the enemy</param>
+        /// <param name="count">amount in batch</param>
+        public void SpawnEnemyBatch(GameObject prefab, int count)
         {
             for (int i = 0; i < count; i++)
                 SpawnEnemy(prefab);
@@ -179,6 +195,10 @@ namespace Bitfrost.Gameplay.Enemies
                 m_enemyTypeToSpawner.Add(config.type, spawner);
         }
 
+        /// <summary>
+        /// Used for debugging.
+        /// With the assigned keyboard key, user can spawn one enemy in Editor Mode
+        /// </summary>
         private void ManageQuickSpawn()
         {
             foreach (EnemyPoolConfig config in m_enemyPoolConfigs)
@@ -213,6 +233,11 @@ namespace Bitfrost.Gameplay.Enemies
             m_enemySpawnBounds.size = size;
         }
 
+        /// <summary>
+        /// All enemies spawn on the edge of caemras's bound.
+        /// Returns a random position along a random edge of the camera
+        /// </summary>
+        /// <returns></returns>
         private Vector3 GetCameraEdgeRandomPosition()
         {
             // Compute random position on the bounds
@@ -223,18 +248,24 @@ namespace Bitfrost.Gameplay.Enemies
 
             if (horizontalOrVertical)
             {
+                // Random position along the horizontal camera size
                 randomPosition.x = Random.Range(
                     -m_enemySpawnBounds.extents.x,
                     m_enemySpawnBounds.extents.x
                 );
+
+                // Set the vertical position at the top or bottom side of the camera
                 randomPosition.y = (positiveOrNegative ? 1 : -1) * m_enemySpawnBounds.extents.y;
             }
             else
             {
+                // Random position along the vertical camera size
                 randomPosition.y = Random.Range(
                     -m_enemySpawnBounds.extents.y,
                     m_enemySpawnBounds.extents.y
                 );
+
+                // Set the horieontal position at the left or right side of the camera
                 randomPosition.x = (positiveOrNegative ? 1 : -1) * m_enemySpawnBounds.extents.x;
             }
 
@@ -242,8 +273,6 @@ namespace Bitfrost.Gameplay.Enemies
 
             randomPosition += m_enemySpawnBounds.center;
             randomPosition += dirToPosition * Random.Range(1f, m_spawnBoundsAreaSize);
-
-            // Compute a new random position inside the area
 
             return randomPosition;
         }
@@ -254,6 +283,10 @@ namespace Bitfrost.Gameplay.Enemies
 
         #region Killing
 
+        /// <summary>
+        /// Releases an enemy 
+        /// </summary>
+        /// <param name="enemy"></param>
         public void ReleaseToPool(Enemy enemy)
         {
             m_poolingChannel.onReleaseToPool.Invoke(enemy.gameObject);
@@ -310,18 +343,9 @@ namespace Bitfrost.Gameplay.Enemies
         {
             isPaused = true;
 
-            PauseActiveEnemies();
-            PauseEnemySpawners();
-        }
-
-        private void PauseEnemySpawners()
-        {
             foreach (KeyValuePair<EnemyType, EnemySpawner> pair in m_enemyTypeToSpawner)
                 pair.Value.Pause();
-        }
 
-        private void PauseActiveEnemies()
-        {
             foreach (Enemy enemy in m_activeEnemies)
                 enemy.Pause();
         }
@@ -330,18 +354,9 @@ namespace Bitfrost.Gameplay.Enemies
         {
             isPaused = false;
 
-            ResumeActiveEnemies();
-            ResumeEnemySpawners();
-        }
-
-        private void ResumeEnemySpawners()
-        {
             foreach (KeyValuePair<EnemyType, EnemySpawner> pair in m_enemyTypeToSpawner)
                 pair.Value.Resume();
-        }
 
-        private void ResumeActiveEnemies()
-        {
             foreach (Enemy enemy in m_activeEnemies)
                 enemy.Resume();
         }

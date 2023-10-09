@@ -3,7 +3,9 @@ using System;
 
 namespace Bitfrost.Gameplay
 {
-
+    /// <summary>
+    /// Manages health, taking damage, healing and also dying
+    /// </summary>
     public class HealthEntity : MonoBehaviour
     {
         #region Fields
@@ -11,6 +13,9 @@ namespace Bitfrost.Gameplay
         public float currentHealth { get; private set; }
         public float maxHealth { get; set; }
 
+        /// <summary>
+        /// Current health on a scale from 0 to 1
+        /// </summary>
         public float normalizedHealth
         {
             get { return Mathf.Clamp01(currentHealth / maxHealth); }
@@ -27,7 +32,6 @@ namespace Bitfrost.Gameplay
         public Action onLostHealth = null;
         public Action onHealedHealth = null;
         public Action onNoHealth = null;
-
         public Action onChangeHealth = null;
 
         #endregion
@@ -67,7 +71,7 @@ namespace Bitfrost.Gameplay
             }
         }
 
-        public void HealHealth(float healed)
+        public void GainHealth(float healed)
         {
             currentHealth += healed;
             onHealedHealth.Invoke();
