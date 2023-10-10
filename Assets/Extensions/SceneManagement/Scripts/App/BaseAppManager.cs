@@ -9,7 +9,6 @@ namespace PierreMizzi.Useful.SceneManagement
 	/// <summary> 
 	///	Scene to go from one scene to another
 	/// </summary>
-	[ExecuteInEditMode]
 	public class BaseAppManager : MonoBehaviour
 	{
 
@@ -36,9 +35,24 @@ namespace PierreMizzi.Useful.SceneManagement
 
 		#region Methods 
 
-		protected virtual void OnEnable()
+		protected virtual void Start()
 		{
 			StartCoroutine(SceneSetup());
+			if (m_appChannel != null)
+			{
+				m_appChannel.onTitlecardToGame += TitlecardToGame;
+				m_appChannel.onGameToTitlecard += GameToTitlecard;
+			}
+		}
+
+		protected virtual void OnDestroy()
+		{
+			if (m_appChannel != null)
+			{
+				m_appChannel.onTitlecardToGame -= TitlecardToGame;
+				m_appChannel.onGameToTitlecard -= GameToTitlecard;
+			}
+
 		}
 
 		protected virtual IEnumerator SceneSetup()
@@ -61,25 +75,6 @@ namespace PierreMizzi.Useful.SceneManagement
 			}
 
 			yield return null;
-		}
-
-		protected virtual void Start()
-		{
-			if (m_appChannel != null)
-			{
-				m_appChannel.onTitlecardToGame += TitlecardToGame;
-				m_appChannel.onGameToTitlecard += GameToTitlecard;
-			}
-		}
-
-		protected virtual void OnDestroy()
-		{
-			if (m_appChannel != null)
-			{
-				m_appChannel.onTitlecardToGame -= TitlecardToGame;
-				m_appChannel.onGameToTitlecard -= GameToTitlecard;
-			}
-
 		}
 
 		protected virtual void ApplicationToTitlecard()

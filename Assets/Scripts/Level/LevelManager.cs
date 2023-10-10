@@ -141,6 +141,7 @@ namespace Bitfrost.Gameplay
             else
                 StartGameWithoutTutorial();
 
+            m_musicSoundSource.SetLooping(true);
             m_musicSoundSource.Play();
         }
 

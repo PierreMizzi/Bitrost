@@ -390,7 +390,6 @@ MonoBehaviour:
     defaultSize: 5
     maxSize: 10
   m_settings: {fileID: 11400000, guid: b1f8d4aa558fd984c9f2c32a95428e1a, type: 2}
-  m_container: {fileID: 783057577}
   m_crystalsSubjectPrefab: {fileID: 86370590758753952, guid: 28d02ade50f36204588e52c67abdddb0,
     type: 3}
   d_config:
@@ -1664,7 +1663,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -6993,7 +6992,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867264002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.357857, y: -2.4512947, z: -1}
+  m_LocalPosition: {x: -4.3578777, y: -2.451306, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

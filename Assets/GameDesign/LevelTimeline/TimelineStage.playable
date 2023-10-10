@@ -2308,7 +2308,7 @@ MonoBehaviour:
   spawnConfig:
     prefab: {fileID: 5009668753968831693, guid: 58667285700976444b69914bc48de0af,
       type: 3}
-    count: 6
+    count: 4
     batchCount: 2
     duration: Infinity
 --- !u!114 &689123541725790499

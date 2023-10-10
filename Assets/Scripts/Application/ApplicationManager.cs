@@ -14,24 +14,18 @@ namespace Bitfrost.Application
 		[SerializeField]
 		private SoundManagerToolSettings m_soundManagerSettings = null;
 
-		[SerializeField]
-		private Transform m_soundSourceContainer = null;
-
-
 		#endregion
 
 		#region Methods 
 
-		protected override void OnEnable()
-		{
-			base.OnEnable();
-			SaveManager.LoadSaveData();
-		}
-
 		protected override void Start()
 		{
-			base.Start();
+			SoundManager.Init(m_soundManagerSettings.path);
+			SaveManager.LoadSaveData();
 			applicationChannel.onSetCursor.Invoke(CursorType.Normal);
+
+			// Start loading the scene
+			base.Start();
 		}
 
 		#endregion

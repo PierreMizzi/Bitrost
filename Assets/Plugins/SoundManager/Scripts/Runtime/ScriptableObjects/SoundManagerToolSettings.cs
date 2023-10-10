@@ -12,6 +12,8 @@ namespace PierreMizzi.SoundManager
 		#region Settings
 
 		[SerializeField] private string _path = "";
+		public string path { get { return _path; } }
+
 
 		[Header("AudioMixer")]
 		[SerializeField] private List<AudioMixerController> m_audioMixerControllers = new List<AudioMixerController>();
@@ -43,14 +45,6 @@ namespace PierreMizzi.SoundManager
 		#endregion
 
 		#endregion
-
-
-		private void OnEnable()
-		{
-			SoundManager.Init(_path);
-		}
-
-
 
 	}
 

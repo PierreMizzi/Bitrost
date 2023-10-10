@@ -90,13 +90,15 @@ namespace PierreMizzi.SoundManager
 		{
 			// Transform container
 			GameObject container = GameObject.Find(k_SFXSSContainerName);
-			if (container == null)
+			if (container != null)
 			{
-				GameObject newContainer = new GameObject(k_SFXSSContainerName);
-				m_SFXSSContainer = newContainer.transform;
+				Debug.Log("SFXSScontainer is referenced");
+				m_SFXSSContainer = container.transform;
 			}
 			else
-				m_SFXSSContainer = container.transform;
+				Debug.LogError("couldn't find SFXSSContainer");
+
+			Debug.Log($"Check SFXSS container : {m_SFXSSContainer == null}");
 
 			// Pool
 			m_SFXSSPool = new ObjectPool<SFXSoundSource>(
@@ -109,17 +111,19 @@ namespace PierreMizzi.SoundManager
 				settings.SFXSSPoolMaxSize
 			);
 
-
 			m_ativeSFXSSs = new List<SFXSoundSource>();
 		}
 
 		private static SFXSoundSource CreateSFXSS()
 		{
-			GameObject gameObject = new GameObject("SFXSS_" + m_SFXSSPool.CountAll + 1);
-			SFXSoundSource soundSource = gameObject.AddComponent<SFXSoundSource>();
-			soundSource.transform.parent = m_SFXSSContainer.transform;
+			Debug.Log("#### TEST CreateSFXSS ####");
+			GameObject gameObject = new GameObject("SFXSS_" + m_SFXSSPool.CountAll + 1, typeof(SFXSoundSource));
+			Debug.Log($"gameObject != null : {gameObject == null}");
+			Debug.Log($"gameObject.transform != null : {gameObject.transform == null}");
+			Debug.Log($"m_SFXSSContainer != null : {m_SFXSSContainer == null}");
+			gameObject.transform.SetParent(m_SFXSSContainer.transform);
 
-			return soundSource;
+			return gameObject.GetComponent<SFXSoundSource>();
 		}
 
 		private static void GetSFXSS(SFXSoundSource soundSource)

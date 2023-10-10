@@ -123,8 +123,13 @@ namespace Bitfrost.Application
 		protected override IEnumerator UnloadTitlecardSceneCoroutine()
 		{
 			yield return base.UnloadTitlecardSceneCoroutine();
-			m_musicSoundSource.FadeOut();
-			yield return null;
+
+			bool hold = true;
+			Action stopHold = () => { hold = false; };
+			m_musicSoundSource.FadeOut(SoundManager.settings.BaseFadeOutDuration, 0, stopHold);
+
+			while (hold)
+				yield return null;
 		}
 
 		#region State Machine

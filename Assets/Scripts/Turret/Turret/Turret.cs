@@ -178,6 +178,7 @@ namespace Bitfrost.Gameplay.Turrets
             camera = Camera.main;
 
             storedEnergy = 0;
+            radialProgress.Awake();
 
             ChangeState(TurretStateType.Inactive);
         }

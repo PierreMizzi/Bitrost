@@ -38,7 +38,7 @@ namespace PierreMizzi.Rendering
 
         private new Renderer renderer { get; set; }
 
-        private void Awake()
+        public void Awake()
         {
             this.renderer = base.GetComponent<Renderer>();
 

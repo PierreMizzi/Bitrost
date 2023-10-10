@@ -14,6 +14,15 @@ namespace PierreMizzi.Useful.SceneManagementEditor
 		private const string scenesPath = "Assets/Scenes/Application/";
 		private const string scenePrefix = ".unity";
 
+		[MenuItem("Scene Setup Shortcut/Application")]
+		public static void SetupApplication()
+		{
+			EditorSceneManager.OpenScene(PathFromName(BaseAppManager.applicationSceneName));
+
+			Scene activeScene = EditorSceneManager.GetSceneByName(BaseAppManager.applicationSceneName);
+			EditorSceneManager.SetActiveScene(activeScene);
+		}
+
 		[MenuItem("Scene Setup Shortcut/Titlecard")]
 		public static void SetupTitlecard()
 		{

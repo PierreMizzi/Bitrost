@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace PierreMizzi.SoundManager
@@ -50,14 +51,15 @@ namespace PierreMizzi.SoundManager
 
 		#region MonoBehaviour
 
-		protected virtual void Awake()
+		protected virtual IEnumerator Start()
 		{
+			yield return new WaitForEndOfFrame();
 			Initialize();
 		}
 
 		protected virtual void Update()
 		{
-			if (m_audioSource.clip != null)
+			if (m_audioSource != null && m_audioSource.clip != null)
 			{
 				if ((m_audioSource.clip.length - m_audioSource.time) < 0.01f)
 					AudioClipEnded();

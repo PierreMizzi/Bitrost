@@ -12,11 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5fbe2e5a9a0c6249abbff2f956c1ed3, type: 3}
   m_Name: CrystalShardsSettings
   m_EditorClassIdentifier: 
-  m_sprites:
-  - {fileID: 2800000, guid: 111266b317b80bc4e83fca5fbf733403, type: 3}
-  - {fileID: 2800000, guid: 50e718ed58476f84bba19fa643129dc1, type: 3}
-  - {fileID: 2800000, guid: 96e16b3e0a363754586db0b1d3010c71, type: 3}
-  - {fileID: 2800000, guid: 9e3a5fdd1cfcf524a80f7bcfb2df4533, type: 3}
   m_spriteTints:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0.8784314, g: 0.79607844, b: 0.7176471, a: 1}
@@ -25,14 +20,6 @@ MonoBehaviour:
   m_minRotationSpeed: 2
   m_maxRotationSpeed: 17
   m_minCrystalScale: 1
-  m_maxCrystalScale: 2.2
+  m_maxCrystalScale: 2
   m_safeDistanceFromScaleRatio: 3
   randomPositionExtents: 10
-  defaultHarvesterSpacerConfig:
-    scale: 1.5
-    radius: 2.8
-    count: 9
-  harvesterSpacerConfigs:
-  - scale: 2
-    radius: 3.5
-    count: 12
